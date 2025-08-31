@@ -5,8 +5,9 @@ export default function Home() {
         <h1 className="text-4xl font-bold text-gray-800 mb-4">
           DPM17 Team4 Web View
         </h1>
-        <p className="text-lg text-gray-600 mb-8">
-          React Native WebView에서 표시되는 웹 페이지입니다.
+        <p className="text-lg text-gray-600 mb-8 text-center px-6 leading-relaxed">
+          React Native WebView 에서<br />
+          표시되는 웹 페이지입니다.
         </p>
         <div className="space-y-4">
           <div className="bg-white rounded-lg shadow-md p-6 max-w-md mx-auto">
