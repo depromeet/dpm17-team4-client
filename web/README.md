@@ -8,6 +8,7 @@ React Native WebView에서 표시되는 Next.js 웹 애플리케이션입니다.
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
 - **Package Manager**: Yarn
+- **Linter/Formatter**: Biome
 
 ## 시작하기
 
@@ -18,6 +19,28 @@ yarn dev
 ```
 
 개발 서버가 [http://localhost:3000](http://localhost:3000)에서 실행됩니다.
+
+### 코드 품질 관리
+
+```bash
+# 린팅
+yarn lint
+
+# 린팅 및 자동 수정
+yarn lint:fix
+
+# 포맷팅
+yarn format
+
+# 포맷팅 및 자동 수정
+yarn format:fix
+
+# 전체 검사 (린팅 + 포맷팅)
+yarn check
+
+# 전체 검사 및 자동 수정
+yarn check:fix
+```
 
 ### 빌드
 
