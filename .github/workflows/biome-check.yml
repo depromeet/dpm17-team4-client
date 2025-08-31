@@ -4,9 +4,6 @@ on:
   push:
     paths:
       - 'web/**'
-  pull_request:
-    paths:
-      - 'web/**'
 
 jobs:
   biome-check:
@@ -24,11 +21,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
-          cache-dependency-path: web/package-lock.json
+          cache: 'yarn'
+          cache-dependency-path: web/yarn.lock
 
       - name: Install dependencies
-        run: npm ci
+        run: yarn install --frozen-lockfile
 
       - name: Run Biome lint check
         run: npm run lint
