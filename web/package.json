@@ -6,8 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "check": "biome check .",
-    "check:fix": "biome check --write ."
+    "biome": "biome check .",
+    "biome:fix": "biome check --write ."
   },
   "dependencies": {
     "next": "15.5.2",
