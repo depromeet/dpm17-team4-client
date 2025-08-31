@@ -5,9 +5,8 @@ import { WebView } from 'react-native-webview';
 export default function App() {
   return (
     <SafeAreaView style={styles.container}>
-      {/* TODO(seonghyun): web uri 변경 */}
       <WebView
-        source={{ uri: 'https://www.google.com' }}
+        source={{ uri: 'http://localhost:3000' }}
         style={styles.webview}
         javaScriptEnabled={true}
         domStorageEnabled={true}
