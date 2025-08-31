@@ -1,36 +1,62 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# DPM17 Team4 Web View
 
-## Getting Started
+React Native WebView에서 표시되는 Next.js 웹 애플리케이션입니다.
 
-First, run the development server:
+## 기술 스택
+
+- **Framework**: Next.js 15.5.2
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Package Manager**: Yarn
+
+## 시작하기
+
+### 개발 서버 실행
 
 ```bash
-npm run dev
-# or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+개발 서버가 [http://localhost:3000](http://localhost:3000)에서 실행됩니다.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 빌드
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+yarn build
+```
 
-## Learn More
+### 프로덕션 서버 실행
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+yarn start
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 프로젝트 구조
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+web/
+├── src/
+│   └── app/
+│       ├── page.tsx      # 메인 페이지
+│       ├── layout.tsx    # 레이아웃
+│       └── globals.css   # 전역 스타일
+├── public/               # 정적 파일
+└── package.json
+```
 
-## Deploy on Vercel
+## React Native 연동
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+이 웹 애플리케이션은 React Native의 WebView 컴포넌트에서 표시되도록 설계되었습니다.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```typescript
+<WebView
+  source={{ uri: 'http://localhost:3000' }}
+  style={styles.webview}
+  javaScriptEnabled={true}
+  domStorageEnabled={true}
+  startInLoadingState={true}
+  scalesPageToFit={true}
+  allowsInlineMediaPlayback={true}
+  mediaPlaybackRequiresUserAction={false}
+/>
+```
