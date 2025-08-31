@@ -15,7 +15,8 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: 'DPM17 Team4 Web View',
   description: 'React Native WebView 에서 표시되는 웹 애플리케이션',
-  viewport: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no',
+  viewport:
+    'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no',
 };
 
 export default function RootLayout({
