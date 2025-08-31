@@ -9,7 +9,7 @@ export default function Home() {
           React Native WebView 에서<br />
           표시되는 웹 페이지입니다.
         </p>
-        <p>테스트</p>
+        <p>테스트1</p>
         <div className="space-y-4">
           <div className="bg-white rounded-lg shadow-md p-6 max-w-md mx-auto">
             <h2 className="text-xl font-semibold text-gray-700 mb-2">
