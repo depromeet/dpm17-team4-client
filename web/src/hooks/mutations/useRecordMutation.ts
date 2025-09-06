@@ -15,7 +15,7 @@ interface RecordColorParams extends RecordDataRequestDto {
 export const useRecordMutation = () => {
   return useMutation<RecordDataResponseDto, Error, RecordColorParams>({
     mutationFn: async (params: RecordColorParams) => {
-      const response = await recordApi.record({ color: params.color });
+      const response = await recordApi.recordDailyData({ color: params.color });
       return response.data;
     },
     onSuccess: (data, variables) => {
