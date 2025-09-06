@@ -3,6 +3,6 @@ import { ReportDataResponseDto } from '@/types/dto/report.dto';
 import { API_ENDPOINTS } from '@/constants';
 
 export const reportApi = {
-  report: (): Promise<{ data: ReportDataResponseDto }> =>
+  reportDailyData: (): Promise<{ data: ReportDataResponseDto }> =>
     apiClient.get<ReportDataResponseDto>(API_ENDPOINTS.REPORT.BASE),
 };

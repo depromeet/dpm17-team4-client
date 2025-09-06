@@ -6,6 +6,6 @@ import {
 import { API_ENDPOINTS } from '@/constants';
 
 export const recordApi = {
-  record: (data: RecordDataRequestDto) =>
+  recordDailyData: (data: RecordDataRequestDto) =>
     apiClient.post<RecordDataResponseDto>(API_ENDPOINTS.RECORD.BASE, data),
 };
