@@ -1,0 +1,1 @@
+export { useScoreQuery } from './useReportQuery';
