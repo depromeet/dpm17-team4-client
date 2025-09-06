@@ -1,10 +1,11 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { recordApi } from '@/apis/record/recordApi';
 import {
   RecordDataRequestDto,
   RecordDataResponseDto,
 } from '@/types/dto/record.dto';
 import { QUERY_KEYS } from '@/constants';
+import { queryClient } from '@/queryClient';
 
 interface RecordColorParams extends RecordDataRequestDto {
   onSuccess?: () => void;
@@ -12,8 +13,6 @@ interface RecordColorParams extends RecordDataRequestDto {
 }
 
 export const useRecordMutation = () => {
-  const queryClient = useQueryClient();
-
   return useMutation<RecordDataResponseDto, Error, RecordColorParams>({
     mutationFn: async (params: RecordColorParams) => {
       const response = await recordApi.record({ color: params.color });

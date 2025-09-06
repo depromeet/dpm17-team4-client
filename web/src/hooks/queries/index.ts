@@ -1,1 +1,1 @@
-export { useScoreQuery } from './useReportQuery';
+export { useReportQuery } from './useReportQuery';
