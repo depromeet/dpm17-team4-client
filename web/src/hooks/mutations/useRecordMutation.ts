@@ -4,6 +4,7 @@ import {
   RecordDataRequestDto,
   RecordDataResponseDto,
 } from '@/types/dto/record.dto';
+import { QUERY_KEYS } from '@/constants';
 
 interface RecordColorParams extends RecordDataRequestDto {
   onSuccess?: () => void;
@@ -19,7 +20,7 @@ export const useRecordMutation = () => {
       return response.data;
     },
     onSuccess: (data, variables) => {
-      queryClient.invalidateQueries({ queryKey: ['score'] });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.RECORDS });
 
       if (variables.onSuccess) {
         variables.onSuccess();
