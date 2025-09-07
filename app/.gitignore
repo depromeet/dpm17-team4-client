@@ -1,3 +1,9 @@
+# NOTE(seonghyun): 보안상 개인적으로 파일 요청 필요
+# Firebase service account key
+firebase-service-account.json
+# Google Services (Android)
+google-services.json
+
 # Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
 
 # dependencies
@@ -9,6 +15,10 @@ dist/
 web-build/
 expo-env.d.ts
 
+# Expo bare workflow generated files
+android/
+ios/
+
 # Native
 .kotlin/
 *.orig.*
@@ -17,6 +27,38 @@ expo-env.d.ts
 *.p12
 *.key
 *.mobileprovision
+
+# iOS build artifacts
+ios/build/
+ios/Pods/
+ios/*.xcworkspace/xcuserdata/
+ios/*.xcodeproj/xcuserdata/
+ios/*.xcodeproj/project.xcworkspace/xcuserdata/
+ios/DerivedData/
+ios/*.xcworkspace/xcshareddata/
+ios/*.xcodeproj/xcshareddata/
+ios/*.xcworkspace/xcuserdata/
+ios/*.xcodeproj/xcuserdata/
+ios/*.xcodeproj/project.xcworkspace/xcuserdata/
+ios/build/
+ios/DerivedData/
+ios/*.xcarchive
+ios/*.ipa
+ios/*.dSYM.zip
+ios/*.dSYM
+
+# Android build artifacts
+android/build/
+android/.gradle/
+android/app/build/
+android/local.properties
+android/captures/
+android/*.iml
+android/.idea/
+android/.externalNativeBuild/
+android/.cxx/
+android/app/release/
+android/app/debug/
 
 # Metro
 .metro-health-check*
@@ -35,3 +77,57 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
+
+# IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Additional build artifacts
+*.log
+*.tmp
+*.temp
+*.cache
+*.lock
+*.pid
+*.seed
+*.pid.lock
+
+# React Native specific
+.react-native/
+.react-native-cli.config.js
+
+# Flipper
+ios/Flipper/
+
+# Fastlane
+ios/fastlane/report.xml
+ios/fastlane/Preview.html
+ios/fastlane/screenshots
+ios/fastlane/test_output
+android/fastlane/report.xml
+android/fastlane/Preview.html
+android/fastlane/screenshots
+android/fastlane/test_output
+
+# Bundle artifacts
+*.jsbundle
+
+# CocoaPods
+ios/Pods/
+# Note: Podfile.lock should be committed for reproducible builds
+
+# Temporary files
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
