@@ -2,12 +2,12 @@ import { createContext, useContext, useState } from 'react';
 import type { DefecationState } from '../types';
 
 interface DefecationContextType {
-  defecationState: DefecationState;
-  setDefecationState: (state: DefecationState) => void;
+	defecationState: DefecationState;
+	setDefecationState: (state: DefecationState) => void;
 }
 
 const DefecationContext = createContext<DefecationContextType | undefined>(
-  undefined
+	undefined,
 );
 
 export const useDefecation = () => {
@@ -19,9 +19,9 @@ export const useDefecation = () => {
 };
 
 export const DefecationProvider = ({
-  children,
+	children,
 }: {
-  children: React.ReactNode;
+	children: React.ReactNode;
 }) => {
   const [defecationState, setDefecationState] = useState<DefecationState>({
     selectedWhen: new Date(),
@@ -33,9 +33,9 @@ export const DefecationProvider = ({
     selectedOptional: '',
   });
 
-  return (
-    <DefecationContext.Provider value={{ defecationState, setDefecationState }}>
-      {children}
-    </DefecationContext.Provider>
-  );
+	return (
+		<DefecationContext.Provider value={{ defecationState, setDefecationState }}>
+			{children}
+		</DefecationContext.Provider>
+	);
 };
