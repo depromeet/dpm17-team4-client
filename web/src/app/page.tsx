@@ -7,15 +7,23 @@ export default function Home() {
   const { data: scoreData, isLoading, error, refetch } = useReportQuery();
 
   // 커스텀 훅을 사용한 색상 저장 mutation
-  const recordColorMutation = useRecordMutation();
+  const { mutate, isPending, isSuccess, isError } = useRecordMutation();
 
-  // 테스트용 색상 저장 함수
-  const handleRecordColor = () => {
+  // 테스트용 데이터 저장 함수
+  const handleRecordData = () => {
     const testColor = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
-    recordColorMutation.mutate({
+    const shapes = ['circle', 'square', 'triangle', 'rectangle'];
+    const testShape = shapes[Math.floor(Math.random() * shapes.length)];
+    const testTime = new Date().toISOString();
+    const testInfo = `Test data created at ${new Date().toLocaleString()}`;
+
+    mutate({
       color: testColor,
+      shape: testShape,
+      time: testTime,
+      info: testInfo,
       onSuccess: () => {
-        alert('색상이 성공적으로 저장되었습니다!');
+        alert('데이터가 성공적으로 저장되었습니다!');
       },
       onError: (error) => {
         alert(error.message);
@@ -91,25 +99,23 @@ export default function Home() {
               </div>
             )}
 
-            {/* 테스트용 색상 저장 버튼 */}
+            {/* 테스트용 데이터 저장 버튼 */}
             <div className="mt-4 pt-4 border-t">
               <button
-                onClick={handleRecordColor}
-                disabled={recordColorMutation.isPending}
+                onClick={handleRecordData}
+                disabled={isPending}
                 className="w-full px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 disabled:bg-gray-400 disabled:cursor-not-allowed"
               >
-                {recordColorMutation.isPending
-                  ? '저장 중...'
-                  : '랜덤 색상 저장 테스트'}
+                {isPending ? '저장 중...' : '랜덤 데이터 저장 테스트'}
               </button>
-              {recordColorMutation.isSuccess && (
+              {isSuccess && (
                 <div className="mt-2 text-sm text-green-600">
-                  색상이 성공적으로 저장되었습니다!
+                  데이터가 성공적으로 저장되었습니다!
                 </div>
               )}
-              {recordColorMutation.isError && (
+              {isError && (
                 <div className="mt-2 text-sm text-red-600">
-                  색상 저장에 실패했습니다.
+                  데이터 저장에 실패했습니다.
                 </div>
               )}
             </div>

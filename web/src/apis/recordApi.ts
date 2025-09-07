@@ -6,6 +6,11 @@ import {
 import { API_ENDPOINTS } from '@/constants';
 
 export const recordApi = {
-  recordDailyData: (data: RecordDataRequestDto) =>
-    apiClient.post<RecordDataResponseDto>(API_ENDPOINTS.RECORD.BASE, data),
+  recordDailyData: async (data: RecordDataRequestDto) => {
+    const response = await apiClient.post<RecordDataResponseDto>(
+      API_ENDPOINTS.RECORD.BASE,
+      data
+    );
+    return response.data;
+  },
 };

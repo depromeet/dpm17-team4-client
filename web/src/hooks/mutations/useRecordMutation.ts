@@ -7,17 +7,14 @@ import {
 import { QUERY_KEYS } from '@/constants';
 import { queryClient } from '@/queryClient';
 
-interface RecordColorParams extends RecordDataRequestDto {
+interface RecordMutationParams extends RecordDataRequestDto {
   onSuccess?: () => void;
   onError?: (error: Error) => void;
 }
 
 export const useRecordMutation = () => {
-  return useMutation<RecordDataResponseDto, Error, RecordColorParams>({
-    mutationFn: async (params: RecordColorParams) => {
-      const response = await recordApi.recordDailyData({ color: params.color });
-      return response.data;
-    },
+  return useMutation<RecordDataResponseDto, Error, RecordMutationParams>({
+    mutationFn: async (data) => recordApi.recordDailyData({ ...data }),
     onSuccess: (data, variables) => {
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.RECORDS });
 
@@ -25,7 +22,7 @@ export const useRecordMutation = () => {
         variables.onSuccess();
       }
     },
-    onError: (error: Error, variables) => {
+    onError: (error, variables) => {
       if (variables.onError) {
         variables.onError(error);
       }
