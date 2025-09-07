@@ -5,21 +5,21 @@ import type { ReactNode } from 'react';
 import { cn } from '@/utils/utils-cn';
 
 interface CollapsibleToggleProps {
-  id: string;
-  trigger: ReactNode;
-  children: ReactNode;
-  className?: string;
-  isOpen: boolean;
-  onToggle: () => void;
+	id: string;
+	trigger: ReactNode;
+	children: ReactNode;
+	className?: string;
+	isOpen: boolean;
+	onToggle: () => void;
 }
 
 export function CollapsibleToggle({
-  id,
-  trigger,
-  children,
-  className,
-  isOpen,
-  onToggle,
+	id,
+	trigger,
+	children,
+	className,
+	isOpen,
+	onToggle,
 }: CollapsibleToggleProps) {
   return (
     <div

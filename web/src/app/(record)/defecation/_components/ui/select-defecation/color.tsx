@@ -5,7 +5,7 @@ import { DEFECATION_TRY_COLOR } from '../../constants/description';
 import { useDefecation } from '../../providers/defecation-providers';
 
 export default function Color() {
-  const { defecationState, setDefecationState } = useDefecation();
+	const { defecationState, setDefecationState } = useDefecation();
 
   return (
     <div className="flex items-center justify-between gap-[12.6px] max-[398px]:gap-1">
