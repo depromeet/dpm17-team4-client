@@ -2,10 +2,10 @@
 
 import { useRouter } from 'next/navigation';
 import {
-  sendLocalNotification,
-  requestNotificationPermission,
-  sendServerPushNotification,
   checkRegisteredTokens,
+  requestNotificationPermission,
+  sendLocalNotification,
+  sendServerPushNotification,
 } from '@/services/notificationService';
 
 export default function NotificationTestPage() {
