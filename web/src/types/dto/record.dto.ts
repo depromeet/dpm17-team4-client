@@ -6,7 +6,8 @@ export interface RecordDataRequestDto {
 }
 
 export interface RecordDataResponseDto {
-  message: string;
   color: string;
-  timestamp: string;
+  shape: string;
+  time: string;
+  info: string;
 }
