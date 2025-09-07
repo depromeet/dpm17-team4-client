@@ -11,7 +11,7 @@ export default function NotificationTestPage() {
       title,
       body,
     });
-    
+
     // NOTE(seonghyun): React Native WebView로 메시지 전송
     if (window.ReactNativeWebView) {
       window.ReactNativeWebView.postMessage(message);
@@ -23,16 +23,16 @@ export default function NotificationTestPage() {
   };
 
   const handleTestNotification = () => {
-    sendNotificationToApp(
-      '테스트 알림',
-      '웹에서 보낸 알림이 앱에 표시됩니다!'
-    );
+    sendNotificationToApp('테스트 알림', '웹에서 보낸 알림이 앱에 표시됩니다!');
   };
 
   const handleCustomNotification = () => {
     const title = prompt('알림 제목을 입력하세요:', '커스텀 알림');
-    const body = prompt('알림 내용을 입력하세요:', '사용자가 입력한 알림입니다.');
-    
+    const body = prompt(
+      '알림 내용을 입력하세요:',
+      '사용자가 입력한 알림입니다.'
+    );
+
     if (title && body) {
       sendNotificationToApp(title, body);
     }
@@ -43,7 +43,7 @@ export default function NotificationTestPage() {
     const message = JSON.stringify({
       type: 'REQUEST_PERMISSION',
     });
-    
+
     if (window.ReactNativeWebView) {
       window.ReactNativeWebView.postMessage(message);
     } else {
@@ -64,9 +64,11 @@ export default function NotificationTestPage() {
       });
 
       const result = await response.json();
-      
+
       if (response.ok) {
-        alert(`서버 푸시 알림이 전송되었습니다!\n결과: ${JSON.stringify(result.results, null, 2)}`);
+        alert(
+          `서버 푸시 알림이 전송되었습니다!\n결과: ${JSON.stringify(result.results, null, 2)}`
+        );
       } else {
         alert(`서버 푸시 알림 전송 실패: ${result.error}`);
       }
@@ -84,9 +86,15 @@ export default function NotificationTestPage() {
   };
 
   const handleCustomServerPush = () => {
-    const title = prompt('서버 푸시 알림 제목을 입력하세요:', '커스텀 서버 푸시');
-    const body = prompt('서버 푸시 알림 내용을 입력하세요:', '서버에서 보낸 커스텀 알림입니다.');
-    
+    const title = prompt(
+      '서버 푸시 알림 제목을 입력하세요:',
+      '커스텀 서버 푸시'
+    );
+    const body = prompt(
+      '서버 푸시 알림 내용을 입력하세요:',
+      '서버에서 보낸 커스텀 알림입니다.'
+    );
+
     if (title && body) {
       sendServerPushNotification(title, body);
     }
@@ -97,11 +105,15 @@ export default function NotificationTestPage() {
     try {
       const response = await fetch('/api/register-token');
       const data = await response.json();
-      
+
       if (data.tokens && data.tokens.length > 0) {
-        alert(`등록된 토큰 수: ${data.count}\n\n토큰 목록:\n${data.tokens.map((t: any) => `- ${t.deviceName} (${t.platform})`).join('\n')}`);
+        alert(
+          `등록된 토큰 수: ${data.count}\n\n토큰 목록:\n${data.tokens.map((t: { deviceName: string; platform: string }) => `- ${t.deviceName} (${t.platform})`).join('\n')}`
+        );
       } else {
-        alert('등록된 토큰이 없습니다.\n\n앱을 실행하고 알림 권한을 허용한 후 다시 시도해주세요.');
+        alert(
+          '등록된 토큰이 없습니다.\n\n앱을 실행하고 알림 권한을 허용한 후 다시 시도해주세요.'
+        );
       }
     } catch (error) {
       console.error('토큰 확인 오류:', error);
@@ -119,6 +131,7 @@ export default function NotificationTestPage() {
       <div className="text-center max-w-2xl w-full">
         <div className="mb-6">
           <button
+            type="button"
             onClick={goBackToMain}
             className="mb-4 bg-gray-600 hover:bg-gray-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200"
           >
@@ -143,12 +156,14 @@ export default function NotificationTestPage() {
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <button
+                type="button"
                 onClick={handleTestNotification}
                 className="bg-gray-700 hover:bg-gray-800 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200"
               >
                 기본 로컬 알림
               </button>
               <button
+                type="button"
                 onClick={handleCustomNotification}
                 className="bg-gray-600 hover:bg-gray-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200"
               >
@@ -167,12 +182,14 @@ export default function NotificationTestPage() {
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <button
+                type="button"
                 onClick={handleServerPushTest}
                 className="bg-gray-800 hover:bg-black text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200"
               >
                 서버 푸시 알림
               </button>
               <button
+                type="button"
                 onClick={handleCustomServerPush}
                 className="bg-gray-700 hover:bg-gray-800 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200"
               >
@@ -181,7 +198,8 @@ export default function NotificationTestPage() {
             </div>
             <div className="mt-4 p-3 bg-gray-50 rounded-lg">
               <p className="text-xs text-gray-600 text-center">
-                ⚠️ Expo Go에서는 서버 푸시가 작동하지 않습니다. Development Build를 사용해주세요.
+                ⚠️ Expo Go에서는 서버 푸시가 작동하지 않습니다. Development
+                Build를 사용해주세요.
               </p>
             </div>
           </div>
@@ -193,12 +211,14 @@ export default function NotificationTestPage() {
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <button
+                type="button"
                 onClick={checkRegisteredTokens}
                 className="bg-gray-600 hover:bg-gray-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200"
               >
                 등록된 토큰 확인
               </button>
               <button
+                type="button"
                 onClick={requestNotificationPermission}
                 className="bg-gray-500 hover:bg-gray-600 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200"
               >
@@ -215,15 +235,24 @@ export default function NotificationTestPage() {
             <div className="text-left space-y-3 text-gray-600">
               <div className="flex items-start space-x-2">
                 <span className="text-gray-800 font-bold">📱 로컬 알림:</span>
-                <span>앱이 실행 중일 때만 작동하며, WebView에서 React Native로 메시지를 전송합니다.</span>
+                <span>
+                  앱이 실행 중일 때만 작동하며, WebView에서 React Native로
+                  메시지를 전송합니다.
+                </span>
               </div>
               <div className="flex items-start space-x-2">
                 <span className="text-gray-800 font-bold">🌐 서버 푸시:</span>
-                <span>Firebase Cloud Messaging을 통해 앱이 종료되어도 알림을 받을 수 있습니다.</span>
+                <span>
+                  Firebase Cloud Messaging을 통해 앱이 종료되어도 알림을 받을 수
+                  있습니다.
+                </span>
               </div>
               <div className="flex items-start space-x-2">
                 <span className="text-gray-800 font-bold">🔑 토큰:</span>
-                <span>각 디바이스마다 고유한 FCM 토큰이 생성되어 서버 푸시 알림을 받을 수 있습니다.</span>
+                <span>
+                  각 디바이스마다 고유한 FCM 토큰이 생성되어 서버 푸시 알림을
+                  받을 수 있습니다.
+                </span>
               </div>
             </div>
           </div>

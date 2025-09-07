@@ -26,12 +26,13 @@ export default function Home() {
               <li>• Tailwind CSS 스타일링</li>
               <li>• 로컬/서버 푸시</li>
               <li>
-                • <Link 
-                    href="/notification-test"
-                    className="text-blue-600 hover:text-blue-800 underline transition-colors"
-                  >
-                    알림 테스트 페이지
-                  </Link>
+                •{' '}
+                <Link
+                  href="/notification-test"
+                  className="text-blue-600 hover:text-blue-800 underline transition-colors"
+                >
+                  알림 테스트 페이지
+                </Link>
               </li>
             </ul>
           </div>
