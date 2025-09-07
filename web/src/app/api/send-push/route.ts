@@ -1,23 +1,35 @@
-import { NextRequest, NextResponse } from 'next/server';
+import type { ServiceAccount } from 'firebase-admin';
 import * as admin from 'firebase-admin';
-import { ServiceAccount } from 'firebase-admin';
+import { type NextRequest, NextResponse } from 'next/server';
 
 // NOTE(seonghyun): Firebase Admin SDK 초기화
 if (!admin.apps.length) {
   // NOTE(seonghyun): 환경변수에서 서비스 계정 정보 가져오기
+  const projectId = process.env.FIREBASE_PROJECT_ID;
+  const privateKey = process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n');
+  const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
+
+  if (!projectId || !privateKey || !clientEmail) {
+    throw new Error('Firebase 환경변수가 설정되지 않았습니다.');
+  }
+
   const serviceAccount = {
-    projectId: process.env.FIREBASE_PROJECT_ID!,
-    privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n')!,
-    clientEmail: process.env.FIREBASE_CLIENT_EMAIL!,
+    projectId,
+    privateKey,
+    clientEmail,
   } as ServiceAccount;
-  
+
   admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
   });
 }
 
 // NOTE(seonghyun): Firebase Cloud Messaging을 사용하여 알림 전송
-async function sendFCMPushNotification(token: string, title: string, body: string) {
+async function sendFCMPushNotification(
+  token: string,
+  title: string,
+  body: string
+) {
   try {
     const message = {
       token,
@@ -64,7 +76,9 @@ export async function POST(request: NextRequest) {
     }
 
     // NOTE(seonghyun): 등록된 토큰 목록 가져오기 (실제로는 데이터베이스에서 조회)
-    const tokenResponse = await fetch(`${request.nextUrl.origin}/api/register-token`);
+    const tokenResponse = await fetch(
+      `${request.nextUrl.origin}/api/register-token`
+    );
     const { tokens } = await tokenResponse.json();
 
     if (!tokens || tokens.length === 0) {
@@ -78,7 +92,9 @@ export async function POST(request: NextRequest) {
 
     // NOTE(seonghyun): 특정 토큰이 지정된 경우 해당 토큰에만 전송
     if (targetToken) {
-      const targetDevice = tokens.find((t: any) => t.token === targetToken);
+      const targetDevice = tokens.find(
+        (t: { token: string; deviceName: string }) => t.token === targetToken
+      );
       if (!targetDevice) {
         return NextResponse.json(
           { error: '지정된 토큰을 찾을 수 없습니다.' },
@@ -96,7 +112,11 @@ export async function POST(request: NextRequest) {
       // NOTE(seonghyun): 모든 등록된 토큰에 전송
       for (const tokenData of tokens) {
         try {
-          const result = await sendFCMPushNotification(tokenData.token, title, body);
+          const result = await sendFCMPushNotification(
+            tokenData.token,
+            title,
+            body
+          );
           results.push({
             token: tokenData.token,
             deviceName: tokenData.deviceName,

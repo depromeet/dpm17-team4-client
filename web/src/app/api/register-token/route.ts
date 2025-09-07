@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 
 // NOTE(seonghyun): 메모리에 토큰 저장 (실제 프로덕션에서는 데이터베이스 사용)
-let registeredTokens: Array<{
+const registeredTokens: Array<{
   token: string;
   platform: string;
   deviceName: string;
@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
     }
 
     // NOTE(seonghyun): 기존 토큰이 있으면 업데이트, 없으면 새로 추가
-    const existingIndex = registeredTokens.findIndex(t => t.token === token);
+    const existingIndex = registeredTokens.findIndex((t) => t.token === token);
     const tokenData = {
       token,
       platform,
