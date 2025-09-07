@@ -1,9 +1,9 @@
+import { API_ENDPOINTS } from '@/constants';
 import apiClient from '@/lib/api-client';
-import {
+import type {
   RecordDataRequestDto,
   RecordDataResponseDto,
 } from '@/types/dto/record.dto';
-import { API_ENDPOINTS } from '@/constants';
 
 export const recordApi = {
   recordDailyData: async (data: RecordDataRequestDto) => {
