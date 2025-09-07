@@ -51,22 +51,13 @@
 - **역할**: Firebase Android 앱 설정 파일
 - **용도**: FCM 토큰 생성 및 Android 앱 인증
 - **위치**: `app/google-services.json`
-- **다운로드**: Firebase 콘솔 → 프로젝트 설정 → Android 앱 → "google-services.json 다운로드"
+- **다운로드**: 담당 개발자에게 요청
 
 ##### 2. `firebase-service-account.json` (웹 서버용)
 - **역할**: Firebase Admin SDK 서비스 계정 키
 - **용도**: 서버에서 FCM 푸시 알림 전송
-- **위치**: `app/firebase-service-account.json`
-- **다운로드**: Firebase 콘솔 → 프로젝트 설정 → 서비스 계정 → "새 비공개 키 생성"
-
-#### 프로젝트 ID 업데이트
-1. Firebase 프로젝트 설정에서 "프로젝트 ID" 확인
-2. `app/app.json` 파일의 `projectId` 값을 `dpm17team4`로 변경
-
-> **💡 참고**: 
-> - `google-services.json`과 `firebase-service-account.json` 파일은 보안상 중요하므로 GitHub에 포함되지 않습니다
-> - 위의 Firebase 설정 파일들을 따로 받아서 설정하세요
-> - 나머지 모든 파일들은 이미 GitHub에 포함되어 있습니다
+- **위치**: `web/.env.local` (해당 파일에서 필요한 환경 변수만 선언됨)
+- **다운로드**: 담당 개발자에게 요청
 
 ### 1. 의존성 설치
 
