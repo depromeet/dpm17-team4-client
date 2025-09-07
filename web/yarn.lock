@@ -648,7 +648,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/react-query-devtools@npm:^5.87.1":
+"@tanstack/react-query-devtools@npm:5.87.1":
   version: 5.87.1
   resolution: "@tanstack/react-query-devtools@npm:5.87.1"
   dependencies:
@@ -660,7 +660,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/react-query@npm:^5.87.1":
+"@tanstack/react-query@npm:5.87.1":
   version: 5.87.1
   resolution: "@tanstack/react-query@npm:5.87.1"
   dependencies:
@@ -714,7 +714,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.11.0":
+"axios@npm:1.11.0":
   version: 1.11.0
   resolution: "axios@npm:1.11.0"
   dependencies:
@@ -1474,12 +1474,12 @@ __metadata:
   dependencies:
     "@biomejs/biome": ^2.2.2
     "@tailwindcss/postcss": ^4
-    "@tanstack/react-query": ^5.87.1
-    "@tanstack/react-query-devtools": ^5.87.1
+    "@tanstack/react-query": 5.87.1
+    "@tanstack/react-query-devtools": 5.87.1
     "@types/node": ^20
     "@types/react": ^19
     "@types/react-dom": ^19
-    axios: ^1.11.0
+    axios: 1.11.0
     next: 15.5.2
     react: 19.1.0
     react-dom: 19.1.0
