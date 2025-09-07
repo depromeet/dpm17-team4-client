@@ -1,3 +1,7 @@
+'use client';
+
+import Link from 'next/link';
+
 export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
@@ -20,6 +24,15 @@ export default function Home() {
               <li>• Next.js 15 기반</li>
               <li>• TypeScript 지원</li>
               <li>• Tailwind CSS 스타일링</li>
+              <li>• 로컬/서버 푸시</li>
+              <li>
+                • <Link 
+                    href="/notification-test"
+                    className="text-blue-600 hover:text-blue-800 underline transition-colors"
+                  >
+                    알림 테스트 페이지
+                  </Link>
+              </li>
             </ul>
           </div>
         </div>
