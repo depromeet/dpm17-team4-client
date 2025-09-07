@@ -1,29 +1,18 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import {
+  sendLocalNotification,
+  requestNotificationPermission,
+  sendServerPushNotification,
+  checkRegisteredTokens,
+} from '@/services/notificationService';
 
 export default function NotificationTestPage() {
   const router = useRouter();
-  // NOTE(seonghyun): WebView로 메시지 전송 함수
-  const sendNotificationToApp = (title: string, body: string) => {
-    const message = JSON.stringify({
-      type: 'SHOW_NOTIFICATION',
-      title,
-      body,
-    });
-
-    // NOTE(seonghyun): React Native WebView로 메시지 전송
-    if (window.ReactNativeWebView) {
-      window.ReactNativeWebView.postMessage(message);
-    } else {
-      // NOTE(seonghyun): 개발 환경에서 테스트용
-      console.log('알림 메시지:', message);
-      alert(`알림 테스트: ${title} - ${body}`);
-    }
-  };
 
   const handleTestNotification = () => {
-    sendNotificationToApp('테스트 알림', '웹에서 보낸 알림이 앱에 표시됩니다!');
+    sendLocalNotification('테스트 알림', '웹에서 보낸 알림이 앱에 표시됩니다!');
   };
 
   const handleCustomNotification = () => {
@@ -34,47 +23,7 @@ export default function NotificationTestPage() {
     );
 
     if (title && body) {
-      sendNotificationToApp(title, body);
-    }
-  };
-
-  // NOTE(seonghyun): 앱에서 알림 권한 요청하는 함수
-  const requestNotificationPermission = () => {
-    const message = JSON.stringify({
-      type: 'REQUEST_PERMISSION',
-    });
-
-    if (window.ReactNativeWebView) {
-      window.ReactNativeWebView.postMessage(message);
-    } else {
-      console.log('권한 요청 메시지:', message);
-      alert('앱에서 알림 권한을 요청합니다.');
-    }
-  };
-
-  // NOTE(seonghyun): 서버 푸시 알림 전송 함수
-  const sendServerPushNotification = async (title: string, body: string) => {
-    try {
-      const response = await fetch('/api/send-push', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ title, body }),
-      });
-
-      const result = await response.json();
-
-      if (response.ok) {
-        alert(
-          `서버 푸시 알림이 전송되었습니다!\n결과: ${JSON.stringify(result.results, null, 2)}`
-        );
-      } else {
-        alert(`서버 푸시 알림 전송 실패: ${result.error}`);
-      }
-    } catch (error) {
-      console.error('서버 푸시 알림 오류:', error);
-      alert('서버 푸시 알림 전송 중 오류가 발생했습니다.');
+      sendLocalNotification(title, body);
     }
   };
 
@@ -100,28 +49,6 @@ export default function NotificationTestPage() {
     }
   };
 
-  // NOTE(seonghyun): 등록된 토큰 확인 함수
-  const checkRegisteredTokens = async () => {
-    try {
-      const response = await fetch('/api/register-token');
-      const data = await response.json();
-
-      if (data.tokens && data.tokens.length > 0) {
-        alert(
-          `등록된 토큰 수: ${data.count}\n\n토큰 목록:\n${data.tokens.map((t: { deviceName: string; platform: string }) => `- ${t.deviceName} (${t.platform})`).join('\n')}`
-        );
-      } else {
-        alert(
-          '등록된 토큰이 없습니다.\n\n앱을 실행하고 알림 권한을 허용한 후 다시 시도해주세요.'
-        );
-      }
-    } catch (error) {
-      console.error('토큰 확인 오류:', error);
-      alert('토큰 확인 중 오류가 발생했습니다.');
-    }
-  };
-
-  // NOTE(seonghyun): 메인 페이지로 돌아가는 함수
   const goBackToMain = () => {
     router.push('/');
   };
