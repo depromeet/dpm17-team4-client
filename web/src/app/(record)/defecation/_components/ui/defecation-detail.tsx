@@ -1,12 +1,16 @@
 'use client';
 
 import { useState } from 'react';
+import { DEFECATION_DETAIL } from '../constants';
+import type { DefecationTryDetailKey } from '../types';
+import { CollapsibleToggle } from './common';
 import {
-  DEFECATION_TRY_DETAIL,
-  type DefecationTryDetailKey,
-} from '../constants/description';
-import { CollapsibleToggle } from './common/collapsible-toggle';
-import { DefecationColor } from './select-defecation';
+  DefecationColor,
+  DefecationOptional,
+  DefecationPain,
+  DefecationShape,
+  DefecationTimeTaken,
+} from './select-defecation';
 
 export const DefecationDetail = () => {
   const [openId, setOpenId] = useState<DefecationTryDetailKey | null>(null);
@@ -18,15 +22,19 @@ export const DefecationDetail = () => {
   const renderSelectSection = (value: DefecationTryDetailKey) => {
     switch (value) {
       case 'COLOR':
-        return <DefecationColor />;
+        return <DefecationColor onColorSelect={() => setOpenId('SHAPE')} />;
       case 'SHAPE':
-        return <div>SHAPE</div>;
+        return <DefecationShape onShapeSelect={() => setOpenId('PAIN')} />;
       case 'PAIN':
-        return <div>PAIN</div>;
+        return <DefecationPain onPainSelect={() => setOpenId('TIME_TAKEN')} />;
       case 'TIME_TAKEN':
-        return <div>TIME_TAKEN</div>;
+        return (
+          <DefecationTimeTaken
+            onTimeTakenSelect={() => setOpenId('OPTIONAL')}
+          />
+        );
       case 'OPTIONAL':
-        return <div>OPTIONAL</div>;
+        return <DefecationOptional isOpen={openId === 'OPTIONAL'} />;
       default:
         return <DefecationColor />;
     }
@@ -34,7 +42,7 @@ export const DefecationDetail = () => {
 
   return (
     <>
-      {Object.entries(DEFECATION_TRY_DETAIL).map(([key, value]) => (
+      {Object.entries(DEFECATION_DETAIL).map(([key, value]) => (
         <div key={key}>
           <CollapsibleToggle
             id={key}
