@@ -1,14 +1,14 @@
 import { getIronSession, type SessionOptions } from "iron-session";
 import { cache } from "react";
 import { SessionData } from "./types";
-import { AUTH_CONSTANTS } from "../constants/auth.constants";
+import { AUTH_CONSTANTS } from "../../constants/auth.constants";
 
 /**기본 세션 데이터*/
 export const defaultSession: SessionData = {
   isLoggedIn: false,
 };
 
-const COOKIE_NAME = AUTH_CONSTANTS.COOKIE_NAME;
+const COOKIE_NAME = AUTH_CONSTANTS.ACCESS_TOKEN;
 const COOKIE_MAX_AGE = AUTH_CONSTANTS.COOKIE_MAX_AGE;
 
 export const sessionOptions: SessionOptions = {

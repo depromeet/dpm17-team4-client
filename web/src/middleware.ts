@@ -1,11 +1,11 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { getSessionFromServer } from "./lib/session/index";
-import { AUTH_CONSTANTS } from "./lib/constants/auth.constants";
+import { AUTH_CONSTANTS } from "./constants/auth.constants";
 import {
   API_ROUTES,
   PUBLIC_PATHS,
   PAGE_ROUTES,
-} from "./lib/constants/route.constants";
+} from "./constants/route.constants";
 
 const isPublicPath = (pathname: string) => {
   return PUBLIC_PATHS.some((path) => pathname.startsWith(path));

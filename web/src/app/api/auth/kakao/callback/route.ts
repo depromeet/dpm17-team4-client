@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { API_ROUTES, PAGE_ROUTES } from "@/lib/constants/route.constants";
+import { API_ROUTES, PAGE_ROUTES } from "@/constants/route.constants";
 
 export async function GET(request: NextRequest) {
   try {

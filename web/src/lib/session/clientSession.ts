@@ -1,6 +1,6 @@
 import { SessionData } from "./types";
-import { AUTH_CONSTANTS } from "../constants/auth.constants";
-import { API_ROUTES } from "../constants/route.constants";
+import { AUTH_CONSTANTS } from "../../constants/auth.constants";
+import { API_ROUTES } from "../../constants/route.constants";
 
 /**클라이언트 세션 캐시*/
 const clientSessionCache = new Map<

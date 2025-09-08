@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { ApiErrors, createSuccessResponse } from "@/lib/utils/apiResponse";
 import { getSessionFromServer, SessionData } from "@/lib/session/index";
-import { AUTH_CONSTANTS, AUTH_CONFIG } from "@/lib/constants/auth.constants";
-import { API_ROUTES, PAGE_ROUTES } from "@/lib/constants/route.constants";
+import { AUTH_CONSTANTS, AUTH_CONFIG } from "@/constants/auth.constants";
+import { API_ROUTES, PAGE_ROUTES } from "@/constants/route.constants";
 
 /**
  * 로그인 요청

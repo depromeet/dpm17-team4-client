@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionFromServer } from "@/lib/session/index";
-import { AUTH_CONSTANTS } from "@/lib/constants/auth.constants";
-import { API_ROUTES } from "@/lib/constants/route.constants";
+import { AUTH_CONSTANTS } from "@/constants/auth.constants";
+import { API_ROUTES } from "@/constants/route.constants";
 import { createSuccessResponse, ApiErrors } from "@/lib/utils/apiResponse";
 
 /**

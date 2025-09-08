@@ -5,8 +5,8 @@ import {
   getSessionFromClient,
   clearClientSessionCache,
 } from "../session/index";
-import { AUTH_CONSTANTS } from "../constants/auth.constants";
-import { API_ROUTES } from "../constants/route.constants";
+import { AUTH_CONSTANTS } from "../../constants/auth.constants";
+import { API_ROUTES } from "../../constants/route.constants";
 
 export interface UserInfo {
   id: string;
