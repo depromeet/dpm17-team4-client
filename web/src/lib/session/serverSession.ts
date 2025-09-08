@@ -1,4 +1,4 @@
 export const getSessionFromServer = async () => {
-  const { getSession } = await import("./session");
+  const { getSession } = await import('./session');
   return await getSession();
 };

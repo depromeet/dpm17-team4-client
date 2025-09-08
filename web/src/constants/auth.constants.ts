@@ -1,7 +1,7 @@
 // 인증 관련 상수들
 export const AUTH_CONSTANTS = {
-  ACCESS_TOKEN: "access_token",
-  REFRESH_TOKEN: "refresh_token",
+  ACCESS_TOKEN: 'access_token',
+  REFRESH_TOKEN: 'refresh_token',
   COOKIE_MAX_AGE: 7 * 24 * 60 * 60, // 7일
   TEMP_COOKIE_MAX_AGE: 60, // 1분 (임시 쿠키)
 

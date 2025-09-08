@@ -1,14 +1,14 @@
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
 
 /**API 에러 응답 타입*/
 interface ApiError {
   errorMessage: string;
   code?: string;
-  details?: any;
+  details?: unknown;
 }
 
 /**API 성공 응답 타입*/
-interface ApiSuccess<T = any> {
+interface ApiSuccess<T = unknown> {
   data?: T;
   message?: string;
   success: boolean;
@@ -25,7 +25,7 @@ export function createErrorResponse(
   errorMessage: string,
   status: number = 500,
   code?: string,
-  details?: any
+  details?: unknown
 ) {
   const error: ApiError = { errorMessage };
   if (code) error.code = code;
@@ -55,22 +55,22 @@ export function createSuccessResponse<T>(
 /**자주 사용되는 에러 응답들*/
 export const ApiErrors = {
   /**400 Bad Request*/
-  BAD_REQUEST: (message: string = "잘못된 요청입니다.") =>
-    createErrorResponse(message, 400, "BAD_REQUEST"),
+  BAD_REQUEST: (message: string = '잘못된 요청입니다.') =>
+    createErrorResponse(message, 400, 'BAD_REQUEST'),
 
   /**401 Unauthorized*/
-  UNAUTHORIZED: (message: string = "인증이 필요합니다.") =>
-    createErrorResponse(message, 401, "UNAUTHORIZED"),
+  UNAUTHORIZED: (message: string = '인증이 필요합니다.') =>
+    createErrorResponse(message, 401, 'UNAUTHORIZED'),
 
   /**403 Forbidden*/
-  FORBIDDEN: (message: string = "접근 권한이 없습니다.") =>
-    createErrorResponse(message, 403, "FORBIDDEN"),
+  FORBIDDEN: (message: string = '접근 권한이 없습니다.') =>
+    createErrorResponse(message, 403, 'FORBIDDEN'),
 
   /**404 Not Found*/
-  NOT_FOUND: (message: string = "리소스를 찾을 수 없습니다.") =>
-    createErrorResponse(message, 404, "NOT_FOUND"),
+  NOT_FOUND: (message: string = '리소스를 찾을 수 없습니다.') =>
+    createErrorResponse(message, 404, 'NOT_FOUND'),
 
   /**500 Internal Server Error*/
-  INTERNAL_ERROR: (message: string = "서버 내부 오류가 발생했습니다.") =>
-    createErrorResponse(message, 500, "INTERNAL_ERROR"),
+  INTERNAL_ERROR: (message: string = '서버 내부 오류가 발생했습니다.') =>
+    createErrorResponse(message, 500, 'INTERNAL_ERROR'),
 } as const;

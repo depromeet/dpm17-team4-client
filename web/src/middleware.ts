@@ -1,11 +1,7 @@
-import { type NextRequest, NextResponse } from "next/server";
-import { getSessionFromServer } from "./lib/session/index";
-import { AUTH_CONSTANTS } from "./constants/auth.constants";
-import {
-  API_ROUTES,
-  PUBLIC_PATHS,
-  PAGE_ROUTES,
-} from "./constants/route.constants";
+import { type NextRequest, NextResponse } from 'next/server';
+import { AUTH_CONSTANTS } from './constants/auth.constants';
+import { PAGE_ROUTES, PUBLIC_PATHS } from './constants/route.constants';
+import { getSessionFromServer } from './lib/session/index';
 
 const isPublicPath = (pathname: string) => {
   return PUBLIC_PATHS.some((path) => pathname.startsWith(path));
@@ -43,7 +39,7 @@ export async function middleware(request: NextRequest) {
 
     return NextResponse.next();
   } catch (error) {
-    console.error("미들웨어 에러:", error);
+    console.error('미들웨어 에러:', error);
     // 에러 발생 시 로그인 페이지로 리다이렉트
     const loginUrl = new URL(PAGE_ROUTES.AUTH, request.url);
     return NextResponse.redirect(loginUrl);
@@ -52,6 +48,6 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/((?!api|_next/static|_next/image|favicon.ico|mockServiceWorker.js|pwaServiceWorker.js|.*\\.png$|manifest.webmanifest).*)",
+    '/((?!api|_next/static|_next/image|favicon.ico|mockServiceWorker.js|pwaServiceWorker.js|.*\\.png$|manifest.webmanifest).*)',
   ],
 };

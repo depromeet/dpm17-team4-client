@@ -1,6 +1,6 @@
-import { SessionData } from "./types";
-import { AUTH_CONSTANTS } from "../../constants/auth.constants";
-import { API_ROUTES } from "../../constants/route.constants";
+import { AUTH_CONSTANTS } from '../../constants/auth.constants';
+import { API_ROUTES } from '../../constants/route.constants';
+import type { SessionData } from './types';
 
 /**클라이언트 세션 캐시*/
 const clientSessionCache = new Map<
@@ -8,7 +8,7 @@ const clientSessionCache = new Map<
   { session: SessionData; expiresAt: number }
 >();
 
-const CLIENT_SESSION_CACHE_KEY = "session";
+const CLIENT_SESSION_CACHE_KEY = 'session';
 const CACHE_DURATION_MS = AUTH_CONSTANTS.CLIENT_SESSION_CACHE_DURATION;
 
 /**
@@ -24,12 +24,12 @@ export const clearClientSessionCache = () => {
  */
 async function fetchClientSession(): Promise<SessionData> {
   const response = await fetch(API_ROUTES.SESSION, {
-    method: "GET",
-    credentials: "include",
+    method: 'GET',
+    credentials: 'include',
   });
 
   if (!response.ok) {
-    throw new Error("세션을 가져올 수 없습니다.");
+    throw new Error('세션을 가져올 수 없습니다.');
   }
 
   return response.json();

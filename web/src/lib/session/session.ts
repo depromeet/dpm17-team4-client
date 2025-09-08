@@ -1,7 +1,7 @@
-import { getIronSession, type SessionOptions } from "iron-session";
-import { cache } from "react";
-import { SessionData } from "./types";
-import { AUTH_CONSTANTS } from "../../constants/auth.constants";
+import { getIronSession, type SessionOptions } from 'iron-session';
+import { cache } from 'react';
+import { AUTH_CONSTANTS } from '../../constants/auth.constants';
+import type { SessionData } from './types';
 
 /**기본 세션 데이터*/
 export const defaultSession: SessionData = {
@@ -14,10 +14,10 @@ const COOKIE_MAX_AGE = AUTH_CONSTANTS.COOKIE_MAX_AGE;
 export const sessionOptions: SessionOptions = {
   password:
     process.env.SECRET_COOKIE_PASSWORD ||
-    "your-secret-password-must-be-at-least-32-characters-long-for-development",
+    'your-secret-password-must-be-at-least-32-characters-long-for-development',
   cookieName: COOKIE_NAME,
   cookieOptions: {
-    secure: process.env.NODE_ENV === "production",
+    secure: process.env.NODE_ENV === 'production',
     httpOnly: true,
     maxAge: COOKIE_MAX_AGE,
   },
@@ -28,7 +28,7 @@ export const sessionOptions: SessionOptions = {
  * @description react cache를 사용하여 1회 렌더링 사이클 내에서 요청이 캐싱되도록 합니다.
  */
 export const getSession = cache(async () => {
-  const { cookies } = await import("next/headers");
+  const { cookies } = await import('next/headers');
   const session = await getIronSession<SessionData>(
     await cookies(),
     sessionOptions

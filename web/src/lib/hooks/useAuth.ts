@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
-import {
-  getSessionFromClient,
-  clearClientSessionCache,
-} from "../session/index";
+import { useCallback, useEffect, useState } from "react";
 import { AUTH_CONSTANTS } from "../../constants/auth.constants";
 import { API_ROUTES } from "../../constants/route.constants";
+import {
+  clearClientSessionCache,
+  getSessionFromClient,
+  type SessionData,
+} from "../session/index";
 
 export interface UserInfo {
   id: string;
@@ -41,7 +42,7 @@ export function useAuth(): UseAuthReturn {
    * 세션 데이터를 기반으로 인증 상태를 업데이트합니다
    * @param session - 세션 데이터
    */
-  const updateAuthState = useCallback((session: any) => {
+  const updateAuthState = useCallback((session: SessionData) => {
     if (session.isLoggedIn && session.user) {
       setIsAuthenticated(true);
       setUser(session.user);

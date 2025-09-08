@@ -1,8 +1,8 @@
-import { NextRequest, NextResponse } from "next/server";
-import { getSessionFromServer } from "@/lib/session/index";
-import { AUTH_CONSTANTS } from "@/constants/auth.constants";
-import { API_ROUTES } from "@/constants/route.constants";
-import { createSuccessResponse, ApiErrors } from "@/lib/utils/apiResponse";
+import { type NextRequest, NextResponse } from 'next/server';
+import { AUTH_CONSTANTS } from '@/constants/auth.constants';
+import { API_ROUTES } from '@/constants/route.constants';
+import { getSessionFromServer } from '@/lib/session/index';
+import { ApiErrors, createSuccessResponse } from '@/lib/utils/apiResponse';
 
 /**
  * Access Token 재발급 API
@@ -15,7 +15,7 @@ export const POST = async (req: NextRequest) => {
 
     if (!refreshToken) {
       return NextResponse.json(
-        { errorMessage: "리프레시 토큰이 없습니다." },
+        { errorMessage: '리프레시 토큰이 없습니다.' },
         { status: 401 }
       );
     }
@@ -24,29 +24,29 @@ export const POST = async (req: NextRequest) => {
     const mockUrl = new URL(API_ROUTES.MOCK_AUTH_REFRESH, req.url);
 
     const response = await fetch(mockUrl, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({ refresh_token: refreshToken }),
     });
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error("모킹 토큰 재발급 API 호출 실패:", errorText);
-      throw new Error("토큰 재발급 실패");
+      console.error('모킹 토큰 재발급 API 호출 실패:', errorText);
+      throw new Error('토큰 재발급 실패');
     }
 
     const data = await response.json();
 
     // 임시 사용자 정보 쿠키에서 가져오기
-    const tempUserCookie = req.cookies.get("temp_user")?.value;
+    const tempUserCookie = req.cookies.get('temp_user')?.value;
     let user = null;
     if (tempUserCookie) {
       try {
         user = JSON.parse(decodeURIComponent(tempUserCookie));
       } catch (parseError) {
-        console.error("temp_user 쿠키 파싱 실패:", parseError);
+        console.error('temp_user 쿠키 파싱 실패:', parseError);
       }
     }
 
@@ -63,13 +63,13 @@ export const POST = async (req: NextRequest) => {
     // temp_user 쿠키 삭제
     const responseWithDeletedCookie = createSuccessResponse(
       { user, access_token: data.access_token },
-      "Access Token 재발급 성공"
+      'Access Token 재발급 성공'
     );
-    responseWithDeletedCookie.cookies.delete("temp_user");
+    responseWithDeletedCookie.cookies.delete('temp_user');
 
     return responseWithDeletedCookie;
   } catch (error) {
-    console.error("Access Token 재발급 실패:", error);
-    return ApiErrors.UNAUTHORIZED("Access Token 재발급에 실패했습니다.");
+    console.error('Access Token 재발급 실패:', error);
+    return ApiErrors.UNAUTHORIZED('Access Token 재발급에 실패했습니다.');
   }
 };

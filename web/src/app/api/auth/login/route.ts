@@ -1,8 +1,8 @@
-import { NextRequest, NextResponse } from "next/server";
-import { ApiErrors, createSuccessResponse } from "@/lib/utils/apiResponse";
-import { getSessionFromServer, SessionData } from "@/lib/session/index";
-import { AUTH_CONSTANTS, AUTH_CONFIG } from "@/constants/auth.constants";
-import { API_ROUTES, PAGE_ROUTES } from "@/constants/route.constants";
+import { type NextRequest, NextResponse } from 'next/server';
+import { AUTH_CONFIG, AUTH_CONSTANTS } from '@/constants/auth.constants';
+import { API_ROUTES, PAGE_ROUTES } from '@/constants/route.constants';
+import { getSessionFromServer, type SessionData } from '@/lib/session/index';
+import { ApiErrors, createSuccessResponse } from '@/lib/utils/apiResponse';
 
 /**
  * 로그인 요청
@@ -14,16 +14,16 @@ export const POST = async (req: NextRequest) => {
     const { code } = await req.json();
 
     if (!code) {
-      return ApiErrors.BAD_REQUEST("인가 코드가 필요합니다.");
+      return ApiErrors.BAD_REQUEST('인가 코드가 필요합니다.');
     }
 
     // 모킹 API 사용 (백엔드 구현 전까지)
     const mockUrl = new URL(API_ROUTES.MOCK_KAKAO_SIGNIN, req.url);
 
     const response = await fetch(mockUrl, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({ code }),
     });
@@ -43,8 +43,8 @@ export const POST = async (req: NextRequest) => {
       return handleMockFlow(data);
     }
   } catch (error) {
-    console.error("로그인 실패:", error);
-    return ApiErrors.UNAUTHORIZED("인증에 실패했습니다.");
+    console.error('로그인 실패:', error);
+    return ApiErrors.UNAUTHORIZED('인증에 실패했습니다.');
   }
 };
 
@@ -66,33 +66,36 @@ async function handleMockFlow(data: SessionData) {
 
   await session.save();
 
-  return createSuccessResponse(data.user, "로그인 성공");
+  return createSuccessResponse(data.user, '로그인 성공');
 }
 
 /**
  * 리다이렉트 플로우 (향후 실제 서버 연동 시)
  * refresh_token을 httpOnly 쿠키로 설정하고 302 리다이렉트
  */
-async function handleRedirectFlow(data: any, req: NextRequest) {
+async function handleRedirectFlow(
+  data: { user: unknown; refresh_token: string },
+  req: NextRequest
+) {
   // 302 리다이렉트 응답 생성
   const redirectUrl = new URL(PAGE_ROUTES.HOME, req.url);
-  redirectUrl.searchParams.set("is_new_user", "true");
+  redirectUrl.searchParams.set('is_new_user', 'true');
 
   const redirectResponse = NextResponse.redirect(redirectUrl, 302);
 
   // refresh token을 httpOnly 쿠키로 설정
-  redirectResponse.cookies.set("refresh_token", data.refresh_token, {
+  redirectResponse.cookies.set('refresh_token', data.refresh_token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax',
     maxAge: AUTH_CONSTANTS.COOKIE_MAX_AGE,
   });
 
   // 사용자 정보를 임시로 쿠키에 저장 (access token 발급 전까지)
-  redirectResponse.cookies.set("temp_user", JSON.stringify(data.user), {
+  redirectResponse.cookies.set('temp_user', JSON.stringify(data.user), {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax',
     maxAge: AUTH_CONSTANTS.TEMP_COOKIE_MAX_AGE, // 5분 (임시)
   });
 

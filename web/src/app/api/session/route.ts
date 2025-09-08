@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
-import { getSessionFromServer } from "@/lib/session/index";
+import { type NextRequest, NextResponse } from 'next/server';
+import { getSessionFromServer } from '@/lib/session/index';
 
 /**GET: 세션 데이터 조회*/
 export async function GET() {
@@ -7,9 +7,9 @@ export async function GET() {
     const session = await getSessionFromServer();
     return NextResponse.json(session);
   } catch (error) {
-    console.error("세션 조회 실패:", error);
+    console.error('세션 조회 실패:', error);
     return NextResponse.json(
-      { error: "세션을 조회할 수 없습니다." },
+      { error: '세션을 조회할 수 없습니다.' },
       { status: 500 }
     );
   }
@@ -27,9 +27,9 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error("세션 업데이트 실패:", error);
+    console.error('세션 업데이트 실패:', error);
     return NextResponse.json(
-      { error: "세션 업데이트에 실패했습니다." },
+      { error: '세션 업데이트에 실패했습니다.' },
       { status: 500 }
     );
   }
@@ -43,9 +43,9 @@ export async function DELETE() {
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error("세션 삭제 실패:", error);
+    console.error('세션 삭제 실패:', error);
     return NextResponse.json(
-      { error: "세션 삭제에 실패했습니다." },
+      { error: '세션 삭제에 실패했습니다.' },
       { status: 500 }
     );
   }
