@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import { useCallback, useEffect, useState } from "react";
-import { AUTH_CONSTANTS } from "../../constants/auth.constants";
-import { API_ROUTES } from "../../constants/route.constants";
+import { useCallback, useEffect, useState } from 'react';
+import { AUTH_CONSTANTS } from '../../constants/auth.constants';
+import { API_ROUTES } from '../../constants/route.constants';
 import {
   clearClientSessionCache,
   getSessionFromClient,
   type SessionData,
-} from "../session/index";
+} from '../session/index';
 
 export interface UserInfo {
   id: string;
@@ -65,7 +65,7 @@ export function useAuth(): UseAuthReturn {
         const session = await getSessionFromClient();
         updateAuthState(session);
       } catch (error) {
-        console.error("인증 상태 갱신 실패:", error);
+        console.error('인증 상태 갱신 실패:', error);
         setIsAuthenticated(false);
         setUser(null);
       }
@@ -80,7 +80,7 @@ export function useAuth(): UseAuthReturn {
         const session = await getSessionFromClient();
         updateAuthState(session);
       } catch (error) {
-        console.error("인증 상태 초기화 실패:", error);
+        console.error('인증 상태 초기화 실패:', error);
         setIsAuthenticated(false);
         setUser(null);
       } finally {
@@ -96,12 +96,12 @@ export function useAuth(): UseAuthReturn {
     try {
       // 서버 세션 삭제
       const response = await fetch(API_ROUTES.SESSION, {
-        method: "DELETE",
-        credentials: "include",
+        method: 'DELETE',
+        credentials: 'include',
       });
 
       if (!response.ok) {
-        throw new Error("서버 세션 삭제 실패");
+        throw new Error('서버 세션 삭제 실패');
       }
 
       // 클라이언트 캐시 삭제
@@ -112,7 +112,7 @@ export function useAuth(): UseAuthReturn {
       setUser(null);
       setAccessToken(null);
     } catch (error) {
-      console.error("로그아웃 실패:", error);
+      console.error('로그아웃 실패:', error);
       // 에러가 발생해도 클라이언트 상태는 초기화
       setIsAuthenticated(false);
       setUser(null);
@@ -132,18 +132,18 @@ export function useAuth(): UseAuthReturn {
       }
     };
 
-    window.addEventListener("focus", handleFocus);
-    document.addEventListener("visibilitychange", handleVisibilityChange);
+    window.addEventListener('focus', handleFocus);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
 
     return () => {
-      window.removeEventListener("focus", handleFocus);
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      window.removeEventListener('focus', handleFocus);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
   }, [refreshAuthState]);
 
   // 개발 환경에서 주기적으로 인증 상태 확인
   useEffect(() => {
-    if (process.env.NODE_ENV === "development") {
+    if (process.env.NODE_ENV === 'development') {
       const interval = setInterval(() => {
         refreshAuthState();
       }, DEV_CHECK_INTERVAL);
