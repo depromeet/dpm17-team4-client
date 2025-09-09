@@ -1,7 +1,7 @@
 'use client';
 
-import { useRecordMutation, useReportQuery } from '@/hooks';
 import Link from 'next/link';
+import { useRecordMutation, useReportQuery } from '@/hooks';
 
 export default function FetchTestPage() {
   const { data: scoreData, isLoading, error, refetch } = useReportQuery();
