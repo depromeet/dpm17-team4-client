@@ -8,7 +8,6 @@ export default function FetchTestPage() {
 
   const { mutate, isPending, isSuccess, isError } = useRecordMutation();
 
-  // 테스트용 데이터 저장 함수
   const handleRecordData = () => {
     const testColor = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
     const shapes = ['circle', 'square', 'triangle', 'rectangle'];

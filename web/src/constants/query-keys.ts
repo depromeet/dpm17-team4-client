@@ -3,6 +3,6 @@ export const QUERY_KEYS = {
 
   RECORD: ['record'],
 
-  // create key factory
+  // NOTE(seieun): create key factory
   // RECORD_DETAILS: (id: string) => ['records', id],
 } as const;

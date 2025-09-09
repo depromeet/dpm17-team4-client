@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const apiClient = axios.create({
-  //TODO: server url 설정
+  //TODO(seieun): server url 설정
   baseURL: process.env.NODE_ENV === 'production' ? '' : 'http://localhost:3000',
   timeout: 5000,
   headers: {
@@ -11,7 +11,7 @@ const apiClient = axios.create({
 
 apiClient.interceptors.request.use(
   (config) => {
-    //TODO: Access token 추가
+    //TODO(yubin): Access token 추가
     return config;
   },
   (error) => {
