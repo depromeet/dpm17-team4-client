@@ -1,6 +1,6 @@
 import { type NextRequest, NextResponse } from 'next/server';
 
-export async function GET(request: NextRequest) {
+export async function GET(_request: NextRequest) {
   try {
     // 여기서 실제 데이터베이스에서 점수를 조회하는 로직을 구현
     // 현재는 샘플 데이터를 반환

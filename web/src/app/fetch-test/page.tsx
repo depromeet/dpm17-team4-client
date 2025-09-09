@@ -72,6 +72,7 @@ export default function FetchTestPage() {
                     : '알 수 없는 오류가 발생했습니다'}
                 </div>
                 <button
+                  type="button"
                   onClick={() => refetch()}
                   className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
                 >
@@ -130,6 +131,7 @@ export default function FetchTestPage() {
               </p>
 
               <button
+                type="button"
                 onClick={handleRecordData}
                 disabled={isPending}
                 className="w-full px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors font-medium"

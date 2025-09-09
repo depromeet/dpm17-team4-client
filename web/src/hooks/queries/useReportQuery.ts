@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { reportApi } from '@/apis/reportApi';
-import { ReportDataResponseDto } from '@/types/dto/report.dto';
 import { QUERY_KEYS } from '@/constants';
+import type { ReportDataResponseDto } from '@/types/dto/report.dto';
 
 export const useReportQuery = () => {
   return useQuery<ReportDataResponseDto>({
