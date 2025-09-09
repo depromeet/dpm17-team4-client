@@ -1,13 +1,24 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, SafeAreaView } from 'react-native';
+import { StyleSheet, SafeAreaView } from 'react-native';
 import { WebView } from 'react-native-webview';
+import { useEffect, useRef } from 'react';
+import { setupNotificationHandler, registerForPushNotificationsAsync } from './services/notificationService';
+import { handleWebViewMessage } from './services/webViewService';
 
 export default function App() {
+  const webViewRef = useRef<WebView>(null);
+
+  useEffect(() => {
+    // NOTE(seonghyun): 알림 설정 및 권한 요청
+    setupNotificationHandler();
+    registerForPushNotificationsAsync();
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
-      {/* TODO(seonghyun): web uri 변경 */}
       <WebView
-        source={{ uri: 'https://www.google.com' }}
+        ref={webViewRef}
+        source={{ uri: 'http://192.168.45.51:3000' }}
         style={styles.webview}
         javaScriptEnabled={true}
         domStorageEnabled={true}
@@ -15,6 +26,7 @@ export default function App() {
         scalesPageToFit={true}
         allowsInlineMediaPlayback={true}
         mediaPlaybackRequiresUserAction={false}
+        onMessage={handleWebViewMessage}
       />
       <StatusBar style="auto" />
     </SafeAreaView>
