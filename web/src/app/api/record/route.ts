@@ -6,7 +6,7 @@ export async function POST(request: NextRequest) {
     const { color, time, shape, info } = body;
 
     console.log('Received color:', color);
-    
+
     return NextResponse.json(
       {
         color,
