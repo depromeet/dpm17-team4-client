@@ -1,0 +1,19 @@
+name: Auto Assign
+
+on:
+  pull_request:
+    types: [opened, ready_for_review, converted_to_draft]
+  issues:
+    types: [opened]
+
+jobs:
+  assign_pull_request:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+      - name: "Auto assign"
+        uses: hkusu/review-assign-action@v1
+        with:
+          assignees: ${{ github.actor }}
