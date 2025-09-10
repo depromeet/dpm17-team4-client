@@ -1,6 +1,6 @@
 'use client';
 
-import { useFormContext } from 'react-hook-form';
+import { type FieldErrors, useFormContext } from 'react-hook-form';
 import type { DefecationFormValues } from '../schemas';
 
 export const DefecationSubmit = () => {
@@ -11,7 +11,7 @@ export const DefecationSubmit = () => {
     // TODO: 서버로 데이터 전송 로직 구현
   };
 
-  const onError = (errors: any) => {
+  const onError = (errors: FieldErrors<DefecationFormValues>) => {
     console.error('Form errors:', errors);
     // TODO: 에러 처리 로직 (예: 첫 번째 에러 필드로 포커스 이동)
     const firstError = Object.keys(errors)[0];
