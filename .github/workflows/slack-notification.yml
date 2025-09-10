@@ -17,8 +17,27 @@ jobs:
       - name: Run Build or Test
         run: |
           echo "🚀 Starting build process..."
-          yarn build
-          echo "✅ Build successful!"
+          # Web 프로젝트 빌드
+          if [ -d "web" ]; then
+            echo "📱 Building web project..."
+            cd web
+            yarn install
+            yarn build
+            cd ..
+            echo "✅ Web build successful!"
+          fi
+
+            # App 프로젝트 빌드 (React Native/Expo) - 추후 추가 예정
+            # if [ -d "app" ]; then
+            #   echo "📱 Building app project..."
+            #   cd app
+            #   yarn install
+            #   TODO: App 빌드에 필요한 내용 추가
+            #   cd ..
+            #   echo "✅ App build successful!"
+            # fi
+
+          echo "🎉 All builds completed successfully!"
 
       - name: Send Slack Notification
         uses: 8398a7/action-slack@v3
