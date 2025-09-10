@@ -10,6 +10,7 @@
     "biome:fix": "biome check --write ."
   },
   "dependencies": {
+    "firebase-admin": "^13.5.0",
     "next": "15.5.2",
     "react": "19.1.0",
     "react-dom": "19.1.0"
