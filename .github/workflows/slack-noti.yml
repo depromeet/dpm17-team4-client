@@ -1,0 +1,63 @@
+name: Slack Notification
+
+on:
+  pull_request:
+    types: [opened, synchronize, closed]
+  push:
+    branches: ["main"]
+
+jobs:
+  build-and-notify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run Build or Test
+        run: |
+          echo "🚀 Starting build process..."
+          yarn build
+          echo "✅ Build successful!"
+
+      - name: Send Slack Notification
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          fields: workflow,job,commit,message,ref,author,took
+          mention: "here"
+          if_mention: failure
+          custom_payload: |
+            {
+              "text": "🚀 GitHub Action 알림",
+              "attachments": [
+                {
+                  "color": "${{ job.status == 'success' && 'good' || 'danger' }}",
+                  "fields": [
+                    {
+                      "title": "이벤트",
+                      "value": "${{ github.event_name == 'pull_request' && 'Pull Request' || 'Push' }}",
+                      "short": true
+                    },
+                    {
+                      "title": "상태",
+                      "value": "${{ job.status == 'success' && '✅ 성공' || '❌ 실패' }}",
+                      "short": true
+                    },
+                    {
+                      "title": "브랜치",
+                      "value": "${{ github.ref_name }}",
+                      "short": true
+                    },
+                    {
+                      "title": "작성자",
+                      "value": "${{ github.actor }}",
+                      "short": true
+                    }
+                  ]
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: always()
