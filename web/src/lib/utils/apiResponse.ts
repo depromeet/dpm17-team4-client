@@ -51,19 +51,25 @@ export function createSuccessResponse<T>(
   return NextResponse.json(response, { status });
 }
 
+/**자주 사용되는 에러 응답들*/
 export const ApiErrors = {
+  /**400 Bad Request*/
   BAD_REQUEST: (message: string = '잘못된 요청입니다.') =>
     createErrorResponse(message, 400, 'BAD_REQUEST'),
 
+  /**401 Unauthorized*/
   UNAUTHORIZED: (message: string = '인증이 필요합니다.') =>
     createErrorResponse(message, 401, 'UNAUTHORIZED'),
 
+  /**403 Forbidden*/
   FORBIDDEN: (message: string = '접근 권한이 없습니다.') =>
     createErrorResponse(message, 403, 'FORBIDDEN'),
 
+  /**404 Not Found*/
   NOT_FOUND: (message: string = '리소스를 찾을 수 없습니다.') =>
     createErrorResponse(message, 404, 'NOT_FOUND'),
 
+  /**500 Internal Server Error*/
   INTERNAL_ERROR: (message: string = '서버 내부 오류가 발생했습니다.') =>
     createErrorResponse(message, 500, 'INTERNAL_ERROR'),
 } as const;
