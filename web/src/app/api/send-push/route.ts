@@ -16,7 +16,9 @@ function initializeFirebase() {
   const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
 
   if (!projectId || !privateKey || !clientEmail) {
-    console.warn('Firebase 환경변수가 설정되지 않았습니다. 푸시 알림 기능이 비활성화됩니다.');
+    console.warn(
+      'Firebase 환경변수가 설정되지 않았습니다. 푸시 알림 기능이 비활성화됩니다.'
+    );
     firebaseInitialized = true;
     return;
   }
@@ -30,7 +32,7 @@ function initializeFirebase() {
   admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
   });
-  
+
   firebaseInitialized = true;
 }
 
@@ -82,9 +84,11 @@ export async function POST(request: NextRequest) {
     // Firebase가 초기화되지 않은 경우 (환경변수 없음)
     if (!admin.apps.length) {
       return NextResponse.json(
-        { 
-          error: 'Firebase 환경변수가 설정되지 않았습니다. 푸시 알림 기능을 사용할 수 없습니다.',
-          details: 'FIREBASE_PROJECT_ID, FIREBASE_PRIVATE_KEY, FIREBASE_CLIENT_EMAIL 환경변수를 설정해주세요.'
+        {
+          error:
+            'Firebase 환경변수가 설정되지 않았습니다. 푸시 알림 기능을 사용할 수 없습니다.',
+          details:
+            'FIREBASE_PROJECT_ID, FIREBASE_PRIVATE_KEY, FIREBASE_CLIENT_EMAIL 환경변수를 설정해주세요.',
         },
         { status: 503 }
       );
