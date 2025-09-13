@@ -3,14 +3,24 @@ import * as admin from 'firebase-admin';
 import { type NextRequest, NextResponse } from 'next/server';
 
 // NOTE(seonghyun): Firebase Admin SDK 초기화
-if (!admin.apps.length) {
+let firebaseInitialized = false;
+
+function initializeFirebase() {
+  if (firebaseInitialized || admin.apps.length > 0) {
+    return;
+  }
+
   // NOTE(seonghyun): 환경변수에서 서비스 계정 정보 가져오기
   const projectId = process.env.FIREBASE_PROJECT_ID;
   const privateKey = process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n');
   const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
 
   if (!projectId || !privateKey || !clientEmail) {
-    throw new Error('Firebase 환경변수가 설정되지 않았습니다.');
+    console.warn(
+      'Firebase 환경변수가 설정되지 않았습니다. 푸시 알림 기능이 비활성화됩니다.'
+    );
+    firebaseInitialized = true;
+    return;
   }
 
   const serviceAccount = {
@@ -22,6 +32,8 @@ if (!admin.apps.length) {
   admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
   });
+
+  firebaseInitialized = true;
 }
 
 // NOTE(seonghyun): Firebase Cloud Messaging을 사용하여 알림 전송
@@ -66,6 +78,22 @@ async function sendFCMPushNotification(
 
 export async function POST(request: NextRequest) {
   try {
+    // Firebase 초기화 시도
+    initializeFirebase();
+
+    // Firebase가 초기화되지 않은 경우 (환경변수 없음)
+    if (!admin.apps.length) {
+      return NextResponse.json(
+        {
+          error:
+            'Firebase 환경변수가 설정되지 않았습니다. 푸시 알림 기능을 사용할 수 없습니다.',
+          details:
+            'FIREBASE_PROJECT_ID, FIREBASE_PRIVATE_KEY, FIREBASE_CLIENT_EMAIL 환경변수를 설정해주세요.',
+        },
+        { status: 503 }
+      );
+    }
+
     const { title, body, targetToken } = await request.json();
 
     if (!title || !body) {
