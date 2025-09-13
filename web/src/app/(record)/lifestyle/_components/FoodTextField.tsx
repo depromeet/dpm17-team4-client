@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import { type ChangeEvent, useState } from 'react';
 import { Button } from '@/components';
 import { useDebounce } from '@/hooks';
 import { FoodList } from './FoodList';

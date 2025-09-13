@@ -2,7 +2,7 @@
 
 import { type ChangeEvent, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
-import { ChevronIcon } from '@/components/icons';
+import { ChevronIcon } from '@/components';
 import { cn } from '@/utils/utils-cn';
 import type { DefecationFormValues } from '../schemas';
 import { formatDate, useHourOptions } from '../utils';

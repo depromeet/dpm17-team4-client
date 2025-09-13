@@ -1,7 +1,7 @@
 'use client';
 
 import type { ReactNode } from 'react';
-import { ChevronThinIcon } from '@/components/icons';
+import { ChevronThinIcon } from '@/components';
 import { cn } from '@/utils/utils-cn';
 
 interface CollapsibleToggleProps {
