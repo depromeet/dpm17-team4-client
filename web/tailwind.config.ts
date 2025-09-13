@@ -7,34 +7,31 @@ module.exports = {
   theme: {
     extend: {
       fontSize: {
-        h1: ['1.75rem', { lineHeight: '2.25rem', fontWeight: '600' }],
-        h2: ['1.5rem', { lineHeight: '2rem', fontWeight: '600' }],
-        h3: ['1.25rem', { lineHeight: '1.75rem', fontWeight: '600' }],
-        h4: ['1rem', { lineHeight: '1.5rem', fontWeight: '600' }],
-        'body1-r': ['1.125rem', { lineHeight: '1.5rem', fontWeight: '400' }],
-        'body1-m': ['1.125rem', { lineHeight: '1rem', fontWeight: '500' }],
-        'body1-sb': ['1.125rem', { lineHeight: '0.875rem', fontWeight: '600' }],
+        h1: ['1.75rem', { lineHeight: '130%', fontWeight: '600' }],
+        h2: ['1.5rem', { lineHeight: '135%', fontWeight: '600' }],
+        h3: ['1.25rem', { lineHeight: '135%', fontWeight: '600' }],
+        h4: ['1rem', { lineHeight: '150%', fontWeight: '600' }],
+        'body1-r': ['1.125rem', { lineHeight: '135%', fontWeight: '400' }],
+        'body1-m': ['1.125rem', { lineHeight: '130%', fontWeight: '500' }],
+        'body1-sb': ['1.125rem', { lineHeight: '130%', fontWeight: '600' }],
 
-        'body2-r': ['1rem', { lineHeight: '1.5rem', fontWeight: '400' }],
-        'body2-m': ['1rem', { lineHeight: '1rem', fontWeight: '500' }],
-        'body2-sb': ['1rem', { lineHeight: '0.875rem', fontWeight: '600' }],
+        'body2-r': ['1rem', { lineHeight: '150%', fontWeight: '400' }],
+        'body2-m': ['1rem', { lineHeight: '150%', fontWeight: '500' }],
+        'body2-sb': ['1rem', { lineHeight: '150%', fontWeight: '600' }],
 
-        'body3-r': ['0.875rem', { lineHeight: '1.5rem', fontWeight: '400' }],
-        'body3-m': ['0.875rem', { lineHeight: '1rem', fontWeight: '500' }],
-        'body3-sb': ['0.875rem', { lineHeight: '0.875rem', fontWeight: '600' }],
+        'body3-r': ['0.875rem', { lineHeight: '145%', fontWeight: '400' }],
+        'body3-m': ['0.875rem', { lineHeight: '145%', fontWeight: '500' }],
+        'body3-sb': ['0.875rem', { lineHeight: '145%', fontWeight: '600' }],
 
-        'body4-r': ['0.75rem', { lineHeight: '1.5rem', fontWeight: '400' }],
-        'body4-m': ['0.75rem', { lineHeight: '1rem', fontWeight: '500' }],
-        'body4-sb': ['0.75rem', { lineHeight: '0.875rem', fontWeight: '600' }],
+        'body4-r': ['0.75rem', { lineHeight: '150%', fontWeight: '400' }],
+        'body4-m': ['0.75rem', { lineHeight: '150%', fontWeight: '500' }],
+        'body4-sb': ['0.75rem', { lineHeight: '150%', fontWeight: '600' }],
 
-        'button-1': ['1.125rem', { lineHeight: '1.25rem', fontWeight: '500' }],
-        'button-2': ['1rem', { lineHeight: '1rem', fontWeight: '500' }],
-        'button-3': ['0.875rem', { lineHeight: '0.875rem', fontWeight: '600' }],
-        'button-4': ['0.75rem', { lineHeight: '0.875rem', fontWeight: '600' }],
-        'button-5': [
-          '0.6875rem',
-          { lineHeight: '0.875rem', fontWeight: '600' },
-        ],
+        'button-1': ['1.125rem', { lineHeight: '110%', fontWeight: '500' }],
+        'button-2': ['1rem', { lineHeight: '115%', fontWeight: '500' }],
+        'button-3': ['0.875rem', { lineHeight: '115%', fontWeight: '600' }],
+        'button-4': ['0.75rem', { lineHeight: '135%', fontWeight: '600' }],
+        'button-5': ['0.6875rem', { lineHeight: '110%', fontWeight: '600' }],
       },
       colors: {
         primary: {
