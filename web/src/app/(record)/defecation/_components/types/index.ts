@@ -6,10 +6,9 @@ import type {
   DEFECATION_TIME_TAKEN,
 } from '../constants';
 
-
 /**
  * @description 배변 기록 폼 타입
- */export interface DefecationState {
+ */ export interface DefecationState {
   selectedWhen: Date;
   selectedTry: string;
   selectedColor: string;

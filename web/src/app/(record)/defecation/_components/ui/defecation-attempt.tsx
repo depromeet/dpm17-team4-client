@@ -1,6 +1,6 @@
 'use client';
 
-import { Controller, useFormContext } from 'react-hook-form';
+import { Controller, type FieldValues, useFormContext } from 'react-hook-form';
 import { cn } from '@/utils/utils-cn';
 import { DEFECATION_TRY } from '../constants';
 import type { DefecationFormValues } from '../schemas';
@@ -9,10 +9,10 @@ export const DefecationAttempt = () => {
   const { control, setValue, watch } = useFormContext<DefecationFormValues>();
   const selectedTry = watch('selectedTry');
 
-   const handleClick = (value: string, field:any) => {
-      const newValue = selectedTry === value ? '' : value;
-      setValue('selectedTry', newValue, { shouldValidate: true });
-      field.onChange(newValue);
+  const handleClick = (value: string, field: FieldValues) => {
+    const newValue = selectedTry === value ? '' : value;
+    setValue('selectedTry', newValue, { shouldValidate: true });
+    field.onChange(newValue);
   };
 
   return (
@@ -20,7 +20,7 @@ export const DefecationAttempt = () => {
       <Controller
         name="selectedTry"
         control={control}
-        render={({ field }) => (
+        render={({ field }: { field: FieldValues }) => (
           <>
             {Object.entries(DEFECATION_TRY).map(([_, value]) => (
               <button
@@ -31,7 +31,7 @@ export const DefecationAttempt = () => {
                 type="button"
                 key={value}
                 onClick={() => {
-                  handleClick(value, field)
+                  handleClick(value, field);
                 }}
               >
                 <p className="text-base font-bold">{value}</p>
