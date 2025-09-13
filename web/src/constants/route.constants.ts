@@ -14,4 +14,4 @@ export const API_ROUTES = {
 } as const;
 
 // 공개 경로 (인증이 필요하지 않은 경로)
-export const PUBLIC_PATHS = ['/', '/auth'] as const;
+export const PUBLIC_PATHS = ['/', '/auth', '/notification-test'] as const;
