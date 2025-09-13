@@ -1,6 +1,6 @@
-import { PropsWithChildren, useEffect } from 'react';
+import type { MouseEvent, PropsWithChildren } from 'react';
+import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import type { MouseEvent } from 'react';
 
 interface BottomSheetProps extends PropsWithChildren {
   isOpen: boolean;
@@ -36,6 +36,14 @@ export const BottomSheet = ({
     <div
       className="fixed inset-0 z-50 flex items-end"
       onClick={handleBackdropClick}
+      onKeyDown={(e) => {
+        if (e.key === 'Escape') {
+          onClose();
+        }
+      }}
+      role="dialog"
+      aria-modal="true"
+      tabIndex={-1}
     >
       {/* Backdrop */}
       <div className="absolute inset-0 bg-black/50 transition-opacity" />
