@@ -19,21 +19,21 @@ export const POST = async (req: NextRequest) => {
   // 모킹 API 사용 (백엔드 구현 전까지)
   const mockUrl = new URL(API_ROUTES.MOCK_AUTH_REFRESH, req.url);
 
-    const response = await fetch(mockUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ refresh_token: refreshToken }),
-    });
+  const response = await fetch(mockUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ refresh_token: refreshToken }),
+  });
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error('모킹 토큰 재발급 API 호출 실패:', errorText);
-      throw new Error('토큰 재발급 실패');
-    }
+  if (!response.ok) {
+    const errorText = await response.text();
+    console.error('모킹 토큰 재발급 API 호출 실패:', errorText);
+    throw new Error('토큰 재발급 실패');
+  }
 
-    const data = await response.json();
+  const data = await response.json();
 
   // 임시 사용자 정보 쿠키에서 가져오기
   const tempUserCookie = req.cookies.get('temp_user')?.value;
