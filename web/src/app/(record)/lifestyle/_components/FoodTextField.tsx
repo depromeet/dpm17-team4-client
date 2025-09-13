@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { Button } from '@/components';
 import { useDebounce } from '@/hooks';
+import { FoodList } from './FoodList';
 
 export const FoodTextField = () => {
   const [foodName, setFoodName] = useState('');
+
   const debouncedFoodName = useDebounce(foodName, 300);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,9 +27,10 @@ export const FoodTextField = () => {
         </div>
         <div className="h-[0.9375rem]" />
         <div className="w-full p-[1rem] flex gap-[0.75rem] rounded-[0.94rem] bg-gray-800">
-          <div className="bg-gray-600 text-gray-200 rounded-[0.5rem] px-[0.375rem] py-[0.25rem]">
+          <div className="bg-gray-600 text-gray-200 rounded-[0.5rem] px-[0.375rem] py-[0.25rem] flex gap-[0.25rem]">
             시간
           </div>
+
           <input
             type="text"
             placeholder="음식 이름을 입력해주세요"
@@ -44,9 +47,7 @@ export const FoodTextField = () => {
         </div>
       </div>
       <div className="h-[0.9375rem]" />
-      {debouncedFoodName && (
-        <div className="px-[1.25rem] text-white">{debouncedFoodName}</div>
-      )}
+      {debouncedFoodName && <FoodList debouncedFoodName={debouncedFoodName} />}
     </div>
   );
 };
