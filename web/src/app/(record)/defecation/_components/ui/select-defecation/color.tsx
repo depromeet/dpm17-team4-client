@@ -16,13 +16,12 @@ export default function Color() {
             setDefecationState({ ...defecationState, selectedColor: key });
           }}
           key={key}
-          className="flex flex-col items-center justify-center gap-2.5"
+          className="flex flex-col items-center justify-center gap-2.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5170FF]"
         >
           <div
             className={cn(
-              'w-10 h-10 rounded-[10px]',
-              defecationState.selectedColor === key &&
-                'border-[1px] border-white'
+              'w-10 h-10 rounded-[10px] border border-transparent',
+              defecationState.selectedColor === key && 'border-white'
             )}
             style={{ backgroundColor: value[1] }}
           />
