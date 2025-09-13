@@ -1,6 +1,7 @@
 'use client';
 
 import { type FieldErrors, useFormContext } from 'react-hook-form';
+import { BottomBtnBar } from '@/components';
 import type { DefecationFormValues } from '../schemas';
 
 export const DefecationSubmit = () => {
@@ -18,13 +19,5 @@ export const DefecationSubmit = () => {
     alert(`${firstError} 필드를 확인해주세요.`);
   };
 
-  return (
-    <button
-      type="button"
-      className="w-full bg-blue-500 text-white rounded-lg p-2"
-      onClick={handleSubmit(onSubmit, onError)}
-    >
-      저장
-    </button>
-  );
+  return <BottomBtnBar onSubmit={handleSubmit(onSubmit, onError)} />;
 };

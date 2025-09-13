@@ -36,6 +36,15 @@ export default function Home() {
                   알림 테스트 페이지
                 </Link>
               </li>
+              <li>
+                •{' '}
+                <Link
+                  href="/defecation"
+                  className="text-green-600 hover:text-green-800 underline transition-colors"
+                >
+                  배변 기록 페이지
+                </Link>
+              </li>
             </ul>
           </div>
         </div>

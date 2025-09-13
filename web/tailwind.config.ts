@@ -9,7 +9,7 @@ module.exports = {
       fontSize: {
         h1: ['1.75rem', { lineHeight: '130%', fontWeight: '600' }],
         h2: ['1.5rem', { lineHeight: '135%', fontWeight: '600' }],
-        h3: ['1.25rem', { lineHeight: '135%', fontWeight: '600' }],
+        h3: ['1.125rem', { lineHeight: '135%', fontWeight: '600' }],
         h4: ['1rem', { lineHeight: '150%', fontWeight: '600' }],
         'body1-r': ['1.125rem', { lineHeight: '135%', fontWeight: '400' }],
         'body1-m': ['1.125rem', { lineHeight: '130%', fontWeight: '500' }],
