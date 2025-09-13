@@ -20,7 +20,7 @@ async function sendExpoPushNotification(
     };
 
     console.log('📤 Expo Push 메시지 전송 시도:', {
-      token: token.substring(0, 20) + '...',
+      token: `${token.substring(0, 20)}...`,
       title,
       body,
     });
@@ -28,7 +28,7 @@ async function sendExpoPushNotification(
     const response = await fetch('https://exp.host/--/api/v2/push/send', {
       method: 'POST',
       headers: {
-        'Accept': 'application/json',
+        Accept: 'application/json',
         'Accept-encoding': 'gzip, deflate',
         'Content-Type': 'application/json',
       },
@@ -51,7 +51,6 @@ async function sendExpoPushNotification(
 
 export async function POST(request: NextRequest) {
   try {
-
     const { title, body, targetToken } = await request.json();
 
     if (!title || !body) {
