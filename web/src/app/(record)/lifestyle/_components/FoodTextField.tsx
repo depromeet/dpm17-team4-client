@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { Button } from '@/components';
 import { useDebounce } from '@/hooks';
 import { FoodList } from './FoodList';
@@ -9,7 +9,7 @@ export const FoodTextField = () => {
 
   const debouncedFoodName = useDebounce(foodName, DEBOUNCE_DELAY);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFoodName(e.target.value);
   };
 
