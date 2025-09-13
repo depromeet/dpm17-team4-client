@@ -3,10 +3,11 @@ import { Button } from '@/components';
 import { useDebounce } from '@/hooks';
 import { FoodList } from './FoodList';
 
+const DEBOUNCE_DELAY = 300;
 export const FoodTextField = () => {
   const [foodName, setFoodName] = useState('');
 
-  const debouncedFoodName = useDebounce(foodName, 300);
+  const debouncedFoodName = useDebounce(foodName, DEBOUNCE_DELAY);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFoodName(e.target.value);
