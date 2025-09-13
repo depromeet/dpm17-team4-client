@@ -1,5 +1,5 @@
-export { default as DefenationColor } from './color';
-export { default as DefenationOptional } from './optional';
-export { default as DefenationPain } from './pain';
-export { default as DefenationShape } from './shape';
-export { default as DefenationTimeTaken } from './time-taken';
+export { default as DefecationColor } from './color';
+export { default as DefecationOptional } from './optional';
+export { default as DefecationPain } from './pain';
+export { default as DefecationShape } from './shape';
+export { default as DefecationTimeTaken } from './time-taken';

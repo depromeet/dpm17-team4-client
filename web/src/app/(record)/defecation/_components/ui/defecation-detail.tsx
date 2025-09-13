@@ -6,7 +6,7 @@ import {
   type DefecationTryDetailKey,
 } from '../constants/description';
 import { CollapsibleToggle } from './common/collapsible-toggle';
-import { DefenationColor } from './select-defecation';
+import { DefecationColor } from './select-defecation';
 
 export const DefecationDetail = () => {
   const [openId, setOpenId] = useState<DefecationTryDetailKey | null>(null);
@@ -18,7 +18,7 @@ export const DefecationDetail = () => {
   const renderSelectSection = (value: DefecationTryDetailKey) => {
     switch (value) {
       case 'COLOR':
-        return <DefenationColor />;
+        return <DefecationColor />;
       case 'SHAPE':
         return <div>SHAPE</div>;
       case 'PAIN':
@@ -28,7 +28,7 @@ export const DefecationDetail = () => {
       case 'OPTIONAL':
         return <div>OPTIONAL</div>;
       default:
-        return <DefenationColor />;
+        return <DefecationColor />;
     }
   };
 
