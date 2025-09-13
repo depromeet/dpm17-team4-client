@@ -1,8 +1,8 @@
 'use client';
 
-import { ChevronDown } from 'lucide-react';
 import { type ChangeEvent, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
+import { ChevronIcon } from '@/components/icons';
 import { cn } from '@/utils/utils-cn';
 import type { DefecationFormValues } from '../schemas';
 import { formatDate, useHourOptions } from '../utils';
@@ -56,7 +56,8 @@ export const DefecationTime = () => {
               onClick={() => setIsOpen(!isOpen)}
             >
               <p className="text-xl font-bold">{formatDate(currentDate)}</p>
-              <ChevronDown
+              <ChevronIcon
+                type="down"
                 className={cn(
                   'transition-transform duration-300',
                   isOpen ? 'rotate-180' : ''
