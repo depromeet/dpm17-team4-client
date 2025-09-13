@@ -73,7 +73,7 @@ async function handleMockFlow(data: SessionData) {
  * refresh_token을 httpOnly 쿠키로 설정하고 302 리다이렉트
  */
 async function handleRedirectFlow(
-  data: { user: unknown; refresh_token: string },
+  data: { user: { id: string; nickname: string; avatarUrl?: string }; refresh_token: string },
   req: NextRequest
 ) {
   // 302 리다이렉트 응답 생성
