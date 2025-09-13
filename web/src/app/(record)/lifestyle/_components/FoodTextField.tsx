@@ -39,6 +39,7 @@ export const FoodTextField = () => {
             className="flex-1 text-white bg-transparent outline-none placeholder:text-gray-400"
           />
           <button
+            type="button"
             onClick={handleRemoveFood}
             className="text-white hover:text-gray-300 transition-colors"
           >
