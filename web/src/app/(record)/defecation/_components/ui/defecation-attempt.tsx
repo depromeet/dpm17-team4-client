@@ -7,6 +7,17 @@ import { useDefecation } from '../providers/defecation-providers';
 export const DefecationAttempt = () => {
   const { defecationState, setDefecationState } = useDefecation();
 
+  const handleClick = (value: string) => {
+    if (defecationState.selectedTry === value) {
+      setDefecationState({ ...defecationState, selectedTry: '' });
+    } else {
+      setDefecationState({
+        ...defecationState,
+        selectedTry: value,
+      });
+    }
+  };
+
   return (
     <div className="flex items-start justify-center w-full gap-3">
       {Object.entries(DEFECATION_TRY).map(([_, value]) => (
@@ -20,14 +31,7 @@ export const DefecationAttempt = () => {
           type="button"
           key={value}
           onClick={() => {
-            if (defecationState.selectedTry === value) {
-              setDefecationState({ ...defecationState, selectedTry: '' });
-            } else {
-              setDefecationState({
-                ...defecationState,
-                selectedTry: value,
-              });
-            }
+            handleClick(value);
           }}
         >
           <p className="text-base font-bold">{value}</p>
