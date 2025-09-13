@@ -1,7 +1,7 @@
 'use client';
 
-import { ChevronDown } from 'lucide-react';
 import type { ReactNode } from 'react';
+import { ChevronThinIcon } from '@/components';
 import { cn } from '@/utils/utils-cn';
 
 interface CollapsibleToggleProps {
@@ -34,12 +34,10 @@ export function CollapsibleToggle({
         aria-controls={`collapsible-content-${id}`}
       >
         {trigger}
-        <ChevronDown
+        <ChevronThinIcon
+          type={isOpen ? 'up' : 'down'}
           className={cn(
-            'will-change-transform transition-transform duration-300',
-            {
-              'rotate-180': isOpen,
-            }
+            'will-change-transform transition-transform duration-300 text-white'
           )}
         />
       </button>
