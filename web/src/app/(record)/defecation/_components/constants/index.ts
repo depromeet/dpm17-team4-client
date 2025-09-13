@@ -30,7 +30,7 @@ export const DEFECATION_SHAPE = {
   PORRIDGE: '죽',
 } as const satisfies Record<string, string>;
 
-// TODO: 통증 정도에 대한 디테일 작업은 UI 확정 후 적용
+// NOTE(taehyeon): 통증 정도에 대한 디테일 작업은 UI 확정 후 적용
 export const DEFECATION_PAIN = {
   A: '0',
   B: '10',
