@@ -19,7 +19,7 @@ export default function Color({
         control={control}
         render={({ field }) => (
           <>
-            {Object.entries(DEFECATION_COLOR).map(([key, value]) => (
+            {Object.entries(DEFECATION_COLOR).map(([key, [label, color]]) => (
               <button
                 type="button"
                 onClick={() => {
@@ -35,9 +35,9 @@ export default function Color({
                     'w-10 h-10 rounded-[10px]',
                     field.value === key && 'border-[1px] border-white'
                   )}
-                  style={{ backgroundColor: value[1] }}
+                  style={{ backgroundColor: color }}
                 />
-                <div className="text-sm font-normal">{value[0]}</div>
+                <div className="text-sm font-normal">{label}</div>
               </button>
             ))}
           </>
