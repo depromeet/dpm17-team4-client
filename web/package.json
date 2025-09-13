@@ -13,9 +13,11 @@
     "@tanstack/react-query": "5.87.1",
     "axios": "1.11.0",
     "firebase-admin": "^13.5.0",
+    "lucide-react": "^0.542.0",
     "next": "15.5.2",
     "react": "19.1.0",
-    "react-dom": "19.1.0"
+    "react-dom": "19.1.0",
+    "tailwind-merge": "^3.3.1"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.2.4",
