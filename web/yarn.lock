@@ -12,7 +12,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@biomejs/biome@npm:^2.2.2":
+"@biomejs/biome@npm:^2.2.4":
   version: 2.2.4
   resolution: "@biomejs/biome@npm:2.2.4"
   dependencies:
@@ -2733,7 +2733,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "web@workspace:."
   dependencies:
-    "@biomejs/biome": "npm:^2.2.2"
+    "@biomejs/biome": "npm:^2.2.4"
     "@tailwindcss/postcss": "npm:^4"
     "@tanstack/react-query": "npm:5.87.1"
     "@tanstack/react-query-devtools": "npm:5.87.1"
