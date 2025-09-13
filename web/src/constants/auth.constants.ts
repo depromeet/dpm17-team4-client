@@ -18,5 +18,5 @@ export const AUTH_CONSTANTS = {
 
 // 인증 설정
 export const AUTH_CONFIG = {
-  USE_REDIRECT_FLOW: true, // 리다이렉트 플로우 사용 여부
+  USE_REDIRECT_FLOW: false, // 리다이렉트 플로우 사용 여부
 } as const;

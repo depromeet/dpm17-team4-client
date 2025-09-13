@@ -1,6 +1,7 @@
 import { type NextRequest, NextResponse } from 'next/server';
 import { AUTH_CONSTANTS } from './constants/auth.constants';
 import { PAGE_ROUTES, PUBLIC_PATHS } from './constants/route.constants';
+import { getSessionFromServer } from './lib/session/index';
 
 const isPublicPath = (pathname: string) => {
   return PUBLIC_PATHS.some((path) => {

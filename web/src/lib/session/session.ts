@@ -5,6 +5,7 @@ import type { SessionData } from './types';
 
 const COOKIE_NAME = AUTH_CONSTANTS.SESSION_COOKIE_NAME;
 const COOKIE_MAX_AGE = AUTH_CONSTANTS.COOKIE_MAX_AGE;
+
 export const sessionOptions: SessionOptions = {
   password:
     process.env.SECRET_COOKIE_PASSWORD ||

@@ -61,6 +61,7 @@ export function useAuth(): UseAuthReturn {
         if (clearCache) {
           clearClientSessionCache();
         }
+
         const session = await getSessionFromClient();
         updateAuthState(session);
       } catch (error) {

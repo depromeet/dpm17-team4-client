@@ -17,6 +17,7 @@ export async function GET(request: NextRequest) {
     if (!isLoginError) {
       return NextResponse.redirect(new URL(PAGE_ROUTES.AUTH, request.url));
     }
+
     /**내부 로그인 API 호출하여 세션에 토큰 저장*/
     const loginUrl = new URL(API_ROUTES.AUTH_LOGIN, request.url);
     const loginResponse = await fetch(loginUrl, {
@@ -26,6 +27,7 @@ export async function GET(request: NextRequest) {
       },
       body: JSON.stringify({ code }),
     });
+
     if (!loginResponse.ok) {
       throw new Error(`로그인 API 호출 실패: ${loginResponse.status}`);
     }
