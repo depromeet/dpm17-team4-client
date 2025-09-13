@@ -55,6 +55,7 @@ export const POST = async (req: NextRequest) => {
 async function handleMockFlow(data: SessionData) {
   const session = await getSessionFromServer();
 
+  // 세션에 토큰 정보 저장
   session.isLoggedIn = true;
   session.accessToken = data.accessToken;
   session.refreshToken = data.refreshToken;
