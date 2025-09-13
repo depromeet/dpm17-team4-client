@@ -27,6 +27,8 @@ export const DefecationDetail = () => {
         return <div>TIME_TAKEN</div>;
       case 'OPTIONAL':
         return <div>OPTIONAL</div>;
+      default:
+        return <DefenationColor />;
     }
   };
 
