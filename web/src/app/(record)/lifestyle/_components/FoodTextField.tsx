@@ -20,7 +20,7 @@ export const FoodTextField = () => {
   return (
     <div>
       <div className="px-[1rem]">
-        <div className="flex justify-between align-center">
+        <div className="flex justify-between items-center">
           <div className="text-h4 text-gray-400">먹은 음식</div>
           <Button size="32" color="secondary">
             + 음식 추가
