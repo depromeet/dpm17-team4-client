@@ -1,11 +1,12 @@
 'use client';
 
+import { ReactNode } from 'react';
 import { DefecationProvider } from './_components/providers/defecation-providers';
 
 export default function DefecationLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   return <DefecationProvider>{children}</DefecationProvider>;
 }
