@@ -1,4 +1,5 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+@config "../../tailwind.config.ts";
 
 :root {
   --background: #ffffff;
@@ -47,7 +48,8 @@ body {
 
 /* 터치 디바이스 최적화 */
 @media (hover: none) and (pointer: coarse) {
-  button, a {
+  button,
+  a {
     min-height: 44px;
     min-width: 44px;
   }
