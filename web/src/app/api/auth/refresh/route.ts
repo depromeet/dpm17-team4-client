@@ -76,6 +76,7 @@ export const POST = async (req: NextRequest) => {
       );
     }
     responseWithDeletedCookie.cookies.delete('temp_user');
+
     return responseWithDeletedCookie;
   } catch (error) {
     console.error('Access Token 재발급 실패:', error);
