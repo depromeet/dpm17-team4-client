@@ -1,30 +1,31 @@
 import { useState } from 'react';
+import Image from 'next/image';
 
 const STRESS_LEVELS = [
   {
     id: 'very-low',
     range: '0~20',
-    imageUrl: '',
+    imageUrl: '/images/stress-very-low.png',
   },
   {
     id: 'low',
     range: '21~40',
-    imageUrl: '',
+    imageUrl: '/images/stress-low.png',
   },
   {
     id: 'medium',
     range: '41~60',
-    imageUrl: '',
+    imageUrl: '/images/stress-medium.png',
   },
   {
     id: 'high',
     range: '61~80',
-    imageUrl: '',
+    imageUrl: '/images/stress-high.png',
   },
   {
     id: 'very-high',
     range: '81~100',
-    imageUrl: '',
+    imageUrl: '/images/stress-very-high.png',
   },
 ] as const;
 
@@ -45,10 +46,11 @@ export const StressForm = () => {
           오늘 하루 스트레스 점수는 어떤가요?
         </div>
 
-        <div className="flex justify-center gap-[1.5rem] overflow-scroll px-[1.25rem]">
+        <div className="flex justify-center gap-[1.5rem] overflow-scroll pl-[4.8rem]">
           {STRESS_LEVELS.map((level) => (
             <button
               key={level.id}
+              type="button"
               onClick={() => handleLevelSelect(level.id)}
               className="flex flex-col items-center gap-[0.5rem] transition-all duration-200"
             >
@@ -59,9 +61,11 @@ export const StressForm = () => {
                     : 'border-4 border-transparent'
                 }`}
               >
-                <img
+                <Image
                   src={level.imageUrl}
                   alt={`stress level ${level.range}`}
+                  width={56}
+                  height={56}
                   className="w-full h-full object-cover"
                 />
               </div>
