@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { DefecationProvider } from './_components/providers/defecation-providers';
 
 export default function DefecationLayout({
