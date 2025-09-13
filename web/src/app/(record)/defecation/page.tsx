@@ -11,10 +11,13 @@ export default function DefecationPage() {
       <div className="text-start space-y-6">
         {/* 배변 시간 선택 영역 */}
         <DefecationTime />
+
         {/* 배변 시도 기록 영역 */}
         <DefecationAttempt />
+
         {/* 배변 내용 상세 기록 영역 */}
         <DefecationDetail />
+
         {/* 저장 버튼 */}
         <DefecationSubmit />
       </div>

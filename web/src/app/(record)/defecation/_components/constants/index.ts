@@ -50,3 +50,7 @@ export const DEFECATION_TIME_TAKEN = {
   LESS_THAN_10_MINUTES: '10분 내',
   MORE_THAN_10_MINUTES: '10분 이상',
 } as const satisfies Record<string, string>;
+
+export const SCROLL_DELAY = 100;
+
+export const HOUR = 24;

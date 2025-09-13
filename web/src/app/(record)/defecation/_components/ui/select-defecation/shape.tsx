@@ -6,10 +6,7 @@ import { cn } from '@/utils/utils-cn';
 import { DEFECATION_SHAPE } from '../../constants';
 import type { DefecationFormValues } from '../../schemas';
 import type { DefecationTryShapeKey } from '../../types';
-import {
-  getEmojiShapeIcon,
-  getRealShapeIcon,
-} from '../../utils/utils-getShapeIcon';
+import { getEmojiShapeIcon, getRealShapeIcon } from '../../utils';
 import { SelectButton, Switch } from '../common';
 
 export default function Shape({
