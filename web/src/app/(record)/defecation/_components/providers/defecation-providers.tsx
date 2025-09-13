@@ -1,41 +1,27 @@
-import { createContext, useContext, useState } from 'react';
-import type { DefecationState } from '../types';
+'use client';
 
-interface DefecationContextType {
-  defecationState: DefecationState;
-  setDefecationState: (state: DefecationState) => void;
-}
-
-const DefecationContext = createContext<DefecationContextType | undefined>(
-  undefined
-);
-
-export const useDefecation = () => {
-  const context = useContext(DefecationContext);
-  if (!context) {
-    throw new Error('useDefecation must be used within a DefecationProvider');
-  }
-  return context;
-};
+import { zodResolver } from '@hookform/resolvers/zod';
+import { FormProvider, useForm } from 'react-hook-form';
+import { type DefecationFormValues, defecationFormSchema } from '../schemas';
 
 export const DefecationProvider = ({
   children,
 }: {
   children: React.ReactNode;
 }) => {
-  const [defecationState, setDefecationState] = useState<DefecationState>({
-    selectedWhen: new Date(),
-    selectedTry: '',
-    selectedColor: '',
-    selectedShape: '',
-    selectedPain: '',
-    selectedTimeTaken: '',
-    selectedOptional: '',
+  const methods = useForm<DefecationFormValues>({
+    resolver: zodResolver(defecationFormSchema),
+    defaultValues: {
+      selectedWhen: new Date(),
+      selectedTry: '',
+      selectedColor: '',
+      selectedShape: '',
+      selectedPain: '',
+      selectedTimeTaken: '',
+      selectedOptional: '',
+    },
+    mode: 'onChange',
   });
 
-  return (
-    <DefecationContext.Provider value={{ defecationState, setDefecationState }}>
-      {children}
-    </DefecationContext.Provider>
-  );
+  return <FormProvider {...methods}>{children}</FormProvider>;
 };
