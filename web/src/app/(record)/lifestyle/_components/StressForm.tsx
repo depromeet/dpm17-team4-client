@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import Image from 'next/image';
+import { useState } from 'react';
 
 const STRESS_LEVELS = [
   {
