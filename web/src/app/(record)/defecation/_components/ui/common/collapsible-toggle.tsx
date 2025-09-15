@@ -52,7 +52,9 @@ export function CollapsibleToggle({
 				)}
 			>
 				<div className="overflow-hidden">
-					<div className="pb-6 pt-[14px]">{children}</div>
+					<div className={`pb-6 ${id === "COLOR" ? "pt-5" : "pt-1"}`}>
+						{children}
+					</div>
 				</div>
 			</div>
 		</div>
