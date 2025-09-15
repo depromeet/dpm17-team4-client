@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { useState } from 'react';
 import { BottomSheet } from '@/components/BottomSheet';
 
@@ -55,6 +56,7 @@ export const TimeBottomSheet = ({
             {MEAL_TIMES.map((mealTime) => (
               <button
                 key={mealTime.id}
+                type="button"
                 onClick={() => handleTimeSelect(mealTime)}
                 className={`flex items-center gap-[0.5rem] px-[0.94rem] py-[0.69rem] rounded-[0.625rem] text-white text-body2-m transition-colors h-fit ${
                   selectedTime === mealTime.name
@@ -62,9 +64,11 @@ export const TimeBottomSheet = ({
                     : 'bg-gray-700 hover:bg-gray-600'
                 }`}
               >
-                <img
+                <Image
                   src={mealTime.imageUrl}
                   alt={mealTime.name}
+                  width={19}
+                  height={19}
                   className="w-[1.19rem] h-[1.19rem] object-cover"
                 />
                 <span className="whitespace-nowrap">{mealTime.name}</span>
