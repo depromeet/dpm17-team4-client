@@ -13,14 +13,12 @@ export const BottomSheet = ({
   children,
 }: BottomSheetProps) => {
   useEffect(() => {
+    const prevOverflow = document.body.style.overflow;
     if (isOpen) {
       document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
     }
-
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = prevOverflow;
     };
   }, [isOpen]);
 
