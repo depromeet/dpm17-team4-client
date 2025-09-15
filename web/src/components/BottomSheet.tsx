@@ -1,4 +1,4 @@
-import type { MouseEvent, PropsWithChildren } from 'react';
+import type { PropsWithChildren } from 'react';
 import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
@@ -24,16 +24,13 @@ export const BottomSheet = ({
 
   if (!isOpen) return null;
 
-  const handleBackdropClick = (e: MouseEvent) => {
-    if (e.target === e.currentTarget) {
-      onClose();
-    }
+  const handleBackdropClick = () => {
+    onClose();
   };
 
   return createPortal(
     <div
       className="fixed inset-0 z-50 flex items-end"
-      onClick={handleBackdropClick}
       onKeyDown={(e) => {
         if (e.key === 'Escape') {
           onClose();
@@ -44,7 +41,10 @@ export const BottomSheet = ({
       tabIndex={-1}
     >
       {/* Backdrop */}
-      <div className="absolute inset-0 bg-black/50 transition-opacity" />
+      <div
+        className="absolute inset-0 bg-black/50 transition-opacity"
+        onClick={handleBackdropClick}
+      />
 
       {/* Bottom Sheet */}
       <div
