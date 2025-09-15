@@ -1,3 +1,5 @@
+'use client';
+
 import type { PropsWithChildren } from 'react';
 import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
@@ -44,14 +46,8 @@ export const BottomSheet = ({
       <div
         className="absolute inset-0 bg-black/50 transition-opacity"
         onClick={handleBackdropClick}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            onClose();
-          }
-        }}
-        role="button"
-        tabIndex={0}
-        aria-label="backdrop"
+        role="presentation"
+        aria-hidden="true"
       />
 
       {/* Bottom Sheet */}
