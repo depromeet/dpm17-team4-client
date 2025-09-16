@@ -4,13 +4,8 @@ import { useState } from 'react';
 import ChevronLeft from '@/assets/home/IC_Chevron_Left.png';
 import ChevronRight from '@/assets/home/IC_Chevron_Right.png';
 import { cn } from '@/utils/utils-cn';
-import {
-  formatDate,
-  isNextDisabled,
-  isPrevDisabled,
-} from '../utils/date-Utils';
-import { getRecordPath } from '../utils/routing-Utils';
-import RecordButton from './RecordButton';
+import { formatDate, isNextDisabled, isPrevDisabled } from '../utils/util-date';
+import { getRecordPath } from '../utils/util-route';
 
 type RecordSectionProps = {
   navHeight: number;
