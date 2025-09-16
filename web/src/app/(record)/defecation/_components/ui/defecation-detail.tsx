@@ -11,6 +11,7 @@ import {
 	DefecationPain,
 	DefecationShape,
 	DefecationTimeTaken,
+	SelectPreview,
 } from "./select-defecation";
 
 export const DefecationDetail = () => {
@@ -52,6 +53,10 @@ export const DefecationDetail = () => {
 		() => handleSectionChange("OPTIONAL"),
 		[handleSectionChange],
 	);
+	const onOptionalSelect = useCallback(
+		() => handleSectionChange(null),
+		[handleSectionChange],
+	);
 
 	const renderSelectSection = (value: DefecationTryDetailKey) => {
 		switch (value) {
@@ -64,7 +69,12 @@ export const DefecationDetail = () => {
 			case "TIME_TAKEN":
 				return <DefecationTimeTaken onTimeTakenSelect={onTimeTakenSelect} />;
 			case "OPTIONAL":
-				return <DefecationOptional isOpen={openId === "OPTIONAL"} />;
+				return (
+					<DefecationOptional
+						isOpen={openId === "OPTIONAL"}
+						onOptionalSelect={onOptionalSelect}
+					/>
+				);
 			default:
 				return <DefecationColor />;
 		}
@@ -80,6 +90,7 @@ export const DefecationDetail = () => {
 						onToggle={() => {
 							handleToggle(key as DefecationTryDetailKey);
 						}}
+						previewr={<SelectPreview currentKey={key} />}
 						trigger={<p className="text-button-1">{value}</p>}
 					>
 						<div>{renderSelectSection(key as DefecationTryDetailKey)}</div>

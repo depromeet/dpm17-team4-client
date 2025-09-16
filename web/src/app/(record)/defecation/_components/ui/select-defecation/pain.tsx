@@ -10,12 +10,14 @@ const DEBOUNCE_DELAY = 300;
 
 export default function Pain({ onPainSelect }: { onPainSelect?: () => void }) {
 	const { control, setValue } = useFormContext<DefecationFormValues>();
-	const [painValue, setPainValue] = useState(0);
+	const [painValue, setPainValue] = useState<number | null>(null);
 
 	const debouncedPainValue = useDebounce(painValue, DEBOUNCE_DELAY);
 
 	useEffect(() => {
-		setValue("selectedPain", debouncedPainValue, { shouldValidate: true });
+		setValue("selectedPain", debouncedPainValue ?? -1, {
+			shouldValidate: true,
+		});
 
 		if (debouncedPainValue) {
 			onPainSelect?.();
@@ -32,7 +34,10 @@ export default function Pain({ onPainSelect }: { onPainSelect?: () => void }) {
 					name="selectedPain"
 					control={control}
 					render={() => (
-						<DraggableProgressBar value={painValue} onChange={setPainValue} />
+						<DraggableProgressBar
+							value={painValue ?? 0}
+							onChange={setPainValue}
+						/>
 					)}
 				/>
 			</div>

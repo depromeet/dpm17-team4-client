@@ -7,6 +7,7 @@ import { cn } from "@/utils/utils-cn";
 interface CollapsibleToggleProps {
 	id: string;
 	trigger: ReactNode;
+	previewr: ReactNode;
 	children: ReactNode;
 	className?: string;
 	isOpen: boolean;
@@ -16,6 +17,7 @@ interface CollapsibleToggleProps {
 export function CollapsibleToggle({
 	id,
 	trigger,
+	previewr,
 	children,
 	className,
 	isOpen,
@@ -37,12 +39,15 @@ export function CollapsibleToggle({
 				aria-controls={`collapsible-content-${id}`}
 			>
 				{trigger}
-				<ChevronThinIcon
-					type={isOpen ? "up" : "down"}
-					className={cn(
-						"will-change-transform transition-transform duration-300 text-white",
-					)}
-				/>
+				<div className="flex items-center justify-center gap-3.5">
+					{previewr}
+					<ChevronThinIcon
+						type={isOpen ? "up" : "down"}
+						className={cn(
+							"will-change-transform transition-transform duration-300 text-white",
+						)}
+					/>
+				</div>
 			</button>
 			<div
 				id={`collapsible-content-${id}`}

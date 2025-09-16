@@ -29,24 +29,9 @@ export const DEFECATION_SHAPE = {
 	PORRIDGE: "죽",
 } as const satisfies Record<string, string>;
 
-// NOTE(taehyeon): 통증 정도에 대한 디테일 작업은 UI 확정 후 적용
-export const DEFECATION_PAIN = {
-	A: "0",
-	B: "10",
-	C: "20",
-	D: "30",
-	E: "40",
-	F: "50",
-	G: "60",
-	H: "70",
-	I: "80",
-	J: "90",
-	K: "100",
-} as const satisfies Record<string, string>;
-
 export const DEFECATION_TIME_TAKEN = {
 	LESS_THAN_5_MINUTES: "5분 내",
-	LESS_THAN_10_MINUTES: "10분 내",
+	LESS_THAN_10_MINUTES: "10분 이내",
 	MORE_THAN_10_MINUTES: "10분 이상",
 } as const satisfies Record<string, string>;
 
