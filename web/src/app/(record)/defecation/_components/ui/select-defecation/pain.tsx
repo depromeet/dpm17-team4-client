@@ -24,7 +24,7 @@ export default function Pain({ onPainSelect }: { onPainSelect?: () => void }) {
 
 	return (
 		<div>
-			<p className="text-sm font-medium opacity-80 mb-3.5">
+			<p className="text-body3-r opacity-80 mb-3.5">
 				힘줄 때 느낀 고통은 어땠나요?
 			</p>
 			<div className="flex items-center justify-start gap-1">
