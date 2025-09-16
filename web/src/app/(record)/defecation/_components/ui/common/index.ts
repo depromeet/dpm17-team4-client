@@ -1,3 +1,4 @@
-export * from './collapsible-toggle';
-export * from './select-button';
-export * from './switch';
+export * from "./collapsible-toggle";
+export * from "./draggable-progress-bar";
+export * from "./select-button";
+export * from "./switch";

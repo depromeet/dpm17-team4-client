@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { DEFECATION_DETAIL } from "../constants";
-import { useScrollToSection } from "../hooks/useScrollToSection";
+import { useScrollToSection } from "../hooks";
 import type { DefecationTryDetailKey } from "../types";
 import { CollapsibleToggle } from "./common";
 import {
@@ -18,40 +18,51 @@ export const DefecationDetail = () => {
 	const { setRef, scrollToSection } =
 		useScrollToSection<DefecationTryDetailKey>();
 
-	const handleSectionChange = (id: DefecationTryDetailKey | null) => {
-		setOpenId(id);
-		if (id) {
-			scrollToSection(id);
-		}
-	};
+	const handleSectionChange = useCallback(
+		(id: DefecationTryDetailKey | null) => {
+			setOpenId(id);
+			if (id) {
+				scrollToSection(id);
+			}
+		},
+		[scrollToSection],
+	);
 
-	const handleToggle = (id: DefecationTryDetailKey) => {
-		const newOpenId = openId === id ? null : id;
-		handleSectionChange(newOpenId);
-	};
+	const handleToggle = useCallback(
+		(id: DefecationTryDetailKey) => {
+			const newOpenId = openId === id ? null : id;
+			handleSectionChange(newOpenId);
+		},
+		[openId, handleSectionChange],
+	);
+
+	const onColorSelect = useCallback(
+		() => handleSectionChange("SHAPE"),
+		[handleSectionChange],
+	);
+	const onShapeSelect = useCallback(
+		() => handleSectionChange("PAIN"),
+		[handleSectionChange],
+	);
+	const onPainSelect = useCallback(
+		() => handleSectionChange("TIME_TAKEN"),
+		[handleSectionChange],
+	);
+	const onTimeTakenSelect = useCallback(
+		() => handleSectionChange("OPTIONAL"),
+		[handleSectionChange],
+	);
 
 	const renderSelectSection = (value: DefecationTryDetailKey) => {
 		switch (value) {
 			case "COLOR":
-				return (
-					<DefecationColor onColorSelect={() => handleSectionChange("SHAPE")} />
-				);
+				return <DefecationColor onColorSelect={onColorSelect} />;
 			case "SHAPE":
-				return (
-					<DefecationShape onShapeSelect={() => handleSectionChange("PAIN")} />
-				);
+				return <DefecationShape onShapeSelect={onShapeSelect} />;
 			case "PAIN":
-				return (
-					<DefecationPain
-						onPainSelect={() => handleSectionChange("TIME_TAKEN")}
-					/>
-				);
+				return <DefecationPain onPainSelect={onPainSelect} />;
 			case "TIME_TAKEN":
-				return (
-					<DefecationTimeTaken
-						onTimeTakenSelect={() => handleSectionChange("OPTIONAL")}
-					/>
-				);
+				return <DefecationTimeTaken onTimeTakenSelect={onTimeTakenSelect} />;
 			case "OPTIONAL":
 				return <DefecationOptional isOpen={openId === "OPTIONAL"} />;
 			default:
