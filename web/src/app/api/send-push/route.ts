@@ -1,99 +1,56 @@
-import type { ServiceAccount } from 'firebase-admin';
-import * as admin from 'firebase-admin';
 import { type NextRequest, NextResponse } from 'next/server';
 
-// NOTE(seonghyun): Firebase Admin SDK 초기화
-let firebaseInitialized = false;
-
-function initializeFirebase() {
-  if (firebaseInitialized || admin.apps.length > 0) {
-    return;
-  }
-
-  // NOTE(seonghyun): 환경변수에서 서비스 계정 정보 가져오기
-  const projectId = process.env.FIREBASE_PROJECT_ID;
-  const privateKey = process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n');
-  const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
-
-  if (!projectId || !privateKey || !clientEmail) {
-    console.warn(
-      'Firebase 환경변수가 설정되지 않았습니다. 푸시 알림 기능이 비활성화됩니다.'
-    );
-    firebaseInitialized = true;
-    return;
-  }
-
-  const serviceAccount = {
-    projectId,
-    privateKey,
-    clientEmail,
-  } as ServiceAccount;
-
-  admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-  });
-
-  firebaseInitialized = true;
-}
-
-// NOTE(seonghyun): Firebase Cloud Messaging을 사용하여 알림 전송
-async function sendFCMPushNotification(
+// NOTE(seonghyun): Expo Push API를 사용하여 알림 전송
+async function sendExpoPushNotification(
   token: string,
   title: string,
   body: string
 ) {
   try {
     const message = {
-      token,
-      notification: {
-        title,
-        body,
-      },
+      to: token,
+      title,
+      body,
+      sound: 'default',
       data: {
         title,
         body,
         timestamp: new Date().toISOString(),
       },
-      android: {
-        notification: {
-          sound: 'default',
-        },
-      },
-      apns: {
-        payload: {
-          aps: {
-            sound: 'default',
-          },
-        },
-      },
     };
 
-    const response = await admin.messaging().send(message);
-    return { success: true, messageId: response };
+    console.log('📤 Expo Push 메시지 전송 시도:', {
+      token: `${token.substring(0, 20)}...`,
+      title,
+      body,
+    });
+
+    const response = await fetch('https://exp.host/--/api/v2/push/send', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Accept-encoding': 'gzip, deflate',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(message),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.text();
+      throw new Error(`Expo Push API 오류: ${response.status} - ${errorData}`);
+    }
+
+    const result = await response.json();
+    console.log('✅ Expo Push 메시지 전송 성공:', result);
+    return { success: true, result };
   } catch (error) {
-    console.error('FCM Push 전송 오류:', error);
+    console.error('❌ Expo Push 전송 오류:', error);
     throw error;
   }
 }
 
 export async function POST(request: NextRequest) {
   try {
-    // Firebase 초기화 시도
-    initializeFirebase();
-
-    // Firebase가 초기화되지 않은 경우 (환경변수 없음)
-    if (!admin.apps.length) {
-      return NextResponse.json(
-        {
-          error:
-            'Firebase 환경변수가 설정되지 않았습니다. 푸시 알림 기능을 사용할 수 없습니다.',
-          details:
-            'FIREBASE_PROJECT_ID, FIREBASE_PRIVATE_KEY, FIREBASE_CLIENT_EMAIL 환경변수를 설정해주세요.',
-        },
-        { status: 503 }
-      );
-    }
-
     const { title, body, targetToken } = await request.json();
 
     if (!title || !body) {
@@ -130,7 +87,7 @@ export async function POST(request: NextRequest) {
         );
       }
 
-      const result = await sendFCMPushNotification(targetToken, title, body);
+      const result = await sendExpoPushNotification(targetToken, title, body);
       results.push({
         token: targetToken,
         deviceName: targetDevice.deviceName,
@@ -140,7 +97,7 @@ export async function POST(request: NextRequest) {
       // NOTE(seonghyun): 모든 등록된 토큰에 전송
       for (const tokenData of tokens) {
         try {
-          const result = await sendFCMPushNotification(
+          const result = await sendExpoPushNotification(
             tokenData.token,
             title,
             body
