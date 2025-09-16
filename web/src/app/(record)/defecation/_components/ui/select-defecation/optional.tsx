@@ -1,36 +1,60 @@
-'use client';
+"use client";
 
-import { useEffect, useRef } from 'react';
-import { useFormContext } from 'react-hook-form';
-import type { DefecationFormValues } from '../../schemas';
+import { useEffect, useRef, useState } from "react";
+import { useFormContext } from "react-hook-form";
+import { DeleteIcon } from "@/components";
+import type { DefecationFormValues } from "../../schemas";
 
 export default function Optional({ isOpen }: { isOpen: boolean }) {
-  const { register } = useFormContext<DefecationFormValues>();
-  const { ref, ...rest } = register('selectedOptional');
-  const inputRef = useRef<HTMLInputElement | null>(null);
+	const { register } = useFormContext<DefecationFormValues>();
+	const { ref, ...rest } = register("selectedOptional");
 
-  useEffect(() => {
-    if (isOpen && inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, [isOpen]);
+	const [showDelete, setShowDelete] = useState(false);
+	const inputRef = useRef<HTMLInputElement | null>(null);
 
-  return (
-    <div>
-      <p className="text-sm font-medium opacity-80 mb-5">
-        출혈, 악취, 복용 약 등 특이사항을 메모해요!
-      </p>
-      <input
-        {...rest}
-        ref={(e) => {
-          ref(e);
-          inputRef.current = e;
-        }}
-        type="text"
-        placeholder="ex. 출혈이 많이 났어요 (최대 20자)"
-        maxLength={20}
-        className="w-full h-6 bg-transparent border-b-[1px] border-b-white/30 text-sm font-normal focus:outline-none"
-      />
-    </div>
-  );
+	useEffect(() => {
+		if (isOpen && inputRef.current) {
+			inputRef.current.focus();
+		}
+	}, [isOpen]);
+
+	return (
+		<div>
+			<p className="text-body3-r text-white opacity-80 mb-5">
+				출혈, 악취, 복용 약 등 특이사항을 메모해요!
+			</p>
+			<div className="relative">
+				<input
+					{...rest}
+					ref={(e) => {
+						ref(e);
+						inputRef.current = e;
+					}}
+					type="text"
+					placeholder="ex. 출혈이 많이 났어요 (최대 30자)"
+					maxLength={30}
+					onChange={(e) => {
+						setShowDelete(e.target.value.length > 0);
+					}}
+					className="w-full h-6 pb-2 pl-2 pr-6 bg-transparent border-b-[1px] border-b-white/30 text-sm font-normal focus:outline-none focus:border-b-white"
+				/>
+				{showDelete && (
+					<button
+						className="absolute right-0 top-0"
+						type="button"
+						onClick={() => {
+							if (inputRef.current) {
+								inputRef.current.value = "";
+							}
+							inputRef.current?.focus();
+							setShowDelete(false);
+							rest.onChange({ target: { value: "" } });
+						}}
+					>
+						<DeleteIcon className="text-gray-700" />
+					</button>
+				)}
+			</div>
+		</div>
+	);
 }
