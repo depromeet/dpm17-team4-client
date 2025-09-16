@@ -310,7 +310,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hookform/resolvers@npm:^5.2.2":
+"@hookform/resolvers@npm:^5.2.1":
   version: 5.2.2
   resolution: "@hookform/resolvers@npm:5.2.2"
   dependencies:
@@ -2816,7 +2816,7 @@ __metadata:
   resolution: "web@workspace:."
   dependencies:
     "@biomejs/biome": "npm:^2.2.4"
-    "@hookform/resolvers": "npm:^5.2.2"
+    "@hookform/resolvers": "npm:^5.2.1"
     "@tailwindcss/postcss": "npm:^4"
     "@tanstack/react-query": "npm:5.87.1"
     "@tanstack/react-query-devtools": "npm:5.87.1"
@@ -2835,7 +2835,7 @@ __metadata:
     tailwind-merge: "npm:^3.3.1"
     tailwindcss: "npm:^4"
     typescript: "npm:^5"
-    zod: "npm:^4.1.8"
+    zod: "npm:^4.1.5"
   languageName: unknown
   linkType: soft
 
@@ -2942,7 +2942,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zod@npm:^4.1.8":
+"zod@npm:^4.1.5":
   version: 4.1.8
   resolution: "zod@npm:4.1.8"
   checksum: 10c0/5eae39da09d7bd0564a30dfd2348811e4e2e7dd15955d8f3444f8e196f35e5422b1482eda234b722fafb0738f4a8b718adb042b860936bfdd2cc19cdbdac8a9a
