@@ -41,7 +41,7 @@ export default function Shape({
 										field.onChange(key);
 										onShapeSelect?.();
 									}}
-									className="h-22 w-36.5 px-4 py-[13px]"
+									className="h-22 min-w-36.5 px-4 py-[13px]"
 								>
 									<div className="flex flex-col items-center justify-around gap-2">
 										{showType === "EMOJI"
