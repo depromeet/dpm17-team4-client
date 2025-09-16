@@ -24,11 +24,11 @@ const RecordSection = ({ navHeight }: RecordSectionProps) => {
     }
     setSelectedDate(newDate);
   };
-
-  const handleRecordClick = (type: 'defecation' | 'lifestyle') => {
-    const path = getRecordPath(type, selectedDate);
-    router.push(path);
-  };
+  // NOTE(yubin): RecordButton 브렌치 병합시 주석해제
+  // const handleRecordClick = (type: 'defecation' | 'lifestyle') => {
+  //   const path = getRecordPath(type, selectedDate);
+  //   router.push(path);
+  // };
 
   return (
     <section
@@ -67,16 +67,7 @@ const RecordSection = ({ navHeight }: RecordSectionProps) => {
         </button>
       </div>
       <div className="flex gap-[0.69rem] mt-4">
-        <RecordButton
-          title="이날의 뿡"
-          subtitle="배변 기록하기"
-          onClick={() => handleRecordClick('defecation')}
-        />
-        <RecordButton
-          title="이날의 냠"
-          subtitle="생활 기록하기"
-          onClick={() => handleRecordClick('lifestyle')}
-        />
+        {/* NOTE(yubin): RecordButton 컴포넌트 추가  */}
       </div>
     </section>
   );
