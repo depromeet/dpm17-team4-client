@@ -1,6 +1,7 @@
 "use client";
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { Bell } from 'lucide-react';
 import Image from 'next/image';
 <<<<<<< HEAD
@@ -13,13 +14,19 @@ import { BottomNavigation } from './_components/ui';
 import type { Tab } from './types';
 import MaskGroup from '@/assets/home/Mask group.svg';
 =======
+=======
+// biome-ignore assist/source/organizeImports: <explanation></explanation>
+>>>>>>> e6c6a31 (fix: RecordSection import 경로 수정 및 사용하지 않는 변수 정리)
 import { Bell } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import MaskGroup from "@/assets/home/Mask group.svg";
 import { BottomNavigation } from "./_components/ui";
 import type { Tab } from "./types";
+<<<<<<< HEAD
 >>>>>>> 1d431d7 (refactor: home-ui에서 BottomNavigation 관련 코드 제거)
+=======
+import MaskGroup from "@/assets/home/Mask group.svg";
+>>>>>>> e6c6a31 (fix: RecordSection import 경로 수정 및 사용하지 않는 변수 정리)
 
 export default function Home() {
 	const [activeTab, setActiveTab] = useState<Tab>("home");
