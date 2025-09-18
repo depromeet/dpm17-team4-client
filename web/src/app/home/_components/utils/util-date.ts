@@ -1,3 +1,5 @@
+import { DATE_LABELS, DATE_LIMITS, DAYS_OF_WEEK } from '@/constants';
+
 /**
  * 날짜를 한국어 형식으로 포맷팅합니다.
  * @param date - 포맷팅할 날짜
@@ -10,7 +12,7 @@ export const formatDate = (date: Date): string => {
 
   const month = date.getMonth() + 1;
   const day = date.getDate();
-  const dayOfWeek = ['일', '월', '화', '수', '목', '금', '토'][date.getDay()];
+  const dayOfWeek = DAYS_OF_WEEK[date.getDay()];
 
   // 날짜 비교를 위해 시간을 0으로 설정
   const dateOnly = new Date(
@@ -31,9 +33,9 @@ export const formatDate = (date: Date): string => {
 
   let suffix = '';
   if (dateOnly.getTime() === todayOnly.getTime()) {
-    suffix = ', 오늘';
+    suffix = `, ${DATE_LABELS.TODAY}`;
   } else if (dateOnly.getTime() === yesterdayOnly.getTime()) {
-    suffix = ', 어제';
+    suffix = `, ${DATE_LABELS.YESTERDAY}`;
   }
 
   return `${month}월 ${day}일(${dayOfWeek})${suffix}`;
@@ -47,7 +49,7 @@ export const formatDate = (date: Date): string => {
 export const isPrevDisabled = (selectedDate: Date): boolean => {
   const today = new Date();
   const sevenDaysAgo = new Date(today);
-  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - DATE_LIMITS.MAX_PREV_DAYS);
 
   const selectedDateOnly = new Date(
     selectedDate.getFullYear(),
