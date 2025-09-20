@@ -16,9 +16,9 @@ export const DefecationProvider = ({
       selectedTry: '',
       selectedColor: '',
       selectedShape: '',
-      selectedPain: '',
+      selectedPain: -1,
       selectedTimeTaken: '',
-      selectedOptional: '',
+      selectedOptional: 'initial',
     },
     mode: 'onChange',
   });

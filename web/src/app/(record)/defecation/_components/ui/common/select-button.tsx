@@ -18,10 +18,10 @@ export function SelectButton({
     <button
       type="button"
       className={cn(
-        'rounded-lg',
+        'rounded-xl',
         {
-          'bg-[#454551]': !isSelected,
-          'bg-[#5170FF]/50 border-[1px] border-[#5170FF]': isSelected,
+          'bg-gray-700': !isSelected,
+          'bg-primary-500/30 border-[1px] border-primary-600': isSelected,
         },
         className
       )}

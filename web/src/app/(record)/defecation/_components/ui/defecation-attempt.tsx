@@ -25,8 +25,9 @@ export const DefecationAttempt = () => {
             {Object.entries(DEFECATION_TRY).map(([_, value]) => (
               <button
                 className={cn(
-                  'flex-1 h-12 rounded-lg bg-[#2C2C35] text-[#9D9D9D] whitespace-nowrap flex items-center justify-center',
-                  selectedTry === value ? 'bg-[#5170FF] text-white' : ''
+                  'flex-1 h-12 rounded-[10px] bg-gray-800 text-white/40 whitespace-nowrap flex items-center justify-center',
+                  'transition-all duration-200',
+                  selectedTry === value ? 'bg-primary-600 text-white' : ''
                 )}
                 type="button"
                 key={value}
@@ -34,7 +35,7 @@ export const DefecationAttempt = () => {
                   handleClick(value, field);
                 }}
               >
-                <p className="text-base font-bold">{value}</p>
+                <p className="text-button-3">{value}</p>
               </button>
             ))}
           </>
