@@ -21,11 +21,6 @@ const RecordSection = ({ navHeight }: RecordSectionProps) => {
     }
     setSelectedDate(newDate);
   };
-  // NOTE(yubin): RecordButton 브렌치 병합시 주석해제
-  // const handleRecordClick = (type: 'defecation' | 'lifestyle') => {
-  //   const path = getRecordPath(type, selectedDate);
-  //   router.push(path);
-  // };
 
   return (
     <section
