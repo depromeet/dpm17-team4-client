@@ -1,9 +1,18 @@
-import { type ChangeEvent, useState } from 'react';
+import { type ChangeEvent, useState, useEffect } from 'react';
 import { useDebounce } from '@/hooks';
 import { FoodList } from './FoodList';
 import { TimeBottomSheet } from './TimeBottomSheet';
 
 const DEBOUNCE_DELAY = 300;
+
+// 시간 타입을 한글로 매핑
+const TIME_LABEL_MAP: Record<string, string> = {
+  'BREAKFAST': '아침',
+  'LUNCH': '점심',
+  'DINNER': '저녁',
+  'SNACK': '간식',
+  '시간': '시간'
+};
 
 interface FoodTextFieldProps {
   id: number;
@@ -28,6 +37,15 @@ export const FoodTextField = ({
   const [isFoodSelected, setIsFoodSelected] = useState(false);
   const [selectedTime, setSelectedTime] = useState(initialFoodTime);
   const [isTimeBottomSheetOpen, setIsTimeBottomSheetOpen] = useState(false);
+
+  // props가 변경될 때 내부 상태 업데이트
+  useEffect(() => {
+    setFoodName(initialFoodName);
+  }, [initialFoodName]);
+
+  useEffect(() => {
+    setSelectedTime(initialFoodTime);
+  }, [initialFoodTime]);
 
   const debouncedFoodName = useDebounce(foodName, DEBOUNCE_DELAY);
 
@@ -67,6 +85,9 @@ export const FoodTextField = ({
     setIsTimeBottomSheetOpen(false);
   };
 
+  // 선택된 시간이 식사 시간인지 확인
+  const isMealTimeSelected = selectedTime !== '시간' && selectedTime in TIME_LABEL_MAP;
+
   return (
     <div>
       <div>
@@ -75,9 +96,13 @@ export const FoodTextField = ({
           <button
             type="button"
             onClick={handleTimeClick}
-            className="bg-gray-600 text-gray-200 rounded-[0.5rem] px-[0.375rem] py-[0.25rem] flex gap-[0.25rem] hover:bg-gray-500 transition-colors"
+            className={`${
+              isMealTimeSelected 
+                ? 'bg-green-600 text-white hover:bg-green-500' 
+                : 'bg-gray-600 text-gray-200 hover:bg-gray-500'
+            } rounded-[0.5rem] px-[0.375rem] py-[0.25rem] flex gap-[0.25rem] transition-colors`}
           >
-            {selectedTime}
+            {TIME_LABEL_MAP[selectedTime] || selectedTime}
           </button>
 
           <input

@@ -1,44 +1,44 @@
-import { useState } from 'react';
 import { Button } from '@/components';
 import { FoodTextField } from './FoodTextField';
+import type { Food } from '@/types/dto/lifestyle.dto';
 
-interface FoodData {
-  id: number;
-  foodName: string;
-  foodTime: string;
+interface FoodListContainerProps {
+  foods: Food[];
+  setFoods: React.Dispatch<React.SetStateAction<Food[]>>;
 }
 
-export const FoodListContainer = () => {
-  const [foodTextFields, setFoodTextFields] = useState<FoodData[]>([{ id: 1, foodName: '', foodTime: '시간' }]);
-
+export const FoodListContainer = ({
+  foods,
+  setFoods
+}: FoodListContainerProps) => {
   const handleAddFood = () => {
-    const newId = Math.max(...foodTextFields.map(field => field.id)) + 1;
-    setFoodTextFields(prev => [...prev, { id: newId, foodName: '', foodTime: '시간' }]);
+    const newId = Math.max(...foods.map(food => food.id)) + 1;
+    setFoods(prev => [...prev, { id: newId, name: '', mealTime: '' }]);
   };
 
   const handleRemoveFood = (idToRemove: number) => {
-    if (foodTextFields.length > 1) {
-      setFoodTextFields(prev => prev.filter(field => field.id !== idToRemove));
+    if (foods.length > 1) {
+      setFoods(prev => prev.filter(food => food.id !== idToRemove));
     }
   };
 
   const handleFoodNameChange = (id: number, foodName: string) => {
-    setFoodTextFields(prev => 
-      prev.map(field => 
-        field.id === id ? { ...field, foodName } : field
+    setFoods(prev => 
+      prev.map(food => 
+        food.id === id ? { ...food, name: foodName } : food
       )
     );
   };
 
-  const handleFoodTimeChange = (id: number, foodTime: string) => {
-    setFoodTextFields(prev => 
-      prev.map(field => 
-        field.id === id ? { ...field, foodTime } : field
+  const handleFoodTimeChange = (id: number, mealTime: string) => {
+    setFoods(prev => 
+      prev.map(food => 
+        food.id === id ? { ...food, mealTime: mealTime as 'BREAKFAST' | 'LUNCH' | 'DINNER' | 'SNACK' } : food
       )
     );
   };
 
-  console.log(foodTextFields)
+  console.log(foods)
   return (
     <div>
       <div className="px-[1rem]">
@@ -48,16 +48,16 @@ export const FoodListContainer = () => {
             + 음식 추가
           </Button>
         </div>
-        {foodTextFields.map((field, index) => (
-          <div key={field.id} className="relative">
+        {foods.map((food) => (
+          <div key={food.id} className="relative">
             <FoodTextField 
-              id={field.id}
-              initialFoodName={field.foodName}
-              initialFoodTime={field.foodTime}
-              onRemove={() => handleRemoveFood(field.id)}
-              onFoodNameChange={(foodName) => handleFoodNameChange(field.id, foodName)}
-              onFoodTimeChange={(foodTime) => handleFoodTimeChange(field.id, foodTime)}
-              canRemove={foodTextFields.length > 1}
+              id={food.id}
+              initialFoodName={food.name}
+              initialFoodTime={food.mealTime ? food.mealTime : '시간'}
+              onRemove={() => handleRemoveFood(food.id)}
+              onFoodNameChange={(foodName) => handleFoodNameChange(food.id, foodName)}
+              onFoodTimeChange={(foodTime) => handleFoodTimeChange(food.id, foodTime)}
+              canRemove={foods.length > 1}
             />
           </div>
         ))}
