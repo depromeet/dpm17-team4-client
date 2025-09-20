@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import { type ChangeEvent, useState } from 'react';
 
 const TOTAL_STEPS = 10;
 
