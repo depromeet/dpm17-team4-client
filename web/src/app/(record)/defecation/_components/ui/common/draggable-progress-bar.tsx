@@ -42,7 +42,7 @@ export function DraggableProgressBar({
       {...rest}
     >
       <div
-        role="progressbar"
+        role="slider"
         ref={progressBarRef}
         onMouseDown={handleMouseDown}
         onTouchStart={handleTouchStart}
