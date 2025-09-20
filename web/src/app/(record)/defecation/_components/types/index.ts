@@ -11,7 +11,7 @@ export interface DefecationState {
   selectedTry: string;
   selectedColor: string;
   selectedShape: string;
-  selectedPain: string;
+  selectedPain: number;
   selectedTimeTaken: string;
   selectedOptional: string;
 }
