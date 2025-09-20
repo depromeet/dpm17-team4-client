@@ -4,12 +4,12 @@ import { Bell } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import MaskGroup from '@/assets/home/Mask group.svg';
-import { BottomNavigation } from './_components/ui';
+import { BottomNavigation, RecordSection } from './_components/ui';
 import type { Tab } from './types';
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<Tab>('home');
-  const [_navHeight, setNavHeight] = useState(0);
+  const [navHeight, setNavHeight] = useState(0);
   const navRef = useRef<HTMLElement>(null);
 
   const handleTabClick = (tabName: Tab) => {
@@ -64,7 +64,7 @@ export default function Home() {
         </div>
       </main>
       {/* 기록하기 영역 */}
-      {/* <RecordSection navHeight={navHeight} /> */}
+      <RecordSection navHeight={navHeight} />
       {/* 하단 내비게이션 바*/}
       <BottomNavigation
         navRef={navRef}

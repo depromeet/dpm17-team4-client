@@ -1,15 +1,19 @@
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import ChevronLeft from '@/assets/home/IC_Chevron_Left.png';
 import ChevronRight from '@/assets/home/IC_Chevron_Right.png';
 import { cn } from '@/utils/utils-cn';
 import { formatDate, isNextDisabled, isPrevDisabled } from '../utils/util-date';
+import { getRecordPath } from '../utils/util-route';
+import RecordButton from './RecordButton';
 
 type RecordSectionProps = {
   navHeight: number;
 };
 
 const RecordSection = ({ navHeight }: RecordSectionProps) => {
+  const router = useRouter();
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   const handleDateChange = (direction: 'prev' | 'next') => {
@@ -20,6 +24,10 @@ const RecordSection = ({ navHeight }: RecordSectionProps) => {
       newDate.setDate(newDate.getDate() + 1);
     }
     setSelectedDate(newDate);
+  };
+  const handleRecordClick = (type: 'defecation' | 'lifestyle') => {
+    const path = getRecordPath(type, selectedDate);
+    router.push(path);
   };
 
   return (
@@ -58,8 +66,18 @@ const RecordSection = ({ navHeight }: RecordSectionProps) => {
           />
         </button>
       </div>
+      {/* RecordButton 컴포넌트는 record-button 브랜치에서 관리됩니다 */}
       <div className="flex gap-[0.69rem] mt-4">
-        {/* NOTE(yubin): RecordButton 컴포넌트 추가  */}
+        <RecordButton
+          title="이날의 뿡"
+          subtitle="배변 기록하기"
+          onClick={() => handleRecordClick('defecation')}
+        />
+        <RecordButton
+          title="이날의 냠"
+          subtitle="생활 기록하기"
+          onClick={() => handleRecordClick('lifestyle')}
+        />
       </div>
     </section>
   );
