@@ -8,6 +8,7 @@ type UseDragProgressProps = {
   step?: number;
   value: number;
   onChange: (value: number) => void;
+  onDragEnd?: () => void;
 };
 
 export const useDragProgress = ({
@@ -16,6 +17,7 @@ export const useDragProgress = ({
   step = 1,
   value,
   onChange,
+  onDragEnd,
 }: UseDragProgressProps) => {
   const progressBarRef = useRef<HTMLDivElement>(null);
   const isDraggingRef = useRef(false);
@@ -95,7 +97,8 @@ export const useDragProgress = ({
     document.body.style.cursor = '';
     document.removeEventListener('mousemove', handleMouseMove);
     document.removeEventListener('mouseup', handleMouseUp);
-  }, [handleMouseMove]);
+    onDragEnd?.();
+  }, [handleMouseMove, onDragEnd]);
 
   const handleMouseDown = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
@@ -122,7 +125,8 @@ export const useDragProgress = ({
     isDraggingRef.current = false;
     document.removeEventListener('touchmove', handleTouchMove);
     document.removeEventListener('touchend', handleTouchEnd);
-  }, [handleTouchMove]);
+    onDragEnd?.();
+  }, [handleTouchMove, onDragEnd]);
 
   const handleTouchStart = useCallback(
     (e: React.TouchEvent<HTMLDivElement>) => {

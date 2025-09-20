@@ -13,6 +13,7 @@ type DraggableProgressBarProps = Omit<
   step?: number;
   value: number;
   onChange: (value: number) => void;
+  onDragEnd?: () => void;
 };
 
 export function DraggableProgressBar({
@@ -21,6 +22,7 @@ export function DraggableProgressBar({
   step = 1,
   value,
   onChange,
+  onDragEnd,
   className,
   ...rest
 }: DraggableProgressBarProps) {
@@ -31,6 +33,7 @@ export function DraggableProgressBar({
       step,
       value,
       onChange,
+      onDragEnd,
     });
 
   return (

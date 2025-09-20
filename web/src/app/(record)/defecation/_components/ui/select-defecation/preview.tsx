@@ -51,7 +51,7 @@ export default function Preview({ currentKey }: { currentKey: string }) {
       }
       case 'PAIN': {
         const painKey = getValues('selectedPain');
-        if (painKey === -1) return null;
+        if (painKey === undefined) return null;
 
         const calculatedPainCode = () => {
           if (painKey >= 0 && painKey < 10) return '10';

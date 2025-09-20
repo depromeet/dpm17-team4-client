@@ -15,14 +15,10 @@ export default function Pain({ onPainSelect }: { onPainSelect?: () => void }) {
   const debouncedPainValue = useDebounce(painValue, DEBOUNCE_DELAY);
 
   useEffect(() => {
-    setValue('selectedPain', debouncedPainValue ?? -1, {
+    setValue('selectedPain', debouncedPainValue ?? undefined, {
       shouldValidate: true,
     });
-
-    if (debouncedPainValue) {
-      onPainSelect?.();
-    }
-  }, [debouncedPainValue, setValue, onPainSelect]);
+  }, [debouncedPainValue, setValue]);
 
   return (
     <div>
@@ -37,6 +33,7 @@ export default function Pain({ onPainSelect }: { onPainSelect?: () => void }) {
             <DraggableProgressBar
               value={painValue ?? 0}
               onChange={setPainValue}
+              onDragEnd={onPainSelect}
             />
           )}
         />
