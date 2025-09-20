@@ -46,6 +46,11 @@ export function DraggableProgressBar({
     >
       <div
         role="slider"
+        tabIndex={0}
+        aria-valuemin={min}
+        aria-valuemax={max}
+        aria-valuenow={value}
+        aria-orientation="horizontal"
         ref={progressBarRef}
         onMouseDown={handleMouseDown}
         onTouchStart={handleTouchStart}
