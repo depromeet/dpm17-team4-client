@@ -1,3 +1,3 @@
 export const EVENT_KEYS = {
-    ESCAPE: 'Escape',
-  } as const;
+  ESCAPE: 'Escape',
+} as const;
