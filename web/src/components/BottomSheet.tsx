@@ -3,6 +3,7 @@
 import type { PropsWithChildren } from 'react';
 import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import { EVENT_KEYS } from '@/constants';
 
 interface BottomSheetProps extends PropsWithChildren {
   isOpen: boolean;
@@ -34,7 +35,7 @@ export const BottomSheet = ({
     <div
       className="fixed inset-0 z-50 flex items-end"
       onKeyDown={(e) => {
-        if (e.key === 'Escape') {
+        if (e.key === EVENT_KEYS.ESCAPE) {
           onClose();
         }
       }}
