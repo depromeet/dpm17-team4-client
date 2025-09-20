@@ -23,13 +23,12 @@ export const FoodList = ({
 
   return (
     <div className="px-[1.25rem]">
-      <div className="text-white text-body2-sb mb-2">추천 음식</div>
       <div className="space-y-2">
         {mockFoodList.map((food, index) => (
           <div
             key={index}
             onClick={() => handleFoodClick(food)}
-            className="p-3 bg-gray-800 rounded-lg cursor-pointer hover:bg-gray-700 transition-colors text-white text-body2"
+            className="p-3 text-white text-body2"
           >
             {food}
           </div>
