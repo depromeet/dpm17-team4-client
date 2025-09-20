@@ -1,31 +1,33 @@
 import { type ChangeEvent, useState } from 'react';
-import { Button } from '@/components';
 import { useDebounce } from '@/hooks';
 import { FoodList } from './FoodList';
 
 const DEBOUNCE_DELAY = 300;
+
 export const FoodTextField = () => {
   const [foodName, setFoodName] = useState('');
+  const [isFoodSelected, setIsFoodSelected] = useState(false);
 
   const debouncedFoodName = useDebounce(foodName, DEBOUNCE_DELAY);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFoodName(e.target.value);
+    setIsFoodSelected(false); // 사용자가 타이핑하면 선택 상태 해제
   };
 
   const handleRemoveFood = () => {
     setFoodName('');
+    setIsFoodSelected(false);
+  };
+
+  const handleFoodSelect = (selectedFood: string) => {
+    setFoodName(selectedFood);
+    setIsFoodSelected(true); // 음식이 선택되면 선택 상태로 설정
   };
 
   return (
     <div>
       <div className="px-[1rem]">
-        <div className="flex justify-between items-center">
-          <div className="text-h4 text-gray-400">먹은 음식</div>
-          <Button size="32" color="secondary">
-            + 음식 추가
-          </Button>
-        </div>
         <div className="h-[0.9375rem]" />
         <div className="w-full p-[1rem] flex gap-[0.75rem] rounded-[0.94rem] bg-gray-800">
           <div className="bg-gray-600 text-gray-200 rounded-[0.5rem] px-[0.375rem] py-[0.25rem] flex gap-[0.25rem]">
@@ -49,7 +51,12 @@ export const FoodTextField = () => {
         </div>
       </div>
       <div className="h-[0.9375rem]" />
-      {debouncedFoodName && <FoodList debouncedFoodName={debouncedFoodName} />}
+      {debouncedFoodName && !isFoodSelected && (
+        <FoodList 
+          debouncedFoodName={debouncedFoodName} 
+          onFoodSelect={handleFoodSelect}
+        />
+      )}
     </div>
   );
 };
