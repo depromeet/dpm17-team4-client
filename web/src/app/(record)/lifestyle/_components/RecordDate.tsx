@@ -103,6 +103,7 @@ export const RecordDate = () => {
     <div className="px-[4.78rem] py-[1.25rem] text-h3 text-white text-center">
       <div className="flex items-center justify-between">
         <button
+          type="button"
           onClick={handlePreviousDay}
           className="hover:opacity-70 transition-opacity"
         >
@@ -110,6 +111,7 @@ export const RecordDate = () => {
         </button>
         <h1>{getDateDisplayText()}</h1>
         <button
+          type="button"
           onClick={handleNextDay}
           className="hover:opacity-70 transition-opacity"
         >

@@ -52,6 +52,7 @@ export const FoodList = ({
         {mockFoodList.map((food) => (
           <button
             key={food.id}
+            type="button"
             onClick={() => handleFoodClick(food.id, food.name)}
             className="w-full p-3 text-white text-body2 cursor-pointer hover:bg-gray-700 transition-colors rounded text-body2-sb text-left"
           >
