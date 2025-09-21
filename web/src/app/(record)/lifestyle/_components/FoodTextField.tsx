@@ -4,6 +4,7 @@ import { FoodList } from './FoodList';
 import { TimeBottomSheet } from './TimeBottomSheet';
 import { TIME_LABEL_MAP } from '../constants';
 import { MealTime } from '../types/entitites';
+import { ChevronDownIcon, MinusIcon, XIcon } from 'lucide-react';
 
 const DEBOUNCE_DELAY = 300;
 
@@ -51,12 +52,12 @@ export const FoodTextField = ({
   };
 
   const handleRemoveFood = () => {
-    if (canRemove && onRemove) {
-      onRemove(); // 전체 FoodTextField 삭제
+    if (isFoodSelected && canRemove && onRemove) {
+      onRemove();
     } else {
-      setFoodName(''); // 텍스트만 지우기
+      setFoodName('');
       setIsFoodSelected(false);
-      onFoodChange?.(-1, ''); // 빈 문자열로 업데이트, foodId는 -1로 유지
+      onFoodChange?.(-1, '');
     }
   };
 
@@ -88,7 +89,7 @@ export const FoodTextField = ({
     <div>
       <div>
         <div className="h-[0.9375rem]" />
-        <div className="w-full p-[1rem] flex gap-[0.75rem] rounded-[0.94rem] bg-gray-800">
+        <div className="w-full p-[1rem] flex gap-[0.75rem] rounded-[0.94rem] bg-gray-800 items-center">
           <button
             type="button"
             onClick={handleTimeClick}
@@ -96,9 +97,10 @@ export const FoodTextField = ({
               isMealTimeSelected
                 ? 'bg-green-600 text-white hover:bg-green-500'
                 : 'bg-gray-600 text-gray-200 hover:bg-gray-500'
-            } rounded-[0.5rem] px-[0.375rem] py-[0.25rem] flex gap-[0.25rem] transition-colors`}
+            } rounded-[0.5rem] px-[0.375rem] py-[0.25rem] flex gap-[0.25rem] transition-colors text-body3-m items-center`}
           >
             {selectedTime in TIME_LABEL_MAP ? TIME_LABEL_MAP[selectedTime as MealTime] : '시간'}
+            <ChevronDownIcon className='w-[1rem] h-[1rem] text-gray-200'/>
           </button>
 
           <input
@@ -108,15 +110,13 @@ export const FoodTextField = ({
             onChange={handleInputChange}
             className="flex-1 text-white bg-transparent outline-none placeholder:text-gray-400"
           />
-          {
-            <button
-              type="button"
-              onClick={handleRemoveFood}
-              className="text-white hover:text-gray-300 transition-colors"
-            >
-              x
-            </button>
-          }
+          <button
+            type="button"
+            onClick={handleRemoveFood}
+            className="bg-gray-600 rounded-full w-[1.5rem] h-[1.5rem] flex items-center justify-center"
+          >
+            {isFoodSelected ? <MinusIcon className='w-[1rem] h-[1rem] text-gray-200'/> : <XIcon className='w-[1rem] h-[1rem] text-gray-200'/>}
+          </button>
         </div>
       </div>
 

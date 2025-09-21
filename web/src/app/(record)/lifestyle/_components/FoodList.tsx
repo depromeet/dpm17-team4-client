@@ -22,7 +22,7 @@ export const FoodList = ({
   };
 
   return (
-    <div className="px-[1.25rem]">
+    <div>
       <div className="space-y-2">
         {mockFoodList.map((food) => (
           <div
