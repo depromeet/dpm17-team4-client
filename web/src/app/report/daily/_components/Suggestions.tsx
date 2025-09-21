@@ -40,4 +40,4 @@ export const Suggestions = ({ suggestion }: SuggestionsProps) => {
       </div>
     </div>
   );
-};  
+};
