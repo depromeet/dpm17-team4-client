@@ -11,9 +11,9 @@ const DEBOUNCE_DELAY = 300;
 interface FoodTextFieldProps {
   id: number;
   initialFoodName: string;
-  initialFoodTime: MealTime;
+  initialFoodTime: MealTime | '';
   onRemove?: () => void;
-  onFoodNameChange?: (foodName: string) => void;
+  onFoodChange?: (foodId: number, foodName: string) => void;
   onFoodTimeChange?: (foodTime: MealTime) => void;
   canRemove?: boolean;
 }
@@ -23,7 +23,7 @@ export const FoodTextField = ({
   initialFoodName,
   initialFoodTime,
   onRemove,
-  onFoodNameChange,
+  onFoodChange,
   onFoodTimeChange,
   canRemove = false,
 }: FoodTextFieldProps) => {
@@ -47,7 +47,7 @@ export const FoodTextField = ({
     const newFoodName = e.target.value;
     setFoodName(newFoodName);
     setIsFoodSelected(false); // 사용자가 타이핑하면 선택 상태 해제
-    onFoodNameChange?.(newFoodName);
+    onFoodChange?.(-1, newFoodName); // foodId는 -1로 유지 (직접 입력)
   };
 
   const handleRemoveFood = () => {
@@ -56,14 +56,14 @@ export const FoodTextField = ({
     } else {
       setFoodName(''); // 텍스트만 지우기
       setIsFoodSelected(false);
-      onFoodNameChange?.(''); // 빈 문자열로 업데이트
+      onFoodChange?.(-1, ''); // 빈 문자열로 업데이트, foodId는 -1로 유지
     }
   };
 
-  const handleFoodSelect = (selectedFood: string) => {
-    setFoodName(selectedFood);
+  const handleFoodSelect = (foodId: number, foodName: string) => {
+    setFoodName(foodName);
     setIsFoodSelected(true); // 음식이 선택되면 선택 상태로 설정
-    onFoodNameChange?.(selectedFood);
+    onFoodChange?.(foodId, foodName); // 선택된 음식의 ID와 이름 업데이트
   };
 
   const handleTimeClick = () => {
@@ -83,6 +83,7 @@ export const FoodTextField = ({
   const isMealTimeSelected =
     selectedTime !== '' && selectedTime in TIME_LABEL_MAP;
 
+  console.log(isFoodSelected, '음식 선택됨')
   return (
     <div>
       <div>

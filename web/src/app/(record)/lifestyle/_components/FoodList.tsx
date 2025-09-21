@@ -1,6 +1,6 @@
 interface FoodListProps {
   debouncedFoodName: string;
-  onFoodSelect: (selectedFood: string) => void;
+  onFoodSelect: (foodId: number, foodName: string) => void;
 }
 
 export const FoodList = ({
@@ -10,27 +10,27 @@ export const FoodList = ({
   // TODO(seieun): debouncedFoodName으로 api fetch 해서 리스트로 뿌리는 로직 필요
   // 임시로 더미 데이터 사용
   const mockFoodList = [
-    `${debouncedFoodName} 김치찌개`,
-    `${debouncedFoodName} 된장찌개`,
-    `${debouncedFoodName} 불고기`,
-    `${debouncedFoodName} 비빔밥`,
-    `${debouncedFoodName} 김치`,
+    { id: 1, name: `${debouncedFoodName} 김치찌개` },
+    { id: 2, name: `${debouncedFoodName} 된장찌개` },
+    { id: 3, name: `${debouncedFoodName} 불고기` },
+    { id: 4, name: `${debouncedFoodName} 비빔밥` },
+    { id: 5, name: `${debouncedFoodName} 김치` },
   ];
 
-  const handleFoodClick = (food: string) => {
-    onFoodSelect(food);
+  const handleFoodClick = (foodId: number, foodName: string) => {
+    onFoodSelect(foodId, foodName);
   };
 
   return (
     <div className="px-[1.25rem]">
       <div className="space-y-2">
-        {mockFoodList.map((food, index) => (
+        {mockFoodList.map((food) => (
           <div
-            key={index}
-            onClick={() => handleFoodClick(food)}
+            key={food.id}
+            onClick={() => handleFoodClick(food.id, food.name)}
             className="p-3 text-white text-body2"
           >
-            {food}
+            {food.name}
           </div>
         ))}
       </div>

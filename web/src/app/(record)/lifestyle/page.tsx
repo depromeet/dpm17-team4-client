@@ -10,7 +10,7 @@ import { StressLevel } from './types/entitites';
 
 export default function LifestylePage() {
   const [foods, setFoods] = useState<Food[]>([
-    { id: -1, name: '', mealTime: '' },
+    { id: -1, foodId: -1, name: '', mealTime: '' },
   ]);
   const [water, setWater] = useState(0);
   const [stress, setStress] = useState<StressLevel | ''>('');
