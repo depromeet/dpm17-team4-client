@@ -2,7 +2,6 @@
 
 import { Suspense, useState } from 'react';
 import { FoodListContainer } from './_components/FoodListContainer';
-import { LifeStyleSubmit } from './_components/LifeStyleSubmit';
 import { RecordDate } from './_components/RecordDate';
 import { StressForm } from './_components/StressForm';
 import { WaterForm } from './_components/WaterForm';
@@ -35,17 +34,6 @@ export default function LifestylePage() {
       <div className="h-[1.75rem]" />
       <StressForm selectedLevel={stress} setSelectedLevel={setStress} />
       <div className="h-30" />
-      <Suspense
-        fallback={
-          <div className="fixed bottom-0 left-0 w-full h-30 z-10 pt-4 px-4 bg-gray-900">
-            <div className="w-full h-14 bg-gray-600 rounded-lg flex items-center justify-center text-white">
-              로딩 중...
-            </div>
-          </div>
-        }
-      >
-        <LifeStyleSubmit foods={foods} water={water} stress={stress} />
-      </Suspense>
     </div>
   );
 }

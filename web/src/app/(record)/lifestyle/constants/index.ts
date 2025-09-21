@@ -1,5 +1,12 @@
 import type { MealTime, StressLevel } from '../types/entitites';
 
+// 이미지 import
+import stressVeryLow from '../assets/stress-very-low.png';
+import stressLow from '../assets/stress-low.png';
+import stressMedium from '../assets/stress-medium.png';
+import stressHigh from '../assets/stress-high.png';
+import stressVeryHigh from '../assets/stree-very-high.png';
+
 export const MEAL_TIMES: {
   id: MealTime;
   name: string;
@@ -37,31 +44,31 @@ export const TIME_LABEL_MAP: Record<MealTime, string> = {
 export const STRESS_LEVELS: {
   id: StressLevel;
   range: string;
-  imageUrl: string;
+  imageUrl: any; // Next.js Image import 타입
 }[] = [
   {
     id: 'VERY_LOW',
     range: '0~20',
-    imageUrl: '/images/stress-very-low.png',
+    imageUrl: stressVeryLow,
   },
   {
     id: 'LOW',
     range: '21~40',
-    imageUrl: '/images/stress-low.png',
+    imageUrl: stressLow,
   },
   {
     id: 'MEDIUM',
     range: '41~60',
-    imageUrl: '/images/stress-medium.png',
+    imageUrl: stressMedium,
   },
   {
     id: 'HIGH',
     range: '61~80',
-    imageUrl: '/images/stress-high.png',
+    imageUrl: stressHigh,
   },
   {
     id: 'VERY_HIGH',
     range: '81~100',
-    imageUrl: '/images/stress-very-high.png',
+    imageUrl: stressVeryHigh,
   },
 ];

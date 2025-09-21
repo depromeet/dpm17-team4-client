@@ -38,7 +38,7 @@ export const WaterForm = memo(({ waterCups, setWaterCups }: WaterFormProps) => {
 
           {/* Range Labels */}
           <div className="flex justify-between w-full max-w-[20rem] mt-[1rem]">
-            <span className="text-body2 text-white">0잔</span>
+            <span className="text-body2 text-[#95E6FF]">0잔</span>
             <span className="text-body2 text-blue-400">10잔 이상</span>
           </div>
         </div>
