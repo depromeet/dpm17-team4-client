@@ -1,5 +1,5 @@
 import type { StaticImageData } from 'next/image';
-import stressVeryHigh from '../assets/stree-very-high.png';
+import stressVeryHigh from '../assets/stress-very-high.png';
 import stressHigh from '../assets/stress-high.png';
 import stressLow from '../assets/stress-low.png';
 import stressMedium from '../assets/stress-medium.png';
