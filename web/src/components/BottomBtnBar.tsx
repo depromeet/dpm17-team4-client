@@ -11,7 +11,13 @@ export const BottomBtnBar = ({
 }) => {
   return (
     <div className="fixed bottom-0 left-0 w-full h-30 z-10 pt-4 px-4 bg-gray-900">
-      <Button size="56" color="primary" fullWidth onClick={onSubmit} disabled={disabled}>
+      <Button
+        size="56"
+        color="primary"
+        fullWidth
+        onClick={onSubmit}
+        disabled={disabled}
+      >
         <p>{text}</p>
       </Button>
     </div>

@@ -22,8 +22,6 @@ export const LifeStyleSubmit = ({
   const { mutate, isPending } = useActivityRecordMutation();
 
   const handleSubmit = useCallback(() => {
-    
-
     // URL parameter에서 날짜 정보 가져오기
     const year =
       searchParams.get('year') || new Date().getFullYear().toString();
@@ -39,8 +37,8 @@ export const LifeStyleSubmit = ({
     ).toISOString();
 
     // 유효한 음식 데이터 필터링 및 매핑
-    const validFoods = foods.filter(food =>  food.mealTime !== '');
-    
+    const validFoods = foods.filter((food) => food.mealTime !== '');
+
     if (validFoods.length === 0) {
       alert('음식을 선택하고 식사 시간을 설정해주세요.');
       return;
@@ -50,9 +48,9 @@ export const LifeStyleSubmit = ({
     mutate({
       water,
       stress,
-      foods: validFoods.map(food => ({
+      foods: validFoods.map((food) => ({
         id: food.foodId,
-        mealTime: food.mealTime
+        mealTime: food.mealTime,
       })),
       occurredAt,
       onSuccess: () => {
