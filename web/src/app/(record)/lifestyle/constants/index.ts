@@ -1,6 +1,5 @@
 import type { MealTime, StressLevel } from '../types/entitites';
 
-// 이미지 import
 import stressVeryLow from '../assets/stress-very-low.png';
 import stressLow from '../assets/stress-low.png';
 import stressMedium from '../assets/stress-medium.png';
