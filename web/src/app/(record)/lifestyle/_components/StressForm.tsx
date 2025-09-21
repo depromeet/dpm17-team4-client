@@ -35,15 +35,15 @@ export const StressForm = memo(
                 <div
                   className={`w-[3.5rem] h-[3.5rem] rounded-full flex items-center justify-center transition-all duration-200 overflow-hidden ${
                     selectedLevel === level.id
-                      ? 'border-4 border-white'
-                      : 'border-4 border-transparent'
+                      ? 'bg-white'
+                      : 'bg-[#2c2c35]'
                   }`}
                 >
                   <Image
                     src={level.imageUrl}
                     alt={`stress level ${level.range}`}
-                    width={56}
-                    height={56}
+                    width={35}
+                    height={35}
                     className="w-full h-full object-cover"
                   />
                 </div>
