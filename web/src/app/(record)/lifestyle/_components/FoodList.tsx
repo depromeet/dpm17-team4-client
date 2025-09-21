@@ -21,6 +21,31 @@ export const FoodList = ({
     onFoodSelect(foodId, foodName);
   };
 
+  // debouncedFoodName과 일치하는 부분을 하이라이트하는 함수
+  const highlightText = (text: string, searchTerm: string) => {
+    if (!searchTerm.trim()) {
+      return <span className="text-white">{text}</span>;
+    }
+
+    const regex = new RegExp(`(${searchTerm})`, 'gi');
+    const parts = text.split(regex);
+
+    return parts.map((part, index) => {
+      if (regex.test(part)) {
+        return (
+          <span key={index} className="text-primary-400">
+            {part}
+          </span>
+        );
+      }
+      return (
+        <span key={index} className="text-white">
+          {part}
+        </span>
+      );
+    });
+  };
+
   return (
     <div>
       <div className="space-y-2">
@@ -28,9 +53,9 @@ export const FoodList = ({
           <div
             key={food.id}
             onClick={() => handleFoodClick(food.id, food.name)}
-            className="p-3 text-white text-body2"
+            className="p-3 text-white text-body2 cursor-pointer hover:bg-gray-700 transition-colors rounded text-body2-sb"
           >
-            {food.name}
+            {highlightText(food.name, debouncedFoodName)}
           </div>
         ))}
       </div>
