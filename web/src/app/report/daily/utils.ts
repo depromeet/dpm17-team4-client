@@ -1,4 +1,3 @@
-
 // NOTE(seonghyun): Enum 매핑 함수들
 export const getMealTimeLabel = (mealTime: string): string => {
   const mapping: Record<string, string> = {
