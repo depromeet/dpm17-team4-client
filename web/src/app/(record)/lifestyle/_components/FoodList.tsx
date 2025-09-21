@@ -33,13 +33,13 @@ export const FoodList = ({
     return parts.map((part, index) => {
       if (regex.test(part)) {
         return (
-          <span key={index} className="text-primary-400">
+          <span key={`highlight-${index}-${part}`} className="text-primary-400">
             {part}
           </span>
         );
       }
       return (
-        <span key={index} className="text-white">
+        <span key={`normal-${index}-${part}`} className="text-white">
           {part}
         </span>
       );
@@ -50,13 +50,14 @@ export const FoodList = ({
     <div>
       <div className="space-y-2">
         {mockFoodList.map((food) => (
-          <div
+          <button
             key={food.id}
+            type="button"
             onClick={() => handleFoodClick(food.id, food.name)}
-            className="p-3 text-white text-body2 cursor-pointer hover:bg-gray-700 transition-colors rounded text-body2-sb"
+            className="w-full p-3 text-white text-body2 cursor-pointer hover:bg-gray-700 transition-colors rounded text-body2-sb text-left"
           >
             {highlightText(food.name, debouncedFoodName)}
-          </div>
+          </button>
         ))}
       </div>
     </div>

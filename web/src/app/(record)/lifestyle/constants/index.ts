@@ -1,10 +1,10 @@
-import type { MealTime, StressLevel } from '../types/entitites';
-
-import stressVeryLow from '../assets/stress-very-low.png';
+import type { StaticImageData } from 'next/image';
+import stressHigh from '../assets/stress-high.png';
 import stressLow from '../assets/stress-low.png';
 import stressMedium from '../assets/stress-medium.png';
-import stressHigh from '../assets/stress-high.png';
-import stressVeryHigh from '../assets/stree-very-high.png';
+import stressVeryHigh from '../assets/stress-very-high.png';
+import stressVeryLow from '../assets/stress-very-low.png';
+import type { MealTime, StressLevel } from '../types/entitites';
 
 export const MEAL_TIMES: {
   id: MealTime;
@@ -43,7 +43,7 @@ export const TIME_LABEL_MAP: Record<MealTime, string> = {
 export const STRESS_LEVELS: {
   id: StressLevel;
   range: string;
-  imageUrl: any; // Next.js Image import 타입
+  imageUrl: StaticImageData;
 }[] = [
   {
     id: 'VERY_LOW',

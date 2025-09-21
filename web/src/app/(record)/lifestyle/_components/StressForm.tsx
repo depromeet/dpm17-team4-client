@@ -34,9 +34,7 @@ export const StressForm = memo(
               >
                 <div
                   className={`w-[3.5rem] h-[3.5rem] rounded-full flex items-center justify-center transition-all duration-200 overflow-hidden ${
-                    selectedLevel === level.id
-                      ? 'bg-white'
-                      : 'bg-[#2c2c35]'
+                    selectedLevel === level.id ? 'bg-white' : 'bg-[#2c2c35]'
                   }`}
                 >
                   <Image

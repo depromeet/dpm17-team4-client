@@ -1,20 +1,21 @@
-import { Image, Sticker } from 'lucide-react';
 import type { DefecationTryShapeKey } from '../types';
+
+//NOTE(taehyeon): 아이콘 assets 작업 완료 시 추후 변경
 
 const getRealShapeIcon = (shape: DefecationTryShapeKey) => {
   switch (shape) {
     case 'RABBIT':
-      return <Image />;
+      return <div className="w-9 h-9 bg-gray-600" />;
     case 'STONE':
-      return <Image />;
+      return <div className="w-9 h-9 bg-gray-600" />;
     case 'CORN':
-      return <Image />;
+      return <div className="w-9 h-9 bg-gray-600" />;
     case 'BANANA':
-      return <Image />;
+      return <div className="w-9 h-9 bg-gray-600" />;
     case 'CREAM':
-      return <Image />;
+      return <div className="w-9 h-9 bg-gray-600" />;
     case 'PORRIDGE':
-      return <Image />;
+      return <div className="w-9 h-9 bg-gray-600" />;
     default:
       return null;
   }
@@ -23,17 +24,17 @@ const getRealShapeIcon = (shape: DefecationTryShapeKey) => {
 const getEmojiShapeIcon = (shape: DefecationTryShapeKey) => {
   switch (shape) {
     case 'RABBIT':
-      return <Sticker />;
+      return <div className="w-9 h-9 bg-gray-600" />;
     case 'STONE':
-      return <Sticker />;
+      return <div className="w-9 h-9 bg-gray-600" />;
     case 'CORN':
-      return <Sticker />;
+      return <div className="w-9 h-9 bg-gray-600" />;
     case 'BANANA':
-      return <Sticker />;
+      return <div className="w-9 h-9 bg-gray-600" />;
     case 'CREAM':
-      return <Sticker />;
+      return <div className="w-9 h-9 bg-gray-600" />;
     case 'PORRIDGE':
-      return <Sticker />;
+      return <div className="w-9 h-9 bg-gray-600" />;
     default:
       return null;
   }

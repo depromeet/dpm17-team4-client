@@ -49,13 +49,13 @@ export const DefecationTime = () => {
 
         return (
           <div className="flex flex-col items-start justify-center gap-2">
-            <p className="text-sm font-normal">배변 시각</p>
+            <p className="text-h4">배변 시각</p>
             <button
               className="flex items-center gap-1"
               type="button"
               onClick={() => setIsOpen(!isOpen)}
             >
-              <p className="text-xl font-bold">{formatDate(currentDate)}</p>
+              <p className="text-h3">{formatDate(currentDate)}</p>
               <ChevronIcon
                 type="down"
                 className={cn(

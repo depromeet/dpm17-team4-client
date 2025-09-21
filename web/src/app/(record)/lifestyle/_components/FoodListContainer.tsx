@@ -14,7 +14,9 @@ export const FoodListContainer = memo(
   ({ foods, setFoods }: FoodListContainerProps) => {
     const handleAddFood = () => {
       //NOTE(seieun): food textfield 에 대한 식별자 id 추가, foodId 는 음식 고유 id
-      const newId = Math.max(...foods.map((food) => food.id)) + 1;
+      const newId = foods.length
+        ? Math.max(...foods.map((food) => food.id)) + 1
+        : 1;
       setFoods((prev) => [
         ...prev,
         { id: newId, foodId: -1, name: '', mealTime: '' },
@@ -81,7 +83,7 @@ export const FoodListContainer = memo(
                 initialFoodName={food.name}
                 initialFoodTime={food.mealTime ? food.mealTime : ''}
                 onRemove={() => handleRemoveFood(food.id)}
-                onFoodChange={(newFoodId, foodName) =>
+                onFoodChange={(_, newFoodId, foodName) =>
                   handleFoodChange(food.id, newFoodId, foodName)
                 }
                 onFoodTimeChange={(foodTime) =>

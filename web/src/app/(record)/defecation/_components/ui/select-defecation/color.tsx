@@ -37,7 +37,7 @@ export default function Color({
                   )}
                   style={{ backgroundColor: color }}
                 />
-                <div className="text-sm font-normal">{label}</div>
+                <div className="text-button-4">{label}</div>
               </button>
             ))}
           </>

@@ -29,9 +29,9 @@ export const RecordDate = () => {
   // 이전 날짜로 이동
   const handlePreviousDay = () => {
     const currentDate = new Date(
-      parseInt(year),
-      parseInt(month) - 1,
-      parseInt(date)
+      parseInt(year, 10),
+      parseInt(month, 10) - 1,
+      parseInt(date, 10)
     );
     currentDate.setDate(currentDate.getDate() - 1);
     updateDate(
@@ -44,9 +44,9 @@ export const RecordDate = () => {
   // 다음 날짜로 이동
   const handleNextDay = () => {
     const currentDate = new Date(
-      parseInt(year),
-      parseInt(month) - 1,
-      parseInt(date)
+      parseInt(year, 10),
+      parseInt(month, 10) - 1,
+      parseInt(date, 10)
     );
     currentDate.setDate(currentDate.getDate() + 1);
     updateDate(
@@ -65,9 +65,9 @@ export const RecordDate = () => {
   // 날짜 표시 텍스트 생성
   const getDateDisplayText = () => {
     const targetDate = new Date(
-      parseInt(year),
-      parseInt(month) - 1,
-      parseInt(date)
+      parseInt(year, 10),
+      parseInt(month, 10) - 1,
+      parseInt(date, 10)
     );
     const today = new Date();
 
@@ -89,13 +89,13 @@ export const RecordDate = () => {
     const dayName = getDayName(targetDate);
 
     if (diffDays === 0) {
-      return `${parseInt(month)}월 ${parseInt(date)}일 (${dayName}), 오늘`;
+      return `${parseInt(month, 10)}월 ${parseInt(date, 10)}일 (${dayName}), 오늘`;
     } else if (diffDays === -1) {
-      return `${parseInt(month)}월 ${parseInt(date)}일 (${dayName}), 어제`;
+      return `${parseInt(month, 10)}월 ${parseInt(date, 10)}일 (${dayName}), 어제`;
     } else if (diffDays === 1) {
-      return `${parseInt(month)}월 ${parseInt(date)}일 (${dayName}), 내일`;
+      return `${parseInt(month, 10)}월 ${parseInt(date, 10)}일 (${dayName}), 내일`;
     } else {
-      return `${parseInt(month)}월 ${parseInt(date)}일 (${dayName})`;
+      return `${parseInt(month, 10)}월 ${parseInt(date, 10)}일 (${dayName})`;
     }
   };
 
@@ -103,6 +103,7 @@ export const RecordDate = () => {
     <div className="px-[4.78rem] py-[1.25rem] text-h3 text-white text-center">
       <div className="flex items-center justify-between">
         <button
+          type="button"
           onClick={handlePreviousDay}
           className="hover:opacity-70 transition-opacity"
         >
@@ -110,6 +111,7 @@ export const RecordDate = () => {
         </button>
         <h1>{getDateDisplayText()}</h1>
         <button
+          type="button"
           onClick={handleNextDay}
           className="hover:opacity-70 transition-opacity"
         >

@@ -19,8 +19,8 @@ export default function Shape({
 
   return (
     <>
-      <div className="flex items-center justify-start gap-2.5 mb-4">
-        <p className="text-sm font-medium opacity-80">실제 모양 보기</p>
+      <div className="flex items-center justify-start gap-3 mb-4">
+        <p className="text-body3-r opacity-80">실제 모양 보기</p>
         <Switch
           checked={showType === 'REAL'}
           onCheckedChange={(checked) => setShowType(checked ? 'REAL' : 'EMOJI')}
@@ -41,16 +41,16 @@ export default function Shape({
                     field.onChange(key);
                     onShapeSelect?.();
                   }}
-                  className="h-21 py-3 px-[53px]"
+                  className="h-22 min-w-36.5 px-4 py-[13px]"
                 >
-                  <div className="flex flex-col items-center justify-center gap-1.5">
+                  <div className="flex flex-col items-center justify-around gap-2">
                     {showType === 'EMOJI'
                       ? getEmojiShapeIcon(key as DefecationTryShapeKey)
                       : getRealShapeIcon(key as DefecationTryShapeKey)}
 
                     <div
                       className={cn(
-                        'text-sm font-normal',
+                        'text-button-2',
                         field.value === key && 'text-white'
                       )}
                     >

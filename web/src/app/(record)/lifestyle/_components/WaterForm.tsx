@@ -9,7 +9,7 @@ interface WaterFormProps {
 
 export const WaterForm = memo(({ waterCups, setWaterCups }: WaterFormProps) => {
   const handleSliderChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setWaterCups(parseInt(e.target.value));
+    setWaterCups(parseInt(e.target.value, 10));
   };
 
   return (
