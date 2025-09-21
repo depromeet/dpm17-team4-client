@@ -13,7 +13,7 @@ interface FoodTextFieldProps {
   initialFoodName: string;
   initialFoodTime: MealTime | '';
   onRemove?: () => void;
-  onFoodChange?: (foodId: number, foodName: string) => void;
+  onFoodChange?: (id: number, foodId: number, foodName: string) => void;
   onFoodTimeChange?: (foodTime: MealTime) => void;
   canRemove?: boolean;
 }
@@ -49,7 +49,7 @@ export const FoodTextField = ({
     const newFoodName = e.target.value;
     setFoodName(newFoodName);
     setIsFoodSelected(false); // 사용자가 타이핑하면 선택 상태 해제
-    onFoodChange?.(-1, newFoodName); // foodId는 -1로 유지 (직접 입력)
+    onFoodChange?.(id, -1, newFoodName); // id와 foodId는 -1로 유지 (직접 입력)
   };
 
   const handleRemoveFood = () => {
@@ -58,14 +58,14 @@ export const FoodTextField = ({
     } else {
       setFoodName('');
       setIsFoodSelected(false);
-      onFoodChange?.(-1, '');
+      onFoodChange?.(id, -1, '');
     }
   };
 
   const handleFoodSelect = (foodId: number, foodName: string) => {
     setFoodName(foodName);
     setIsFoodSelected(true); // 음식이 선택되면 선택 상태로 설정
-    onFoodChange?.(foodId, foodName); // 선택된 음식의 ID와 이름 업데이트
+    onFoodChange?.(id, foodId, foodName); // 선택된 음식의 ID와 이름 업데이트
   };
 
   const handleTimeClick = () => {
