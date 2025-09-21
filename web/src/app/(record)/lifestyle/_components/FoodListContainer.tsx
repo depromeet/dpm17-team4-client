@@ -1,14 +1,16 @@
-import React from 'react';
+
 import { Button } from '@/components';
-import type { Food } from '@/types/dto/lifestyle.dto';
+import { Food } from '../types/dto';
 import { FoodTextField } from './FoodTextField';
+import { MealTime } from '../types/entitites';
+import { memo } from 'react';
 
 interface FoodListContainerProps {
   foods: Food[];
   setFoods: React.Dispatch<React.SetStateAction<Food[]>>;
 }
 
-export const FoodListContainer = React.memo(
+export const FoodListContainer = memo(
   ({ foods, setFoods }: FoodListContainerProps) => {
     const handleAddFood = () => {
       const newId = Math.max(...foods.map((food) => food.id)) + 1;
@@ -29,17 +31,13 @@ export const FoodListContainer = React.memo(
       );
     };
 
-    const handleFoodTimeChange = (id: number, mealTime: string) => {
+    const handleFoodTimeChange = (id: number, mealTime: MealTime) => {
       setFoods((prev) =>
         prev.map((food) =>
           food.id === id
             ? {
                 ...food,
-                mealTime: mealTime as
-                  | 'BREAKFAST'
-                  | 'LUNCH'
-                  | 'DINNER'
-                  | 'SNACK',
+                mealTime
               }
             : food
         )

@@ -1,34 +1,13 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import { BottomSheet } from '@/components/BottomSheet';
-
-const MEAL_TIMES = [
-  {
-    id: 'BREAKFAST',
-    name: '아침',
-    imageUrl: '',
-  },
-  {
-    id: 'LUNCH',
-    name: '점심',
-    imageUrl: '',
-  },
-  {
-    id: 'DINNER',
-    name: '저녁',
-    imageUrl: '',
-  },
-  {
-    id: 'SNACK',
-    name: '간식',
-    imageUrl: '',
-  },
-] as const;
+import { MealTime } from '../types/entitites';
+import { MEAL_TIMES } from '../constants';
 
 interface TimeBottomSheetProps {
   isOpen: boolean;
   onClose: () => void;
-  onTimeSelect: (time: string) => void;
+  onTimeSelect: (time: MealTime) => void;
 }
 
 export const TimeBottomSheet = ({

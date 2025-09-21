@@ -1,41 +1,15 @@
 import Image from 'next/image';
 import { memo } from 'react';
-
-const STRESS_LEVELS = [
-  {
-    id: 'VERY_LOW',
-    range: '0~20',
-    imageUrl: '/images/stress-very-low.png',
-  },
-  {
-    id: 'LOW',
-    range: '21~40',
-    imageUrl: '/images/stress-low.png',
-  },
-  {
-    id: 'MEDIUM',
-    range: '41~60',
-    imageUrl: '/images/stress-medium.png',
-  },
-  {
-    id: 'HIGH',
-    range: '61~80',
-    imageUrl: '/images/stress-high.png',
-  },
-  {
-    id: 'VERY_HIGH',
-    range: '81~100',
-    imageUrl: '/images/stress-very-high.png',
-  },
-] as const;
+import { STRESS_LEVELS } from '../constants';
+import { StressLevel } from '../types/entitites';
 
 interface StressFormProps {
-  selectedLevel: string;
-  setSelectedLevel: (level: string) => void;
+  selectedLevel: StressLevel | '';
+  setSelectedLevel: (level: StressLevel) => void;
 }
 
 export const StressForm = memo(({ selectedLevel, setSelectedLevel }: StressFormProps) => {
-  const handleLevelSelect = (levelId: string) => {
+  const handleLevelSelect = (levelId: StressLevel) => {
     setSelectedLevel(levelId);
   };
 
