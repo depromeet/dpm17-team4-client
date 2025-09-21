@@ -69,12 +69,31 @@ export const getScoreLabel = (score: number): string => {
 };
 
 // NOTE(seonghyun): 날짜 포맷팅 함수
-export const formatDate = (date: Date): string => {
+export const formatDate = (date: Date, now: Date = new Date()): string => {
   const month = date.getMonth() + 1;
   const day = date.getDate();
   const weekdays = ['일', '월', '화', '수', '목', '금', '토'];
   const weekday = weekdays[date.getDay()];
-  return `${month}월 ${day}일 (${weekday}), 오늘`;
+
+  // 자정 기준으로 일수 차이 계산
+  const dateStart = new Date(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate()
+  );
+  const nowStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const diffDays = Math.floor(
+    (dateStart.getTime() - nowStart.getTime()) / (1000 * 60 * 60 * 24)
+  );
+
+  let suffix = '';
+  if (diffDays === 0) {
+    suffix = ', 오늘';
+  } else if (diffDays === -1) {
+    suffix = ', 어제';
+  }
+
+  return `${month}월 ${day}일 (${weekday})${suffix}`;
 };
 
 // NOTE(seonghyun): 임시 - 식사 시간에 따른 이모지 반환
