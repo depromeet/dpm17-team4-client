@@ -1,10 +1,9 @@
-import type { MealTime, StressLevel } from '../types/entitites';
-
-import stressVeryLow from '../assets/stress-very-low.png';
+import stressVeryHigh from '../assets/stree-very-high.png';
+import stressHigh from '../assets/stress-high.png';
 import stressLow from '../assets/stress-low.png';
 import stressMedium from '../assets/stress-medium.png';
-import stressHigh from '../assets/stress-high.png';
-import stressVeryHigh from '../assets/stree-very-high.png';
+import stressVeryLow from '../assets/stress-very-low.png';
+import type { MealTime, StressLevel } from '../types/entitites';
 
 export const MEAL_TIMES: {
   id: MealTime;
