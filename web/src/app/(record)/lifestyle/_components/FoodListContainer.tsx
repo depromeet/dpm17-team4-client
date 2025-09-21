@@ -81,7 +81,7 @@ export const FoodListContainer = memo(
                 initialFoodName={food.name}
                 initialFoodTime={food.mealTime ? food.mealTime : ''}
                 onRemove={() => handleRemoveFood(food.id)}
-                onFoodChange={(_,newFoodId, foodName) =>
+                onFoodChange={(_, newFoodId, foodName) =>
                   handleFoodChange(food.id, newFoodId, foodName)
                 }
                 onFoodTimeChange={(foodTime) =>
