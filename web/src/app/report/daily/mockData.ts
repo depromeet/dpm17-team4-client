@@ -82,17 +82,17 @@ export const mockReportData: ReportData = {
     message: '장 상태를 개선하려면 이런 습관을 추천해요',
     items: [
       {
-        image: null, // JSX는 컴포넌트에서 생성
+        image: '/icons/water-droplet.png',
         title: '물 섭취량을 더 늘려보세요',
         content: '하루 권장 물 섭취량은 성인 기준 2L 예요',
       },
       {
-        image: null, // JSX는 컴포넌트에서 생성
+        image: '/icons/banana.png',
         title: '충분한 식이섬유가 중요해요',
         content: '과일과 채소를 섭취하면 좋은 흐름이 유지돼요',
       },
       {
-        image: null, // JSX는 컴포넌트에서 생성
+        image: '/icons/record.png',
         title: '지속적으로 배변을 기록해요',
         content: '배변이 잘 되는 나만의 루틴을 만들 수 있어요',
       },

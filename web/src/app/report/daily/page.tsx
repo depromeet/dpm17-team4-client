@@ -15,6 +15,7 @@ import {
   getWaterLevelLabel,
   getWaterNameLabel,
 } from './utils';
+import { Suggestions } from './_components/Suggestions';
 
 export default function DailyReportPage() {
   const [selectedPeriod, _setSelectedPeriod] = useState<ReportPeriod>('daily');
@@ -301,6 +302,8 @@ export default function DailyReportPage() {
         </p>
       </main>
 
+
+      <Suggestions suggestion={reportData.suggestion} />
       {/* TOEO(seonghyun): 하단 네비게이션 */}
       {/*<nav className="fixed bottom-0 left-0 right-0 bg-gray-900 border-t border-gray-700">*/}
       {/*  <div className="flex justify-around py-2">*/}

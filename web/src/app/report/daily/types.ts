@@ -84,7 +84,7 @@ export type Stress = {
 
 // NOTE(seonghyun): 추천 습관 관련 타입
 export type SuggestionItem = {
-  image: React.ReactNode;
+  image: string;
   title: string;
   content: string;
 };
