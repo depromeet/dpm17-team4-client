@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import { BottomSheet } from '@/components/BottomSheet';
-import { MealTime } from '../types/entitites';
 import { MEAL_TIMES } from '../constants';
+import type { MealTime } from '../types/entitites';
 
 interface TimeBottomSheetProps {
   isOpen: boolean;

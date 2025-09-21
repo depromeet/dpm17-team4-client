@@ -1,13 +1,12 @@
+import { ChevronDownIcon, MinusIcon, XIcon } from 'lucide-react';
 import { type ChangeEvent, useEffect, useState } from 'react';
 import { useDebounce } from '@/hooks';
+import { TIME_LABEL_MAP } from '../constants';
+import type { MealTime } from '../types/entitites';
 import { FoodList } from './FoodList';
 import { TimeBottomSheet } from './TimeBottomSheet';
-import { TIME_LABEL_MAP } from '../constants';
-import { MealTime } from '../types/entitites';
-import { ChevronDownIcon, MinusIcon, XIcon } from 'lucide-react';
 
 const DEBOUNCE_DELAY = 300;
-
 
 interface FoodTextFieldProps {
   id: number;
@@ -30,7 +29,9 @@ export const FoodTextField = ({
 }: FoodTextFieldProps) => {
   const [foodName, setFoodName] = useState(initialFoodName);
   const [isFoodSelected, setIsFoodSelected] = useState(false);
-  const [selectedTime, setSelectedTime] = useState(isFoodSelected ? initialFoodTime : '');
+  const [selectedTime, setSelectedTime] = useState(
+    isFoodSelected ? initialFoodTime : ''
+  );
   const [isTimeBottomSheetOpen, setIsTimeBottomSheetOpen] = useState(false);
 
   // props가 변경될 때 내부 상태 업데이트
@@ -84,7 +85,7 @@ export const FoodTextField = ({
   const isMealTimeSelected =
     selectedTime !== '' && selectedTime in TIME_LABEL_MAP;
 
-  console.log(isFoodSelected, '음식 선택됨')
+  console.log(isFoodSelected, '음식 선택됨');
   return (
     <div>
       <div>
@@ -99,8 +100,10 @@ export const FoodTextField = ({
                 : 'bg-gray-600 text-gray-200 hover:bg-gray-500'
             } rounded-[0.5rem] px-[0.375rem] py-[0.25rem] flex gap-[0.25rem] transition-colors text-body3-m items-center`}
           >
-            {selectedTime in TIME_LABEL_MAP ? TIME_LABEL_MAP[selectedTime as MealTime] : '시간'}
-            <ChevronDownIcon className='w-[1rem] h-[1rem] text-gray-200'/>
+            {selectedTime in TIME_LABEL_MAP
+              ? TIME_LABEL_MAP[selectedTime as MealTime]
+              : '시간'}
+            <ChevronDownIcon className="w-[1rem] h-[1rem] text-gray-200" />
           </button>
 
           <input
@@ -115,7 +118,11 @@ export const FoodTextField = ({
             onClick={handleRemoveFood}
             className="bg-gray-600 rounded-full w-[1.5rem] h-[1.5rem] flex items-center justify-center"
           >
-            {isFoodSelected ? <MinusIcon className='w-[1rem] h-[1rem] text-gray-200'/> : <XIcon className='w-[1rem] h-[1rem] text-gray-200'/>}
+            {isFoodSelected ? (
+              <MinusIcon className="w-[1rem] h-[1rem] text-gray-200" />
+            ) : (
+              <XIcon className="w-[1rem] h-[1rem] text-gray-200" />
+            )}
           </button>
         </div>
       </div>

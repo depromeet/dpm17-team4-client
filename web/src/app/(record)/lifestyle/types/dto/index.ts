@@ -1,8 +1,8 @@
-import { MealTime, StressLevel } from "../entitites";
+import type { MealTime, StressLevel } from '../entitites';
 
 export interface Food {
   id: number;
-  foodId: number; 
+  foodId: number;
   name: string;
   mealTime: MealTime | '';
 }
