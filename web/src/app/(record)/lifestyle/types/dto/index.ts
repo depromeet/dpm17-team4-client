@@ -9,7 +9,7 @@ export interface Food {
 
 export interface LifeStyleCreateRequestDto {
   water: number;
-  stress: StressLevel;
+  stress: StressLevel | '';
   foods: Omit<Food, 'name' | 'foodId'>[];
   occurredAt: string;
 }
