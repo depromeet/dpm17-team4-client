@@ -25,18 +25,18 @@ export default function DailyReportPage() {
   const reportData = mockReportData;
 
   // NOTE(seonghyun): 임시 - Suggestion 아이템의 이미지를 동적으로 생성
-  const getSuggestionIcon = (index: number) => {
-    switch (index) {
-      case 0:
-        return <Droplets className="w-6 h-6 text-blue-400" />;
-      case 1:
-        return <Banana className="w-6 h-6 text-yellow-400" />;
-      case 2:
-        return <FileText className="w-6 h-6 text-white" />;
-      default:
-        return null;
-    }
-  };
+  // const getSuggestionIcon = (index: number) => {
+  //     switch (index) {
+  //       case 0:
+  //         return <Droplets className="w-6 h-6 text-blue-400" />;
+  //       case 1:
+  //         return <Banana className="w-6 h-6 text-yellow-400" />;
+  //       case 2:
+  //         return <FileText className="w-6 h-6 text-white" />;
+  //       default:
+  //         return null;
+  //     }
+  //   };
 
   // TODO(seonghyun): 카드 데이터 - API 응답에서 생성
   const cards: Card[] = [
