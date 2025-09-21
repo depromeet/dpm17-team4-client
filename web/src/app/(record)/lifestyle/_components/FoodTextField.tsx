@@ -1,4 +1,4 @@
-import { type ChangeEvent, useState, useEffect } from 'react';
+import { type ChangeEvent, useEffect, useState } from 'react';
 import { useDebounce } from '@/hooks';
 import { FoodList } from './FoodList';
 import { TimeBottomSheet } from './TimeBottomSheet';
@@ -7,11 +7,11 @@ const DEBOUNCE_DELAY = 300;
 
 // 시간 타입을 한글로 매핑
 const TIME_LABEL_MAP: Record<string, string> = {
-  'BREAKFAST': '아침',
-  'LUNCH': '점심',
-  'DINNER': '저녁',
-  'SNACK': '간식',
-  '시간': '시간'
+  BREAKFAST: '아침',
+  LUNCH: '점심',
+  DINNER: '저녁',
+  SNACK: '간식',
+  시간: '시간',
 };
 
 interface FoodTextFieldProps {
@@ -24,14 +24,14 @@ interface FoodTextFieldProps {
   canRemove?: boolean;
 }
 
-export const FoodTextField = ({ 
+export const FoodTextField = ({
   id,
-  initialFoodName, 
-  initialFoodTime, 
-  onRemove, 
+  initialFoodName,
+  initialFoodTime,
+  onRemove,
   onFoodNameChange,
   onFoodTimeChange,
-  canRemove = false 
+  canRemove = false,
 }: FoodTextFieldProps) => {
   const [foodName, setFoodName] = useState(initialFoodName);
   const [isFoodSelected, setIsFoodSelected] = useState(false);
@@ -86,7 +86,8 @@ export const FoodTextField = ({
   };
 
   // 선택된 시간이 식사 시간인지 확인
-  const isMealTimeSelected = selectedTime !== '시간' && selectedTime in TIME_LABEL_MAP;
+  const isMealTimeSelected =
+    selectedTime !== '시간' && selectedTime in TIME_LABEL_MAP;
 
   return (
     <div>
@@ -97,8 +98,8 @@ export const FoodTextField = ({
             type="button"
             onClick={handleTimeClick}
             className={`${
-              isMealTimeSelected 
-                ? 'bg-green-600 text-white hover:bg-green-500' 
+              isMealTimeSelected
+                ? 'bg-green-600 text-white hover:bg-green-500'
                 : 'bg-gray-600 text-gray-200 hover:bg-gray-500'
             } rounded-[0.5rem] px-[0.375rem] py-[0.25rem] flex gap-[0.25rem] transition-colors`}
           >
@@ -112,7 +113,7 @@ export const FoodTextField = ({
             onChange={handleInputChange}
             className="flex-1 text-white bg-transparent outline-none placeholder:text-gray-400"
           />
-          { (
+          {
             <button
               type="button"
               onClick={handleRemoveFood}
@@ -120,20 +121,20 @@ export const FoodTextField = ({
             >
               x
             </button>
-          )}
+          }
         </div>
       </div>
-      
+
       {debouncedFoodName && !isFoodSelected && (
         <>
-        <div className="h-[0.9375rem]" />
-        <FoodList 
-          debouncedFoodName={debouncedFoodName} 
-          onFoodSelect={handleFoodSelect}
-        />
+          <div className="h-[0.9375rem]" />
+          <FoodList
+            debouncedFoodName={debouncedFoodName}
+            onFoodSelect={handleFoodSelect}
+          />
         </>
       )}
-      
+
       <TimeBottomSheet
         isOpen={isTimeBottomSheetOpen}
         onClose={handleCloseTimeBottomSheet}

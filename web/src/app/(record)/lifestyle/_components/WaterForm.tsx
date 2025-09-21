@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react';
+import { type ChangeEvent, memo } from 'react';
 
 const TOTAL_STEPS = 10;
 
@@ -7,7 +7,7 @@ interface WaterFormProps {
   setWaterCups: (cups: number) => void;
 }
 
-export const WaterForm = ({ waterCups, setWaterCups }: WaterFormProps) => {
+export const WaterForm = memo(({ waterCups, setWaterCups }: WaterFormProps) => {
   const handleSliderChange = (e: ChangeEvent<HTMLInputElement>) => {
     setWaterCups(parseInt(e.target.value));
   };
@@ -45,4 +45,4 @@ export const WaterForm = ({ waterCups, setWaterCups }: WaterFormProps) => {
       </div>
     </div>
   );
-};
+});
