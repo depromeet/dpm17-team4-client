@@ -45,6 +45,15 @@ export default function Home() {
                   배변 기록 페이지
                 </Link>
               </li>
+              <li>
+                •{' '}
+                <Link
+                  href="/report/daily"
+                  className="text-purple-600 hover:text-purple-800 underline transition-colors"
+                >
+                  일일 리포트 페이지
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
