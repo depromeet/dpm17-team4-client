@@ -299,154 +299,30 @@ export default function DailyReportPage() {
           })}{' '}
           업데이트
         </p>
-
-        {/* 배변 점수 */}
-        <div className="bg-gray-800 rounded-xl p-4 mt-6">
-          <div className="flex justify-between items-center mb-3">
-            <h3 className="text-lg font-semibold">배변 점수</h3>
-            <span className="text-2xl font-bold">{reportData.poo.score}점</span>
-          </div>
-
-          <div className="mb-3">
-            <div className="w-full bg-gray-700 rounded-full h-2">
-              <div
-                className={`h-2 rounded-full ${getScoreColor(reportData.poo.score)}`}
-                style={{ width: `${reportData.poo.score}%` }}
-              ></div>
-            </div>
-          </div>
-
-          <div className="flex justify-between text-xs text-gray-400">
-            <span>매우 나쁨</span>
-            <span>나쁨</span>
-            <span>보통</span>
-            <span>좋음</span>
-            <span>매우 좋음</span>
-          </div>
-        </div>
-
-        {/* 식단 분석 결과 */}
-        <div className="bg-gray-800 rounded-xl p-4 mt-6">
-          <h3 className="text-lg font-semibold mb-3">식단 분석 결과</h3>
-          <p className="text-gray-300 mb-3">{reportData.food.message}</p>
-          <p className="text-sm text-gray-400 mb-4">9월 16일 화요일, 어제</p>
-
-          <div className="space-y-3">
-            {reportData.food.items[0].meals.map((meal, index) => (
-              <div
-                key={`meal-${meal.mealTime}-${index}`}
-                className="flex items-center gap-3"
-              >
-                <span className="text-lg">
-                  {getMealTimeIcon(meal.mealTime)}
-                </span>
-                <span className="text-sm text-gray-300 w-12">
-                  {getMealTimeLabel(meal.mealTime)}
-                </span>
-                {meal.dangerous && (
-                  <span className="text-xs px-2 py-1 rounded text-red-500">
-                    주의
-                  </span>
-                )}
-                <span className="text-sm text-gray-200">
-                  {meal.foods.join(', ')}
-                </span>
-              </div>
-            ))}
-          </div>
-
-          <div className="flex justify-center mt-4">
-            <span className="text-xs text-gray-400">&lt; 1/2 &gt;</span>
-          </div>
-        </div>
-
-        {/* 물 섭취량 분석 결과 */}
-        <div className="bg-gray-800 rounded-xl p-4 mt-6">
-          <h3 className="text-lg font-semibold mb-3">물 섭취량 분석 결과</h3>
-          <p className="text-gray-300 mb-4">{reportData.water.message}</p>
-
-          <div className="flex items-end justify-center gap-4 mb-2">
-            {reportData.water.items.map((item, index) => (
-              <div
-                key={`water-${item.name}-${index}`}
-                className="flex flex-col items-center"
-              >
-                <div
-                  className={`w-8 h-${Math.round(item.value / 100)} rounded-t mb-2`}
-                  style={{ backgroundColor: item.color }}
-                ></div>
-                <span className="text-xs text-gray-400">
-                  {getWaterNameLabel(item.name)}
-                </span>
-                <span className="text-sm font-medium">{item.value}ml</span>
-                <span className="text-xs text-gray-500">
-                  {getWaterLevelLabel(item.level)}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* 스트레스 분석 결과 */}
-        <div className="bg-gray-800 rounded-xl p-4 mt-6">
-          <div className="flex items-start justify-between">
-            <div className="flex-1">
-              <h3 className="text-lg font-semibold mb-3">스트레스 분석 결과</h3>
-              <p className="text-gray-300">{reportData.stress.message}</p>
-            </div>
-            <div className="flex flex-col items-center">
-              <span className="text-2xl mb-1">{reportData.stress.image}</span>
-              <span className="text-lg">✨</span>
-            </div>
-          </div>
-        </div>
-
-        {/* 추천 습관 */}
-        <div className="bg-gray-800 rounded-xl p-4 mt-6">
-          <h3 className="text-lg font-semibold mb-2">추천 습관</h3>
-          <p className="text-sm text-gray-400 mb-4">
-            {reportData.suggestion.message}
-          </p>
-
-          <div className="space-y-4">
-            {reportData.suggestion.items.map((habit, index) => (
-              <div
-                key={`suggestion-${habit.title}-${index}`}
-                className="flex items-start gap-3"
-              >
-                <div className="mt-1">{getSuggestionIcon(index)}</div>
-                <div>
-                  <p className="text-sm font-medium mb-1">{habit.title}</p>
-                  <p className="text-xs text-gray-400">{habit.content}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
       </main>
 
-      {/* 하단 네비게이션 */}
-      <nav className="fixed bottom-0 left-0 right-0 bg-gray-900 border-t border-gray-700">
-        <div className="flex justify-around py-2">
-          {[
-            { icon: '🏠', label: '홈' },
-            { icon: '🗓️', label: '캘린더' },
-            { icon: '📄', label: '리포트', active: true },
-            { icon: '👤', label: '마이' },
-          ].map((item, index) => (
-            <button
-              type="button"
-              key={`nav-${item.label}-${index}`}
-              className={`flex flex-col items-center py-2 px-4 ${
-                item.active ? 'text-white' : 'text-gray-400'
-              }`}
-            >
-              <span className="text-lg mb-1">{item.icon}</span>
-              <span className="text-xs">{item.label}</span>
-            </button>
-          ))}
-        </div>
-      </nav>
+      {/* TOEO(seonghyun): 하단 네비게이션 */}
+      {/*<nav className="fixed bottom-0 left-0 right-0 bg-gray-900 border-t border-gray-700">*/}
+      {/*  <div className="flex justify-around py-2">*/}
+      {/*    {[*/}
+      {/*      { icon: '🏠', label: '홈' },*/}
+      {/*      { icon: '🗓️', label: '캘린더' },*/}
+      {/*      { icon: '📄', label: '리포트', active: true },*/}
+      {/*      { icon: '👤', label: '마이' },*/}
+      {/*    ].map((item, index) => (*/}
+      {/*      <button*/}
+      {/*        type="button"*/}
+      {/*        key={`nav-${item.label}-${index}`}*/}
+      {/*        className={`flex flex-col items-center py-2 px-4 ${*/}
+      {/*          item.active ? 'text-white' : 'text-gray-400'*/}
+      {/*        }`}*/}
+      {/*      >*/}
+      {/*        <span className="text-lg mb-1">{item.icon}</span>*/}
+      {/*        <span className="text-xs">{item.label}</span>*/}
+      {/*      </button>*/}
+      {/*    ))}*/}
+      {/*  </div>*/}
+      {/*</nav>*/}
     </div>
   );
 }
