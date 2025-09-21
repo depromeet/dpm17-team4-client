@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { DEFECATION_DETAIL } from '../constants';
-import { useScrollToSection } from '../hooks/useScrollToSection';
+import { useScrollToSection } from '../hooks';
 import type { DefecationTryDetailKey } from '../types';
 import { CollapsibleToggle } from './common';
 import {
@@ -11,6 +11,7 @@ import {
   DefecationPain,
   DefecationShape,
   DefecationTimeTaken,
+  SelectPreview,
 } from './select-defecation';
 
 export const DefecationDetail = () => {
@@ -18,42 +19,62 @@ export const DefecationDetail = () => {
   const { setRef, scrollToSection } =
     useScrollToSection<DefecationTryDetailKey>();
 
-  const handleSectionChange = (id: DefecationTryDetailKey | null) => {
-    setOpenId(id);
-    if (id) {
-      scrollToSection(id);
-    }
-  };
+  const handleSectionChange = useCallback(
+    (id: DefecationTryDetailKey | null) => {
+      setOpenId(id);
+      if (id) {
+        scrollToSection(id);
+      }
+    },
+    [scrollToSection]
+  );
 
-  const handleToggle = (id: DefecationTryDetailKey) => {
-    const newOpenId = openId === id ? null : id;
-    handleSectionChange(newOpenId);
-  };
+  const handleToggle = useCallback(
+    (id: DefecationTryDetailKey) => {
+      const newOpenId = openId === id ? null : id;
+      handleSectionChange(newOpenId);
+    },
+    [openId, handleSectionChange]
+  );
+
+  const onColorSelect = useCallback(
+    () => handleSectionChange('SHAPE'),
+    [handleSectionChange]
+  );
+  const onShapeSelect = useCallback(
+    () => handleSectionChange('PAIN'),
+    [handleSectionChange]
+  );
+  const onPainSelect = useCallback(
+    () => handleSectionChange('TIME_TAKEN'),
+    [handleSectionChange]
+  );
+  const onTimeTakenSelect = useCallback(
+    () => handleSectionChange('OPTIONAL'),
+    [handleSectionChange]
+  );
+  const onOptionalSelect = useCallback(
+    () => handleSectionChange(null),
+    [handleSectionChange]
+  );
 
   const renderSelectSection = (value: DefecationTryDetailKey) => {
     switch (value) {
       case 'COLOR':
-        return (
-          <DefecationColor onColorSelect={() => handleSectionChange('SHAPE')} />
-        );
+        return <DefecationColor onColorSelect={onColorSelect} />;
       case 'SHAPE':
-        return (
-          <DefecationShape onShapeSelect={() => handleSectionChange('PAIN')} />
-        );
+        return <DefecationShape onShapeSelect={onShapeSelect} />;
       case 'PAIN':
-        return (
-          <DefecationPain
-            onPainSelect={() => handleSectionChange('TIME_TAKEN')}
-          />
-        );
+        return <DefecationPain onPainSelect={onPainSelect} />;
       case 'TIME_TAKEN':
+        return <DefecationTimeTaken onTimeTakenSelect={onTimeTakenSelect} />;
+      case 'OPTIONAL':
         return (
-          <DefecationTimeTaken
-            onTimeTakenSelect={() => handleSectionChange('OPTIONAL')}
+          <DefecationOptional
+            isOpen={openId === 'OPTIONAL'}
+            onOptionalSelect={onOptionalSelect}
           />
         );
-      case 'OPTIONAL':
-        return <DefecationOptional isOpen={openId === 'OPTIONAL'} />;
       default:
         return <DefecationColor />;
     }
@@ -69,7 +90,8 @@ export const DefecationDetail = () => {
             onToggle={() => {
               handleToggle(key as DefecationTryDetailKey);
             }}
-            trigger={<p className="text-base font-bold">{value}</p>}
+            previewr={<SelectPreview currentKey={key} />}
+            trigger={<p className="text-button-1">{value}</p>}
           >
             <div>{renderSelectSection(key as DefecationTryDetailKey)}</div>
           </CollapsibleToggle>

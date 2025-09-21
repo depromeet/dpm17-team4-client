@@ -1,7 +1,6 @@
 import type {
   DEFECATION_COLOR,
   DEFECATION_DETAIL,
-  DEFECATION_PAIN,
   DEFECATION_SHAPE,
   DEFECATION_TIME_TAKEN,
 } from '../constants';
@@ -12,7 +11,7 @@ export interface DefecationState {
   selectedTry: string;
   selectedColor: string;
   selectedShape: string;
-  selectedPain: string;
+  selectedPain: number;
   selectedTimeTaken: string;
   selectedOptional: string;
 }
@@ -31,11 +30,6 @@ export type DefecationTryColorValue =
 export type DefecationTryShapeKey = keyof typeof DEFECATION_SHAPE;
 export type DefecationTryShapeValue =
   (typeof DEFECATION_SHAPE)[DefecationTryShapeKey];
-
-// NOTE: 배변 통증 타입 (TODO: 통증 정도에 대한 디테일 작업은 UI 확정 후 변경 필요)
-export type DefecationTryPainKey = keyof typeof DEFECATION_PAIN;
-export type DefecationTryPainValue =
-  (typeof DEFECATION_PAIN)[DefecationTryPainKey];
 
 // NOTE: 배변 소요 시간 타입
 export type DefecationTryTimeTakenKey = keyof typeof DEFECATION_TIME_TAKEN;
