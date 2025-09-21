@@ -44,7 +44,7 @@ export const StressForm = memo(
                     alt={`stress level ${level.range}`}
                     width={35}
                     height={35}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover w-[35px] h-[35px]"
                   />
                 </div>
                 <div className="text-body3 text-gray-300 text-center">

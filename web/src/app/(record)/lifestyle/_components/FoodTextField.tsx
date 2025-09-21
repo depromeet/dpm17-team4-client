@@ -84,8 +84,7 @@ export const FoodTextField = ({
   // 선택된 시간이 식사 시간인지 확인
   const isMealTimeSelected =
     selectedTime !== '' && selectedTime in TIME_LABEL_MAP;
-
-  console.log(isFoodSelected, '음식 선택됨');
+    
   return (
     <div>
       <div>
