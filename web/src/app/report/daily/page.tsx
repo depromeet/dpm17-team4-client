@@ -5,7 +5,16 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { mockReportData } from './mockData';
 import type { Card, ReportPeriod } from './types';
-import { formatDate, getColorLabel, getShapeLabel } from './utils';
+import {
+  formatDate,
+  getColorLabel,
+  getMealTimeIcon,
+  getMealTimeLabel,
+  getScoreColor,
+  getShapeLabel,
+  getWaterLevelLabel,
+  getWaterNameLabel,
+} from './utils';
 
 export default function DailyReportPage() {
   const [selectedPeriod, _setSelectedPeriod] = useState<ReportPeriod>('daily');
