@@ -22,7 +22,6 @@ export const useDragProgress = ({
   const progressBarRef = useRef<HTMLDivElement>(null);
   const isDraggingRef = useRef(false);
 
-  // NOTE(taehyeon): 드래그 중 터치 기기에서 페이지가 스크롤되는 것을 방지
   useEffect(() => {
     const preventDefault = (e: TouchEvent) => {
       if (isDraggingRef.current) {
