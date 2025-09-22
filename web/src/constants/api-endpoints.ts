@@ -19,4 +19,8 @@ export const API_ENDPOINTS = {
     REGISTER_TOKEN: '/api/register-token',
     SEND_PUSH: '/api/send-push',
   },
+
+  DEFECATION: {
+    BASE: '/api/v1/poo-records',
+  },
 } as const;
