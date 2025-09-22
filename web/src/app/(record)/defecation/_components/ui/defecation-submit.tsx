@@ -3,7 +3,7 @@
 import { type FieldErrors, useFormContext } from 'react-hook-form';
 import { BottomBtnBar } from '@/components';
 import { useCreateDefecationMutation } from '@/hooks/mutations/useCreateDefecation';
-import {  DEFECATION_TRY } from '../constants';
+import { DEFECATION_TRY } from '../constants';
 import type { DefecationFormValues } from '../schemas';
 
 export const DefecationSubmit = () => {

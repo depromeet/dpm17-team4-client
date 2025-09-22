@@ -3,7 +3,8 @@ import { type NextRequest, NextResponse } from 'next/server';
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { occurredAt, isSuccessful, color, shape, pain, duration, note } = body;
+    const { occurredAt, isSuccessful, color, shape, pain, duration, note } =
+      body;
 
     console.log('Received defecation data:', {
       occurredAt,
