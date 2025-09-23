@@ -1,34 +1,13 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import { BottomSheet } from '@/components/BottomSheet';
-
-const MEAL_TIMES = [
-  {
-    id: 'breakfast',
-    name: '아침',
-    imageUrl: '',
-  },
-  {
-    id: 'lunch',
-    name: '점심',
-    imageUrl: '',
-  },
-  {
-    id: 'dinner',
-    name: '저녁',
-    imageUrl: '',
-  },
-  {
-    id: 'snack',
-    name: '간식',
-    imageUrl: '',
-  },
-] as const;
+import { MEAL_TIMES } from '../constants';
+import type { MealTime } from '../types/entitites';
 
 interface TimeBottomSheetProps {
   isOpen: boolean;
   onClose: () => void;
-  onTimeSelect: (time: string) => void;
+  onTimeSelect: (time: MealTime) => void;
 }
 
 export const TimeBottomSheet = ({
@@ -40,7 +19,7 @@ export const TimeBottomSheet = ({
 
   const handleTimeSelect = (mealTime: (typeof MEAL_TIMES)[number]) => {
     setSelectedTime(mealTime.name);
-    onTimeSelect(mealTime.name);
+    onTimeSelect(mealTime.id);
     onClose();
   };
 
@@ -60,7 +39,7 @@ export const TimeBottomSheet = ({
                 onClick={() => handleTimeSelect(mealTime)}
                 className={`flex items-center gap-[0.5rem] px-[0.94rem] py-[0.69rem] rounded-[0.625rem] text-white text-body2-m transition-colors h-fit ${
                   selectedTime === mealTime.name
-                    ? 'bg-blue-500'
+                    ? 'bg-green-600'
                     : 'bg-gray-700 hover:bg-gray-600'
                 }`}
               >
