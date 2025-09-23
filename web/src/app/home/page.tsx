@@ -46,7 +46,7 @@ export default function HomePage() {
           </section>
           <section className="text-h2 mt-[2.2rem]">
             <h1>
-              {user?.nickname || '사용자'}s, 반가워요!
+              {user?.nickname || '사용자'} 님, 반가워요!
               <br />
               오늘의 기록을 시작할까요?
             </h1>
