@@ -3,9 +3,9 @@
 import { useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import {
-	getUserInfo,
-	setUserInfo,
-	type UserInfo
+  getUserInfo,
+  setUserInfo,
+  type UserInfo,
 } from '../app/auth/_components/AuthSessionProvider';
 
 /**

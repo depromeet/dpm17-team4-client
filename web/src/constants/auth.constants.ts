@@ -15,4 +15,3 @@ export const AUTH_CONSTANTS = {
   DEV_CHECK_INTERVAL: 5000, // 5초 (개발 모드 체크 간격)
   OAUTH_STATE_COOKIE: 'oauth_state_cookie',
 } as const;
-
