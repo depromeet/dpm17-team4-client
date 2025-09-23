@@ -20,17 +20,18 @@ export async function middleware(request: NextRequest) {
   }
 
   try {
-    const sessionCookie = request.cookies.get(
-      AUTH_CONSTANTS.SESSION_COOKIE_NAME
-    )?.value;
-    if (!sessionCookie) {
-      const loginUrl = new URL(PAGE_ROUTES.AUTH, request.url);
-      loginUrl.searchParams.set(
-        'next',
-        request.nextUrl.pathname + request.nextUrl.search
-      );
-      return NextResponse.redirect(loginUrl);
-    }
+    // NOTE(yubin): 인증 관련 라우팅 추후 작업
+    // const sessionCookie = request.cookies.get(
+    //   AUTH_CONSTANTS.SESSION_COOKIE_NAME
+    // )?.value;
+    // if (!sessionCookie) {
+    //   const loginUrl = new URL(PAGE_ROUTES.AUTH, request.url);
+    //   loginUrl.searchParams.set(
+    //     'next',
+    //     request.nextUrl.pathname + request.nextUrl.search
+    //   );
+    //   return NextResponse.redirect(loginUrl);
+    // }
 
     return NextResponse.next();
   } catch (error) {
