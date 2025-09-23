@@ -16,7 +16,3 @@ export const AUTH_CONSTANTS = {
   OAUTH_STATE_COOKIE: 'oauth_state_cookie',
 } as const;
 
-// 인증 설정
-export const AUTH_CONFIG = {
-  USE_REDIRECT_FLOW: false, // 리다이렉트 플로우 사용 여부
-} as const;
