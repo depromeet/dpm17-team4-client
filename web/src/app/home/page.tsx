@@ -4,13 +4,16 @@ import { Bell } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import MaskGroup from '@/assets/home/Mask group.svg';
+import { getUserInfo } from '../auth/_components/AuthSessionProvider';
 import { BottomNavigation, RecordSection } from './_components/ui';
 import type { Tab } from './types';
 
-export default function Home() {
+export default function HomePage() {
   const [activeTab, setActiveTab] = useState<Tab>('home');
   const [navHeight, setNavHeight] = useState(0);
   const navRef = useRef<HTMLElement>(null);
+
+  const user = getUserInfo();
 
   const handleTabClick = (tabName: Tab) => {
     setActiveTab(tabName);
@@ -43,7 +46,7 @@ export default function Home() {
           </section>
           <section className="text-h2 mt-[2.2rem]">
             <h1>
-              유빈님, 반가워요!
+              {user?.nickname || '사용자'}s, 반가워요!
               <br />
               오늘의 기록을 시작할까요?
             </h1>

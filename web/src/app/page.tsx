@@ -1,9 +1,10 @@
 'use client';
 
 import Link from 'next/link';
+import { Suspense } from 'react';
 import LoginContent from '@/components/LoginContent';
 
-export default function Home() {
+function HomeContent() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
       <div className="text-center">
@@ -15,6 +16,7 @@ export default function Home() {
           <br />
           표시되는 웹 페이지입니다.
         </p>
+        {/* 유저 정보 표시 */}
         <LoginContent />
         <div className="space-y-4">
           <div className="bg-white rounded-lg shadow-md p-6 max-w-md mx-auto">
@@ -34,6 +36,15 @@ export default function Home() {
                   className="text-blue-600 hover:text-blue-800 underline transition-colors"
                 >
                   알림 테스트 페이지
+                </Link>
+              </li>
+              <li>
+                •{' '}
+                <Link
+                  href="/home"
+                  className="text-pink-600 hover:text-green-800 underline transition-colors"
+                >
+                  홈 페이지
                 </Link>
               </li>
               <li>
@@ -59,5 +70,13 @@ export default function Home() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <HomeContent />
+    </Suspense>
   );
 }
