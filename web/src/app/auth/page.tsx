@@ -51,6 +51,9 @@ function AuthContent() {
         }
         if (userInfo) {
           setUserInfo(userInfo);
+          const url = new URL(window.location.href);
+          url.search = '';
+          window.history.replaceState({}, '', url.toString());
         }
       } catch (error) {
         console.error('Auth 처리 중 에러:', error);
