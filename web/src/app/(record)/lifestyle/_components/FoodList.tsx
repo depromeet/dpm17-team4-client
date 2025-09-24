@@ -1,4 +1,4 @@
-import { useFoodSearch } from "@/hooks";
+import { useFoodSearch } from '@/hooks';
 
 interface FoodListProps {
   debouncedFoodName: string;
@@ -9,7 +9,11 @@ export const FoodList = ({
   debouncedFoodName,
   onFoodSelect,
 }: FoodListProps) => {
-  const { data: foodList, isLoading, error } = useFoodSearch({
+  const {
+    data: foodList,
+    isLoading,
+    error,
+  } = useFoodSearch({
     query: debouncedFoodName,
     count: 10,
     enabled: debouncedFoodName.trim().length > 0,
@@ -50,9 +54,7 @@ export const FoodList = ({
   // 로딩 중일 때
   if (isLoading) {
     return (
-      <div className="p-3 text-center text-gray-400">
-        음식을 검색 중...
-      </div>
+      <div className="p-3 text-center text-gray-400">음식을 검색 중...</div>
     );
   }
 
@@ -68,9 +70,7 @@ export const FoodList = ({
   // 검색 결과가 없을 때
   if (foods.length === 0 && debouncedFoodName.trim().length > 0) {
     return (
-      <div className="p-3 text-center text-gray-400">
-        검색 결과가 없습니다.
-      </div>
+      <div className="p-3 text-center text-gray-400">검색 결과가 없습니다.</div>
     );
   }
 

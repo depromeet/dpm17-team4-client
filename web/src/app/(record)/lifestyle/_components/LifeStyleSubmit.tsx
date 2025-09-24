@@ -31,9 +31,9 @@ export const LifeStyleSubmit = ({
 
     // occurredAt 생성 (선택된 날짜의 00:00:00)
     const occurredAt = new Date(
-      parseInt(year),
-      parseInt(month) - 1,
-      parseInt(date)
+      parseInt(year, 10),
+      parseInt(month, 10) - 1,
+      parseInt(date, 10)
     ).toISOString();
 
     // 유효한 음식 데이터 필터링 및 매핑
