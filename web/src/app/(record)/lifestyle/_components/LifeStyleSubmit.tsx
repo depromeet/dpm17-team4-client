@@ -22,21 +22,18 @@ export const LifeStyleSubmit = ({
   const { mutate, isPending } = useActivityRecordMutation();
 
   const handleSubmit = useCallback(() => {
-    // URL parameter에서 날짜 정보 가져오기
     const year =
       searchParams.get('year') || new Date().getFullYear().toString();
     const month =
       searchParams.get('month') || (new Date().getMonth() + 1).toString();
     const date = searchParams.get('date') || new Date().getDate().toString();
 
-    // occurredAt 생성 (선택된 날짜의 00:00:00)
     const occurredAt = new Date(
       parseInt(year, 10),
       parseInt(month, 10) - 1,
       parseInt(date, 10)
-    ).toISOString();
+    ).toISOString().replace('Z', '');
 
-    // 유효한 음식 데이터 필터링 및 매핑
     const validFoods = foods.filter((food) => food.mealTime !== '');
 
     if (validFoods.length === 0) {
@@ -44,14 +41,15 @@ export const LifeStyleSubmit = ({
       return;
     }
 
-    // API 호출
     mutate({
       water,
       stress,
-      foods: validFoods.map((food) => ({
-        id: food.foodId,
-        mealTime: food.mealTime,
-      })),
+      //TODO(seieun): db 채워지면 실제 foods 로 보내기
+      // foods: validFoods.map((food) => ({
+      //   id: food.foodId,
+      //   mealTime: food.mealTime,
+      // })),
+      foods: [],
       occurredAt,
       onSuccess: () => {
         alert('데이터가 성공적으로 저장되었습니다!');
