@@ -3,7 +3,9 @@
 import { useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import {
+  clearUserInfo,
   getUserInfo,
+  setAccessToken,
   setUserInfo,
   type UserInfo,
 } from '../app/auth/_components/AuthSessionProvider';
@@ -49,7 +51,8 @@ export function useUserInfo() {
   }, []);
 
   const handleLogOut = () => {
-    localStorage.clear();
+    setAccessToken(null);
+    clearUserInfo();
     setUserInfoState(null);
   };
 
