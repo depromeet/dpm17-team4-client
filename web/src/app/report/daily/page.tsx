@@ -2,10 +2,10 @@
 
 import Image from 'next/image';
 import { useState } from 'react';
-import { Suggestions } from './_components/Suggestions';
 import { DefecationScore } from './_components/DefecationScore';
 import { FoodReport } from './_components/FoodReport';
 import { StressReport } from './_components/StressReport';
+import { Suggestions } from './_components/Suggestions';
 import { WaterReport } from './_components/WaterReport';
 import { mockReportData } from './mockData';
 import type { Card, ReportPeriod } from './types';
