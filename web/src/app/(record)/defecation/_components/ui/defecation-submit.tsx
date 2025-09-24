@@ -3,7 +3,7 @@
 import { type FieldErrors, useFormContext } from 'react-hook-form';
 import { BottomBtnBar } from '@/components';
 import { useCreateDefecationMutation } from '@/hooks/mutations/useCreateDefecation';
-import { DEFECATION_TRY } from '../constants';
+import { DEFECATION_TRY, DEFECATION_TIME_TAKEN_KEYS } from '../constants';
 import type { DefecationFormValues } from '../schemas';
 
 export const DefecationSubmit = () => {
@@ -16,11 +16,11 @@ export const DefecationSubmit = () => {
     }
 
     let toiletDuration = 0;
-    if (data.selectedTimeTaken === 'LESS_THAN_5_MINUTES') {
+    if (data.selectedTimeTaken === DEFECATION_TIME_TAKEN_KEYS.LESS_THAN_5_MINUTES) {
       toiletDuration = 5;
-    } else if (data.selectedTimeTaken === 'LESS_THAN_10_MINUTES') {
+    } else if (data.selectedTimeTaken === DEFECATION_TIME_TAKEN_KEYS.LESS_THAN_10_MINUTES) {
       toiletDuration = 10;
-    } else if (data.selectedTimeTaken === 'MORE_THAN_10_MINUTES') {
+    } else if (data.selectedTimeTaken === DEFECATION_TIME_TAKEN_KEYS.MORE_THAN_10_MINUTES) {
       toiletDuration = 15;
     }
 
