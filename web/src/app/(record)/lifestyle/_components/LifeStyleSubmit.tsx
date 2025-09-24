@@ -32,7 +32,9 @@ export const LifeStyleSubmit = ({
       parseInt(year, 10),
       parseInt(month, 10) - 1,
       parseInt(date, 10)
-    ).toISOString().replace('Z', '');
+    )
+    .toISOString()
+    .replace('Z', '');
 
     const validFoods = foods.filter((food) => food.mealTime !== '');
 
