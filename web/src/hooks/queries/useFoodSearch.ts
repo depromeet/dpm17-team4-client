@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { foodSearchApi } from '@/apis/foodSearchApi';
 import { QUERY_KEYS } from '@/constants';
-import type { FoodSearchResponseDto } from '@/apis/foodSearchApi';
+import type { FoodSearchResponseDto } from '@/app/(record)/lifestyle/types/dto';
 
 interface UseFoodSearchParams {
   query: string;
