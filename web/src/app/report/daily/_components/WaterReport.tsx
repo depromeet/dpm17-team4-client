@@ -1,5 +1,10 @@
+import { cn } from '@/utils/utils-cn';
 import type { Water } from '../types';
-import { getWaterLevelColor, getWaterNameLabel } from '../utils';
+import {
+  getWaterLevelColor,
+  getWaterLevelLabel,
+  getWaterNameLabel,
+} from '../utils';
 
 const WATER_HEIGHT = 164;
 const WATER_MAX_VALUE = 2000;
@@ -15,8 +20,30 @@ export const WaterReport = ({ waterData }: { waterData: Water }) => {
       <div className="flex gap-6 items-end justify-center px-4 pt-4 pb-4">
         {waterData.items.map((item) => (
           <div key={item.name} className="flex flex-col items-center">
+            {item.name !== 'STANDARD' && (
+              <div
+                className={cn(
+                  'w-[34px] h-5 flex items-center justify-center rounded-[4px] py-1 px-[7px]',
+                  {
+                    'bg-red-100': item.level === 'LOW',
+                    'bg-yellow-100': item.level === 'MEDIUM',
+                    'bg-blue-100': item.level === 'HIGH',
+                  }
+                )}
+              >
+                <p
+                  className={cn('text-[11px] font-semibold', {
+                    'text-red-600': item.level === 'LOW',
+                    'text-yellow-600': item.level === 'MEDIUM',
+                    'text-blue-600': item.level === 'HIGH',
+                  })}
+                >
+                  {getWaterLevelLabel(item.level)}
+                </p>
+              </div>
+            )}
             <div
-              className="rounded-md w-9.5 mb-3"
+              className="rounded-md w-9.5 mb-3 mt-2"
               style={{
                 height: `${(WATER_HEIGHT / WATER_MAX_VALUE) * item.value}px`,
                 backgroundColor:
