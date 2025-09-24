@@ -33,6 +33,18 @@ export const getWaterLevelLabel = (level: string): string => {
   return mapping[level] || level;
 };
 
+export const getWaterValue = (value: number): string => {
+  if (value <= 2000) return 'HIGH';
+  if (value <= 1600) return 'MEDIUM';
+  return 'LOW';
+};
+
+export const getWaterLevelColor = (value: number): string => {
+  if (value <= 800) return '#F13A49';
+  if (value <= 1600) return '#F4B005';
+  return '#23ABFF';
+};
+
 export const getColorLabel = (color: string): string => {
   const mapping: Record<string, string> = {
     DEFAULT: '기본',

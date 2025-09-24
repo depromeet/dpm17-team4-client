@@ -5,6 +5,8 @@ import { useState } from 'react';
 import { Suggestions } from './_components/Suggestions';
 import { DefecationScore } from './_components/DefecationScore';
 import { FoodReport } from './_components/FoodReport';
+import { StressReport } from './_components/StressReport';
+import { WaterReport } from './_components/WaterReport';
 import { mockReportData } from './mockData';
 import type { Card, ReportPeriod } from './types';
 import { formatDate, getColorLabel, getShapeLabel } from './utils';
@@ -296,9 +298,9 @@ export default function DailyReportPage() {
         <div className="flex flex-col space-y-5 mt-9">
           <DefecationScore score={reportData.poo.score} />
           <FoodReport foodData={reportData.food} />
+          <WaterReport waterData={reportData.water} />
 
-          <div>물 섭취량 분석 결과</div>
-          <div>스트레스 분석 결과</div>
+          <StressReport stressData={reportData.stress} />
         </div>
       </main>
 
