@@ -11,6 +11,10 @@ export const API_ENDPOINTS = {
     BASE: '/api/v1/activity-records',
   },
 
+  FOODS: {
+    SEARCH: '/api/v1/foods/search',
+  },
+
   NOTIFICATION: {
     REGISTER_TOKEN: '/api/register-token',
     SEND_PUSH: '/api/send-push',

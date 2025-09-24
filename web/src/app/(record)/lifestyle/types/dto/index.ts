@@ -13,3 +13,17 @@ export interface LifeStyleCreateRequestDto {
   foods: Omit<Food, 'name' | 'foodId'>[];
   occurredAt: string;
 }
+
+export interface FoodSearchItem {
+  id: number;
+  name: string;
+}
+
+export interface FoodSearchResponseDto {
+  items: FoodSearchItem[];
+}
+
+export interface FoodSearchParams {
+  query: string;
+  count?: number;
+}

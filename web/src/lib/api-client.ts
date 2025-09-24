@@ -5,7 +5,7 @@ const apiClient = axios.create({
   baseURL:
     process.env.NODE_ENV === 'production'
       ? process.env.NEXT_PUBLIC_API_URL
-      : 'http://localhost:3000',
+      : 'http://211.188.58.167',
   timeout: 5000,
   headers: {
     'Content-Type': 'application/json',
@@ -15,6 +15,7 @@ const apiClient = axios.create({
 apiClient.interceptors.request.use(
   (config) => {
     //TODO(yubin): Access token 추가
+    config.headers.Authorization = `Bearer ${process.env.NEXT_PUBLIC_AUTH_TOKEN}`;
     return config;
   },
   (error) => {
