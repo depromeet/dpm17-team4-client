@@ -1,7 +1,10 @@
 'use client';
 
+import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
-import { Suspense, useCallback, useEffect, useState } from 'react';
+import { Suspense, useCallback, useEffect } from 'react';
+import EllipseBg from '@/assets/auth/Ellipse 322187.png';
+import LoginCharacter from '@/assets/auth/login-character.png';
 import { API_ENDPOINTS } from '@/constants';
 import {
   requestAccessToken,
@@ -9,12 +12,12 @@ import {
   setUserInfo,
   type UserInfo,
 } from './_components/AuthSessionProvider';
+import KakaoLoginButton from './_components/KakaoLoginButton';
 
 const KAKAO_LOGIN_INITIATE_URL = `${process.env.NEXT_PUBLIC_API || 'https://211.188.58.167'}${API_ENDPOINTS.AUTH.KAKAO_LOGIN}`;
 
 function AuthContent() {
   const searchParams = useSearchParams();
-  const [error, setError] = useState<string | null>(null);
 
   const extractUserInfo = useCallback((): UserInfo | null => {
     const id = searchParams.get('id');
@@ -37,11 +40,6 @@ function AuthContent() {
   }, [searchParams]);
 
   useEffect(() => {
-    const errorParam = searchParams.get('error_message');
-    if (errorParam) setError(decodeURIComponent(errorParam));
-  }, [searchParams]);
-
-  useEffect(() => {
     (async () => {
       try {
         const userInfo = extractUserInfo();
@@ -59,35 +57,30 @@ function AuthContent() {
   }, [extractUserInfo]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow-md">
-        <div className="text-center">
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">로그인</h2>
-          <p className="text-gray-600">카카오 계정으로 간편하게 시작하세요</p>
-        </div>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-[#090318] to-[#404DDC00] relative">
+      {/* 배경 ellipse 이미지 */}
+      <div className="absolute inset-0 opacity-70">
+        <Image
+          src={EllipseBg}
+          alt="배경 ellipse"
+          className="w-full h-full object-cover"
+          priority
+        />
+      </div>
 
-        {error && (
-          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
-            {error}
+      {/* 콘텐츠 영역 */}
+      <div className="relative z-10">
+        <div className="mb-[5rem]">
+          <div className="flex justify-center">
+            <Image src={LoginCharacter} alt="로그인 캐릭터 이미지" />
           </div>
-        )}
-
+          <div className="text-center text-h2 mt-[1.37rem]">
+            반가워요 <br />
+            지금 바로 함께해요!
+          </div>
+        </div>
         <form method="POST" action={KAKAO_LOGIN_INITIATE_URL}>
-          <button
-            type="submit"
-            className="w-full flex items-center justify-center px-4 py-3 border border-transparent text-sm font-medium rounded-md text-black bg-[#FEE500] hover:bg-[#E6CF00] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 transition-colors"
-          >
-            <svg
-              className="w-5 h-5 mr-3"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              role="img"
-              aria-label="카카오 로고"
-            >
-              <path d="M12 3c5.799 0 10.5 3.664 10.5 8.185 0 4.52-4.701 8.184-10.5 8.184S1.5 15.705 1.5 11.185C1.5 6.664 6.201 3 12 3z" />
-            </svg>
-            카카오로 3초만에 시작하기
-          </button>
+          <KakaoLoginButton />
         </form>
       </div>
     </div>
