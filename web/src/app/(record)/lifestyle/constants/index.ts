@@ -1,14 +1,13 @@
 import type { StaticImageData } from 'next/image';
+import breakfast from '../assets/breakfast.png';
+import dinner from '../assets/dinner.png';
+import lunch from '../assets/lunch.png';
+import snack from '../assets/snack.png';
 import stressHigh from '../assets/stress-high.png';
 import stressLow from '../assets/stress-low.png';
 import stressMedium from '../assets/stress-medium.png';
 import stressVeryHigh from '../assets/stress-very-high.png';
 import stressVeryLow from '../assets/stress-very-low.png';
-
-import breakfast from '../assets/breakfast.png';
-import snack from '../assets/snack.png';
-import lunch from '../assets/lunch.png';
-import dinner from '../assets/dinner.png';
 import type { MealTime, StressLevel } from '../types/entitites';
 
 export const MEAL_TIMES: {
