@@ -1,3 +1,9 @@
+import type { StaticImageData } from 'next/image';
+import BreakfastImage from '@/assets/report/breakfast.png';
+import DinnerImage from '@/assets/report/dinner.png';
+import LunchImage from '@/assets/report/lunch.png';
+import SnackImage from '@/assets/report/snack.png';
+
 // NOTE(seonghyun): Enum 매핑 함수들
 export const getMealTimeLabel = (mealTime: string): string => {
   const mapping: Record<string, string> = {
@@ -96,18 +102,18 @@ export const formatDate = (date: Date, now: Date = new Date()): string => {
   return `${month}월 ${day}일 (${weekday})${suffix}`;
 };
 
-// NOTE(seonghyun): 임시 - 식사 시간에 따른 이모지 반환
-export const getMealTimeIcon = (mealTime: string): string => {
+// NOTE(taehyeon): 식사 시간에 따른 이미지 반환
+export const getMealTimeIcon = (mealTime: string): string | StaticImageData => {
   switch (mealTime) {
     case 'BREAKFAST':
-      return '☀️';
+      return BreakfastImage;
     case 'LUNCH':
-      return '🍀';
+      return LunchImage;
     case 'DINNER':
-      return '🌙';
+      return DinnerImage;
     case 'SNACK':
-      return '🍰';
+      return SnackImage;
     default:
-      return '🍽️';
+      return '';
   }
 };

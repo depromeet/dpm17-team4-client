@@ -46,6 +46,7 @@ export type MealTime = 'BREAKFAST' | 'LUNCH' | 'DINNER' | 'SNACK';
 
 export type Meal = {
   mealTime: MealTime;
+  image: string | StaticImageData;
   dangerous: boolean;
   foods: string[];
 };
