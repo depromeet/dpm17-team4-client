@@ -1,3 +1,4 @@
+'use client';
 import Image from 'next/image';
 import kakaoSymbol from '@/assets/auth/kakao_shape 2.svg';
 
