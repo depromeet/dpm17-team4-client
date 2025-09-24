@@ -63,5 +63,5 @@ export const LifeStyleSubmit = ({
     });
   }, [foods, water, stress, searchParams, mutate]);
 
-  return <BottomBtnBar onSubmit={handleSubmit} disabled={isPending} />
+  return <BottomBtnBar onSubmit={handleSubmit} disabled={isPending} />;
 };
