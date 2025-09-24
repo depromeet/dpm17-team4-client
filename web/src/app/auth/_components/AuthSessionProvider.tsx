@@ -22,7 +22,7 @@ export const getAccessToken = () => {
       accessToken = storedToken;
       return storedToken;
     }
-  } catch (error) {}
+  } catch (_error) {}
 
   return null;
 };
