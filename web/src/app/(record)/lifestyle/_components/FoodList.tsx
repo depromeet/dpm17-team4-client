@@ -1,3 +1,5 @@
+import { useFoodSearch } from '@/hooks';
+
 interface FoodListProps {
   debouncedFoodName: string;
   onFoodSelect: (foodId: number, foodName: string) => void;
@@ -7,15 +9,18 @@ export const FoodList = ({
   debouncedFoodName,
   onFoodSelect,
 }: FoodListProps) => {
-  // TODO(seieun): debouncedFoodName으로 api fetch 해서 리스트로 뿌리는 로직 필요
-  // 임시로 더미 데이터 사용
-  const mockFoodList = [
-    { id: 1, name: `${debouncedFoodName} 김치찌개` },
-    { id: 2, name: `${debouncedFoodName} 된장찌개` },
-    { id: 3, name: `${debouncedFoodName} 불고기` },
-    { id: 4, name: `${debouncedFoodName} 비빔밥` },
-    { id: 5, name: `${debouncedFoodName} 김치` },
-  ];
+  const {
+    data: foodList,
+    isLoading,
+    error,
+  } = useFoodSearch({
+    query: debouncedFoodName,
+    count: 10,
+    enabled: debouncedFoodName.trim().length > 0,
+  });
+
+  // API 데이터가 없으면 빈 배열 사용
+  const foods = foodList?.items || [];
 
   const handleFoodClick = (foodId: number, foodName: string) => {
     onFoodSelect(foodId, foodName);
@@ -46,10 +51,33 @@ export const FoodList = ({
     });
   };
 
+  // 로딩 중일 때
+  if (isLoading) {
+    return (
+      <div className="p-3 text-center text-gray-400">음식을 검색 중...</div>
+    );
+  }
+
+  // 에러가 있을 때
+  if (error) {
+    return (
+      <div className="p-3 text-center text-red-400">
+        검색 중 오류가 발생했습니다.
+      </div>
+    );
+  }
+
+  // 검색 결과가 없을 때
+  if (foods.length === 0 && debouncedFoodName.trim().length > 0) {
+    return (
+      <div className="p-3 text-center text-gray-400">검색 결과가 없습니다.</div>
+    );
+  }
+
   return (
     <div>
       <div className="space-y-2">
-        {mockFoodList.map((food) => (
+        {foods.map((food) => (
           <button
             key={food.id}
             type="button"
