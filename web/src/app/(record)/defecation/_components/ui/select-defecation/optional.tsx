@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { DeleteIcon } from '@/components/icons/Delete';
+import { DeleteIcon } from '@/components';
 import type { DefecationFormValues } from '../../schemas';
 
 export default function Optional({
