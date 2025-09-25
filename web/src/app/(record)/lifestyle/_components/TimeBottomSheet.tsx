@@ -31,7 +31,7 @@ export const TimeBottomSheet = ({
             식사 시간
           </div>
 
-          <div className="flex justify-center gap-[0.4rem]">
+          <div className="flex justify-center gap-[0.4rem] w-[100vw]">
             {MEAL_TIMES.map((mealTime) => (
               <button
                 key={mealTime.id}

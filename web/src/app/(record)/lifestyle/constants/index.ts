@@ -1,4 +1,8 @@
 import type { StaticImageData } from 'next/image';
+import breakfast from '../assets/breakfast.png';
+import dinner from '../assets/dinner.png';
+import lunch from '../assets/lunch.png';
+import snack from '../assets/snack.png';
 import stressHigh from '../assets/stress-high.png';
 import stressLow from '../assets/stress-low.png';
 import stressMedium from '../assets/stress-medium.png';
@@ -9,27 +13,27 @@ import type { MealTime, StressLevel } from '../types/entitites';
 export const MEAL_TIMES: {
   id: MealTime;
   name: string;
-  imageUrl: string;
+  imageUrl: StaticImageData;
 }[] = [
   {
     id: 'BREAKFAST',
     name: '아침',
-    imageUrl: '',
+    imageUrl: breakfast,
   },
   {
     id: 'LUNCH',
     name: '점심',
-    imageUrl: '',
+    imageUrl: lunch,
   },
   {
     id: 'DINNER',
     name: '저녁',
-    imageUrl: '',
+    imageUrl: dinner,
   },
   {
     id: 'SNACK',
     name: '간식',
-    imageUrl: '',
+    imageUrl: snack,
   },
 ] as const;
 
