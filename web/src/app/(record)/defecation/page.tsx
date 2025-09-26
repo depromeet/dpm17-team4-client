@@ -23,15 +23,17 @@ export default function DefecationPage() {
         <DefecationTime />
 
         {/* 배변 시도 기록 영역 */}
-        <DefecationAttempt 
-          colorRef={colorRef} 
+        <DefecationAttempt
+          colorRef={colorRef}
           onOpenColorSection={handleOpenColorSection}
         />
 
         {/* 배변 내용 상세 기록 영역 */}
-        <DefecationDetail 
+        <DefecationDetail
           ref={defecationDetailRef}
-          colorRef={(el) => { colorRef.current = el; }}
+          colorRef={(el) => {
+            colorRef.current = el;
+          }}
         />
       </div>
     </div>

@@ -47,10 +47,10 @@ const BottomNavigation = ({ navRef }: BottomNavigationProps) => {
               type="button"
               key={tab.id}
               onClick={() => {
-                if(tab.active) {
+                if (tab.active) {
                   handleTabClick(tab.id);
-                }else{
-                  alert('아직 개발중..')
+                } else {
+                  alert('아직 개발중..');
                 }
               }}
               className="py-[1.19rem] pl-[1.78rem] pr-[1.84rem] cursor-pointer flex flex-col items-center gap-1 bg-transparent border-none text-white"

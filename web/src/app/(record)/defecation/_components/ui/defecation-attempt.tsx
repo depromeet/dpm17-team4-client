@@ -1,6 +1,5 @@
 'use client';
 
-import { useRef } from 'react';
 import { Controller, type FieldValues, useFormContext } from 'react-hook-form';
 import { cn } from '@/utils/utils-cn';
 import { DEFECATION_TRY, SCROLL_DELAY } from '../constants';
@@ -11,7 +10,10 @@ interface DefecationAttemptProps {
   onOpenColorSection?: () => void;
 }
 
-export const DefecationAttempt = ({ colorRef, onOpenColorSection }: DefecationAttemptProps) => {
+export const DefecationAttempt = ({
+  colorRef,
+  onOpenColorSection,
+}: DefecationAttemptProps) => {
   const { control, setValue, watch } = useFormContext<DefecationFormValues>();
   const selectedTry = watch('selectedTry');
 
@@ -19,12 +21,12 @@ export const DefecationAttempt = ({ colorRef, onOpenColorSection }: DefecationAt
     const newValue = selectedTry === value ? '' : value;
     setValue('selectedTry', newValue, { shouldValidate: true });
     field.onChange(newValue);
-    
+
     // DEFECATION_TRY 버튼을 선택하면 다음 폼(COLOR 섹션)으로 스크롤하고 열기
     if (newValue) {
       // COLOR 섹션 열기
       onOpenColorSection?.();
-      
+
       // COLOR 섹션으로 스크롤
       if (colorRef?.current) {
         setTimeout(() => {

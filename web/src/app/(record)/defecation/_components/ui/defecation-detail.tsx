@@ -22,8 +22,10 @@ export interface DefecationDetailRef {
   openColorSection: () => void;
 }
 
-export const DefecationDetail = forwardRef<DefecationDetailRef, DefecationDetailProps>(
-  ({ colorRef }, ref) => {
+export const DefecationDetail = forwardRef<
+  DefecationDetailRef,
+  DefecationDetailProps
+>(({ colorRef }, ref) => {
   const [openId, setOpenId] = useState<DefecationTryDetailKey | null>(null);
   const { setRef, scrollToSection } =
     useScrollToSection<DefecationTryDetailKey>();
@@ -100,9 +102,13 @@ export const DefecationDetail = forwardRef<DefecationDetailRef, DefecationDetail
   return (
     <>
       {Object.entries(DEFECATION_DETAIL).map(([key, value]) => (
-        <div 
-          key={key} 
-          ref={key === 'COLOR' && colorRef ? colorRef : setRef(key as DefecationTryDetailKey)}
+        <div
+          key={key}
+          ref={
+            key === 'COLOR' && colorRef
+              ? colorRef
+              : setRef(key as DefecationTryDetailKey)
+          }
         >
           <CollapsibleToggle
             id={key}
