@@ -3,7 +3,7 @@
 import { Bell } from 'lucide-react';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, Suspense } from 'react';
 import {
   getAccessToken,
   requestAccessToken,
@@ -15,7 +15,8 @@ import Character from '@/assets/home/character.png';
 import MaskGroup from '@/assets/home/Mask group.svg';
 import { useNavigationContext } from '@/contexts/NavigationContext';
 import { RecordSection } from './_components/ui';
-export default function Home() {
+
+function HomeContent() {
   const { navHeight } = useNavigationContext();
   const searchParams = useSearchParams();
 
@@ -118,5 +119,13 @@ export default function Home() {
       {/* 기록하기 영역 */}
       <RecordSection navHeight={navHeight} />
     </>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <HomeContent />
+    </Suspense>
   );
 }
