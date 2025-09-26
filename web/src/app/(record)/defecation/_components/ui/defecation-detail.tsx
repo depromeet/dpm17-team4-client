@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useState } from 'react';
+import { forwardRef, useCallback, useImperativeHandle, useState } from 'react';
 import { DEFECATION_DETAIL } from '../constants';
 import { useScrollToSection } from '../hooks';
 import type { DefecationTryDetailKey } from '../types';
@@ -14,10 +14,27 @@ import {
   SelectPreview,
 } from './select-defecation';
 
-export const DefecationDetail = () => {
+interface DefecationDetailProps {
+  colorRef?: (el: HTMLDivElement | null) => void;
+}
+
+export interface DefecationDetailRef {
+  openColorSection: () => void;
+}
+
+export const DefecationDetail = forwardRef<DefecationDetailRef, DefecationDetailProps>(
+  ({ colorRef }, ref) => {
   const [openId, setOpenId] = useState<DefecationTryDetailKey | null>(null);
   const { setRef, scrollToSection } =
     useScrollToSection<DefecationTryDetailKey>();
+
+  // ref를 통해 외부에서 호출할 수 있는 함수들
+  useImperativeHandle(ref, () => ({
+    openColorSection: () => {
+      setOpenId('COLOR');
+      scrollToSection('COLOR');
+    },
+  }));
 
   const handleSectionChange = useCallback(
     (id: DefecationTryDetailKey | null) => {
@@ -83,7 +100,10 @@ export const DefecationDetail = () => {
   return (
     <>
       {Object.entries(DEFECATION_DETAIL).map(([key, value]) => (
-        <div key={key} ref={setRef(key as DefecationTryDetailKey)}>
+        <div 
+          key={key} 
+          ref={key === 'COLOR' && colorRef ? colorRef : setRef(key as DefecationTryDetailKey)}
+        >
           <CollapsibleToggle
             id={key}
             isOpen={openId === key}
@@ -99,4 +119,4 @@ export const DefecationDetail = () => {
       ))}
     </>
   );
-};
+});
