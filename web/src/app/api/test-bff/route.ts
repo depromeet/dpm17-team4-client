@@ -1,15 +1,11 @@
 import { type NextRequest, NextResponse } from 'next/server';
-
-const BACKEND_URL = process.env.BACKEND_URL || 'http://211.188.58.167';
+import { fetchFromBackend } from '@/lib/bff-utils';
 
 export async function GET(request: NextRequest) {
   try {
     // BFF가 정상적으로 작동하는지 테스트
-    const testResponse = await fetch(`${BACKEND_URL}/api/health`, {
+    const testResponse = await fetchFromBackend('/api/health', request, {
       method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
     });
 
     if (!testResponse.ok) {
@@ -25,6 +21,7 @@ export async function GET(request: NextRequest) {
         frontend: 'HTTPS (Next.js)',
         backend: 'HTTP (Backend Server)',
         proxy: 'Working',
+        tokenPassing: 'Authorization header forwarded',
       },
       backendResponse: backendData,
       timestamp: new Date().toISOString(),

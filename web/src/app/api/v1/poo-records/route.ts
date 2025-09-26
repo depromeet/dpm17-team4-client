@@ -1,18 +1,13 @@
 import { type NextRequest, NextResponse } from 'next/server';
-
-const BACKEND_URL = process.env.BACKEND_URL || 'http://211.188.58.167';
+import { fetchFromBackend } from '@/lib/bff-utils';
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const queryString = searchParams.toString();
     
-    const response = await fetch(`${BACKEND_URL}/api/v1/poo-records${queryString ? `?${queryString}` : ''}`, {
+    const response = await fetchFromBackend('/api/v1/poo-records', request, {
       method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': request.headers.get('Authorization') || '',
-      },
+      searchParams,
     });
 
     const data = await response.json();
@@ -31,12 +26,8 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     
-    const response = await fetch(`${BACKEND_URL}/api/v1/poo-records`, {
+    const response = await fetchFromBackend('/api/v1/poo-records', request, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': request.headers.get('Authorization') || '',
-      },
       body: JSON.stringify(body),
     });
 
@@ -65,12 +56,8 @@ export async function PUT(request: NextRequest) {
       );
     }
     
-    const response = await fetch(`${BACKEND_URL}/api/v1/poo-records/${id}`, {
+    const response = await fetchFromBackend(`/api/v1/poo-records/${id}`, request, {
       method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': request.headers.get('Authorization') || '',
-      },
       body: JSON.stringify(body),
     });
 
@@ -98,12 +85,8 @@ export async function DELETE(request: NextRequest) {
       );
     }
     
-    const response = await fetch(`${BACKEND_URL}/api/v1/poo-records/${id}`, {
+    const response = await fetchFromBackend(`/api/v1/poo-records/${id}`, request, {
       method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': request.headers.get('Authorization') || '',
-      },
     });
 
     const data = await response.json();
