@@ -17,8 +17,14 @@ type RecordSectionProps = {
 const RecordSection = ({ navHeight }: RecordSectionProps) => {
   const router = useRouter();
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const isReady = false;
 
   const handleDateChange = (direction: 'prev' | 'next') => {
+    if(!isReady){
+      // TODO form 에 설정된 date 가 전달되지 않음
+      return;
+    }
+
     const newDate = new Date(selectedDate);
     if (direction === 'prev') {
       newDate.setDate(newDate.getDate() - 1);
@@ -43,7 +49,7 @@ const RecordSection = ({ navHeight }: RecordSectionProps) => {
         <button
           type="button"
           onClick={() => handleDateChange('prev')}
-          disabled={isPrevDisabled(selectedDate)}
+          disabled={!isReady || isPrevDisabled(selectedDate)}
           className={cn(
             'cursor-pointer block transition-opacity',
             isPrevDisabled(selectedDate) && 'opacity-30 cursor-not-allowed'
@@ -51,11 +57,11 @@ const RecordSection = ({ navHeight }: RecordSectionProps) => {
         >
           <Image src={ChevronLeft} alt="화살표 왼쪽 아이콘" className="block" />
         </button>
-        <span className="select-none">{formatDate(selectedDate)}</span>
+        <span className="select-none text-white">{formatDate(selectedDate)}</span>
         <button
           type="button"
           onClick={() => handleDateChange('next')}
-          disabled={isNextDisabled(selectedDate)}
+          disabled={!isReady || isNextDisabled(selectedDate)}
           className={cn(
             'cursor-pointer block transition-opacity',
             isNextDisabled(selectedDate) && 'opacity-30 cursor-not-allowed'

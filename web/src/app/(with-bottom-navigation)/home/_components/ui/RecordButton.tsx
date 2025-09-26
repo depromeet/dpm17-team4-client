@@ -21,7 +21,7 @@ const RecordButton = ({
     >
       <div className="text-left flex flex-col flex-1">
         <div className="text-gray-400">{title}</div>
-        <div className="text-body1-sb">{subtitle}</div>
+        <div className="text-body1-sb text-white">{subtitle}</div>
         <div className="flex justify-end">
           <Image src={icon} alt="아이콘" width={24} height={24} />
         </div>
