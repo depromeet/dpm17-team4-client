@@ -31,13 +31,13 @@ export const TimeBottomSheet = ({
             식사 시간
           </div>
 
-          <div className="flex justify-center gap-[0.4rem] w-[100vw]">
+          <div className="flex justify-center items-center gap-[0.4rem] w-full">
             {MEAL_TIMES.map((mealTime) => (
               <button
                 key={mealTime.id}
                 type="button"
                 onClick={() => handleTimeSelect(mealTime)}
-                className={`flex items-center gap-[0.5rem] px-[0.94rem] py-[0.69rem] rounded-[0.625rem] text-white text-body2-m transition-colors h-fit ${
+                className={`flex items-center justify-center gap-[0.5rem] px-[0.94rem] py-[0.69rem] rounded-[0.625rem] text-white text-body2-m transition-colors h-fit ${
                   selectedTime === mealTime.name
                     ? 'bg-green-600'
                     : 'bg-gray-700 hover:bg-gray-600'
