@@ -46,6 +46,7 @@ export type MealTime = 'BREAKFAST' | 'LUNCH' | 'DINNER' | 'SNACK';
 
 export type Meal = {
   mealTime: MealTime;
+  image: string | StaticImageData;
   dangerous: boolean;
   foods: string[];
 };
@@ -79,7 +80,7 @@ export type Water = {
 // NOTE(seonghyun): 스트레스 관련 타입
 export type Stress = {
   message: string;
-  image: string;
+  image: string | StaticImageData;
 };
 
 // NOTE(seonghyun): 추천 습관 관련 타입

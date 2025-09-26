@@ -1,21 +1,15 @@
 'use client';
 
-import { Banana, Droplets, FileText } from 'lucide-react';
 import Image from 'next/image';
 import { useState } from 'react';
+import { DefecationScore } from './_components/DefecationScore';
+import { FoodReport } from './_components/FoodReport';
+import { StressReport } from './_components/StressReport';
 import { Suggestions } from './_components/Suggestions';
+import { WaterReport } from './_components/WaterReport';
 import { mockReportData } from './mockData';
 import type { Card, ReportPeriod } from './types';
-import {
-  formatDate,
-  getColorLabel,
-  getMealTimeIcon,
-  getMealTimeLabel,
-  getScoreColor,
-  getShapeLabel,
-  getWaterLevelLabel,
-  getWaterNameLabel,
-} from './utils';
+import { formatDate, getColorLabel, getShapeLabel } from './utils';
 
 export default function DailyReportPage() {
   const [selectedPeriod, _setSelectedPeriod] = useState<ReportPeriod>('daily');
@@ -300,6 +294,14 @@ export default function DailyReportPage() {
           })}{' '}
           업데이트
         </p>
+
+        <div className="flex flex-col space-y-5 mt-9">
+          <DefecationScore score={reportData.poo.score} />
+          <FoodReport foodData={reportData.food} />
+          <WaterReport waterData={reportData.water} />
+
+          <StressReport stressData={reportData.stress} />
+        </div>
       </main>
 
       <Suggestions suggestion={reportData.suggestion} />

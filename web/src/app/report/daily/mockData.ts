@@ -1,4 +1,10 @@
+import BreakfastImage from '@/assets/report/breakfast.png';
 import CharacterImage from '@/assets/report/charactoer1.png';
+import DinnerImage from '@/assets/report/dinner.png';
+import StressImage from '@/assets/report/emoji_anger.png';
+import LunchImage from '@/assets/report/lunch.png';
+import SnackImage from '@/assets/report/snack.png';
+
 import type { ReportData } from './types';
 
 // NOTE(seonghyun): Mock 데이터 - API 응답 형태
@@ -36,47 +42,64 @@ export const mockReportData: ReportData = {
     ],
   },
   food: {
-    message: '맵고 자극적인 음식이 장을 자극했을 수 있어요',
+    message: `맵고 자극적인 음식이\n 장을 자극했을 수 있어요`,
     items: [
       {
         occurredAt: '2024-09-16T00:00:00Z', // 어제
         meals: [
-          { mealTime: 'BREAKFAST', dangerous: false, foods: [] },
+          {
+            mealTime: 'BREAKFAST',
+            image: BreakfastImage,
+            dangerous: false,
+            foods: [],
+          },
           {
             mealTime: 'LUNCH',
+            image: LunchImage,
             dangerous: true,
             foods: ['마라탕', '꿔바로우'],
           },
           {
             mealTime: 'DINNER',
+            image: DinnerImage,
             dangerous: false,
             foods: ['짜장면', '탕수육'],
           },
-          { mealTime: 'SNACK', dangerous: false, foods: [] },
+          { mealTime: 'SNACK', image: SnackImage, dangerous: false, foods: [] },
         ],
       },
       {
         occurredAt: '2024-09-17T00:00:00Z', // 오늘
         meals: [
-          { mealTime: 'BREAKFAST', dangerous: false, foods: [] },
-          { mealTime: 'LUNCH', dangerous: false, foods: [] },
-          { mealTime: 'DINNER', dangerous: false, foods: [] },
-          { mealTime: 'SNACK', dangerous: false, foods: [] },
+          {
+            mealTime: 'BREAKFAST',
+            image: BreakfastImage,
+            dangerous: false,
+            foods: [],
+          },
+          { mealTime: 'LUNCH', image: LunchImage, dangerous: false, foods: [] },
+          {
+            mealTime: 'DINNER',
+            image: DinnerImage,
+            dangerous: false,
+            foods: [],
+          },
+          { mealTime: 'SNACK', image: SnackImage, dangerous: false, foods: [] },
         ],
       },
     ],
   },
   water: {
-    message: '장이 말라가고 있어요! 물 섭취량을 늘려야 해요',
+    message: `장이 말라가고 있어요!\n물 섭취량을 늘려야 해요`,
     items: [
       { name: 'STANDARD', value: 2000, color: '#9CA3AF', level: 'HIGH' },
-      { name: 'YESTERDAY', value: 500, color: '#FBBF24', level: 'MEDIUM' },
-      { name: 'TODAY', value: 200, color: '#EF4444', level: 'LOW' },
+      { name: 'YESTERDAY', value: 1600, color: '#23ABFF', level: 'MEDIUM' },
+      { name: 'TODAY', value: 800, color: '#EF4444', level: 'LOW' },
     ],
   },
   stress: {
-    message: '스트레스 관리가 필요해요. 가벼운 산책이나 명상 어때요?',
-    image: '😤',
+    message: `스트레스 관리가 필요해요.\n가벼운 산책이나 명상 어때요?`,
+    image: StressImage,
   },
   suggestion: {
     message: '장 상태를 개선하려면 이런 습관을 추천해요',
