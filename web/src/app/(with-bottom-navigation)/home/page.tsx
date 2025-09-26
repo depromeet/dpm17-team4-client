@@ -2,12 +2,77 @@
 
 import { Bell } from 'lucide-react';
 import Image from 'next/image';
+import { useSearchParams } from 'next/navigation';
+import { useCallback, useEffect } from 'react';
+import {
+  getAccessToken,
+  requestAccessToken,
+  setAccessToken,
+  setUserInfo,
+  type UserInfo,
+} from '@/app/auth/_components/AuthSessionProvider';
 import Character from '@/assets/home/character.png';
 import MaskGroup from '@/assets/home/Mask group.svg';
 import { useNavigationContext } from '@/contexts/NavigationContext';
 import { RecordSection } from './_components/ui';
 export default function Home() {
   const { navHeight } = useNavigationContext();
+  const searchParams = useSearchParams();
+
+  const extractUserInfo = useCallback((): UserInfo | null => {
+    const id = searchParams.get('id');
+    const nickname = searchParams.get('nickname');
+    const profileImage = searchParams.get('profileImage');
+    const isNew = searchParams.get('isNew');
+    const providerType = searchParams.get('providerType');
+
+    if (id && nickname && profileImage && isNew && providerType) {
+      const userInfo = {
+        id,
+        nickname: decodeURIComponent(nickname),
+        profileImage: decodeURIComponent(profileImage),
+        isNew: isNew === 'true',
+        providerType,
+      };
+      return userInfo;
+    }
+    return null;
+  }, [searchParams]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const userInfo = extractUserInfo();
+        const currentAccessToken = getAccessToken();
+
+        // 사용자 정보가 있고 accessToken이 없을 때만 refresh 요청
+        if (userInfo && !currentAccessToken) {
+          console.log('🔄 Home에서 Refresh 요청 시작...');
+          const { accessToken } = await requestAccessToken();
+          if (accessToken) {
+            console.log('✅ Home에서 AccessToken 발급 완료');
+            setAccessToken(accessToken);
+          } else {
+            console.log('❌ Home에서 AccessToken 발급 실패');
+          }
+        } else {
+          console.log('⏭️ Home에서 Refresh 요청 건너뜀:', {
+            reason: !userInfo ? '사용자 정보 없음' : '이미 accessToken 있음',
+          });
+        }
+
+        // 사용자 정보가 있으면 항상 저장하고 URL 정리
+        if (userInfo) {
+          setUserInfo(userInfo);
+          const url = new URL(window.location.href);
+          url.search = '';
+          window.history.replaceState({}, '', url.toString());
+        }
+      } catch (error) {
+        console.error('Home Auth 처리 중 에러:', error);
+      }
+    })();
+  }, [extractUserInfo]);
 
   return (
     <>
