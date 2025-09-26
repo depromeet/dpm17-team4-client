@@ -20,7 +20,7 @@ export default function Shape({
   return (
     <>
       <div className="flex items-center justify-start gap-3 mb-4">
-        <p className="text-body3-r opacity-80">실제 모양 보기</p>
+        <p className="text-body3-r opacity-80">실제 모양 보기(디자인 작업중..)</p>
         <Switch
           checked={showType === 'REAL'}
           onCheckedChange={(checked) => setShowType(checked ? 'REAL' : 'EMOJI')}
