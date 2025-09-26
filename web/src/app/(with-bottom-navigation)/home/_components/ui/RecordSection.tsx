@@ -20,7 +20,7 @@ const RecordSection = ({ navHeight }: RecordSectionProps) => {
   const isReady = false;
 
   const handleDateChange = (direction: 'prev' | 'next') => {
-    if(!isReady){
+    if (!isReady) {
       // TODO form 에 설정된 date 가 전달되지 않음
       return;
     }
@@ -57,7 +57,9 @@ const RecordSection = ({ navHeight }: RecordSectionProps) => {
         >
           <Image src={ChevronLeft} alt="화살표 왼쪽 아이콘" className="block" />
         </button>
-        <span className="select-none text-white">{formatDate(selectedDate)}</span>
+        <span className="select-none text-white">
+          {formatDate(selectedDate)}
+        </span>
         <button
           type="button"
           onClick={() => handleDateChange('next')}
