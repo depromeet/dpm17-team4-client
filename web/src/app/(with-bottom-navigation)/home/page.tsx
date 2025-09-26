@@ -3,7 +3,7 @@
 import { Bell } from 'lucide-react';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
-import { useCallback, useEffect, Suspense } from 'react';
+import { Suspense, useCallback, useEffect } from 'react';
 import {
   getAccessToken,
   requestAccessToken,
