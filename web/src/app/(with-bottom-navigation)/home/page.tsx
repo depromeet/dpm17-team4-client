@@ -15,6 +15,7 @@ import Character from '@/assets/home/character.png';
 import MaskGroup from '@/assets/home/Mask group.svg';
 import { useNavigationContext } from '@/contexts/NavigationContext';
 import { RecordSection } from './_components/ui';
+import {useUserInfo} from "@/hooks";
 
 function HomeContent() {
   const { navHeight } = useNavigationContext();
@@ -74,6 +75,7 @@ function HomeContent() {
       }
     })();
   }, [extractUserInfo]);
+  const { userInfo: savedUserInfo, handleLogOut } = useUserInfo();
 
   return (
     <>
@@ -96,7 +98,7 @@ function HomeContent() {
           </section>
           <section className="text-h2 mt-[2.2rem]">
             <h1>
-              유빈님, 반가워요!
+              {savedUserInfo?.nickname || savedUserInfo?.id || '테스터'}님, 반가워요!
               <br />
               오늘의 기록을 시작할까요?
             </h1>
