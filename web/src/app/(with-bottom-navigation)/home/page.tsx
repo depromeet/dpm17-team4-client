@@ -2,28 +2,12 @@
 
 import { Bell } from 'lucide-react';
 import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
+import Character from '@/assets/home/character.png';
 import MaskGroup from '@/assets/home/Mask group.svg';
-import { getUserInfo } from '../auth/_components/AuthSessionProvider';
-import { BottomNavigation, RecordSection } from './_components/ui';
-import type { Tab } from './types';
-
-export default function HomePage() {
-  const [activeTab, setActiveTab] = useState<Tab>('home');
-  const [navHeight, setNavHeight] = useState(0);
-  const navRef = useRef<HTMLElement>(null);
-
-  const user = getUserInfo();
-
-  const handleTabClick = (tabName: Tab) => {
-    setActiveTab(tabName);
-  };
-
-  useEffect(() => {
-    if (navRef.current) {
-      setNavHeight(navRef.current.offsetHeight);
-    }
-  }, []);
+import { useNavigationContext } from '@/contexts/NavigationContext';
+import { RecordSection } from './_components/ui';
+export default function Home() {
+  const { navHeight } = useNavigationContext();
 
   return (
     <>
@@ -39,14 +23,14 @@ export default function HomePage() {
         </div>
         {/* 콘텐츠 영역 */}
         <div className="relative z-10">
-          <section className="flex justify-between font-bold text-h3 pt-[71px]">
+          <section className="flex justify-between font-bold text-h3 pt-[0.94rem]">
             <span>Logo</span>
             {/* NOTE(yubin):아이콘 교체 */}
             <Bell />
           </section>
           <section className="text-h2 mt-[2.2rem]">
             <h1>
-              {user?.nickname || '사용자'} 님, 반가워요!
+              유빈님, 반가워요!
               <br />
               오늘의 기록을 시작할까요?
             </h1>
@@ -55,12 +39,12 @@ export default function HomePage() {
             </p>
           </section>
           {/* 중앙 아이콘 영역 */}
-          <section className="flex justify-center items-center mt-[2.94rem]">
+          <section className="flex justify-center items-center">
             {/* NOTE(yubin):이미지 교체 */}
             <Image
               width={213}
               height={206}
-              src={'https://placehold.co/600x400.png'}
+              src={Character}
               alt="홈 화면 중앙 아이콘"
             />
           </section>
@@ -68,12 +52,6 @@ export default function HomePage() {
       </main>
       {/* 기록하기 영역 */}
       <RecordSection navHeight={navHeight} />
-      {/* 하단 내비게이션 바*/}
-      <BottomNavigation
-        navRef={navRef}
-        onTabClick={handleTabClick}
-        currentTab={activeTab}
-      />
     </>
   );
 }

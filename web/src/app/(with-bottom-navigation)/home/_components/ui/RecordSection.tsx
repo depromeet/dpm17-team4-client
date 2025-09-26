@@ -1,8 +1,10 @@
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import forkIcon from '@/assets/home/fork.svg';
 import ChevronLeft from '@/assets/home/IC_Chevron_Left.png';
 import ChevronRight from '@/assets/home/IC_Chevron_Right.png';
+import poopIcon from '@/assets/home/poop.svg';
 import { cn } from '@/utils/utils-cn';
 import { formatDate, isNextDisabled, isPrevDisabled } from '../utils/util-date';
 import { getRecordPath } from '../utils/util-route';
@@ -66,17 +68,18 @@ const RecordSection = ({ navHeight }: RecordSectionProps) => {
           />
         </button>
       </div>
-      {/* RecordButton 컴포넌트는 record-button 브랜치에서 관리됩니다 */}
       <div className="flex gap-[0.69rem] mt-4">
         <RecordButton
           title="이날의 뿡"
           subtitle="배변 기록하기"
           onClick={() => handleRecordClick('defecation')}
+          icon={poopIcon}
         />
         <RecordButton
           title="이날의 냠"
           subtitle="생활 기록하기"
           onClick={() => handleRecordClick('lifestyle')}
+          icon={forkIcon}
         />
       </div>
     </section>

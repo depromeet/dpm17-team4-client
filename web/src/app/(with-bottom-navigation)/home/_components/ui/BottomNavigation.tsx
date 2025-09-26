@@ -1,7 +1,7 @@
-import { Calendar, Home as HomeIcon, NotepadText, User } from 'lucide-react';
 import type { RefObject } from 'react';
+import { CalendarIcon, HomeIcon, ReportIcon, UserIcon } from '@/components';
+import { useNavigationContext } from '@/contexts/NavigationContext';
 import { cn } from '@/utils/utils-cn';
-import type { Tab } from '../../types';
 
 const BOTTOM_NAV_TABS = [
   {
@@ -12,31 +12,27 @@ const BOTTOM_NAV_TABS = [
   {
     id: 'calendar' as const,
     name: '캘린더',
-    icon: Calendar,
+    icon: CalendarIcon,
   },
   {
     id: 'report' as const,
     name: '리포트',
-    icon: NotepadText,
+    icon: ReportIcon,
   },
   {
     id: 'my' as const,
     name: '마이',
-    icon: User,
+    icon: UserIcon,
   },
 ];
 
 type BottomNavigationProps = {
   navRef: RefObject<HTMLElement | null>;
-  onTabClick: (tabName: Tab) => void;
-  currentTab: Tab;
 };
 
-const BottomNavigation = ({
-  navRef,
-  onTabClick,
-  currentTab,
-}: BottomNavigationProps) => {
+const BottomNavigation = ({ navRef }: BottomNavigationProps) => {
+  const { handleTabClick, currentTab } = useNavigationContext();
+
   return (
     <nav ref={navRef} className="bg-gray-900 fixed bottom-0 border-none w-full">
       <div className="flex justify-between">
@@ -44,10 +40,10 @@ const BottomNavigation = ({
           const IconComponent = tab.icon;
           return (
             <button
-              key={tab.id}
               type="button"
+              key={tab.id}
+              onClick={() => handleTabClick(tab.id)}
               className="py-[1.19rem] pl-[1.78rem] pr-[1.84rem] cursor-pointer flex flex-col items-center gap-1 bg-transparent border-none text-white"
-              onClick={() => onTabClick(tab.id)}
             >
               <IconComponent
                 className={cn(

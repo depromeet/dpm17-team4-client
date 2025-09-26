@@ -1,7 +1,10 @@
 // 페이지 라우트 상수들
 export const PAGE_ROUTES = {
-  HOME: '/',
+  HOME: '/home',
   AUTH: '/auth',
+  REPORT_DAILY: '/report/daily',
+  CALENDAR: '/calendar',
+  MY: '/my',
 } as const;
 
 // API 라우트 상수들

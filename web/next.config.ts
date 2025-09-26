@@ -9,6 +9,16 @@ const nextConfig: NextConfig = {
         hostname: 'placehold.co',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'k.kakaocdn.net',
+        pathname: '/**',
+      },
+      {
+        protocol: 'http',
+        hostname: 'k.kakaocdn.net',
+        pathname: '/**',
+      },
     ],
   },
 };

@@ -1,15 +1,16 @@
 import Image from 'next/image';
 import type { ButtonHTMLAttributes } from 'react';
-import poopIcon from '@/assets/home/poop.svg';
 
 type RecordButtonProps = {
   title: string;
   subtitle: string;
+  icon: string;
 } & Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'type'>;
 
 const RecordButton = ({
   title,
   subtitle,
+  icon,
   ...buttonProps
 }: RecordButtonProps) => {
   return (
@@ -22,7 +23,7 @@ const RecordButton = ({
         <div className="text-gray-400">{title}</div>
         <div className="text-body1-sb">{subtitle}</div>
         <div className="flex justify-end">
-          <Image src={poopIcon} alt="poop 아이콘" />
+          <Image src={icon} alt="아이콘" width={24} height={24} />
         </div>
       </div>
     </button>
