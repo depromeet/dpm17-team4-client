@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useUserInfo } from '@/hooks';
 import { PAGE_ROUTES } from '../constants/route.constants';
@@ -29,9 +30,11 @@ export default function LoginContent() {
             <p>
               <strong>로그인 방식:</strong> {savedUserInfo.providerType}
             </p>
-            <img
+            <Image
               src={savedUserInfo.profileImage}
               alt="프로필 이미지"
+              width={64}
+              height={64}
               className="w-16 h-16 rounded-full mx-auto mt-2"
             />
           </div>

@@ -1,5 +1,4 @@
 import { type NextRequest, NextResponse } from 'next/server';
-import { AUTH_CONSTANTS } from './constants/auth.constants';
 import { PAGE_ROUTES, PUBLIC_PATHS } from './constants/route.constants';
 
 const isPublicPath = (pathname: string) => {
