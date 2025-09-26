@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect } from 'react';
 import { API_ENDPOINTS } from '@/constants';
 export interface UserInfo {
   id: string;
@@ -58,14 +57,21 @@ export function setAccessToken(token: string | null) {
 }
 
 export async function requestAccessToken() {
+  console.log('🍪 현재 쿠키 정보:', document.cookie);
+
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL || 'https://211.188.58.167'}${API_ENDPOINTS.AUTH.REFRESH}`,
     {
       method: 'POST',
-      credentials: 'include', // ★ 쿠키 자동 동반
-      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include', // ★ 쿠키 자동 동반 (HttpOnly 쿠키 포함)
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
     }
   );
+
+  console.log('📥 응답 상태:', res.status, res.statusText);
 
   if (!res.ok) {
     const errText = await res.text().catch(() => '');
@@ -87,18 +93,5 @@ export default function AuthSessionProvider({
 }: {
   children: React.ReactNode;
 }) {
-  useEffect(() => {
-    (async () => {
-      try {
-        const { accessToken: token } = await requestAccessToken();
-        if (token) {
-          setAccessToken(token);
-        }
-      } catch {
-        setAccessToken(null);
-      }
-    })();
-  }, []);
-
   return <>{children}</>;
 }

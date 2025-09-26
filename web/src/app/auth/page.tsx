@@ -7,6 +7,7 @@ import EllipseBg from '@/assets/auth/Ellipse 322187.png';
 import LoginCharacter from '@/assets/auth/login-character.png';
 import { API_ENDPOINTS } from '@/constants';
 import {
+  getAccessToken,
   requestAccessToken,
   setAccessToken,
   setUserInfo,
@@ -49,10 +50,31 @@ function AuthContent() {
     (async () => {
       try {
         const userInfo = extractUserInfo();
-        const { accessToken } = await requestAccessToken();
-        if (accessToken) {
-          setAccessToken(accessToken);
+        const currentAccessToken = getAccessToken();
+
+        console.log('🔍 Auth 상태 확인:', {
+          userInfo: !!userInfo,
+          currentAccessToken: !!currentAccessToken,
+          shouldRefresh: !!(userInfo && !currentAccessToken),
+        });
+
+        // 사용자 정보가 있고 accessToken이 없을 때만 refresh 요청
+        if (userInfo && !currentAccessToken) {
+          console.log('🔄 Refresh 요청 시작...');
+          const { accessToken } = await requestAccessToken();
+          if (accessToken) {
+            console.log('✅ AccessToken 발급 완료');
+            setAccessToken(accessToken);
+          } else {
+            console.log('❌ AccessToken 발급 실패');
+          }
+        } else {
+          console.log('⏭️ Refresh 요청 건너뜀:', {
+            reason: !userInfo ? '사용자 정보 없음' : '이미 accessToken 있음',
+          });
         }
+
+        // 사용자 정보가 있으면 항상 저장하고 URL 정리
         if (userInfo) {
           setUserInfo(userInfo);
           const url = new URL(window.location.href);
