@@ -5,7 +5,7 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     
-    const response = await fetchFromBackend('/api/v1/activity-records', request, {
+    const response = await fetchFromBackend('/api/v1/poo-records', request, {
       method: 'GET',
       searchParams,
     });
@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
     
     return NextResponse.json(data, { status: response.status });
   } catch (error) {
-    console.error('BFF Error - GET activity-records:', error);
+    console.error('BFF Error - GET poo-records:', error);
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     
-    const response = await fetchFromBackend('/api/v1/activity-records', request, {
+    const response = await fetchFromBackend('/api/v1/poo-records', request, {
       method: 'POST',
       body: JSON.stringify(body),
     });
@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
     
     return NextResponse.json(data, { status: response.status });
   } catch (error) {
-    console.error('BFF Error - POST activity-records:', error);
+    console.error('BFF Error - POST poo-records:', error);
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -56,7 +56,7 @@ export async function PUT(request: NextRequest) {
       );
     }
     
-    const response = await fetchFromBackend(`/api/v1/activity-records/${id}`, request, {
+    const response = await fetchFromBackend(`/api/v1/poo-records/${id}`, request, {
       method: 'PUT',
       body: JSON.stringify(body),
     });
@@ -65,7 +65,7 @@ export async function PUT(request: NextRequest) {
     
     return NextResponse.json(data, { status: response.status });
   } catch (error) {
-    console.error('BFF Error - PUT activity-records:', error);
+    console.error('BFF Error - PUT poo-records:', error);
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -85,7 +85,7 @@ export async function DELETE(request: NextRequest) {
       );
     }
     
-    const response = await fetchFromBackend(`/api/v1/activity-records/${id}`, request, {
+    const response = await fetchFromBackend(`/api/v1/poo-records/${id}`, request, {
       method: 'DELETE',
     });
 
@@ -93,7 +93,7 @@ export async function DELETE(request: NextRequest) {
     
     return NextResponse.json(data, { status: response.status });
   } catch (error) {
-    console.error('BFF Error - DELETE activity-records:', error);
+    console.error('BFF Error - DELETE poo-records:', error);
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

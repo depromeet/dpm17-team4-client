@@ -15,7 +15,7 @@ import {
 } from './_components/AuthSessionProvider';
 import KakaoLoginButton from './_components/KakaoLoginButton';
 
-const KAKAO_LOGIN_INITIATE_URL = `${process.env.NEXT_PUBLIC_API || 'https://211.188.58.167'}${API_ENDPOINTS.AUTH.KAKAO_LOGIN}`;
+const KAKAO_LOGIN_INITIATE_URL = `${process.env.NEXT_PUBLIC_API_URL || 'https://211.188.58.167'}${API_ENDPOINTS.AUTH.KAKAO_LOGIN}`; // 직접 백엔드 사용
 
 function AuthContent() {
   const searchParams = useSearchParams();

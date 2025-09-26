@@ -2,7 +2,7 @@ import axios from 'axios';
 import { getAccessToken } from '@/app/auth/_components/AuthSessionProvider';
 
 const apiClient = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://211.188.58.167', // TODO(seonghyun): env vercel 세팅,
+  baseURL: process.env.NODE_ENV === 'production' ? '' : '', // BFF 패턴: 같은 도메인의 API 라우트 사용
   timeout: 5000,
   headers: {
     'Content-Type': 'application/json',
