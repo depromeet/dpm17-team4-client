@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getAccessToken } from '@/app/auth/_components/AuthSessionProvider';
 
 const apiClient = axios.create({
   //TODO(seieun): server url 설정
@@ -11,8 +12,11 @@ const apiClient = axios.create({
 
 apiClient.interceptors.request.use(
   (config) => {
-    //TODO(yubin): Access token 추가
-    config.headers.Authorization = `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`;
+    const accessToken = getAccessToken();
+    if (accessToken) {
+      config.headers = config.headers ?? {};
+      config.headers.Authorization = `Bearer ${accessToken}`;
+    }
     return config;
   },
   (error) => {
