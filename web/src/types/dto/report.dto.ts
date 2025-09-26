@@ -1,10 +1,3 @@
-export interface ScoreDetailsDto {
-  accuracy: number;
-  speed: number;
-  consistency: number;
-}
+import type { ReportData } from '@/app/(with-bottom-navigation)/report/daily/types';
 
-export interface ReportDataResponseDto {
-  score: number;
-  details: ScoreDetailsDto;
-}
+export interface ReportDataResponseDto extends ReportData {}

@@ -77,12 +77,13 @@ export const FoodReport = ({ foodData }: { foodData: Food }) => {
                   className="flex items-center justify-between"
                 >
                   <div className="flex items-center gap-1 bg-[#3C4149] rounded-[4px] py-1 px-2">
-                    <Image
-                      src={meal.image}
-                      alt={getMealTimeLabel(meal.mealTime)}
-                      width={16}
-                      height={16}
-                    />
+                    {/* TODO 서버에서 이미지 내려오지 않음 */}
+                    {/*<Image*/}
+                    {/*  src={meal.image}*/}
+                    {/*  alt={getMealTimeLabel(meal.mealTime)}*/}
+                    {/*  width={16}*/}
+                    {/*  height={16}*/}
+                    {/*/>*/}
                     <p className="text-white text-body3-m text-center">
                       {getMealTimeLabel(meal.mealTime)}
                     </p>
