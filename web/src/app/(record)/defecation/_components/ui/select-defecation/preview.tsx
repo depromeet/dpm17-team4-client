@@ -1,7 +1,6 @@
 'use client';
 
-import { useCallback, useEffect } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, useWatch } from 'react-hook-form';
 import { cn } from '@/utils/utils-cn';
 import {
   DEFECATION_COLOR,
@@ -16,12 +15,13 @@ import type {
 } from '../../types';
 
 export default function Preview({ currentKey }: { currentKey: string }) {
-  const { getValues } = useFormContext<DefecationFormValues>();
+  const { control } = useFormContext<DefecationFormValues>();
+  const values = useWatch({ control });
 
-  const handlePreview = useCallback(() => {
+  const handlePreview = () => {
     switch (currentKey) {
       case 'COLOR': {
-        const colorKey = getValues('selectedColor') as DefecationTryColorKey;
+        const colorKey = values.selectedColor as DefecationTryColorKey;
         if (!colorKey || !DEFECATION_COLOR[colorKey]) {
           return null;
         }
@@ -37,7 +37,7 @@ export default function Preview({ currentKey }: { currentKey: string }) {
         );
       }
       case 'SHAPE': {
-        const shapeKey = getValues('selectedShape') as DefecationTryShapeKey;
+        const shapeKey = values.selectedShape as DefecationTryShapeKey;
         if (!shapeKey || !DEFECATION_SHAPE[shapeKey]) {
           return null;
         }
@@ -50,8 +50,8 @@ export default function Preview({ currentKey }: { currentKey: string }) {
         );
       }
       case 'PAIN': {
-        const painKey = getValues('selectedPain');
-        if (painKey === undefined) return null;
+        const painKey = values.selectedPain;
+        if (painKey === undefined || painKey === -1) return null;
 
         const calculatedPainCode = () => {
           if (painKey >= 0 && painKey < 10) return '10';
@@ -77,9 +77,8 @@ export default function Preview({ currentKey }: { currentKey: string }) {
         );
       }
       case 'TIME_TAKEN': {
-        const timeTakenKey = getValues(
-          'selectedTimeTaken'
-        ) as DefecationTryTimeTakenKey;
+        const timeTakenKey =
+          values.selectedTimeTaken as DefecationTryTimeTakenKey;
         if (!timeTakenKey || !DEFECATION_TIME_TAKEN[timeTakenKey]) {
           return null;
         }
@@ -92,7 +91,7 @@ export default function Preview({ currentKey }: { currentKey: string }) {
         );
       }
       case 'OPTIONAL': {
-        const optionalKey = getValues('selectedOptional');
+        const optionalKey = values.selectedOptional;
         if (optionalKey === 'initial') return null;
 
         return (
@@ -102,11 +101,7 @@ export default function Preview({ currentKey }: { currentKey: string }) {
         );
       }
     }
-  }, [currentKey, getValues]);
-
-  useEffect(() => {
-    handlePreview();
-  }, [handlePreview]);
+  };
 
   return <div>{handlePreview()}</div>;
 }

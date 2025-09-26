@@ -1,24 +1,11 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
-import { useDebounce } from '@/hooks';
 import type { DefecationFormValues } from '../../schemas';
 import { DraggableProgressBar } from '../common';
 
-const DEBOUNCE_DELAY = 300;
-
 export default function Pain({ onPainSelect }: { onPainSelect?: () => void }) {
-  const { control, setValue } = useFormContext<DefecationFormValues>();
-  const [painValue, setPainValue] = useState<number | null>(null);
-
-  const debouncedPainValue = useDebounce(painValue, DEBOUNCE_DELAY);
-
-  useEffect(() => {
-    setValue('selectedPain', debouncedPainValue ?? undefined, {
-      shouldValidate: true,
-    });
-  }, [debouncedPainValue, setValue]);
+  const { control } = useFormContext<DefecationFormValues>();
 
   return (
     <div>
@@ -29,10 +16,10 @@ export default function Pain({ onPainSelect }: { onPainSelect?: () => void }) {
         <Controller
           name="selectedPain"
           control={control}
-          render={() => (
+          render={({ field: { onChange, value } }) => (
             <DraggableProgressBar
-              value={painValue ?? 0}
-              onChange={setPainValue}
+              value={value ?? 0}
+              onChange={onChange}
               onDragEnd={onPainSelect}
             />
           )}
