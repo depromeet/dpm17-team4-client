@@ -96,10 +96,10 @@ function AuthContent() {
         )}
 
         <form method="POST" action={KAKAO_LOGIN_INITIATE_URL}>
-          <input 
-            type="hidden" 
-            name="redirectUri" 
-            value={`${window.location.origin}/home`} 
+          <input
+            type="hidden"
+            name="redirectUri"
+            value={`${window.location.origin}/home`}
           />
           <KakaoLoginButton />
         </form>
