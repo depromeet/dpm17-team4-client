@@ -60,7 +60,7 @@ export async function requestAccessToken() {
   console.log('🍪 현재 쿠키 정보:', document.cookie);
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL || 'https://211.188.58.167'}${API_ENDPOINTS.AUTH.REFRESH}`,
+    `${process.env.NEXT_PUBLIC_API_URL || 'https://211.188.58.167'}${API_ENDPOINTS.AUTH.REFRESH}`, // 직접 백엔드 사용 (쿠키 전달을 위해)
     {
       method: 'POST',
       credentials: 'include', // ★ 쿠키 자동 동반 (HttpOnly 쿠키 포함)
