@@ -19,6 +19,26 @@ const nextConfig: NextConfig = {
         hostname: 'k.kakaocdn.net',
         pathname: '/**',
       },
+      {
+        protocol: 'http',
+        hostname: 'img1.kakaocdn.net',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'img1.kakaocdn.net',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'kr.object.ncloudstorage.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'http',
+        hostname: 'kr.object.ncloudstorage.com',
+        pathname: '/**',
+      },
     ],
   },
 };

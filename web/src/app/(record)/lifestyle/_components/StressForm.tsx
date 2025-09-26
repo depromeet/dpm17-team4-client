@@ -24,7 +24,7 @@ export const StressForm = memo(
             오늘 하루 스트레스 점수는 어떤가요?
           </div>
 
-          <div className="flex justify-center gap-[1.5rem] overflow-scroll pl-[4.8rem]">
+          <div className="flex justify-center gap-[1.5rem] overflow-scroll">
             {STRESS_LEVELS.map((level) => (
               <button
                 key={level.id}

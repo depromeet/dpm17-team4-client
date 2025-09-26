@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { type FieldErrors, useFormContext } from 'react-hook-form';
 import { BottomBtnBar } from '@/components';
 import { useCreateDefecationMutation } from '@/hooks/mutations/useCreateDefecation';
@@ -9,6 +10,7 @@ import type { DefecationFormValues } from '../schemas';
 export const DefecationSubmit = () => {
   const { handleSubmit } = useFormContext<DefecationFormValues>();
   const { mutate: createDefecation } = useCreateDefecationMutation();
+  const router = useRouter();
 
   const onSubmit = (data: DefecationFormValues) => {
     if (data.selectedPain === undefined) {
@@ -42,7 +44,7 @@ export const DefecationSubmit = () => {
       },
       {
         onSuccess: () => {
-          alert('데이터가 성공적으로 저장되었습니다!');
+          router.push('/defecation-complete');
         },
         onError: (error) => {
           alert(error.message);

@@ -83,33 +83,39 @@ export default function FetchTestPage() {
             {scoreData && !isLoading && (
               <div className="space-y-4">
                 <div className="flex justify-between items-center p-4 bg-blue-50 rounded-lg">
-                  <span className="text-gray-700 font-medium">총점:</span>
+                  <span className="text-gray-700 font-medium">배변 점수:</span>
                   <span className="text-3xl font-bold text-blue-600">
-                    {scoreData.score}
+                    {scoreData.poo.score}
                   </span>
                 </div>
 
                 <div className="border-t pt-4">
                   <h3 className="text-lg font-semibold text-gray-700 mb-3">
-                    상세 점수
+                    리포트 데이터
                   </h3>
                   <div className="grid grid-cols-1 gap-3">
                     <div className="flex justify-between items-center p-3 bg-gray-50 rounded">
-                      <span className="text-gray-600">정확도</span>
+                      <span className="text-gray-600">배변 기록 수</span>
                       <span className="font-semibold text-green-600">
-                        {scoreData.details.accuracy}%
+                        {scoreData.poo.items.length}개
                       </span>
                     </div>
                     <div className="flex justify-between items-center p-3 bg-gray-50 rounded">
-                      <span className="text-gray-600">속도</span>
+                      <span className="text-gray-600">식단 기록 수</span>
                       <span className="font-semibold text-blue-600">
-                        {scoreData.details.speed}%
+                        {scoreData.food.items.length}개
                       </span>
                     </div>
                     <div className="flex justify-between items-center p-3 bg-gray-50 rounded">
-                      <span className="text-gray-600">일관성</span>
+                      <span className="text-gray-600">물 섭취 기록 수</span>
                       <span className="font-semibold text-purple-600">
-                        {scoreData.details.consistency}%
+                        {scoreData.water.items.length}개
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center p-3 bg-gray-50 rounded">
+                      <span className="text-gray-600">업데이트 시간</span>
+                      <span className="font-semibold text-gray-600 text-sm">
+                        {new Date(scoreData.updatedAt).toLocaleString()}
                       </span>
                     </div>
                   </div>

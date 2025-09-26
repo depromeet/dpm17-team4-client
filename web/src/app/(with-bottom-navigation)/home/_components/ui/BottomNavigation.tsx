@@ -8,21 +8,25 @@ const BOTTOM_NAV_TABS = [
     id: 'home' as const,
     name: '홈',
     icon: HomeIcon,
+    active: true,
   },
   {
     id: 'calendar' as const,
     name: '캘린더',
     icon: CalendarIcon,
+    active: false,
   },
   {
     id: 'report' as const,
     name: '리포트',
     icon: ReportIcon,
+    active: true,
   },
   {
     id: 'my' as const,
     name: '마이',
     icon: UserIcon,
+    active: false,
   },
 ];
 
@@ -42,7 +46,13 @@ const BottomNavigation = ({ navRef }: BottomNavigationProps) => {
             <button
               type="button"
               key={tab.id}
-              onClick={() => handleTabClick(tab.id)}
+              onClick={() => {
+                if (tab.active) {
+                  handleTabClick(tab.id);
+                } else {
+                  alert('아직 개발중..');
+                }
+              }}
               className="py-[1.19rem] pl-[1.78rem] pr-[1.84rem] cursor-pointer flex flex-col items-center gap-1 bg-transparent border-none text-white"
             >
               <IconComponent

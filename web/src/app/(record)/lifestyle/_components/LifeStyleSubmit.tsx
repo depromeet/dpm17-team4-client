@@ -1,6 +1,6 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useCallback } from 'react';
 import { BottomBtnBar } from '@/components';
 import { useActivityRecordMutation } from '@/hooks';
@@ -18,6 +18,7 @@ export const LifeStyleSubmit = ({
   water,
   stress,
 }: LifeStyleSubmitProps) => {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const { mutate, isPending } = useActivityRecordMutation();
 
@@ -53,13 +54,14 @@ export const LifeStyleSubmit = ({
       occurredAt,
       onSuccess: () => {
         alert('데이터가 성공적으로 저장되었습니다!');
+        router.push('/home');
       },
       onError: (error) => {
         console.error('저장 실패:', error);
         alert('데이터 저장에 실패했습니다. 다시 시도해주세요.');
       },
     });
-  }, [foods, water, stress, searchParams, mutate]);
+  }, [foods, water, stress, searchParams, mutate, router]);
 
   return <BottomBtnBar onSubmit={handleSubmit} disabled={isPending} />;
 };

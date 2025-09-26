@@ -2,12 +2,12 @@
 
 import Image from 'next/image';
 import { useState } from 'react';
+import { useReportQuery } from '@/hooks/queries/useReportQuery';
 import { DefecationScore } from './_components/DefecationScore';
 import { FoodReport } from './_components/FoodReport';
 import { StressReport } from './_components/StressReport';
 import { Suggestions } from './_components/Suggestions';
 import { WaterReport } from './_components/WaterReport';
-import { mockReportData } from './mockData';
 import type { Card, ReportPeriod } from './types';
 import { formatDate, getColorLabel, getShapeLabel } from './utils';
 
@@ -15,9 +15,51 @@ export default function DailyReportPage() {
   const [selectedPeriod, _setSelectedPeriod] = useState<ReportPeriod>('daily');
   const [selectedDate, _setSelectedDate] = useState(new Date());
   const [cardIndex, setCardIndex] = useState(0);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
 
-  // NOTE(seonghyun): Mock 데이터 사용
-  const reportData = mockReportData;
+  // API 호출로 데이터 가져오기
+  const { data: reportData, isLoading, error } = useReportQuery();
+
+  // 로딩 상태 처리
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-black text-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
+          <p className="text-gray-400">리포트를 불러오는 중...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // 에러 상태 처리
+  if (error) {
+    return (
+      <div className="min-h-screen bg-black text-white flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-red-400 mb-4">리포트를 불러오는데 실패했습니다.</p>
+          <button
+            type="button"
+            onClick={() => window.location.reload()}
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          >
+            다시 시도
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // 데이터가 없을 때 처리
+  if (!reportData) {
+    return (
+      <div className="min-h-screen bg-black text-white flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-gray-400">리포트 데이터가 없습니다.</p>
+        </div>
+      </div>
+    );
+  }
 
   // NOTE(seonghyun): 임시 - Suggestion 아이템의 이미지를 동적으로 생성
   // const getSuggestionIcon = (index: number) => {
@@ -98,8 +140,6 @@ export default function DailyReportPage() {
     setTouchStart(null);
   };
 
-  const [touchStart, setTouchStart] = useState<number | null>(null);
-
   return (
     <div className="min-h-screen bg-black text-white">
       {/* 헤더 */}
@@ -168,7 +208,7 @@ export default function DailyReportPage() {
                 style={{
                   background:
                     card.type === 'character'
-                      ? 'linear-gradient(to bottom, #FF535F 0%, #A4141E 100%)'
+                      ? `linear-gradient(to bottom, ${reportData.poo.summary.backgroundColors[0]} 0%, ${reportData.poo.summary.backgroundColors[1]} 100%)`
                       : '#ffffff',
                   padding: '36px 12px',
                   transform: `scale(${index === cardIndex ? 1 : 0.85})`,
@@ -194,7 +234,8 @@ export default function DailyReportPage() {
                       <div
                         className="text-white text-body4-m inline-block mb-2 w-fit mx-auto"
                         style={{
-                          backgroundColor: '#D13742',
+                          backgroundColor:
+                            reportData.poo.summary.backgroundColors[0],
                           paddingTop: '6px',
                           paddingRight: '16px',
                           paddingBottom: '6px',
@@ -215,7 +256,8 @@ export default function DailyReportPage() {
                       <div
                         className="text-white mx-auto mb-4 w-8 h-8 flex items-center justify-center p-1.5"
                         style={{
-                          backgroundColor: '#F13A49',
+                          backgroundColor:
+                            reportData.poo.summary.backgroundColors[0],
                           borderRadius: '999px',
                         }}
                       >
@@ -227,7 +269,12 @@ export default function DailyReportPage() {
                         </span>
                       </div>
 
-                      <h2 className="text-red-500 font-bold text-lg mb-4">
+                      <h2
+                        className="font-bold text-lg mb-4"
+                        style={{
+                          color: reportData.poo.summary.backgroundColors[0],
+                        }}
+                      >
                         {card.type === 'text' ? card.content.date : ''}
                       </h2>
 
@@ -305,6 +352,10 @@ export default function DailyReportPage() {
       </main>
 
       <Suggestions suggestion={reportData.suggestion} />
+
+      {/* 하단 여백 추가 */}
+      <div className="h-40"></div>
+
       {/* TOEO(seonghyun): 하단 네비게이션 */}
       {/*<nav className="fixed bottom-0 left-0 right-0 bg-gray-900 border-t border-gray-700">*/}
       {/*  <div className="flex justify-around py-2">*/}
