@@ -46,12 +46,10 @@ export const LifeStyleSubmit = ({
     mutate({
       water,
       stress,
-      //TODO(seieun): db 채워지면 실제 foods 로 보내기
-      // foods: validFoods.map((food) => ({
-      //   id: food.foodId,
-      //   mealTime: food.mealTime,
-      // })),
-      foods: [],
+      foods: validFoods.map((food) => ({
+        id: food.foodId,
+        mealTime: food.mealTime,
+      })),
       occurredAt,
       onSuccess: () => {
         alert('데이터가 성공적으로 저장되었습니다!');
