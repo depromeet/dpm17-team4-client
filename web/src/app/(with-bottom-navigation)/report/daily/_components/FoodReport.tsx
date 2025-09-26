@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { useRef, useState } from 'react';
 import { ChevronIcon } from '@/components';
 import type { Food } from '../types';

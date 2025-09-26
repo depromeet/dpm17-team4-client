@@ -10,5 +10,7 @@ interface ApiResponse<T> {
 
 export const reportApi = {
   reportDailyData: () =>
-    apiClient.get<ApiResponse<ReportDataResponseDto>>(API_ENDPOINTS.REPORT.BASE),
+    apiClient.get<ApiResponse<ReportDataResponseDto>>(
+      API_ENDPOINTS.REPORT.BASE
+    ),
 };

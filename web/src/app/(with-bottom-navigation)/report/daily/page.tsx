@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { useState } from 'react';
+import { useReportQuery } from '@/hooks/queries/useReportQuery';
 import { DefecationScore } from './_components/DefecationScore';
 import { FoodReport } from './_components/FoodReport';
 import { StressReport } from './_components/StressReport';
@@ -9,7 +10,6 @@ import { Suggestions } from './_components/Suggestions';
 import { WaterReport } from './_components/WaterReport';
 import type { Card, ReportPeriod } from './types';
 import { formatDate, getColorLabel, getShapeLabel } from './utils';
-import { useReportQuery } from '@/hooks/queries/useReportQuery';
 
 export default function DailyReportPage() {
   const [selectedPeriod, _setSelectedPeriod] = useState<ReportPeriod>('daily');
@@ -38,8 +38,9 @@ export default function DailyReportPage() {
       <div className="min-h-screen bg-black text-white flex items-center justify-center">
         <div className="text-center">
           <p className="text-red-400 mb-4">리포트를 불러오는데 실패했습니다.</p>
-          <button 
-            onClick={() => window.location.reload()} 
+          <button
+            type="button"
+            onClick={() => window.location.reload()}
             className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
           >
             다시 시도
@@ -233,7 +234,8 @@ export default function DailyReportPage() {
                       <div
                         className="text-white text-body4-m inline-block mb-2 w-fit mx-auto"
                         style={{
-                          backgroundColor: reportData.poo.summary.backgroundColors[0],
+                          backgroundColor:
+                            reportData.poo.summary.backgroundColors[0],
                           paddingTop: '6px',
                           paddingRight: '16px',
                           paddingBottom: '6px',
@@ -254,7 +256,8 @@ export default function DailyReportPage() {
                       <div
                         className="text-white mx-auto mb-4 w-8 h-8 flex items-center justify-center p-1.5"
                         style={{
-                          backgroundColor: reportData.poo.summary.backgroundColors[0],
+                          backgroundColor:
+                            reportData.poo.summary.backgroundColors[0],
                           borderRadius: '999px',
                         }}
                       >
@@ -266,9 +269,11 @@ export default function DailyReportPage() {
                         </span>
                       </div>
 
-                      <h2 
+                      <h2
                         className="font-bold text-lg mb-4"
-                        style={{ color: reportData.poo.summary.backgroundColors[0] }}
+                        style={{
+                          color: reportData.poo.summary.backgroundColors[0],
+                        }}
                       >
                         {card.type === 'text' ? card.content.date : ''}
                       </h2>
@@ -347,10 +352,10 @@ export default function DailyReportPage() {
       </main>
 
       <Suggestions suggestion={reportData.suggestion} />
-      
+
       {/* 하단 여백 추가 */}
       <div className="h-40"></div>
-      
+
       {/* TOEO(seonghyun): 하단 네비게이션 */}
       {/*<nav className="fixed bottom-0 left-0 right-0 bg-gray-900 border-t border-gray-700">*/}
       {/*  <div className="flex justify-around py-2">*/}
