@@ -81,7 +81,10 @@ export async function requestAccessToken() {
 
   // 쿠키에서 refreshToken 가져오기
   const refreshToken = getRefreshTokenFromCookie();
-  console.log('🔄 쿠키에서 가져온 refreshToken:', refreshToken ? '존재함' : '없음');
+  console.log(
+    '🔄 쿠키에서 가져온 refreshToken:',
+    refreshToken ? '존재함' : '없음'
+  );
 
   const requestBody = refreshToken ? { refreshToken } : {};
 
