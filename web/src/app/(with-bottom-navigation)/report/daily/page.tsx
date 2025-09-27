@@ -343,15 +343,16 @@ export default function DailyReportPage() {
         </p>
 
         <div className="flex flex-col space-y-5 mt-9">
-          <DefecationScore score={reportData.poo.score} />
-          <FoodReport foodData={reportData.food} />
-          <WaterReport waterData={reportData.water} />
-
-          <StressReport stressData={reportData.stress} />
+          {reportData.poo && <DefecationScore score={reportData.poo.score} />}
+          {reportData.food && <FoodReport foodData={reportData.food} />}
+          {reportData.water && <WaterReport waterData={reportData.water} />}
+          {reportData.stress && <StressReport stressData={reportData.stress} />}
         </div>
       </main>
 
-      <Suggestions suggestion={reportData.suggestion} />
+      {reportData.suggestion && (
+        <Suggestions suggestion={reportData.suggestion} />
+      )}
 
       {/* 하단 여백 추가 */}
       <div className="h-40"></div>
