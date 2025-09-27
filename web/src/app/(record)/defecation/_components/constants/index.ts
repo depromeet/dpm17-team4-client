@@ -22,7 +22,7 @@ export const DEFECATION_COLOR = {
 
 export const DEFECATION_SHAPE = {
   RABBIT: '토끼',
-  STONE: '돌',
+  ROCK: '돌',
   CORN: '옥수수',
   BANANA: '바나나',
   CREAM: '크림',

@@ -6,7 +6,7 @@ const getRealShapeIcon = (shape: DefecationTryShapeKey) => {
   switch (shape) {
     case 'RABBIT':
       return <div className="w-9 h-9 bg-gray-600" />;
-    case 'STONE':
+    case 'ROCK':
       return <div className="w-9 h-9 bg-gray-600" />;
     case 'CORN':
       return <div className="w-9 h-9 bg-gray-600" />;
@@ -25,7 +25,7 @@ const getEmojiShapeIcon = (shape: DefecationTryShapeKey) => {
   switch (shape) {
     case 'RABBIT':
       return <div className="w-9 h-9 bg-gray-600" />;
-    case 'STONE':
+    case 'ROCK':
       return <div className="w-9 h-9 bg-gray-600" />;
     case 'CORN':
       return <div className="w-9 h-9 bg-gray-600" />;
