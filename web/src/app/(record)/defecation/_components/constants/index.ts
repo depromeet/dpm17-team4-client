@@ -21,12 +21,12 @@ export const DEFECATION_COLOR = {
 } as const satisfies Record<string, [string, string]>;
 
 export const DEFECATION_SHAPE = {
-  RABBIT: '토끼',
-  ROCK: '돌',
-  CORN: '옥수수',
   BANANA: '바나나',
   CREAM: '크림',
+  CORN: '옥수수',
   PORRIDGE: '죽',
+  RABBIT: '토끼',
+  ROCK: '물', // NOTE(taehyeon): 물로 변경 필요
 } as const satisfies Record<string, string>;
 
 export const DEFECATION_TIME_TAKEN = {
