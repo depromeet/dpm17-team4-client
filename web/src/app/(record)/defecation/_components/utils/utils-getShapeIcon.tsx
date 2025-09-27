@@ -1,18 +1,17 @@
 import Image from 'next/image';
+import Banana_IILUST from '@/assets/defecation/Illust/Banana.png';
+import Corn_IILUST from '@/assets/defecation/Illust/Corn.png';
+import Cream_IILUST from '@/assets/defecation/Illust/Cream.png';
+import Porridge_IILUST from '@/assets/defecation/Illust/Porridge.png';
+import Rabbit_IILUST from '@/assets/defecation/Illust/Rabbit.png';
+import Water_IILUST from '@/assets/defecation/Illust/Water.png';
+import Banana_EMOJI from '@/assets/defecation/Real/Banana.png';
+import Corn_EMOJI from '@/assets/defecation/Real/Corn.png';
+import Cream_EMOJI from '@/assets/defecation/Real/Cream.png';
+import Porridge_EMOJI from '@/assets/defecation/Real/Porridge.png';
+import Rabbit_EMOJI from '@/assets/defecation/Real/Rabbit.png';
+import Water_EMOJI from '@/assets/defecation/Real/Water.png';
 import type { DefecationTryShapeKey } from '../types';
-import Banana_IILUST from '@/assets/defecation/Illust/Banana.png'
-import Cream_IILUST from '@/assets/defecation/Illust/Cream.png'
-import Corn_IILUST from '@/assets/defecation/Illust/Corn.png'
-import Porridge_IILUST from '@/assets/defecation/Illust/Porridge.png'
-import Rabbit_IILUST from '@/assets/defecation/Illust/Rabbit.png'
-import Water_IILUST from '@/assets/defecation/Illust/Water.png'
-
-import Banana_EMOJI from '@/assets/defecation/Real/Banana.png'
-import Cream_EMOJI from '@/assets/defecation/Real/Cream.png'
-import Corn_EMOJI from '@/assets/defecation/Real/Corn.png'
-import Porridge_EMOJI from '@/assets/defecation/Real/Porridge.png'
-import Rabbit_EMOJI from '@/assets/defecation/Real/Rabbit.png'
-import Water_EMOJI from '@/assets/defecation/Real/Water.png'
 
 const getRealShapeIcon = (shape: DefecationTryShapeKey) => {
   switch (shape) {
@@ -27,7 +26,9 @@ const getRealShapeIcon = (shape: DefecationTryShapeKey) => {
     case 'CREAM':
       return <Image src={Cream_EMOJI} alt="cream" width={36} height={36} />;
     case 'PORRIDGE':
-      return <Image src={Porridge_EMOJI} alt="porridge" width={36} height={36} />;
+      return (
+        <Image src={Porridge_EMOJI} alt="porridge" width={36} height={36} />
+      );
     default:
       return null;
   }
@@ -46,12 +47,12 @@ const getEmojiShapeIcon = (shape: DefecationTryShapeKey) => {
     case 'CREAM':
       return <Image src={Cream_IILUST} alt="cream" width={36} height={36} />;
     case 'PORRIDGE':
-      return <Image src={Porridge_IILUST} alt="porridge" width={36} height={36} />;
+      return (
+        <Image src={Porridge_IILUST} alt="porridge" width={36} height={36} />
+      );
     default:
       return null;
   }
 };
 
 export { getRealShapeIcon, getEmojiShapeIcon };
-
-
