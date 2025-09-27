@@ -1,12 +1,32 @@
 'use client';
 
 import { API_ENDPOINTS } from '@/constants';
+import { AUTH_CONSTANTS } from '@/constants/auth.constants';
+
 export interface UserInfo {
   id: string;
   nickname: string;
   profileImage: string;
   isNew: boolean;
   providerType: string;
+}
+
+/**
+ * 쿠키에서 refreshToken을 가져오는 함수
+ */
+function getRefreshTokenFromCookie(): string | null {
+  if (typeof document === 'undefined') {
+    return null;
+  }
+
+  const cookies = document.cookie.split(';');
+  for (const cookie of cookies) {
+    const [name, value] = cookie.trim().split('=');
+    if (name === AUTH_CONSTANTS.REFRESH_TOKEN) {
+      return decodeURIComponent(value);
+    }
+  }
+  return null;
 }
 
 let accessToken: string | null = null;
@@ -59,6 +79,15 @@ export function setAccessToken(token: string | null) {
 export async function requestAccessToken() {
   console.log('🍪 현재 쿠키 정보:', document.cookie);
 
+  // 쿠키에서 refreshToken 가져오기
+  const refreshToken = getRefreshTokenFromCookie();
+  console.log(
+    '🔄 쿠키에서 가져온 refreshToken:',
+    refreshToken ? '존재함' : '없음'
+  );
+
+  const requestBody = refreshToken ? { refreshToken } : {};
+
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL || 'https://211.188.58.167'}${API_ENDPOINTS.AUTH.REFRESH}`,
     {
@@ -68,6 +97,7 @@ export async function requestAccessToken() {
         'Content-Type': 'application/json',
         Accept: 'application/json',
       },
+      body: JSON.stringify(requestBody),
     }
   );
 
