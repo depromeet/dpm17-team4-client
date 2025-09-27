@@ -350,7 +350,9 @@ export default function DailyReportPage() {
         </div>
       </main>
 
-      {reportData.suggestion && <Suggestions suggestion={reportData.suggestion} />}
+      {reportData.suggestion && (
+        <Suggestions suggestion={reportData.suggestion} />
+      )}
 
       {/* 하단 여백 추가 */}
       <div className="h-40"></div>
