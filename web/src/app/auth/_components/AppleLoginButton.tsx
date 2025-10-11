@@ -10,7 +10,8 @@ const AppleLoginButton = () => {
     setIsLoading(true);
     try {
       // Apple Login API 호출하여 Apple 인증 URL 받기 (로컬 Next.js API 사용)
-      const origin = typeof window !== 'undefined' ? window.location.origin : '';
+      const origin =
+        typeof window !== 'undefined' ? window.location.origin : '';
       const response = await fetch(
         `${origin}${API_ENDPOINTS.AUTH.APPLE_LOGIN}`,
         {
