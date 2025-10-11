@@ -6,6 +6,7 @@ import { Suspense, useCallback, useEffect, useState } from 'react';
 import EllipseBg from '@/assets/auth/Ellipse 322187.png';
 import LoginCharacter from '@/assets/auth/login-character.png';
 import { API_ENDPOINTS } from '@/constants';
+import AppleLoginButton from './_components/AppleLoginButton';
 import {
   getAccessToken,
   requestAccessToken,
@@ -117,14 +118,14 @@ function AuthContent() {
           </div>
         )}
 
-        <form method="POST" action={KAKAO_LOGIN_INITIATE_URL}>
-          <input
-            type="hidden"
-            name="redirectUri"
-            value={`${window.location.origin}/home`}
-          />
-          <KakaoLoginButton />
-        </form>
+        <div className="space-y-4">
+          <form method="POST" action={KAKAO_LOGIN_INITIATE_URL}>
+            <input type="hidden" name="redirectUri" value="/home" />
+            <KakaoLoginButton />
+          </form>
+
+          <AppleLoginButton />
+        </div>
       </div>
     </div>
   );
