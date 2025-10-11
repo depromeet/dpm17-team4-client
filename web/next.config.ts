@@ -2,6 +2,15 @@ import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   /* config options here */
+  allowedDevOrigins: ['cushionlike-shallowly-nancie.ngrok-free.dev'],
+  experimental: {
+    serverActions: {
+      allowedOrigins: [
+        'cushionlike-shallowly-nancie.ngrok-free.dev',
+        'appleid.apple.com',
+      ],
+    },
+  },
   images: {
     remotePatterns: [
       {
@@ -37,6 +46,11 @@ const nextConfig: NextConfig = {
       {
         protocol: 'http',
         hostname: 'kr.object.ncloudstorage.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'via.placeholder.com',
         pathname: '/**',
       },
     ],
