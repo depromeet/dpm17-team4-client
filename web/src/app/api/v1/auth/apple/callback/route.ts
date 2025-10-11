@@ -138,10 +138,19 @@ async function handleAppleCallback(
   // Server Actions 에러를 피하기 위해 302 리디렉션 사용
   const headers = new Headers();
   headers.set('Location', redirectUrl.toString());
-  headers.append('Set-Cookie', `refreshToken=${refreshToken}; HttpOnly; Secure=${process.env.NODE_ENV === 'production'}; SameSite=Lax; Max-Age=${60 * 60 * 24 * 30}; Path=/`);
-  headers.append('Set-Cookie', `apple_state=; HttpOnly; Secure=${process.env.NODE_ENV === 'production'}; SameSite=Lax; Max-Age=0; Path=/`);
-  headers.append('Set-Cookie', `apple_nonce=; HttpOnly; Secure=${process.env.NODE_ENV === 'production'}; SameSite=Lax; Max-Age=0; Path=/`);
-  
+  headers.append(
+    'Set-Cookie',
+    `refreshToken=${refreshToken}; HttpOnly; Secure=${process.env.NODE_ENV === 'production'}; SameSite=Lax; Max-Age=${60 * 60 * 24 * 30}; Path=/`
+  );
+  headers.append(
+    'Set-Cookie',
+    `apple_state=; HttpOnly; Secure=${process.env.NODE_ENV === 'production'}; SameSite=Lax; Max-Age=0; Path=/`
+  );
+  headers.append(
+    'Set-Cookie',
+    `apple_nonce=; HttpOnly; Secure=${process.env.NODE_ENV === 'production'}; SameSite=Lax; Max-Age=0; Path=/`
+  );
+
   const response = new Response(null, {
     status: 302,
     headers,
