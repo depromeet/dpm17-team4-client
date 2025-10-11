@@ -64,7 +64,7 @@ function HomeContent() {
         }
 
         // 사용자 정보가 있으면 항상 저장하고 URL 정리
-        if (userInfo) {
+        if (userInfo && typeof window !== 'undefined') {
           setUserInfo(userInfo);
           const url = new URL(window.location.href);
           url.search = '';
