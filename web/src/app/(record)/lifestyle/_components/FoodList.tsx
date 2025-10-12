@@ -26,7 +26,6 @@ export const FoodList = ({
 
   const handleFoodClick = (foodId: number, foodName: string) => {
     onFoodSelect(foodId, foodName);
-    // 음식 선택 후에는 컴포넌트가 사라지도록 함
   };
 
   // debouncedFoodName과 일치하는 부분을 하이라이트하는 함수
