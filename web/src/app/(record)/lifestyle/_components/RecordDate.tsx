@@ -12,7 +12,7 @@ export const RecordDate = () => {
   const year = searchParams.get('year') || new Date().getFullYear().toString();
   const month =
     searchParams.get('month') || (new Date().getMonth() + 1).toString();
-  const date = searchParams.get('date') || new Date().getDate().toString();
+  const date = searchParams.get('day') || new Date().getDate().toString();
 
   // 날짜 변경 함수
   const updateDate = useCallback(
@@ -20,7 +20,7 @@ export const RecordDate = () => {
       const params = new URLSearchParams(searchParams);
       params.set('year', newYear.toString());
       params.set('month', newMonth.toString());
-      params.set('date', newDate.toString());
+      params.set('day', newDate.toString());
       router.push(`?${params.toString()}`);
     },
     [router, searchParams]
