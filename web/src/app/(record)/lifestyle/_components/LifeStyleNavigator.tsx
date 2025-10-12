@@ -26,9 +26,10 @@ export const LifeStyleNavigator = ({ existingRecordId }: LifeStyleNavigatorProps
   };
 
   return (
-    <Navigator title="생활 기록">
+    <Navigator>
+      <Navigator.Center>생활 기록</Navigator.Center>
       {existingRecordId && (
-        <Navigator.Right>
+        <div className="absolute right-4 top-1/2 -translate-y-1/2">
           <button
             type="button"
             onClick={handleDelete}
@@ -37,7 +38,7 @@ export const LifeStyleNavigator = ({ existingRecordId }: LifeStyleNavigatorProps
           >
             {deleteMutation.isPending ? '삭제 중...' : '삭제'}
           </button>
-        </Navigator.Right>
+        </div>
       )}
     </Navigator>
   );
