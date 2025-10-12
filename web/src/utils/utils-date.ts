@@ -92,7 +92,7 @@ export const getDateDisplayText = (
  * getDateDisplayTextFromDate(new Date(2024, 0, 1)) // "1월 1일 (월)"
  */
 export const getDateDisplayTextFromDate = (date: Date): string => {
-  const month = date.getMonth();
+  const month = date.getMonth() + 1;
   const day = date.getDate();
   const dayName = getDayName(date);
 
