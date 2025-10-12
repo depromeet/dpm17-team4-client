@@ -1,4 +1,5 @@
 import type { LifeStyleCreateRequestDto } from '@/app/(record)/lifestyle/types/dto';
+import { MealTime } from '@/app/(record)/lifestyle/types/entitites';
 import { API_ENDPOINTS } from '@/constants';
 import apiClient from '@/lib/api-client';
 
@@ -6,7 +7,7 @@ export interface ActivityRecordResponse {
   id: number;
   waterIntakeCups: number;
   stressLevel: string;
-  foods: Array<{ id: number; name: string; mealTime: string }>;
+  foods: Array<{ id: number; name: string; mealTime: MealTime }>;
   occurredAt: string;
 }
 
@@ -27,7 +28,12 @@ export const activityRecordApi = {
     );
 
     if (response.status === 200 && response.data.status === 200) {
-      return response.data.data;
+      const data = response.data.data;
+      // 빈 데이터인지 확인 (id가 null이거나 foods가 빈 배열)
+      if (data.id === null || data.foods.length === 0) {
+        return null;
+      }
+      return data;
     }
 
     return null;
