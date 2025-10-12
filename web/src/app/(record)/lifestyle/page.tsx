@@ -42,7 +42,7 @@ export default function LifestylePage() {
     setWater(0);
     setStress('');
     setFoods([{ id: -1, foodId: -1, name: '', mealTime: '' }]);
-  }, [searchParams]);
+  }, []);
 
   useEffect(() => {
     if (existingData) {
