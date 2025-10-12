@@ -11,7 +11,7 @@ import { WaterForm } from './_components/WaterForm';
 import type { Food } from './types/dto';
 import type { StressLevel } from './types/entitites';
 
-export default function LifestylePage() {
+function LifestylePageContent() {
   const searchParams = useSearchParams();
   const [foods, setFoods] = useState<Food[]>([
     { id: -1, foodId: -1, name: '', mealTime: '' },
@@ -108,5 +108,22 @@ export default function LifestylePage() {
         />
       </Suspense>
     </div>
+  );
+}
+
+export default function LifestylePage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
+            <p className="text-gray-400">로딩 중...</p>
+          </div>
+        </div>
+      }
+    >
+      <LifestylePageContent />
+    </Suspense>
   );
 }
