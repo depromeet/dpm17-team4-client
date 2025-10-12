@@ -2,9 +2,9 @@
 
 import { useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useState } from 'react';
-import { Navigator } from '@/components';
 import { useActivityRecordQuery } from '@/hooks/queries';
 import { FoodListContainer } from './_components/FoodListContainer';
+import { LifeStyleNavigator } from './_components/LifeStyleNavigator';
 import { LifeStyleSubmit } from './_components/LifeStyleSubmit';
 import { RecordDate } from './_components/RecordDate';
 import { StressForm } from './_components/StressForm';
@@ -80,13 +80,7 @@ function LifestylePageContent() {
 
   return (
     <div className="min-h-screen bg-gray-900">
-      <Navigator title="생활 기록">
-        {existingRecordId && (
-          <Navigator.Right>
-            <span className="text-body2-m text-red-600">삭제</span>
-          </Navigator.Right>
-        )}
-      </Navigator>
+      <LifeStyleNavigator existingRecordId={existingRecordId} />
       <div className="h-[56px]" />
       <Suspense
         fallback={
