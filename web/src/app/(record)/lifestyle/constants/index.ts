@@ -73,27 +73,27 @@ export const STRESS_LEVELS: {
 }[] = [
   {
     id: 'VERY_LOW',
-    range: '0~20',
+    range: '아예 없음',
     imageUrl: stressVeryLow,
   },
   {
     id: 'LOW',
-    range: '21~40',
+    range: '조금 있음',
     imageUrl: stressLow,
   },
   {
     id: 'MEDIUM',
-    range: '41~60',
+    range: '적당함',
     imageUrl: stressMedium,
   },
   {
     id: 'HIGH',
-    range: '61~80',
+    range: '조금 심함',
     imageUrl: stressHigh,
   },
   {
     id: 'VERY_HIGH',
-    range: '81~100',
+    range: '매우 심함',
     imageUrl: stressVeryHigh,
   },
 ];
