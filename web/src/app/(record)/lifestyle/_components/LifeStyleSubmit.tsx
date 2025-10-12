@@ -70,12 +70,10 @@ export const LifeStyleSubmit = ({
         },
         {
           onSuccess: () => {
-            alert('데이터가 성공적으로 수정되었습니다!');
             router.push('/home');
           },
           onError: (error) => {
             console.error('수정 실패:', error);
-            alert('데이터 수정에 실패했습니다. 다시 시도해주세요.');
           },
         }
       );
@@ -84,12 +82,10 @@ export const LifeStyleSubmit = ({
       createMutation({
         ...data,
         onSuccess: () => {
-          alert('데이터가 성공적으로 저장되었습니다!');
           router.push('/home');
         },
         onError: (error) => {
           console.error('저장 실패:', error);
-          alert('데이터 저장에 실패했습니다. 다시 시도해주세요.');
         },
       });
     }

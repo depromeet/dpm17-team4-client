@@ -1,5 +1,8 @@
 import type { LifeStyleCreateRequestDto } from '@/app/(record)/lifestyle/types/dto';
-import type { MealTime, StressLevel } from '@/app/(record)/lifestyle/types/entitites';
+import type {
+  MealTime,
+  StressLevel,
+} from '@/app/(record)/lifestyle/types/entitites';
 import { API_ENDPOINTS } from '@/constants';
 import apiClient from '@/lib/api-client';
 
