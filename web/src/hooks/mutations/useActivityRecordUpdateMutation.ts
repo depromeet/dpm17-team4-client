@@ -10,7 +10,13 @@ interface ActivityRecordUpdateMutationParams extends LifeStyleCreateRequestDto {
 
 export const useActivityRecordUpdateMutation = () => {
   return useMutation({
-    mutationFn: async ({ id, water, stress, foods, occurredAt }: ActivityRecordUpdateMutationParams) => {
+    mutationFn: async ({
+      id,
+      water,
+      stress,
+      foods,
+      occurredAt,
+    }: ActivityRecordUpdateMutationParams) => {
       return activityRecordApi.updateActivityRecord(id, {
         water,
         stress,

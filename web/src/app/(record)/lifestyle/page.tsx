@@ -1,13 +1,13 @@
 'use client';
 
-import { Suspense, useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { Suspense, useEffect, useState } from 'react';
+import { useActivityRecordQuery } from '@/hooks/queries';
 import { FoodListContainer } from './_components/FoodListContainer';
 import { LifeStyleSubmit } from './_components/LifeStyleSubmit';
 import { RecordDate } from './_components/RecordDate';
 import { StressForm } from './_components/StressForm';
 import { WaterForm } from './_components/WaterForm';
-import { useActivityRecordQuery } from '@/hooks/queries';
 import type { Food } from './types/dto';
 import type { StressLevel } from './types/entitites';
 
@@ -25,7 +25,7 @@ export default function LifestylePage() {
     const year = searchParams.get('year');
     const month = searchParams.get('month');
     const date = searchParams.get('day');
-    
+
     if (!year || !month || !date) {
       return '';
     }
@@ -33,7 +33,9 @@ export default function LifestylePage() {
   };
 
   // 기존 데이터 조회
-  const { data: existingData, isLoading } = useActivityRecordQuery(getDateString());
+  const { data: existingData, isLoading } = useActivityRecordQuery(
+    getDateString()
+  );
 
   // 기존 데이터가 있으면 상태 초기화
   useEffect(() => {
@@ -42,7 +44,7 @@ export default function LifestylePage() {
       setExistingRecordId(existingData.id);
       setWater(existingData.waterIntakeCups);
       setStress(existingData.stressLevel as StressLevel);
-      
+
       // foods 데이터 변환
       const existingFoods: Food[] = existingData.foods.map((food, index) => ({
         id: index,
@@ -50,12 +52,12 @@ export default function LifestylePage() {
         name: food.name,
         mealTime: food.mealTime as any,
       }));
-      
+
       // 빈 food 항목이 없으면 추가
       if (existingFoods.length > 0) {
         existingFoods.push({ id: -1, foodId: -1, name: '', mealTime: '' });
       }
-      
+
       setFoods(existingFoods);
     }
   }, [existingData]);
@@ -86,10 +88,10 @@ export default function LifestylePage() {
           </div>
         }
       >
-        <LifeStyleSubmit 
-          foods={foods} 
-          water={water} 
-          stress={stress} 
+        <LifeStyleSubmit
+          foods={foods}
+          water={water}
+          stress={stress}
           existingRecordId={existingRecordId}
           isLoading={isLoading}
         />

@@ -3,7 +3,10 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useCallback } from 'react';
 import { BottomBtnBar } from '@/components';
-import { useActivityRecordMutation, useActivityRecordUpdateMutation } from '@/hooks';
+import {
+  useActivityRecordMutation,
+  useActivityRecordUpdateMutation,
+} from '@/hooks';
 import type { Food } from '../types/dto';
 import type { StressLevel } from '../types/entitites';
 
@@ -24,8 +27,10 @@ export const LifeStyleSubmit = ({
 }: LifeStyleSubmitProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { mutate: createMutation, isPending: isCreatePending } = useActivityRecordMutation();
-  const { mutate: updateMutation, isPending: isUpdatePending } = useActivityRecordUpdateMutation();
+  const { mutate: createMutation, isPending: isCreatePending } =
+    useActivityRecordMutation();
+  const { mutate: updateMutation, isPending: isUpdatePending } =
+    useActivityRecordUpdateMutation();
 
   const handleSubmit = useCallback(async () => {
     const year = searchParams.get('year');
@@ -88,10 +93,25 @@ export const LifeStyleSubmit = ({
         },
       });
     }
-  }, [foods, water, stress, searchParams, createMutation, updateMutation, router, existingRecordId]);
+  }, [
+    foods,
+    water,
+    stress,
+    searchParams,
+    createMutation,
+    updateMutation,
+    router,
+    existingRecordId,
+  ]);
 
   const isPending = isCreatePending || isUpdatePending;
   const buttonText = existingRecordId ? '수정' : '등록';
 
-  return <BottomBtnBar onSubmit={handleSubmit} disabled={isPending || isLoading} text={buttonText} />;
+  return (
+    <BottomBtnBar
+      onSubmit={handleSubmit}
+      disabled={isPending || isLoading}
+      text={buttonText}
+    />
+  );
 };

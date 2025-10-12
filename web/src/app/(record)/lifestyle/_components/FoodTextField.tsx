@@ -65,7 +65,7 @@ export const FoodTextField = ({
   const handleFoodSelect = (foodId: number, foodName: string) => {
     setFoodName(foodName);
     onFoodChange?.(id, foodId, foodName); // 선택된 음식의 ID와 이름 업데이트
-    
+
     // 음식 선택 후 약간의 지연을 두고 타이핑 상태 해제 (FoodList가 자연스럽게 사라지도록)
     setTimeout(() => {
       setIsUserTyping(false);
@@ -89,7 +89,7 @@ export const FoodTextField = ({
   const isMealTimeSelected =
     selectedTime !== '' && selectedTime in TIME_LABEL_MAP;
 
-    console.log(isUserTyping, 'isUserTyping')
+  console.log(isUserTyping, 'isUserTyping');
   return (
     <div>
       <div>

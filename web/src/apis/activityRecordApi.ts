@@ -19,15 +19,17 @@ export const activityRecordApi = {
     return response.status;
   },
 
-  getActivityRecord: async (date: string): Promise<ActivityRecordResponse | null> => {
+  getActivityRecord: async (
+    date: string
+  ): Promise<ActivityRecordResponse | null> => {
     const response = await apiClient.get(
       `${API_ENDPOINTS.ACTIVITY_RECORDS.BASE}?date=${encodeURIComponent(date)}`
     );
-    
+
     if (response.status === 200 && response.data.status === 200) {
       return response.data.data;
     }
-    
+
     return null;
   },
 
