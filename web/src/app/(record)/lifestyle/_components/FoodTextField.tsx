@@ -35,8 +35,6 @@ export const FoodTextField = ({
   // props가 변경될 때 내부 상태 업데이트
   useEffect(() => {
     setFoodName(initialFoodName);
-    // 기존 데이터가 로드되면 타이핑 상태 초기화
-    //setIsUserTyping(false);
   }, [initialFoodName]);
 
   useEffect(() => {
@@ -89,7 +87,6 @@ export const FoodTextField = ({
   const isMealTimeSelected =
     selectedTime !== '' && selectedTime in TIME_LABEL_MAP;
 
-  console.log(isUserTyping, 'isUserTyping');
   return (
     <div>
       <div>
