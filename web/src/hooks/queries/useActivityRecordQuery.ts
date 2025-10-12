@@ -3,7 +3,6 @@ import { activityRecordApi } from '@/apis/activityRecordApi';
 import { QUERY_KEYS } from '@/constants';
 
 export const useActivityRecordQuery = (date: string) => {
-  console.log('date', date);
   return useQuery({
     queryKey: [QUERY_KEYS.ACTIVITY_RECORDS, date],
     queryFn: () => activityRecordApi.getActivityRecord(date),

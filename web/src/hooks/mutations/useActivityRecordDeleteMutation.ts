@@ -7,10 +7,12 @@ interface ActivityRecordDeleteMutationParams {
   onError?: (error: Error) => void;
 }
 
-export const useActivityRecordDeleteMutation = () => {
+export const useActivityRecordDeleteMutation = (callbacks?: Pick<ActivityRecordDeleteMutationParams, 'onSuccess' | 'onError'>) => {
   return useMutation({
     mutationFn: async ({ id }: ActivityRecordDeleteMutationParams) => {
       return activityRecordApi.deleteActivityRecord(id);
     },
+    onSuccess: callbacks?.onSuccess,
+    onError: callbacks?.onError,
   });
 };

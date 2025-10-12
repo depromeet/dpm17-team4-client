@@ -33,7 +33,7 @@ export const activityRecordApi = {
     if (response.status === 200 && response.data.status === 200) {
       const data = response.data.data;
       // 빈 데이터인지 확인 (id가 null이거나 foods가 빈 배열)
-      if (data.id === null || data.foods.length === 0) {
+      if (!data || data.id === null) {
         return null;
       }
       return data;

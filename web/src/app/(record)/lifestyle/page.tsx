@@ -32,17 +32,16 @@ function LifestylePageContent() {
     return `${year}-${month.padStart(2, '0')}-${date.padStart(2, '0')}T00:00:00.000`;
   };
 
-  // 기존 데이터 조회
-  const { data: existingData, isLoading } = useActivityRecordQuery(
-    getDateString()
-  );
+  const dateString = getDateString();
+
+  const { data: existingData, isLoading } = useActivityRecordQuery(dateString);
 
   useEffect(() => {
     setExistingRecordId(null);
     setWater(0);
     setStress('');
     setFoods([{ id: -1, foodId: -1, name: '', mealTime: '' }]);
-  }, []);
+  }, [dateString]);
 
   useEffect(() => {
     if (existingData) {
