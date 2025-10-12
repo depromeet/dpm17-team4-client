@@ -10,7 +10,6 @@ import {
   useMemo,
   useState,
 } from 'react';
-import EllipseBg from '@/assets/auth/Ellipse 322187.png';
 import LoginCharacter from '@/assets/auth/login-character.png';
 import { API_ENDPOINTS, PAGE_ROUTES } from '@/constants';
 import AppleLoginButton from './_components/AppleLoginButton';
@@ -103,15 +102,48 @@ function AuthContent() {
   if (hasAuthParams) return null;
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-[#090318] to-[#404DDC00] relative">
-      <div className="absolute inset-0 opacity-70">
-        <Image
-          src={EllipseBg}
-          alt="배경 ellipse"
-          className="w-full h-full object-cover"
-          priority
-        />
-      </div>
+    <div
+      className="
+    min-h-screen relative overflow-hidden
+    [background-color:var(--Background-Background-Primary,#1D1E20)]
+    bg-[radial-gradient(54.67%_121.62%_at_12.93%_70.32%,_rgba(9,4,27,0.20)_0%,_rgba(73,179,169,0.20)_100%)]
+    bg-no-repeat
+     [background-size:100%_100%]
+    bg-[position:center]
+    flex flex-col items-center justify-center
+    text-white
+  "
+    >
+      <div
+        className="
+    pointer-events-none absolute inset-0 z-10
+    bg-[linear-gradient(180deg,_#090318_0%,_#242D58_20%,_#404DDC80_40%,_#404DDC00_100%)]
+    bg-no-repeat bg-top
+    [background-size:100%_36.75rem]
+    
+  "
+      />
+
+      <div
+        className="
+      absolute z-10
+      bg-[radial-gradient(66.21%_66.21%_at_45.8%_19.42%,_rgba(107,192,213,0.24)_0%,_rgba(92,91,167,0.24)_58.07%,_rgba(37,49,90,0.24)_100%)]
+      blur-[10px]
+      w-[21.5625rem] h-[21.5625rem]
+      rounded-[21.5625rem]
+      top-0 left-1/2
+      -translate-x-[calc(50%+11.12rem)]
+      -translate-y-[3.81rem]
+    "
+      />
+      <div
+        className="
+      absolute z-10 bottom-0 right-0 translate-x-[6.5rem]
+      w-[17.75rem] h-[17.75rem] rounded-[17.75rem]
+      bg-[radial-gradient(76.29%_76.29%_at_36.71%_24.88%,_rgba(107,192,213,0.24)_0%,_rgba(92,91,167,0.24)_58.07%,_rgba(30,39,43,0.24)_100%)]
+      blur-[10px]
+    "
+      />
 
       <div className="relative z-10">
         <div className="mb-[5rem]">
