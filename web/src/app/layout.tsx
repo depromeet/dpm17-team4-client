@@ -36,6 +36,7 @@ export default function RootLayout({
           suppressHydrationWarning={true}
         >
           {children}
+          <div id="modal-root"></div>
         </body>
       </html>
     </QueryProvider>
