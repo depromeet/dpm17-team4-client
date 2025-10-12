@@ -1,9 +1,9 @@
+import { Check } from 'lucide-react';
 import Image from 'next/image';
 import { useState } from 'react';
 import { BottomSheet } from '@/components/BottomSheet';
 import { MEAL_TIMES } from '../constants';
 import type { MealTime } from '../types/entitites';
-import { Check } from 'lucide-react';
 
 interface TimeBottomSheetProps {
   isOpen: boolean;
@@ -65,7 +65,6 @@ export const TimeBottomSheet = ({
                 )}
               </button>
             ))}
-            
           </div>
         </div>
       </div>

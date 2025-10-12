@@ -26,31 +26,31 @@ export const StressForm = memo(
 
           <div className="overflow-x-auto">
             <div className="flex gap-[1.5rem] min-w-max">
-            {STRESS_LEVELS.map((level) => (
-              <button
-                key={level.id}
-                type="button"
-                onClick={() => handleLevelSelect(level.id)}
-                className="flex flex-col items-center gap-[0.5rem] transition-all duration-200"
-              >
-                <div
-                  className={`w-[2.5rem] h-[2.5rem] rounded-full flex items-center justify-center transition-all duration-200 overflow-hidden ${
-                    selectedLevel === level.id ? 'bg-white' : 'bg-[#2c2c35]'
-                  }`}
+              {STRESS_LEVELS.map((level) => (
+                <button
+                  key={level.id}
+                  type="button"
+                  onClick={() => handleLevelSelect(level.id)}
+                  className="flex flex-col items-center gap-[0.5rem] transition-all duration-200"
                 >
-                  <Image
-                    src={level.imageUrl}
-                    alt={`stress level ${level.range}`}
-                    width={35}
-                    height={35}
-                    className="object-cover w-[35px] h-[35px]"
-                  />
-                </div>
-                <div className="text-body4-m text-white text-centerb whitespace-nowrap">
-                  {level.range}
-                </div>
-              </button>
-            ))}
+                  <div
+                    className={`w-[2.5rem] h-[2.5rem] rounded-full flex items-center justify-center transition-all duration-200 overflow-hidden ${
+                      selectedLevel === level.id ? 'bg-white' : 'bg-[#2c2c35]'
+                    }`}
+                  >
+                    <Image
+                      src={level.imageUrl}
+                      alt={`stress level ${level.range}`}
+                      width={35}
+                      height={35}
+                      className="object-cover w-[35px] h-[35px]"
+                    />
+                  </div>
+                  <div className="text-body4-m text-white text-centerb whitespace-nowrap">
+                    {level.range}
+                  </div>
+                </button>
+              ))}
             </div>
           </div>
         </div>

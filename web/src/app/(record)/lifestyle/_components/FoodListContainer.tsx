@@ -60,7 +60,6 @@ export const FoodListContainer = memo(
       );
     };
 
-    console.log(foods);
     return (
       <div>
         <div className="px-[1rem]">

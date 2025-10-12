@@ -1,4 +1,4 @@
-import { Minus, Plus, } from 'lucide-react';
+import { Minus, Plus } from 'lucide-react';
 import { type ChangeEvent, memo } from 'react';
 
 const TOTAL_STEPS = 10;
@@ -42,14 +42,16 @@ export const WaterForm = memo(({ waterCups, setWaterCups }: WaterFormProps) => {
             onClick={handleDecrease}
             disabled={isMinDisabled}
             className={`rounded-full w-[1.5rem] h-[1.5rem] flex items-center justify-center transition-colors ${
-              isMinDisabled 
-                ? 'bg-gray-600 cursor-not-allowed' 
+              isMinDisabled
+                ? 'bg-gray-600 cursor-not-allowed'
                 : 'bg-gray-600 hover:bg-gray-500'
             }`}
-          > 
-            <Minus className={`w-[1.19rem] h-[1.19rem] ${
-              isMinDisabled ? 'text-gray-400' : 'text-white'
-            }`} />
+          >
+            <Minus
+              className={`w-[1.19rem] h-[1.19rem] ${
+                isMinDisabled ? 'text-gray-400' : 'text-white'
+              }`}
+            />
           </button>
           <div className="text-body2-sb text-white">{waterCups}잔</div>
           <button
@@ -57,37 +59,38 @@ export const WaterForm = memo(({ waterCups, setWaterCups }: WaterFormProps) => {
             onClick={handleIncrease}
             disabled={isMaxDisabled}
             className={`rounded-full w-[1.5rem] h-[1.5rem] flex items-center justify-center transition-colors ${
-              isMaxDisabled 
-                ? 'bg-gray-600 cursor-not-allowed' 
+              isMaxDisabled
+                ? 'bg-gray-600 cursor-not-allowed'
                 : 'bg-gray-600 hover:bg-gray-500'
             }`}
           >
-            <Plus className={`w-[1.19rem] h-[1.19rem] ${
-              isMaxDisabled ? 'text-gray-400' : 'text-white'
-            }`} />
+            <Plus
+              className={`w-[1.19rem] h-[1.19rem] ${
+                isMaxDisabled ? 'text-gray-400' : 'text-white'
+              }`}
+            />
           </button>
         </div>
 
-          {/* Progress Bar Container */}
-          <div className="relative w-full max-w-[20rem]">
-            {/* Slider Input */}
-            <input
-              type="range"
-              min="0"
-              max={TOTAL_STEPS}
-              value={waterCups}
-              onChange={handleSliderChange}
-              className="w-full h-[1.875rem] rounded-[62.4375rem] appearance-none cursor-pointer px-[0.25rem] py-[0.38rem] bg-gradient-to-r from-[#52DFDB] to-[#008CFF] [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:h-6 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-white [&::-webkit-slider-thumb]:shadow-md [&::-moz-range-thumb]:w-6 [&::-moz-range-thumb]:h-6 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-white [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-thumb]:border-2 [&::-moz-range-thumb]:border-white [&::-moz-range-thumb]:shadow-md [&::-moz-range-thumb]:appearance-none"
-            />
-          </div>
+        {/* Progress Bar Container */}
+        <div className="relative w-full max-w-[20rem]">
+          {/* Slider Input */}
+          <input
+            type="range"
+            min="0"
+            max={TOTAL_STEPS}
+            value={waterCups}
+            onChange={handleSliderChange}
+            className="w-full h-[1.875rem] rounded-[62.4375rem] appearance-none cursor-pointer px-[0.25rem] py-[0.38rem] bg-gradient-to-r from-[#52DFDB] to-[#008CFF] [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:h-6 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-white [&::-webkit-slider-thumb]:shadow-md [&::-moz-range-thumb]:w-6 [&::-moz-range-thumb]:h-6 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-white [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-thumb]:border-2 [&::-moz-range-thumb]:border-white [&::-moz-range-thumb]:shadow-md [&::-moz-range-thumb]:appearance-none"
+          />
+        </div>
 
-          {/* Range Labels */}
-          <div className="flex justify-between w-full max-w-[20rem] mt-[1rem]">
-            <span className="text-body2 text-[#95E6FF]">0잔</span>
-            <span className="text-body2 text-blue-400">10잔 이상</span>
-          </div>
+        {/* Range Labels */}
+        <div className="flex justify-between w-full max-w-[20rem] mt-[1rem]">
+          <span className="text-body2 text-[#95E6FF]">0잔</span>
+          <span className="text-body2 text-blue-400">10잔 이상</span>
         </div>
       </div>
-
+    </div>
   );
 });

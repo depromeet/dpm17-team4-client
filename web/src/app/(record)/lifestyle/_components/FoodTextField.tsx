@@ -1,7 +1,7 @@
 import { ChevronDownIcon, MinusIcon, XIcon } from 'lucide-react';
 import { type ChangeEvent, useEffect, useState } from 'react';
 import { useDebounce } from '@/hooks';
-import { TIME_LABEL_MAP, TIME_COLOR_MAP } from '../constants';
+import { TIME_COLOR_MAP, TIME_LABEL_MAP } from '../constants';
 import type { MealTime } from '../types/entitites';
 import { FoodList } from './FoodList';
 import { TimeBottomSheet } from './TimeBottomSheet';

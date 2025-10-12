@@ -2,6 +2,7 @@
 
 import { useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useState } from 'react';
+import { Navigator } from '@/components';
 import { useActivityRecordQuery } from '@/hooks/queries';
 import { FoodListContainer } from './_components/FoodListContainer';
 import { LifeStyleSubmit } from './_components/LifeStyleSubmit';
@@ -57,6 +58,11 @@ function LifestylePageContent() {
       }));
 
       setFoods(existingFoods);
+    } else {
+      setExistingRecordId(null);
+      setWater(0);
+      setStress('');
+      setFoods([{ id: -1, foodId: -1, name: '', mealTime: '' }]);
     }
   }, [existingData]);
 
@@ -74,6 +80,14 @@ function LifestylePageContent() {
 
   return (
     <div className="min-h-screen bg-gray-900">
+      <Navigator title="생활 기록">
+        {existingRecordId && (
+          <Navigator.Right>
+            <span className="text-body2-m text-red-600">삭제</span>
+          </Navigator.Right>
+        )}
+      </Navigator>
+      <div className="h-[56px]" />
       <Suspense
         fallback={
           <div className="px-[4.78rem] py-[1.25rem] text-h3 text-white text-center">
