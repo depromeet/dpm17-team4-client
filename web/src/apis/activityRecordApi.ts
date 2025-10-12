@@ -46,4 +46,11 @@ export const activityRecordApi = {
     );
     return response.status;
   },
+
+  deleteActivityRecord: async (id: number) => {
+    const response = await apiClient.delete(
+      `${API_ENDPOINTS.ACTIVITY_RECORDS.BASE}/${id}`
+    );
+    return response.status;
+  },
 };
