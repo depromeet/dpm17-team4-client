@@ -18,6 +18,11 @@ import KakaoLoginButton from './_components/KakaoLoginButton';
 
 const KAKAO_LOGIN_INITIATE_URL = `${process.env.NEXT_PUBLIC_API || 'https://211.188.58.167'}${API_ENDPOINTS.AUTH.KAKAO_LOGIN}`;
 
+
+  const finalRedirectUri = typeof window !== 'undefined' 
+    ? window.location.href.split('?')[0] 
+    : '';
+
 function AuthContent() {
   const searchParams = useSearchParams();
   const [error, setError] = useState<string | null>(null);
@@ -120,7 +125,7 @@ function AuthContent() {
 
         <div className="space-y-4">
           <form method="POST" action={KAKAO_LOGIN_INITIATE_URL}>
-            <input type="hidden" name="redirectUri" value="/home" />
+            <input type="hidden" name="redirectUri" value={finalRedirectUri} />
             <KakaoLoginButton />
           </form>
 
