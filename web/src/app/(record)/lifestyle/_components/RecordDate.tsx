@@ -3,6 +3,7 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useCallback } from 'react';
+import { getDateDifference, getDateDisplayText } from '../utils/dateUtils';
 
 export const RecordDate = () => {
   const router = useRouter();
@@ -56,48 +57,9 @@ export const RecordDate = () => {
     );
   };
 
-  // 요일 이름 반환
-  const getDayName = (date: Date) => {
-    const days = ['일', '월', '화', '수', '목', '금', '토'];
-    return days[date.getDay()];
-  };
-
-  // 날짜 표시 텍스트 생성
-  const getDateDisplayText = () => {
-    const targetDate = new Date(
-      parseInt(year, 10),
-      parseInt(month, 10) - 1,
-      parseInt(date, 10)
-    );
-    const today = new Date();
-
-    // 시간을 00:00:00으로 설정하여 날짜만 비교
-    const targetDateOnly = new Date(
-      targetDate.getFullYear(),
-      targetDate.getMonth(),
-      targetDate.getDate()
-    );
-    const todayOnly = new Date(
-      today.getFullYear(),
-      today.getMonth(),
-      today.getDate()
-    );
-
-    const diffTime = targetDateOnly.getTime() - todayOnly.getTime();
-    const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
-
-    const dayName = getDayName(targetDate);
-
-    if (diffDays === 0) {
-      return `${parseInt(month, 10)}월 ${parseInt(date, 10)}일 (${dayName}), 오늘`;
-    } else if (diffDays === -1) {
-      return `${parseInt(month, 10)}월 ${parseInt(date, 10)}일 (${dayName}), 어제`;
-    } else if (diffDays === 1) {
-      return `${parseInt(month, 10)}월 ${parseInt(date, 10)}일 (${dayName}), 내일`;
-    } else {
-      return `${parseInt(month, 10)}월 ${parseInt(date, 10)}일 (${dayName})`;
-    }
-  };
+  const diffDays = getDateDifference(parseInt(year, 10), parseInt(month, 10), parseInt(date, 10));
+  const isPreviousDisabled = false; // 어제로는 항상 갈 수 있음
+  const isNextDisabled = diffDays >= 0; // 오늘 이후 날짜로는 갈 수 없음
 
   return (
     <div className="px-[4.78rem] py-[1.25rem] text-h3 text-white text-center">
@@ -105,15 +67,25 @@ export const RecordDate = () => {
         <button
           type="button"
           onClick={handlePreviousDay}
-          className="hover:opacity-70 transition-opacity"
+          disabled={isPreviousDisabled}
+          className={`transition-opacity ${
+            isPreviousDisabled 
+              ? 'opacity-30 cursor-not-allowed' 
+              : 'hover:opacity-70'
+          }`}
         >
           <ChevronLeft />
         </button>
-        <h1>{getDateDisplayText()}</h1>
+        <h1>{getDateDisplayText(parseInt(year, 10), parseInt(month, 10), parseInt(date, 10))}</h1>
         <button
           type="button"
           onClick={handleNextDay}
-          className="hover:opacity-70 transition-opacity"
+          disabled={isNextDisabled}
+          className={`transition-opacity ${
+            isNextDisabled 
+              ? 'opacity-30 cursor-not-allowed' 
+              : 'hover:opacity-70'
+          }`}
         >
           <ChevronRight />
         </button>
