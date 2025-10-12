@@ -57,7 +57,11 @@ export const RecordDate = () => {
     );
   };
 
-  const diffDays = getDateDifference(parseInt(year, 10), parseInt(month, 10), parseInt(date, 10));
+  const diffDays = getDateDifference(
+    parseInt(year, 10),
+    parseInt(month, 10),
+    parseInt(date, 10)
+  );
   const isPreviousDisabled = false; // 어제로는 항상 갈 수 있음
   const isNextDisabled = diffDays >= 0; // 오늘 이후 날짜로는 갈 수 없음
 
@@ -69,21 +73,27 @@ export const RecordDate = () => {
           onClick={handlePreviousDay}
           disabled={isPreviousDisabled}
           className={`transition-opacity ${
-            isPreviousDisabled 
-              ? 'opacity-30 cursor-not-allowed' 
+            isPreviousDisabled
+              ? 'opacity-30 cursor-not-allowed'
               : 'hover:opacity-70'
           }`}
         >
           <ChevronLeft />
         </button>
-        <h1>{getDateDisplayText(parseInt(year, 10), parseInt(month, 10), parseInt(date, 10))}</h1>
+        <h1>
+          {getDateDisplayText(
+            parseInt(year, 10),
+            parseInt(month, 10),
+            parseInt(date, 10)
+          )}
+        </h1>
         <button
           type="button"
           onClick={handleNextDay}
           disabled={isNextDisabled}
           className={`transition-opacity ${
-            isNextDisabled 
-              ? 'opacity-30 cursor-not-allowed' 
+            isNextDisabled
+              ? 'opacity-30 cursor-not-allowed'
               : 'hover:opacity-70'
           }`}
         >

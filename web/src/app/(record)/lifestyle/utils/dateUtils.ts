@@ -14,7 +14,11 @@
  * getDateDifference(2024, 1, 14) // -1 (어제)
  * getDateDifference(2024, 1, 16) // 1 (내일)
  */
-export const getDateDifference = (year: number, month: number, date: number): number => {
+export const getDateDifference = (
+  year: number,
+  month: number,
+  date: number
+): number => {
   const targetDate = new Date(year, month - 1, date);
   const today = new Date();
 
@@ -59,7 +63,11 @@ export const getDayName = (date: Date): string => {
  * getDateDisplayText(2024, 1, 16) // "1월 16일 (화), 내일"
  * getDateDisplayText(2024, 1, 10) // "1월 10일 (수)"
  */
-export const getDateDisplayText = (year: number, month: number, date: number): string => {
+export const getDateDisplayText = (
+  year: number,
+  month: number,
+  date: number
+): string => {
   const targetDate = new Date(year, month - 1, date);
   const diffDays = getDateDifference(year, month, date);
   const dayName = getDayName(targetDate);
