@@ -41,7 +41,7 @@ function LifestylePageContent() {
     setWater(0);
     setStress('');
     setFoods([{ id: -1, foodId: -1, name: '', mealTime: '' }]);
-  }, [dateString]);
+  }, []);
 
   useEffect(() => {
     if (existingData) {
