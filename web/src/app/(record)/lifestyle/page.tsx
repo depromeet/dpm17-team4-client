@@ -22,15 +22,14 @@ export default function LifestylePage() {
 
   // 날짜 파라미터로부터 ISO 문자열 생성
   const getDateString = () => {
-    const year = searchParams.get('year') || new Date().getFullYear().toString();
-    const month = searchParams.get('month') || (new Date().getMonth() + 1).toString();
-    const date = searchParams.get('date') || new Date().getDate().toString();
+    const year = searchParams.get('year');
+    const month = searchParams.get('month');
+    const date = searchParams.get('day');
     
-    return new Date(
-      parseInt(year, 10),
-      parseInt(month, 10) - 1,
-      parseInt(date, 10)
-    ).toISOString().replace('Z', '');
+    if (!year || !month || !date) {
+      return '';
+    }
+    return `${year}-${month.padStart(2, '0')}-${date.padStart(2, '0')}T00:00:00.000`;
   };
 
   // 기존 데이터 조회

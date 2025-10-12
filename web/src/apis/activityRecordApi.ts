@@ -32,7 +32,7 @@ export const activityRecordApi = {
   },
 
   updateActivityRecord: async (id: number, data: LifeStyleCreateRequestDto) => {
-    const response = await apiClient.put(
+    const response = await apiClient.patch(
       `${API_ENDPOINTS.ACTIVITY_RECORDS.BASE}/${id}`,
       data
     );
