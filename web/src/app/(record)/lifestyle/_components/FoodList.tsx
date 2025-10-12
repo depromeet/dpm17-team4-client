@@ -3,11 +3,13 @@ import { useFoodSearch } from '@/hooks';
 interface FoodListProps {
   debouncedFoodName: string;
   onFoodSelect: (foodId: number, foodName: string) => void;
+  isUserTyping?: boolean;
 }
 
 export const FoodList = ({
   debouncedFoodName,
   onFoodSelect,
+  isUserTyping = false,
 }: FoodListProps) => {
   const {
     data: foodList,
@@ -16,7 +18,7 @@ export const FoodList = ({
   } = useFoodSearch({
     query: debouncedFoodName,
     count: 10,
-    enabled: debouncedFoodName.trim().length > 0,
+    enabled: debouncedFoodName.trim().length > 0 && isUserTyping,
   });
 
   // API 데이터가 없으면 빈 배열 사용
@@ -24,6 +26,7 @@ export const FoodList = ({
 
   const handleFoodClick = (foodId: number, foodName: string) => {
     onFoodSelect(foodId, foodName);
+    // 음식 선택 후에는 컴포넌트가 사라지도록 함
   };
 
   // debouncedFoodName과 일치하는 부분을 하이라이트하는 함수
