@@ -5,7 +5,7 @@ import { SpeechBubbleIcon } from '@/components';
 
 const KakaoLoginButton = () => {
   return (
-    <div className="relatvie">
+    <>
       <SpeechBubbleIcon className="translate-y-[0.47rem] translate-x-[15.5rem]">
         가장 간편!
       </SpeechBubbleIcon>
@@ -18,7 +18,7 @@ const KakaoLoginButton = () => {
           카카오톡으로 시작하기
         </span>
       </button>
-    </div>
+    </>
   );
 };
 
