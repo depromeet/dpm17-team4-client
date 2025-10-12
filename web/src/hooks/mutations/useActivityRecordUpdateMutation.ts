@@ -8,7 +8,9 @@ interface ActivityRecordUpdateMutationParams extends LifeStyleCreateRequestDto {
   onError?: (error: Error) => void;
 }
 
-export const useActivityRecordUpdateMutation = (callbacks?: Pick<ActivityRecordUpdateMutationParams, 'onSuccess' | 'onError'>) => {
+export const useActivityRecordUpdateMutation = (
+  callbacks?: Pick<ActivityRecordUpdateMutationParams, 'onSuccess' | 'onError'>
+) => {
   return useMutation({
     mutationFn: async ({
       id,
