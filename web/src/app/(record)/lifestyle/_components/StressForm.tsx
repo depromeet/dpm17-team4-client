@@ -24,7 +24,8 @@ export const StressForm = memo(
             오늘 하루 스트레스 점수는 어떤가요?
           </div>
 
-          <div className="flex justify-center gap-[1.5rem] overflow-scroll">
+          <div className="overflow-x-auto">
+            <div className="flex gap-[1.5rem] min-w-max">
             {STRESS_LEVELS.map((level) => (
               <button
                 key={level.id}
@@ -33,7 +34,7 @@ export const StressForm = memo(
                 className="flex flex-col items-center gap-[0.5rem] transition-all duration-200"
               >
                 <div
-                  className={`w-[3.5rem] h-[3.5rem] rounded-full flex items-center justify-center transition-all duration-200 overflow-hidden ${
+                  className={`w-[2.5rem] h-[2.5rem] rounded-full flex items-center justify-center transition-all duration-200 overflow-hidden ${
                     selectedLevel === level.id ? 'bg-white' : 'bg-[#2c2c35]'
                   }`}
                 >
@@ -45,11 +46,12 @@ export const StressForm = memo(
                     className="object-cover w-[35px] h-[35px]"
                   />
                 </div>
-                <div className="text-body3 text-gray-300 text-center">
+                <div className="text-body4-m text-white text-centerb whitespace-nowrap">
                   {level.range}
                 </div>
               </button>
             ))}
+            </div>
           </div>
         </div>
       </div>
