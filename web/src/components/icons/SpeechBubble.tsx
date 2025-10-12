@@ -7,7 +7,7 @@ type SpeechBubbleProps = {
   textClassName?: string;
 } & Omit<SVGProps<SVGSVGElement>, 'children' | 'className'>;
 
-export const SpeechBubble = ({
+export const SpeechBubbleIcon = ({
   children,
   className = '',
   textClassName = '',
@@ -18,6 +18,8 @@ export const SpeechBubble = ({
 
   return (
     <svg
+      role="img"
+      aria-label="speech-bubble"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 83 35"
       fill="none"
