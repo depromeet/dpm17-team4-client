@@ -1,19 +1,21 @@
+import { useRouter } from 'next/navigation';
 import { Navigator } from '@/components';
 import { useActivityRecordDeleteMutation } from '@/hooks/mutations';
-import { useRouter } from 'next/navigation';
 
 interface LifeStyleNavigatorProps {
   existingRecordId: number | null;
 }
 
-export const LifeStyleNavigator = ({ existingRecordId }: LifeStyleNavigatorProps) => {
+export const LifeStyleNavigator = ({
+  existingRecordId,
+}: LifeStyleNavigatorProps) => {
   //TODO(seieun) 삭제 모달에서 삭제 기능 추가
   const router = useRouter();
   const deleteMutation = useActivityRecordDeleteMutation();
 
   const handleDelete = async () => {
     if (!existingRecordId) return;
-    
+
     if (confirm('정말로 삭제하시겠습니까?')) {
       try {
         await deleteMutation.mutateAsync({ id: existingRecordId });
