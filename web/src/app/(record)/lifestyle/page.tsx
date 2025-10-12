@@ -37,30 +37,41 @@ export default function LifestylePage() {
     getDateString()
   );
 
-  // 기존 데이터가 있으면 상태 초기화
   useEffect(() => {
-    console.log('existingData', existingData);
+    setExistingRecordId(null);
+    setWater(0);
+    setStress('');
+    setFoods([{ id: -1, foodId: -1, name: '', mealTime: '' }]);
+  }, [searchParams]);
+
+  useEffect(() => {
     if (existingData) {
       setExistingRecordId(existingData.id);
       setWater(existingData.waterIntakeCups);
       setStress(existingData.stressLevel as StressLevel);
 
-      // foods 데이터 변환
       const existingFoods: Food[] = existingData.foods.map((food, index) => ({
         id: index,
         foodId: food.id,
         name: food.name,
-        mealTime: food.mealTime as any,
+        mealTime: food.mealTime,
       }));
-
-      // 빈 food 항목이 없으면 추가
-      if (existingFoods.length > 0) {
-        existingFoods.push({ id: -1, foodId: -1, name: '', mealTime: '' });
-      }
 
       setFoods(existingFoods);
     }
   }, [existingData]);
+
+  // NOTE(seieun) 데이터를 불러오는 동안 깜빡임 을 없애기 위해 로딩 인디케이터 추가
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
+          <p className="text-gray-400">데이터를 불러오는 중...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-900">
