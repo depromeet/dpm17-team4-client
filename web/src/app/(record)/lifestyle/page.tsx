@@ -1,6 +1,8 @@
 'use client';
 
-import { Suspense, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { Suspense, useEffect, useState } from 'react';
+import { useActivityRecordQuery } from '@/hooks/queries';
 import { FoodListContainer } from './_components/FoodListContainer';
 import { LifeStyleSubmit } from './_components/LifeStyleSubmit';
 import { RecordDate } from './_components/RecordDate';
@@ -9,12 +11,66 @@ import { WaterForm } from './_components/WaterForm';
 import type { Food } from './types/dto';
 import type { StressLevel } from './types/entitites';
 
-export default function LifestylePage() {
+function LifestylePageContent() {
+  const searchParams = useSearchParams();
   const [foods, setFoods] = useState<Food[]>([
     { id: -1, foodId: -1, name: '', mealTime: '' },
   ]);
   const [water, setWater] = useState(0);
   const [stress, setStress] = useState<StressLevel | ''>('');
+  const [existingRecordId, setExistingRecordId] = useState<number | null>(null);
+
+  // 날짜 파라미터로부터 ISO 문자열 생성
+  const getDateString = () => {
+    const year = searchParams.get('year');
+    const month = searchParams.get('month');
+    const date = searchParams.get('day');
+
+    if (!year || !month || !date) {
+      return '';
+    }
+    return `${year}-${month.padStart(2, '0')}-${date.padStart(2, '0')}T00:00:00.000`;
+  };
+
+  const dateString = getDateString();
+
+  const { data: existingData, isLoading } = useActivityRecordQuery(dateString);
+
+  useEffect(() => {
+    setExistingRecordId(null);
+    setWater(0);
+    setStress('');
+    setFoods([{ id: -1, foodId: -1, name: '', mealTime: '' }]);
+  }, []);
+
+  useEffect(() => {
+    if (existingData) {
+      setExistingRecordId(existingData.id);
+      setWater(existingData.waterIntakeCups);
+      setStress(existingData.stressLevel as StressLevel);
+
+      const existingFoods: Food[] = existingData.foods.map((food, index) => ({
+        id: index,
+        foodId: food.id,
+        name: food.name,
+        mealTime: food.mealTime,
+      }));
+
+      setFoods(existingFoods);
+    }
+  }, [existingData]);
+
+  // NOTE(seieun) 데이터를 불러오는 동안 깜빡임 을 없애기 위해 로딩 인디케이터 추가
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
+          <p className="text-gray-400">데이터를 불러오는 중...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-900">
@@ -42,8 +98,31 @@ export default function LifestylePage() {
           </div>
         }
       >
-        <LifeStyleSubmit foods={foods} water={water} stress={stress} />
+        <LifeStyleSubmit
+          foods={foods}
+          water={water}
+          stress={stress}
+          existingRecordId={existingRecordId}
+          isLoading={isLoading}
+        />
       </Suspense>
     </div>
+  );
+}
+
+export default function LifestylePage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
+            <p className="text-gray-400">로딩 중...</p>
+          </div>
+        </div>
+      }
+    >
+      <LifestylePageContent />
+    </Suspense>
   );
 }

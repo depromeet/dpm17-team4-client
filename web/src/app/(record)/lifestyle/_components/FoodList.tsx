@@ -3,11 +3,13 @@ import { useFoodSearch } from '@/hooks';
 interface FoodListProps {
   debouncedFoodName: string;
   onFoodSelect: (foodId: number, foodName: string) => void;
+  isUserTyping?: boolean;
 }
 
 export const FoodList = ({
   debouncedFoodName,
   onFoodSelect,
+  isUserTyping = false,
 }: FoodListProps) => {
   const {
     data: foodList,
@@ -16,7 +18,7 @@ export const FoodList = ({
   } = useFoodSearch({
     query: debouncedFoodName,
     count: 10,
-    enabled: debouncedFoodName.trim().length > 0,
+    enabled: debouncedFoodName.trim().length > 0 && isUserTyping,
   });
 
   // API 데이터가 없으면 빈 배열 사용

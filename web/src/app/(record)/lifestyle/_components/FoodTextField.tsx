@@ -28,10 +28,8 @@ export const FoodTextField = ({
   canRemove = false,
 }: FoodTextFieldProps) => {
   const [foodName, setFoodName] = useState(initialFoodName);
-  const [isFoodSelected, setIsFoodSelected] = useState(false);
-  const [selectedTime, setSelectedTime] = useState(
-    isFoodSelected ? initialFoodTime : ''
-  );
+  const [isUserTyping, setIsUserTyping] = useState(false);
+  const [selectedTime, setSelectedTime] = useState(initialFoodTime);
   const [isTimeBottomSheetOpen, setIsTimeBottomSheetOpen] = useState(false);
 
   // props가 변경될 때 내부 상태 업데이트
@@ -48,24 +46,28 @@ export const FoodTextField = ({
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newFoodName = e.target.value;
     setFoodName(newFoodName);
-    setIsFoodSelected(false); // 사용자가 타이핑하면 선택 상태 해제
+    setIsUserTyping(true); // 사용자가 타이핑하면 타이핑 상태로 설정
     onFoodChange?.(id, -1, newFoodName); // id와 foodId는 -1로 유지 (직접 입력)
   };
 
   const handleRemoveFood = () => {
-    if (isFoodSelected && canRemove && onRemove) {
+    if (!isUserTyping && canRemove && onRemove) {
       onRemove();
     } else {
       setFoodName('');
-      setIsFoodSelected(false);
+      setIsUserTyping(false);
       onFoodChange?.(id, -1, '');
     }
   };
 
   const handleFoodSelect = (foodId: number, foodName: string) => {
     setFoodName(foodName);
-    setIsFoodSelected(true); // 음식이 선택되면 선택 상태로 설정
     onFoodChange?.(id, foodId, foodName); // 선택된 음식의 ID와 이름 업데이트
+
+    // 음식 선택 후 약간의 지연을 두고 타이핑 상태 해제 (FoodList가 자연스럽게 사라지도록)
+    setTimeout(() => {
+      setIsUserTyping(false);
+    }, 100);
   };
 
   const handleTimeClick = () => {
@@ -117,7 +119,7 @@ export const FoodTextField = ({
             onClick={handleRemoveFood}
             className="bg-gray-600 rounded-full w-[1.5rem] h-[1.5rem] flex items-center justify-center"
           >
-            {isFoodSelected ? (
+            {!isUserTyping ? (
               <MinusIcon className="w-[1rem] h-[1rem] text-gray-200" />
             ) : (
               <XIcon className="w-[1rem] h-[1rem] text-gray-200" />
@@ -126,12 +128,13 @@ export const FoodTextField = ({
         </div>
       </div>
 
-      {debouncedFoodName && !isFoodSelected && (
+      {debouncedFoodName && isUserTyping && foodName.trim().length > 0 && (
         <>
           <div className="h-[0.9375rem]" />
           <FoodList
             debouncedFoodName={debouncedFoodName}
             onFoodSelect={handleFoodSelect}
+            isUserTyping={isUserTyping}
           />
         </>
       )}
