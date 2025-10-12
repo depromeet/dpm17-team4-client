@@ -32,6 +32,7 @@ export const StressForm = memo(
                   type="button"
                   onClick={() => handleLevelSelect(level.id)}
                   className="flex flex-col items-center gap-[0.5rem] transition-all duration-200"
+                  aria-pressed={selectedLevel === level.id}
                 >
                   <div
                     className={`w-[2.5rem] h-[2.5rem] rounded-full flex items-center justify-center transition-all duration-200 overflow-hidden ${
@@ -46,7 +47,7 @@ export const StressForm = memo(
                       className="object-cover w-[35px] h-[35px]"
                     />
                   </div>
-                  <div className="text-body4-m text-white text-centerb whitespace-nowrap">
+                  <div className="text-body4-m text-white text-center whitespace-nowrap">
                     {level.range}
                   </div>
                 </button>
