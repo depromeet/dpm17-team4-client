@@ -29,7 +29,7 @@ const Left = ({ children, className = '' }: NavigatorLeftProps) => (
 );
 
 const Right = ({ children, className = '' }: NavigatorRightProps) => (
-  <div className={`flex items-center justify-end ${className}`}>{children}</div>
+  <div className={`flex items-center justify-end absolute right-4 top-1/2 -translate-y-1/2 ${className}`}>{children}</div>
 );
 
 const Center = ({ children, className = '' }: NavigatorCenterProps) => (
