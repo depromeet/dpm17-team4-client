@@ -44,6 +44,28 @@ export const TIME_LABEL_MAP: Record<MealTime, string> = {
   SNACK: '간식',
 };
 
+export const TIME_COLOR_MAP: Record<MealTime, {
+  bg: string;
+  hover: string;
+}> = {
+  BREAKFAST: {
+    bg: 'bg-yellow-600',
+    hover: 'hover:bg-yellow-500',
+  },
+  LUNCH: {
+    bg: 'bg-green-600',
+    hover: 'hover:bg-green-500',
+  },
+  DINNER: {
+    bg: 'bg-blue-600',
+    hover: 'hover:bg-blue-500',
+  },
+  SNACK: {
+    bg: 'bg-red-600',
+    hover: 'hover:bg-red-500',
+  },
+};
+
 export const STRESS_LEVELS: {
   id: StressLevel;
   range: string;

@@ -1,7 +1,7 @@
 import { ChevronDownIcon, MinusIcon, XIcon } from 'lucide-react';
 import { type ChangeEvent, useEffect, useState } from 'react';
 import { useDebounce } from '@/hooks';
-import { TIME_LABEL_MAP } from '../constants';
+import { TIME_LABEL_MAP, TIME_COLOR_MAP } from '../constants';
 import type { MealTime } from '../types/entitites';
 import { FoodList } from './FoodList';
 import { TimeBottomSheet } from './TimeBottomSheet';
@@ -97,7 +97,7 @@ export const FoodTextField = ({
             onClick={handleTimeClick}
             className={`${
               isMealTimeSelected
-                ? 'bg-green-600 text-white hover:bg-green-500'
+                ? `${TIME_COLOR_MAP[selectedTime as MealTime].bg} text-white ${TIME_COLOR_MAP[selectedTime as MealTime].hover}`
                 : 'bg-gray-600 text-gray-200 hover:bg-gray-500'
             } rounded-[0.5rem] px-[0.375rem] py-[0.25rem] flex gap-[0.25rem] transition-colors text-body3-m items-center`}
           >
@@ -143,6 +143,7 @@ export const FoodTextField = ({
         isOpen={isTimeBottomSheetOpen}
         onClose={handleCloseTimeBottomSheet}
         onTimeSelect={handleTimeSelect}
+        selectedMealTime={selectedTime}
       />
     </div>
   );
