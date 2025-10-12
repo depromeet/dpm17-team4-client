@@ -3,7 +3,7 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useCallback } from 'react';
-import { getDateDifference, getDateDisplayText } from '../utils/dateUtils';
+import { getDateDifference, getDateDisplayText } from '@/utils/utils-date';
 
 export const RecordDate = () => {
   const router = useRouter();
