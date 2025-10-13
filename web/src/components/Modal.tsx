@@ -2,11 +2,10 @@ import type { PropsWithChildren } from 'react';
 import { createPortal } from 'react-dom';
 import { useModal } from '@/hooks/queries/useModal';
 import { Button } from './Button';
-import { UseMutateFunction } from '@tanstack/react-query';
 
 interface ModalContentProps {
   onClose: () => void;
-  onDelete: UseMutateFunction<number, Error, void, unknown>
+  onDelete: () => void;
 }
 
 interface ModalProps {
@@ -14,7 +13,7 @@ interface ModalProps {
   onClose: () => void;
 }
 
-export const ModalContent = ({ onClose,onDelete}: ModalContentProps) => {
+export const ModalContent = ({ onClose, onDelete }: ModalContentProps) => {
   return (
     <>
       <div className="mb-7 flex-col">
