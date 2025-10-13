@@ -36,6 +36,8 @@ export default function RootLayout({
           suppressHydrationWarning={true}
         >
           {children}
+          {/* biome-ignore lint/correctness/useUniqueElementIds: <This is a global portal root> */}
+          <div id="modal-root"></div>
         </body>
       </html>
     </QueryProvider>
