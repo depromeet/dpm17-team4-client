@@ -89,7 +89,7 @@ function HomeContent() {
         console.error('Home Auth 처리 중 에러:', error);
       }
     })();
-  }, [extractUserInfo]);
+  }, [extractUserInfo, router, searchParams]);
 
   const { userInfo: savedUserInfo } = useUserInfo();
 
