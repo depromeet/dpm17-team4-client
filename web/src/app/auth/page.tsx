@@ -2,7 +2,14 @@
 
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useState } from 'react';
+import {
+  Suspense,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useState,
+} from 'react';
 import EllipseBg from '@/assets/auth/Ellipse 322187.png';
 import LoginCharacter from '@/assets/auth/login-character.png';
 import { API_ENDPOINTS, PAGE_ROUTES } from '@/constants';
@@ -33,10 +40,10 @@ function AuthContent() {
   const hasAuthParams = useMemo(() => {
     return Boolean(
       searchParams.get('id') ||
-      searchParams.get('nickname') ||
-      searchParams.get('profileImage') ||
-      searchParams.get('isNew') ||
-      searchParams.get('providerType')
+        searchParams.get('nickname') ||
+        searchParams.get('profileImage') ||
+        searchParams.get('isNew') ||
+        searchParams.get('providerType')
     );
   }, [searchParams]);
 
@@ -98,7 +105,12 @@ function AuthContent() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-[#090318] to-[#404DDC00] relative">
       <div className="absolute inset-0 opacity-70">
-        <Image src={EllipseBg} alt="배경 ellipse" className="w-full h-full object-cover" priority />
+        <Image
+          src={EllipseBg}
+          alt="배경 ellipse"
+          className="w-full h-full object-cover"
+          priority
+        />
       </div>
 
       <div className="relative z-10">
