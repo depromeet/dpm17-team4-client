@@ -1,6 +1,6 @@
 import type { PropsWithChildren } from 'react';
 import { createPortal } from 'react-dom';
-import { useModal } from '@/hooks/queries/useModal';
+import { useModal } from '@/hooks/useModal';
 import { Button } from './Button';
 
 interface ModalContentProps {

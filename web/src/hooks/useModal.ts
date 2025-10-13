@@ -1,5 +1,5 @@
 import { type RefObject, useEffect, useRef, useState } from 'react';
-import { usePreventScroll } from '../usePreventScroll';
+import { usePreventScroll } from './usePreventScroll';
 
 interface UseModalReturn {
   dialogRef: RefObject<HTMLDialogElement | null>;
@@ -26,7 +26,7 @@ export const useModal = (
     } else {
       dialogRef.current?.close();
     }
-  });
+  }, [isOpen]);
   const onClickDialog = (e: React.MouseEvent<HTMLDialogElement>) => {
     if (e.target === e.currentTarget) {
       onClose();
