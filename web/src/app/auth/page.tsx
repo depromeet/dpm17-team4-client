@@ -1,11 +1,18 @@
 'use client';
 
 import Image from 'next/image';
-import { useSearchParams } from 'next/navigation';
-import { Suspense, useCallback, useEffect, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import {
+  Suspense,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useState,
+} from 'react';
 import EllipseBg from '@/assets/auth/Ellipse 322187.png';
 import LoginCharacter from '@/assets/auth/login-character.png';
-import { API_ENDPOINTS } from '@/constants';
+import { API_ENDPOINTS, PAGE_ROUTES } from '@/constants';
 import AppleLoginButton from './_components/AppleLoginButton';
 import {
   getAccessToken,
@@ -16,11 +23,29 @@ import {
 } from './_components/AuthSessionProvider';
 import KakaoLoginButton from './_components/KakaoLoginButton';
 
-const KAKAO_LOGIN_INITIATE_URL = `${process.env.NEXT_PUBLIC_API || 'https://211.188.58.167'}${API_ENDPOINTS.AUTH.KAKAO_LOGIN}`;
+const API_BASE = process.env.NEXT_PUBLIC_API || 'https://211.188.58.167';
+const KAKAO_LOGIN_INITIATE_URL = `${API_BASE}${API_ENDPOINTS.AUTH.KAKAO_LOGIN}`;
 
 function AuthContent() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const [error, setError] = useState<string | null>(null);
+
+  const redirectUri = useMemo(() => {
+    if (typeof window === 'undefined') return '';
+    return `${window.location.origin}/auth`;
+  }, []);
+
+  // ✅ 인증 콜백 파라미터 존재 여부 (있으면 렌더 스킵)
+  const hasAuthParams = useMemo(() => {
+    return Boolean(
+      searchParams.get('id') ||
+        searchParams.get('nickname') ||
+        searchParams.get('profileImage') ||
+        searchParams.get('isNew') ||
+        searchParams.get('providerType')
+    );
+  }, [searchParams]);
 
   const extractUserInfo = useCallback((): UserInfo | null => {
     const id = searchParams.get('id');
@@ -30,67 +55,55 @@ function AuthContent() {
     const providerType = searchParams.get('providerType');
 
     if (id && nickname && profileImage && isNew && providerType) {
-      const userInfo = {
+      return {
         id,
         nickname: decodeURIComponent(nickname),
         profileImage: decodeURIComponent(profileImage),
         isNew: isNew === 'true',
         providerType,
       };
-      return userInfo;
     }
     return null;
   }, [searchParams]);
 
   useEffect(() => {
-    const errorParam = searchParams.get('error_message');
-    if (errorParam) setError(decodeURIComponent(errorParam));
+    const error = searchParams.get('erroror_message');
+    if (error) setError(decodeURIComponent(error));
   }, [searchParams]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    const userInfo = extractUserInfo();
+    if (!userInfo) return;
+
+    setUserInfo(userInfo);
+
+    // URL 쿼리 제거
+    const url = new URL(window.location.href);
+    url.search = '';
+    window.history.replaceState({}, '', url.toString());
+
+    // 먼저 홈으로 이동
+    router.replace(PAGE_ROUTES.HOME);
+
+    // 토큰은 백그라운드로 시도 (실패해도 화면은 이미 /home)
     (async () => {
       try {
-        const userInfo = extractUserInfo();
         const currentAccessToken = getAccessToken();
-
-        console.log('🔍 Auth 상태 확인:', {
-          userInfo: !!userInfo,
-          currentAccessToken: !!currentAccessToken,
-          shouldRefresh: !!(userInfo && !currentAccessToken),
-        });
-
-        // 사용자 정보가 있고 accessToken이 없을 때만 refresh 요청
-        if (userInfo && !currentAccessToken) {
-          console.log('🔄 Refresh 요청 시작...');
+        if (!currentAccessToken) {
           const { accessToken } = await requestAccessToken();
-          if (accessToken) {
-            console.log('✅ AccessToken 발급 완료');
-            setAccessToken(accessToken);
-          } else {
-            console.log('❌ AccessToken 발급 실패');
-          }
-        } else {
-          console.log('⏭️ Refresh 요청 건너뜀:', {
-            reason: !userInfo ? '사용자 정보 없음' : '이미 accessToken 있음',
-          });
+          if (accessToken) setAccessToken(accessToken);
         }
-
-        // 사용자 정보가 있으면 항상 저장하고 URL 정리
-        if (userInfo) {
-          setUserInfo(userInfo);
-          const url = new URL(window.location.href);
-          url.search = '';
-          window.history.replaceState({}, '', url.toString());
-        }
-      } catch (error) {
-        console.error('Auth 처리 중 에러:', error);
+      } catch (e) {
+        console.error('⚠️ AccessToken 갱신 실패(무시하고 진행):', e);
       }
     })();
-  }, [extractUserInfo]);
+  }, [extractUserInfo, router]);
+
+  // ✅ 깜빡임 방지: 콜백 파라미터가 보이면 렌더 스킵
+  if (hasAuthParams) return null;
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-[#090318] to-[#404DDC00] relative">
-      {/* 배경 ellipse 이미지 */}
       <div className="absolute inset-0 opacity-70">
         <Image
           src={EllipseBg}
@@ -100,7 +113,6 @@ function AuthContent() {
         />
       </div>
 
-      {/* 콘텐츠 영역 */}
       <div className="relative z-10">
         <div className="mb-[5rem]">
           <div className="flex justify-center">
@@ -120,10 +132,9 @@ function AuthContent() {
 
         <div className="space-y-4">
           <form method="POST" action={KAKAO_LOGIN_INITIATE_URL}>
-            <input type="hidden" name="redirectUri" value="/home" />
+            <input type="hidden" name="redirectUri" value={redirectUri} />
             <KakaoLoginButton />
           </form>
-
           <AppleLoginButton />
         </div>
       </div>
