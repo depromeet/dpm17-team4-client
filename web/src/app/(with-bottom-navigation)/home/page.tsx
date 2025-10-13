@@ -2,8 +2,9 @@
 
 import { Bell } from 'lucide-react';
 import Image from 'next/image';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense, useCallback, useEffect } from 'react';
+import toast from 'react-hot-toast';
 import {
   getAccessToken,
   requestAccessToken,
@@ -20,6 +21,7 @@ import { RecordSection } from './_components/ui';
 function HomeContent() {
   const { navHeight } = useNavigationContext();
   const searchParams = useSearchParams();
+  const router = useRouter();
 
   const extractUserInfo = useCallback((): UserInfo | null => {
     const id = searchParams.get('id');
@@ -70,11 +72,21 @@ function HomeContent() {
           url.search = '';
           window.history.replaceState({}, '', url.toString());
         }
+        if (searchParams.get('toast-defecation')) {
+          toast.success('새로운 배변 기록이 등록되었어요!');
+        }
+        if (searchParams.get('toast-lifestyle')) {
+          toast.success('새로운 생활 기록이 등록되었어요!');
+        }
+        if (userInfo || searchParams.get('toast-defecation') || searchParams.get('toast-lifestyle')) {
+          router.replace('/home', { scroll: false });
+        }
       } catch (error) {
         console.error('Home Auth 처리 중 에러:', error);
       }
     })();
   }, [extractUserInfo]);
+
   const { userInfo: savedUserInfo } = useUserInfo();
 
   return (
