@@ -44,6 +44,31 @@ export const TIME_LABEL_MAP: Record<MealTime, string> = {
   SNACK: '간식',
 };
 
+export const TIME_COLOR_MAP: Record<
+  MealTime,
+  {
+    bg: string;
+    hover: string;
+  }
+> = {
+  BREAKFAST: {
+    bg: 'bg-yellow-600',
+    hover: 'hover:bg-yellow-500',
+  },
+  LUNCH: {
+    bg: 'bg-green-600',
+    hover: 'hover:bg-green-500',
+  },
+  DINNER: {
+    bg: 'bg-blue-600',
+    hover: 'hover:bg-blue-500',
+  },
+  SNACK: {
+    bg: 'bg-red-600',
+    hover: 'hover:bg-red-500',
+  },
+};
+
 export const STRESS_LEVELS: {
   id: StressLevel;
   range: string;
@@ -51,27 +76,27 @@ export const STRESS_LEVELS: {
 }[] = [
   {
     id: 'VERY_LOW',
-    range: '0~20',
+    range: '아예 없음',
     imageUrl: stressVeryLow,
   },
   {
     id: 'LOW',
-    range: '21~40',
+    range: '조금 있음',
     imageUrl: stressLow,
   },
   {
     id: 'MEDIUM',
-    range: '41~60',
+    range: '적당함',
     imageUrl: stressMedium,
   },
   {
     id: 'HIGH',
-    range: '61~80',
+    range: '조금 심함',
     imageUrl: stressHigh,
   },
   {
     id: 'VERY_HIGH',
-    range: '81~100',
+    range: '매우 심함',
     imageUrl: stressVeryHigh,
   },
 ];

@@ -12,7 +12,9 @@ export default function DefecationLayout({
 }) {
   return (
     <DefecationProvider>
-      <Navigator title="배변 기록" />
+      <Navigator>
+        <Navigator.Center>배변 기록</Navigator.Center>
+      </Navigator>
       {children}
       <DefecationSubmit />
     </DefecationProvider>

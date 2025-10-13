@@ -4,6 +4,7 @@ import { useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useState } from 'react';
 import { useActivityRecordQuery } from '@/hooks/queries';
 import { FoodListContainer } from './_components/FoodListContainer';
+import { LifeStyleNavigator } from './_components/LifeStyleNavigator';
 import { LifeStyleSubmit } from './_components/LifeStyleSubmit';
 import { RecordDate } from './_components/RecordDate';
 import { StressForm } from './_components/StressForm';
@@ -57,6 +58,11 @@ function LifestylePageContent() {
       }));
 
       setFoods(existingFoods);
+    } else {
+      setExistingRecordId(null);
+      setWater(0);
+      setStress('');
+      setFoods([{ id: -1, foodId: -1, name: '', mealTime: '' }]);
     }
   }, [existingData]);
 
@@ -74,6 +80,8 @@ function LifestylePageContent() {
 
   return (
     <div className="min-h-screen bg-gray-900">
+      <LifeStyleNavigator existingRecordId={existingRecordId} />
+      <div className="h-[56px]" />
       <Suspense
         fallback={
           <div className="px-[4.78rem] py-[1.25rem] text-h3 text-white text-center">
