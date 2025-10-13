@@ -1,11 +1,11 @@
 'use client';
 
-import { useEffect, type ReactNode } from 'react';
+import type { ReactNode } from 'react';
+import { useFormContext } from 'react-hook-form';
 import { ChevronThinIcon } from '@/components';
 import { cn } from '@/utils/utils-cn';
-import { useFormContext } from 'react-hook-form';
-import { type DefecationFormValues } from '../../schemas';
 import { DEFECATION_TRY } from '../../constants';
+import type { DefecationFormValues } from '../../schemas';
 
 interface CollapsibleToggleProps {
   id: string;
@@ -26,20 +26,22 @@ export function CollapsibleToggle({
   isOpen,
   onToggle,
 }: CollapsibleToggleProps) {
-  const {watch} = useFormContext<DefecationFormValues>();
+  const { watch } = useFormContext<DefecationFormValues>();
   const selectedTry = watch('selectedTry');
 
   const handleToggle = () => {
     if (selectedTry === DEFECATION_TRY.DID_POO) {
       onToggle();
     } else {
-      if(id !== 'COLOR' && id !== 'SHAPE') {
+      if (id !== 'COLOR' && id !== 'SHAPE') {
         onToggle();
       }
     }
   };
 
-  const isDisabled = selectedTry === DEFECATION_TRY.DID_NOT_POO && (id === 'COLOR' || id === 'SHAPE');
+  const isDisabled =
+    selectedTry === DEFECATION_TRY.DID_NOT_POO &&
+    (id === 'COLOR' || id === 'SHAPE');
 
   return (
     <div
@@ -56,7 +58,11 @@ export function CollapsibleToggle({
         aria-expanded={isOpen}
         aria-controls={`collapsible-content-${id}`}
       >
-        <p className={`text-button-1 text-white ${isDisabled ? 'opacity-30' : ''}`}>{trigger}</p>
+        <p
+          className={`text-button-1 text-white ${isDisabled ? 'opacity-30' : ''}`}
+        >
+          {trigger}
+        </p>
         <div className="flex items-center justify-center gap-3.5">
           {previewr}
           <ChevronThinIcon

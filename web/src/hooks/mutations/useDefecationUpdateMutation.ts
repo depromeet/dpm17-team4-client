@@ -1,11 +1,12 @@
 import { useMutation } from '@tanstack/react-query';
 import { defecationApi } from '@/apis/defecationApi';
 import type {
-  PostDefecationDataRequestDto,
   DefecationDataResponseDto,
+  PostDefecationDataRequestDto,
 } from '@/types/dto/defecation.dto';
 
-interface CreateDefecationUpdateMutationParams extends PostDefecationDataRequestDto {
+interface CreateDefecationUpdateMutationParams
+  extends PostDefecationDataRequestDto {
   toiletRecordId: number;
   onSuccess?: () => void;
   onError?: (error: Error) => void;
@@ -18,8 +19,7 @@ export const useDefecationUpdateMutation = () => {
     CreateDefecationUpdateMutationParams
   >({
     mutationFn: async ({ toiletRecordId, ...data }) => {
-      const { onSuccess, onError, ...defecationData } = data;
-      return defecationApi.updateDefecationData(toiletRecordId, defecationData);
+      return defecationApi.updateDefecationData(toiletRecordId, { ...data });
     },
     onSuccess: (_data, variables) => {
       if (variables.onSuccess) {

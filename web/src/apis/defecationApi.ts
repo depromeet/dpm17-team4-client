@@ -1,8 +1,8 @@
 import { API_ENDPOINTS } from '@/constants';
 import apiClient from '@/lib/api-client';
 import type {
+  DefecationDataResponseDto,
   PostDefecationDataRequestDto,
-  DefecationDataResponseDto
 } from '@/types/dto/defecation.dto';
 
 export const defecationApi = {
@@ -21,14 +21,17 @@ export const defecationApi = {
     return response.data;
   },
 
-  updateDefecationData: async (toiletRecordId: number, data: PostDefecationDataRequestDto) => {
+  updateDefecationData: async (
+    toiletRecordId: number,
+    data: PostDefecationDataRequestDto
+  ) => {
     const response = await apiClient.patch<DefecationDataResponseDto>(
       `${API_ENDPOINTS.DEFECATION.BASE}/${toiletRecordId}`,
       data
     );
     return response.data;
   },
-  
+
   deleteDefecationData: async (toiletRecordId: number) => {
     const response = await apiClient.delete<DefecationDataResponseDto>(
       `${API_ENDPOINTS.DEFECATION.BASE}/${toiletRecordId}`

@@ -180,7 +180,7 @@ export const DefecationBottomSheet = ({
             );
           })}
         </div>
-        <div>
+        <div className="pb-10">
           <button
             type="button"
             onClick={() => {

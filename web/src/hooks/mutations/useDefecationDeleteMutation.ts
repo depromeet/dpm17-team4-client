@@ -1,11 +1,12 @@
 import { useMutation } from '@tanstack/react-query';
 import { defecationApi } from '@/apis/defecationApi';
 import type {
-  PostDefecationDataRequestDto,
   DefecationDataResponseDto,
+  PostDefecationDataRequestDto,
 } from '@/types/dto/defecation.dto';
 
-interface CreateDefecationDeleteMutationParams extends PostDefecationDataRequestDto {
+interface CreateDefecationDeleteMutationParams
+  extends PostDefecationDataRequestDto {
   toiletRecordId: number;
   onSuccess?: () => void;
   onError?: (error: Error) => void;
@@ -17,7 +18,7 @@ export const useDefecationDeleteMutation = () => {
     Error,
     CreateDefecationDeleteMutationParams
   >({
-      mutationFn: async ({ toiletRecordId }) => {
+    mutationFn: async ({ toiletRecordId }) => {
       return defecationApi.deleteDefecationData(toiletRecordId);
     },
     onSuccess: (_data, variables) => {

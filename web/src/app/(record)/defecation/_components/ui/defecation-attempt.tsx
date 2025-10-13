@@ -16,7 +16,8 @@ export const DefecationAttempt = ({
   onOpenColorSection,
   onCloseColorSection,
 }: DefecationAttemptProps) => {
-  const { control, setValue, watch, resetField } = useFormContext<DefecationFormValues>();
+  const { control, setValue, watch, resetField } =
+    useFormContext<DefecationFormValues>();
   const selectedTry = watch('selectedTry');
 
   const handleClick = (value: string, field: FieldValues) => {
@@ -26,7 +27,7 @@ export const DefecationAttempt = ({
 
     // DEFECATION_TRY 버튼을 선택하면 다음 폼(COLOR 섹션)으로 스크롤하고 열기
     if (newValue) {
-      if(newValue === DEFECATION_TRY.DID_NOT_POO) {
+      if (newValue === DEFECATION_TRY.DID_NOT_POO) {
         resetField('selectedColor');
         resetField('selectedShape');
         resetField('selectedPain');
