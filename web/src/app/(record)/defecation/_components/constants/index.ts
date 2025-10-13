@@ -42,5 +42,10 @@ export const DEFECATION_TIME_TAKEN_KEYS = {
 } as const;
 
 export const SCROLL_DELAY = 100;
-
 export const HOUR = 24;
+
+export const FIXED_WEEKS = 5;
+export const DAYS_PER_WEEK = 7;
+export const TOTAL_DAYS = FIXED_WEEKS * DAYS_PER_WEEK;
+
+export const DAYS_OF_WEEK = ['일', '월', '화', '수', '목', '금', '토'] as const;
