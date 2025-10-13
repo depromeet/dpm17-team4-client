@@ -29,7 +29,7 @@ const KAKAO_LOGIN_INITIATE_URL = `${API_BASE}${API_ENDPOINTS.AUTH.KAKAO_LOGIN}`;
 function AuthContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [error, setErroror] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const redirectUri = useMemo(() => {
     if (typeof window === 'undefined') return '';
@@ -68,7 +68,7 @@ function AuthContent() {
 
   useEffect(() => {
     const error = searchParams.get('erroror_message');
-    if (error) setErroror(decodeURIComponent(error));
+    if (error) setError(decodeURIComponent(error));
   }, [searchParams]);
 
   useLayoutEffect(() => {
