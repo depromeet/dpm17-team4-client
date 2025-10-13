@@ -70,7 +70,7 @@ export const LifeStyleSubmit = ({
         },
         {
           onSuccess: () => {
-            router.push('/home');
+            router.push('/home?toast-lifestyle=true');
           },
           onError: (error) => {
             console.error('수정 실패:', error);
@@ -82,7 +82,7 @@ export const LifeStyleSubmit = ({
       createMutation({
         ...data,
         onSuccess: () => {
-          router.push('/home');
+          router.push('/home?toast-lifestyle=true');
         },
         onError: (error) => {
           console.error('저장 실패:', error);

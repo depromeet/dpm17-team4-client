@@ -11,11 +11,11 @@ export default function DefecationCompletePage() {
   const router = useRouter();
 
   const handleGoHome = () => {
-    router.push('/home');
+    router.push('/home?toast-defecation=true');
   };
 
   const handleClose = () => {
-    router.push('/home');
+    router.push('/home?toast-defecation=true');
   };
 
   return (
