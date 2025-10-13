@@ -1,6 +1,4 @@
-import { useRouter } from 'next/navigation';
 import { Navigator } from '@/components';
-import { useActivityRecordDeleteMutation } from '@/hooks/mutations';
 
 interface LifeStyleNavigatorProps {
   existingRecordId: number | null;
