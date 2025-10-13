@@ -5,4 +5,5 @@ export * from './ChevronThin';
 export * from './Delete';
 export * from './Home';
 export * from './Report';
+export * from './SpeechBubble';
 export * from './User';
