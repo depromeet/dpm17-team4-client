@@ -47,7 +47,7 @@ const NavigatorComponent = ({ children, className = '' }: NavigatorProps) => {
     <div
       className={`fixed top-0 left-0 w-full h-[56px] z-10 bg-gray-900 text-white p-4 flex shrink-0 ${className}`}
     >
-      <ArrowIcon type="left" className="w-6 h-6" onClick={router.back} />
+      <ArrowIcon type="left" className="w-6 h-6 absolute left-4 top-1/2 -translate-y-1/2 z-10" onClick={router.back} />
       <div className="flex-1 flex justify-center items-center">{children}</div>
     </div>
   );
