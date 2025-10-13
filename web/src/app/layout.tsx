@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
+import { Toaster } from 'react-hot-toast';
 import QueryProvider from '@/providers/query-provider';
 
 const geistSans = Geist({
@@ -38,6 +39,32 @@ export default function RootLayout({
           {children}
           {/* biome-ignore lint/correctness/useUniqueElementIds: <This is a global portal root> */}
           <div id="modal-root"></div>
+          <Toaster
+          position='bottom-center'
+            containerStyle={{ bottom: '19.125rem' }}
+            toastOptions={{
+              className: '',
+              style: {
+                display: 'inline-flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                gap: '0.5rem',
+                flexShrink: 0,
+                color:'white',
+                height: '2.75rem',
+                padding: '0.75rem 1.125rem 0.75rem 1rem',
+                backgroundColor: '#3C3C3C80',
+                borderRadius:'0.625rem',
+              },
+              success:{
+                iconTheme:{
+                  primary:'#02AF6A',
+                  secondary:"white"
+                }
+              }
+            }}
+            
+          />
         </body>
       </html>
     </QueryProvider>
