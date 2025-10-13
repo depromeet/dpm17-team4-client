@@ -1,8 +1,11 @@
 'use client';
 
-import type { ReactNode } from 'react';
+import { useEffect, type ReactNode } from 'react';
 import { ChevronThinIcon } from '@/components';
 import { cn } from '@/utils/utils-cn';
+import { useFormContext } from 'react-hook-form';
+import { type DefecationFormValues } from '../../schemas';
+import { DEFECATION_TRY } from '../../constants';
 
 interface CollapsibleToggleProps {
   id: string;
@@ -23,6 +26,21 @@ export function CollapsibleToggle({
   isOpen,
   onToggle,
 }: CollapsibleToggleProps) {
+  const {watch} = useFormContext<DefecationFormValues>();
+  const selectedTry = watch('selectedTry');
+
+  const handleToggle = () => {
+    if (selectedTry === DEFECATION_TRY.DID_POO) {
+      onToggle();
+    } else {
+      if(id !== 'COLOR' && id !== 'SHAPE') {
+        onToggle();
+      }
+    }
+  };
+
+  const isDisabled = selectedTry === DEFECATION_TRY.DID_NOT_POO && (id === 'COLOR' || id === 'SHAPE');
+
   return (
     <div
       className={cn(
@@ -33,18 +51,19 @@ export function CollapsibleToggle({
       <button
         id={id}
         type="button"
-        onClick={onToggle}
+        onClick={handleToggle}
         className={`flex w-full cursor-pointer items-center justify-between transition-all duration-400 ease-in-out ${isOpen ? 'pt-[25px]' : 'py-[25px]'}`}
         aria-expanded={isOpen}
         aria-controls={`collapsible-content-${id}`}
       >
-        {trigger}
+        <p className={`text-button-1 text-white ${isDisabled ? 'opacity-30' : ''}`}>{trigger}</p>
         <div className="flex items-center justify-center gap-3.5">
           {previewr}
           <ChevronThinIcon
             type={isOpen ? 'up' : 'down'}
             className={cn(
-              'will-change-transform transition-transform duration-300 text-white'
+              'will-change-transform transition-transform duration-300 text-white',
+              isDisabled ? 'opacity-30' : ''
             )}
           />
         </div>

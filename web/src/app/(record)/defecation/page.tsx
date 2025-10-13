@@ -16,6 +16,10 @@ export default function DefecationPage() {
     defecationDetailRef.current?.openColorSection();
   };
 
+  const handleCloseColorSection = () => {
+    defecationDetailRef.current?.closeColorSection();
+  };
+
   return (
     <div className="min-h-screen bg-gray-900 text-white px-4 pt-17 pb-[156px] select-none">
       <div className="text-start space-y-6">
@@ -26,6 +30,7 @@ export default function DefecationPage() {
         <DefecationAttempt
           colorRef={colorRef}
           onOpenColorSection={handleOpenColorSection}
+          onCloseColorSection={handleCloseColorSection}
         />
 
         {/* 배변 내용 상세 기록 영역 */}
