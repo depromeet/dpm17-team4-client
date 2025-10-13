@@ -34,9 +34,6 @@ function LifestylePageContent() {
     if (confirm('정말로 삭제하시겠습니까?')) {
       try {
         await deleteMutation.mutateAsync({ id: existingRecordId });
-        await queryClient.invalidateQueries({
-          queryKey: [QUERY_KEYS.ACTIVITY_RECORDS, dateString],
-        });
         router.push('/home');
       } catch (error) {
         console.error('삭제 중 오류가 발생했습니다:', error);
