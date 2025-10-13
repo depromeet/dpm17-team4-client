@@ -3,10 +3,8 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useState } from 'react';
 import { Modal, ModalContent } from '@/components';
-import { QUERY_KEYS } from '@/constants';
 import { useActivityRecordDeleteMutation } from '@/hooks';
 import { useActivityRecordQuery } from '@/hooks/queries';
-import { queryClient } from '@/queryClient';
 import { FoodListContainer } from './_components/FoodListContainer';
 import { LifeStyleNavigator } from './_components/LifeStyleNavigator';
 import { LifeStyleSubmit } from './_components/LifeStyleSubmit';
