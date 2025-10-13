@@ -40,7 +40,7 @@ export default function RootLayout({
           {/* biome-ignore lint/correctness/useUniqueElementIds: <This is a global portal root> */}
           <div id="modal-root"></div>
           <Toaster
-          position='bottom-center'
+            position="bottom-center"
             containerStyle={{ bottom: '19.125rem' }}
             toastOptions={{
               className: '',
@@ -50,20 +50,19 @@ export default function RootLayout({
                 alignItems: 'center',
                 gap: '0.5rem',
                 flexShrink: 0,
-                color:'white',
+                color: 'white',
                 height: '2.75rem',
                 padding: '0.75rem 1.125rem 0.75rem 1rem',
                 backgroundColor: '#3C3C3C80',
-                borderRadius:'0.625rem',
+                borderRadius: '0.625rem',
               },
-              success:{
-                iconTheme:{
-                  primary:'#02AF6A',
-                  secondary:"white"
-                }
-              }
+              success: {
+                iconTheme: {
+                  primary: '#02AF6A',
+                  secondary: 'white',
+                },
+              },
             }}
-            
           />
         </body>
       </html>

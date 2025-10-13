@@ -78,7 +78,11 @@ function HomeContent() {
         if (searchParams.get('toast-lifestyle')) {
           toast.success('새로운 생활 기록이 등록되었어요!');
         }
-        if (userInfo || searchParams.get('toast-defecation') || searchParams.get('toast-lifestyle')) {
+        if (
+          userInfo ||
+          searchParams.get('toast-defecation') ||
+          searchParams.get('toast-lifestyle')
+        ) {
           router.replace('/home', { scroll: false });
         }
       } catch (error) {
