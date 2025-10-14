@@ -15,7 +15,7 @@ const KakaoLoginButton = () => {
       >
         <Image src={kakaoSymbol} alt="" width={24} height={24} aria-hidden />
         <span className="text-button-2 font-semibold flex-1 justify-center">
-          카카오톡으로 시작하기
+          카카오톡으로 로그인
         </span>
       </button>
     </>
