@@ -40,7 +40,7 @@ export default function DailyReportPage() {
 
   // TODO(seonghyun): 카드 데이터 - API 응답에서 생성
   const cards: Card[] =
-    reportData && reportData.poo && reportData.poo.items.length > 0
+    reportData?.poo && reportData.poo.items.length > 0
       ? [
           {
             type: 'character',
@@ -272,14 +272,17 @@ export default function DailyReportPage() {
                             <h2
                               className="font-bold text-lg mb-4"
                               style={{
-                                color: reportData.poo.summary.backgroundColors[0],
+                                color:
+                                  reportData.poo.summary.backgroundColors[0],
                               }}
                             >
                               {card.type === 'text' ? card.content.date : ''}
                             </h2>
 
                             <p className="text-gray-400 text-body3-m mb-6 leading-relaxed">
-                              {card.type === 'text' ? card.content.advisory : ''}
+                              {card.type === 'text'
+                                ? card.content.advisory
+                                : ''}
                             </p>
 
                             <div className="space-y-2">
