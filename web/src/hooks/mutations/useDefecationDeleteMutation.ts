@@ -1,8 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { defecationApi } from '@/apis/defecationApi';
-import type {
-  DefecationDataResponseDto,
-} from '@/types/dto/defecation.dto';
+import type { DefecationDataResponseDto } from '@/types/dto/defecation.dto';
 
 interface DeleteDefecationMutationParams {
   toiletRecordId: number;

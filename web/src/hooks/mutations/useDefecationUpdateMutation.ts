@@ -5,8 +5,7 @@ import type {
   PostDefecationDataRequestDto,
 } from '@/types/dto/defecation.dto';
 
-interface UpdateDefecationMutationParams
-  extends PostDefecationDataRequestDto {
+interface UpdateDefecationMutationParams extends PostDefecationDataRequestDto {
   toiletRecordId: number;
   onSuccess?: () => void;
   onError?: (error: Error) => void;

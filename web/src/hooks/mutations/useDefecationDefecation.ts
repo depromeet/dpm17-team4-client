@@ -17,7 +17,7 @@ export const useDefecationMutation = () => {
     CreateDefecationMutationParams
   >({
     mutationFn: async (data) => {
-      return defecationApi.postDefecationData({...data});
+      return defecationApi.postDefecationData({ ...data });
     },
     onSuccess: (_data, variables) => {
       if (variables.onSuccess) {
