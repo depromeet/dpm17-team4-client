@@ -353,7 +353,7 @@ export default function DailyReportPage() {
               mode="defecation"
               nullIcon={poop}
               title="배변"
-              descrption="배변 점수는 배변 기록이 있어야 확인할 수 있어요."
+              description="배변 점수는 배변 기록이 있어야 확인할 수 있어요."
             />
           )}
           {reportData.food.items.length > 0 ? (
@@ -369,10 +369,10 @@ export default function DailyReportPage() {
             </div>
           ) : (
             <NullReport
-              mode="lifstyle"
+              mode="lifestyle"
               nullIcon={emojiOpenMouse}
               title="생활"
-              descrption="생활을 기록하면 더 자세한 분석을 얻을 수 있어요"
+              description="생활을 기록하면 더 자세한 분석을 얻을 수 있어요"
             />
           )}
         </main>

@@ -7,14 +7,14 @@ import { getTodayDate } from '@/utils/utils-date';
 interface NullReportProps {
   nullIcon: StaticImageData;
   title?: string;
-  descrption?: string;
-  mode: 'all' | 'defecation' | 'lifstyle';
+  description?: string;
+  mode: 'all' | 'defecation' | 'lifestyle';
 }
 
 export const NullReport = ({
   nullIcon,
   title = '',
-  descrption = '리포트는 기록이 있어야 확인할 수 있어요.',
+  description = '리포트는 기록이 있어야 확인할 수 있어요.',
   mode = 'all',
 }: NullReportProps) => {
   const router = useRouter();
@@ -27,7 +27,7 @@ export const NullReport = ({
     );
   };
   const getButtonText = (
-    currentMode: 'all' | 'defecation' | 'lifstyle',
+    currentMode: 'all' | 'defecation' | 'lifestyle',
     defaultTitle: string
   ) => {
     switch (currentMode) {
@@ -38,7 +38,7 @@ export const NullReport = ({
         };
       case 'defecation':
         return { single: `${defaultTitle} 기록하기`, target: 'defecation' };
-      case 'lifstyle':
+      case 'lifestyle':
         return { single: `${defaultTitle} 기록하기`, target: 'lifestyle' };
       default:
         return { single: '기록하기', target: 'lifestyle' };
@@ -68,7 +68,7 @@ export const NullReport = ({
         </div>
         <div className="mt-3">
           <h2 className="text-h3 text-center">{title} 기록이 없어요!</h2>
-          <p className="text-body3-m text-gray-400 text-center">{descrption}</p>
+          <p className="text-body3-m text-gray-400 text-center">{description}</p>
         </div>
 
         <div className="mt-8 flex justify-center gap-2">
