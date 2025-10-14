@@ -1,7 +1,9 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useState } from 'react';
+import { Modal, ModalContent } from '@/components';
+import { useActivityRecordDeleteMutation } from '@/hooks';
 import { useActivityRecordQuery } from '@/hooks/queries';
 import { FoodListContainer } from './_components/FoodListContainer';
 import { LifeStyleNavigator } from './_components/LifeStyleNavigator';
@@ -21,6 +23,28 @@ function LifestylePageContent() {
   const [stress, setStress] = useState<StressLevel | ''>('');
   const [existingRecordId, setExistingRecordId] = useState<number | null>(null);
 
+  const router = useRouter();
+  const deleteMutation = useActivityRecordDeleteMutation();
+
+  const handleDelete = async () => {
+    if (!existingRecordId) return;
+    try {
+      await deleteMutation.mutateAsync({ id: existingRecordId });
+      router.push('/home');
+    } catch (error) {
+      console.error('삭제 중 오류가 발생했습니다:', error);
+      alert('삭제 중 오류가 발생했습니다.');
+    }
+  };
+
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
   // 날짜 파라미터로부터 ISO 문자열 생성
   const getDateString = () => {
     const year = searchParams.get('year');
@@ -33,7 +57,7 @@ function LifestylePageContent() {
     return `${year}-${month.padStart(2, '0')}-${date.padStart(2, '0')}T00:00:00.000`;
   };
 
-  const dateString = getDateString();
+  const dateString = getDateString().slice(0, 10);
 
   const { data: existingData, isLoading } = useActivityRecordQuery(dateString);
 
@@ -79,42 +103,51 @@ function LifestylePageContent() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900">
-      <LifeStyleNavigator existingRecordId={existingRecordId} />
-      <div className="h-[56px]" />
-      <Suspense
-        fallback={
-          <div className="px-[4.78rem] py-[1.25rem] text-h3 text-white text-center">
-            로딩 중...
-          </div>
-        }
-      >
-        <RecordDate />
-      </Suspense>
-      <div className="h-[0.5rem] bg-gray-700" />
-      <div className="h-[1.25rem]" />
-      <FoodListContainer foods={foods} setFoods={setFoods} />
-      <div className="h-[1rem]" />
-      <WaterForm waterCups={water} setWaterCups={setWater} />
-      <div className="h-[1.75rem]" />
-      <StressForm selectedLevel={stress} setSelectedLevel={setStress} />
-      <div className="h-30" />
-      <Suspense
-        fallback={
-          <div className="px-[4.78rem] py-[1.25rem] text-h3 text-white text-center">
-            로딩 중...
-          </div>
-        }
-      >
-        <LifeStyleSubmit
-          foods={foods}
-          water={water}
-          stress={stress}
+    <>
+      <div className="min-h-screen bg-gray-900">
+        <LifeStyleNavigator
           existingRecordId={existingRecordId}
-          isLoading={isLoading}
+          onOpen={openModal}
+          isDeleting={deleteMutation.isPending}
         />
-      </Suspense>
-    </div>
+        <div className="h-[56px]" />
+        <Suspense
+          fallback={
+            <div className="px-[4.78rem] py-[1.25rem] text-h3 text-white text-center">
+              로딩 중...
+            </div>
+          }
+        >
+          <RecordDate />
+        </Suspense>
+        <div className="h-[0.5rem] bg-gray-700" />
+        <div className="h-[1.25rem]" />
+        <FoodListContainer foods={foods} setFoods={setFoods} />
+        <div className="h-[1rem]" />
+        <WaterForm waterCups={water} setWaterCups={setWater} />
+        <div className="h-[1.75rem]" />
+        <StressForm selectedLevel={stress} setSelectedLevel={setStress} />
+        <div className="h-30" />
+        <Suspense
+          fallback={
+            <div className="px-[4.78rem] py-[1.25rem] text-h3 text-white text-center">
+              로딩 중...
+            </div>
+          }
+        >
+          <LifeStyleSubmit
+            foods={foods}
+            water={water}
+            stress={stress}
+            existingRecordId={existingRecordId}
+            isLoading={isLoading}
+          />
+        </Suspense>
+      </div>
+      <Modal isOpen={isModalOpen} onClose={closeModal}>
+        <ModalContent onClose={closeModal} onDelete={handleDelete} />
+      </Modal>
+    </>
   );
 }
 
