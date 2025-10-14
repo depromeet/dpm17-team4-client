@@ -68,7 +68,9 @@ export const NullReport = ({
         </div>
         <div className="mt-3">
           <h2 className="text-h3 text-center">{title} 기록이 없어요!</h2>
-          <p className="text-body3-m text-gray-400 text-center">{description}</p>
+          <p className="text-body3-m text-gray-400 text-center">
+            {description}
+          </p>
         </div>
 
         <div className="mt-8 flex justify-center gap-2">
