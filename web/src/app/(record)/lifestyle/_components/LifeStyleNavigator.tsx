@@ -15,18 +15,14 @@ export const LifeStyleNavigator = ({
 
   const handleDelete = async () => {
     if (!existingRecordId) return;
-
-    if (confirm('정말로 삭제하시겠습니까?')) {
-      try {
-        await deleteMutation.mutateAsync({ id: existingRecordId });
-        router.push('/home');
-      } catch (error) {
-        console.error('삭제 중 오류가 발생했습니다:', error);
-        alert('삭제 중 오류가 발생했습니다.');
-      }
+    try {
+      await deleteMutation.mutateAsync({ id: existingRecordId });
+      router.push('/home');
+    } catch (error) {
+      console.error('삭제 중 오류가 발생했습니다:', error);
+      alert('삭제 중 오류가 발생했습니다.');
     }
   };
-
   return (
     <Navigator>
       <Navigator.Center>생활 기록</Navigator.Center>
