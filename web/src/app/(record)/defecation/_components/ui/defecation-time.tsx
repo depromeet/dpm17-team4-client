@@ -67,7 +67,7 @@ export const DefecationTime = () => {
             <DefecationBottomSheet
               isOpen={isOpen}
               selectedHour={field.value.getHours().toString().padStart(2, '0')}
-              selectedDate={field.value}
+              selectedDate={currentDate}
               onClose={setIsOpen}
               handleDateChange={handleDateChange}
               handleHourChange={handleHourChange}

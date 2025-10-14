@@ -6,3 +6,6 @@ export const DATE_LABELS = {
 export const DATE_LIMITS = {
   MAX_PREV_DAYS: 7,
 } as const;
+export const FIXED_WEEKS = 5;
+export const DAYS_PER_WEEK = 7;
+export const TOTAL_DAYS = FIXED_WEEKS * DAYS_PER_WEEK;

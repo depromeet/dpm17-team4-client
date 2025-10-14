@@ -23,8 +23,7 @@ import {
 } from 'react';
 import { ChevronIcon } from '@/components';
 import { BottomSheet } from '@/components/BottomSheet';
-import { DAYS_OF_WEEK } from '@/constants';
-import { TOTAL_DAYS } from '../constants';
+import { DAYS_OF_WEEK, TOTAL_DAYS } from '@/constants';
 import { useHourOptions } from '../utils';
 
 interface DefecationBottomSheetProps {

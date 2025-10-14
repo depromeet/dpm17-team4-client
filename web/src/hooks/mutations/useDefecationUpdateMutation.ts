@@ -5,7 +5,7 @@ import type {
   PostDefecationDataRequestDto,
 } from '@/types/dto/defecation.dto';
 
-interface CreateDefecationUpdateMutationParams
+interface UpdateDefecationMutationParams
   extends PostDefecationDataRequestDto {
   toiletRecordId: number;
   onSuccess?: () => void;
@@ -16,10 +16,10 @@ export const useDefecationUpdateMutation = () => {
   return useMutation<
     DefecationDataResponseDto,
     Error,
-    CreateDefecationUpdateMutationParams
+    UpdateDefecationMutationParams
   >({
     mutationFn: async ({ toiletRecordId, ...data }) => {
-      return defecationApi.updateDefecationData(toiletRecordId, { ...data });
+      return defecationApi.updateDefecationData(toiletRecordId, data);
     },
     onSuccess: (_data, variables) => {
       if (variables.onSuccess) {
