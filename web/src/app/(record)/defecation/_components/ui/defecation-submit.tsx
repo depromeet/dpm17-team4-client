@@ -3,13 +3,13 @@
 import { useRouter } from 'next/navigation';
 import { type FieldErrors, useFormContext } from 'react-hook-form';
 import { BottomBtnBar } from '@/components';
-import { useCreateDefecationMutation } from '@/hooks/mutations/useCreateDefecation';
+import { useDefecationMutation } from '@/hooks/mutations';
 import { DEFECATION_TIME_TAKEN_KEYS, DEFECATION_TRY } from '../constants';
 import type { DefecationFormValues } from '../schemas';
 
 export const DefecationSubmit = () => {
   const { handleSubmit } = useFormContext<DefecationFormValues>();
-  const { mutate: createDefecation } = useCreateDefecationMutation();
+  const { mutate: createDefecation } = useDefecationMutation();
   const router = useRouter();
 
   const onSubmit = (data: DefecationFormValues) => {
@@ -36,8 +36,8 @@ export const DefecationSubmit = () => {
       {
         occurredAt: data.selectedWhen.toISOString(),
         isSuccessful: data.selectedTry === DEFECATION_TRY.DID_POO,
-        color: data.selectedColor,
-        shape: data.selectedShape,
+        color: data.selectedColor || '',
+        shape: data.selectedShape || '',
         pain: data.selectedPain,
         duration: toiletDuration,
         note: data.selectedOptional || '',

@@ -5,6 +5,8 @@ export const QUERY_KEYS = {
 
   ACTIVITY_RECORDS: ['activity-records'],
 
+  DEFECATION: ['defecation'],
+
   FOODS: {
     SEARCH: (query: string, count: number) => ['foods', 'search', query, count],
   },

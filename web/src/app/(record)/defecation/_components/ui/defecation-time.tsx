@@ -5,13 +5,12 @@ import { Controller, useFormContext } from 'react-hook-form';
 import { ChevronIcon } from '@/components';
 import { cn } from '@/utils/utils-cn';
 import type { DefecationFormValues } from '../schemas';
-import { formatDate, useHourOptions } from '../utils';
+import { formatDate } from '../utils';
+import { DefecationBottomSheet } from './defecation-bottom-sheet';
 
 export const DefecationTime = () => {
   const { control } = useFormContext<DefecationFormValues>();
   const [isOpen, setIsOpen] = useState(false);
-
-  const hourOptions = useHourOptions();
 
   return (
     <Controller
@@ -65,45 +64,14 @@ export const DefecationTime = () => {
               />
             </button>
 
-            {isOpen && (
-              <div className="absolute z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 h-1/2 bg-[#17171C] border border-white rounded-lg p-4 flex flex-col gap-4">
-                <input
-                  type="date"
-                  className="bg-gray-700 text-white p-2 rounded"
-                  value={`${currentDate.getFullYear()}-${String(
-                    currentDate.getMonth() + 1
-                  ).padStart(2, '0')}-${String(currentDate.getDate()).padStart(
-                    2,
-                    '0'
-                  )}`}
-                  onChange={handleDateChange}
-                />
-                <div className="w-full flex items-center justify-start gap-2 overflow-x-auto">
-                  {hourOptions.map((option) => (
-                    <button
-                      type="button"
-                      key={option.id}
-                      className={cn(
-                        'flex items-center justify-center min-w-10 h-10 bg-[#454552] text-white rounded',
-                        currentDate.getHours() === parseInt(option.time, 10)
-                          ? 'bg-[#5170FF] text-white'
-                          : ''
-                      )}
-                      onClick={() => handleHourChange(option.time)}
-                    >
-                      {option.time}
-                    </button>
-                  ))}
-                </div>
-                <button
-                  type="button"
-                  className="mt-auto bg-blue-500 text-white rounded-lg p-2"
-                  onClick={() => setIsOpen(false)}
-                >
-                  확인
-                </button>
-              </div>
-            )}
+            <DefecationBottomSheet
+              isOpen={isOpen}
+              selectedHour={field.value.getHours().toString().padStart(2, '0')}
+              selectedDate={currentDate}
+              onClose={setIsOpen}
+              handleDateChange={handleDateChange}
+              handleHourChange={handleHourChange}
+            />
           </div>
         );
       }}

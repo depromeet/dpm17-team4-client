@@ -42,5 +42,4 @@ export const DEFECATION_TIME_TAKEN_KEYS = {
 } as const;
 
 export const SCROLL_DELAY = 100;
-
 export const HOUR = 24;

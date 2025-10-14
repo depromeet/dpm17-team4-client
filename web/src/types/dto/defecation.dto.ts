@@ -8,7 +8,7 @@ export interface PostDefecationDataRequestDto {
   note: string;
 }
 
-export interface PostDefecationDataResponseDto {
+export interface DefecationDataResponseDto {
   status: number;
   message: string;
   data: {

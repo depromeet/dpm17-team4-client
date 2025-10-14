@@ -20,6 +20,7 @@ interface DefecationDetailProps {
 
 export interface DefecationDetailRef {
   openColorSection: () => void;
+  closeColorSection: () => void;
 }
 
 export const DefecationDetail = forwardRef<
@@ -35,6 +36,9 @@ export const DefecationDetail = forwardRef<
     openColorSection: () => {
       setOpenId('COLOR');
       scrollToSection('COLOR');
+    },
+    closeColorSection: () => {
+      setOpenId(null);
     },
   }));
 
@@ -117,7 +121,7 @@ export const DefecationDetail = forwardRef<
               handleToggle(key as DefecationTryDetailKey);
             }}
             previewr={<SelectPreview currentKey={key} />}
-            trigger={<p className="text-button-1">{value}</p>}
+            trigger={value}
           >
             <div>{renderSelectSection(key as DefecationTryDetailKey)}</div>
           </CollapsibleToggle>
