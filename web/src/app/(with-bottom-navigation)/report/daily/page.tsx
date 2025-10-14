@@ -2,9 +2,13 @@
 
 import Image from 'next/image';
 import { useState } from 'react';
+import poop from '@/assets/home/poop.svg';
+import emojiOpenMouse from '@/assets/report/emoji_open_mouse.png';
+import newsPaper from '@/assets/report/newspaper.png';
 import { useReportQuery } from '@/hooks/queries/useReportQuery';
 import { DefecationScore } from './_components/DefecationScore';
 import { FoodReport } from './_components/FoodReport';
+import { NullReport } from './_components/NullReport';
 import { StressReport } from './_components/StressReport';
 import { Suggestions } from './_components/Suggestions';
 import { WaterReport } from './_components/WaterReport';
@@ -19,47 +23,6 @@ export default function DailyReportPage() {
 
   // API 호출로 데이터 가져오기
   const { data: reportData, isLoading, error } = useReportQuery();
-
-  // 로딩 상태 처리
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-black text-white flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
-          <p className="text-gray-400">리포트를 불러오는 중...</p>
-        </div>
-      </div>
-    );
-  }
-
-  // 에러 상태 처리
-  if (error) {
-    return (
-      <div className="min-h-screen bg-black text-white flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-red-400 mb-4">리포트를 불러오는데 실패했습니다.</p>
-          <button
-            type="button"
-            onClick={() => window.location.reload()}
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-          >
-            다시 시도
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  // 데이터가 없을 때 처리
-  if (!reportData) {
-    return (
-      <div className="min-h-screen bg-black text-white flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-gray-400">리포트 데이터가 없습니다.</p>
-        </div>
-      </div>
-    );
-  }
 
   // NOTE(seonghyun): 임시 - Suggestion 아이템의 이미지를 동적으로 생성
   // const getSuggestionIcon = (index: number) => {
@@ -76,37 +39,40 @@ export default function DailyReportPage() {
   //   };
 
   // TODO(seonghyun): 카드 데이터 - API 응답에서 생성
-  const cards: Card[] = [
-    {
-      type: 'character',
-      content: {
-        character: reportData.poo.summary.image,
-        badge: reportData.poo.summary.caption,
-        title: reportData.poo.summary.message,
-      },
-    },
-    ...reportData.poo.items.map((item, index) => ({
-      type: 'text' as const,
-      content: {
-        badge: String(index + 1).padStart(2, '0'),
-        date: new Date(item.occurredAt).toLocaleString('ko-KR', {
-          month: 'long',
-          day: 'numeric',
-          hour: 'numeric',
-          hour12: true,
-        }),
-        advisory: item.message,
-        tags: [
-          [
-            getColorLabel(item.color),
-            getShapeLabel(item.shape),
-            `${item.duration}분 이상 소요`,
-          ],
-          [`복통 정도 ${item.pain}%`, item.note],
-        ],
-      },
-    })),
-  ];
+  const cards: Card[] =
+    reportData && reportData.poo && reportData.poo.items.length > 0
+      ? [
+          {
+            type: 'character',
+            content: {
+              character: reportData.poo.summary.image,
+              badge: reportData.poo.summary.caption,
+              title: reportData.poo.summary.message,
+            },
+          },
+          ...reportData.poo.items.map((item, index) => ({
+            type: 'text' as const,
+            content: {
+              badge: String(index + 1).padStart(2, '0'),
+              date: new Date(item.occurredAt).toLocaleString('ko-KR', {
+                month: 'long',
+                day: 'numeric',
+                hour: 'numeric',
+                hour12: true,
+              }),
+              advisory: item.message,
+              tags: [
+                [
+                  getColorLabel(item.color),
+                  getShapeLabel(item.shape),
+                  `${item.duration}분 이상 소요`,
+                ],
+                [`복통 정도 ${item.pain}%`, item.note],
+              ],
+            },
+          })),
+        ]
+      : [];
 
   const handleSwipe = (direction: 'left' | 'right') => {
     if (direction === 'left') {
@@ -187,171 +153,226 @@ export default function DailyReportPage() {
         {/*  <ChevronRight className="w-5 h-5" />*/}
         {/*</button>*/}
       </div>
-
-      {/* 메인 콘텐츠 */}
-      <main className="px-4 pb-20">
-        {/* 캐러셀 컨테이너 */}
-        <div className="relative overflow-hidden w-full max-w-[400px] mx-auto">
-          <div
-            className="flex transition-transform duration-300 ease-out"
-            style={{
-              transform: `translateX(calc(50% - 125.5px - ${cardIndex * 251}px))`, // 중앙 정렬을 위한 오프셋 조정
-            }}
-            onTouchStart={handleTouchStart}
-            onTouchEnd={handleTouchEnd}
-          >
-            {cards.map((card, index) => (
-              <button
-                type="button"
-                key={`card-${card.type}-${index}`}
-                className="w-[251px] h-[328px] rounded-2xl text-center relative overflow-hidden flex-shrink-0 cursor-pointer transition-all duration-300"
-                style={{
-                  background:
-                    card.type === 'character'
-                      ? `linear-gradient(to bottom, ${reportData.poo.summary.backgroundColors[0]} 0%, ${reportData.poo.summary.backgroundColors[1]} 100%)`
-                      : '#ffffff',
-                  padding: '36px 12px',
-                  transform: `scale(${index === cardIndex ? 1 : 0.85})`,
-                  opacity: index === cardIndex ? 1 : 0.6,
-                }}
-                onClick={() => setCardIndex(index)}
-              >
-                <div className="relative z-10 h-full flex flex-col justify-center">
-                  {card.type === 'character' ? (
-                    <>
-                      {/* 캐릭터 이미지 */}
-                      <div className="w-[227px] h-[162px] mx-auto mb-4 relative">
-                        <Image
-                          src={card.content.character}
-                          alt="화가 난 대장 캐릭터"
-                          width={227}
-                          height={162}
-                          className="w-full h-full object-contain"
-                          priority
-                        />
-                      </div>
-
-                      <div
-                        className="text-white text-body4-m inline-block mb-2 w-fit mx-auto"
-                        style={{
-                          backgroundColor:
-                            reportData.poo.summary.backgroundColors[0],
-                          paddingTop: '6px',
-                          paddingRight: '16px',
-                          paddingBottom: '6px',
-                          paddingLeft: '16px',
-                          borderRadius: '40px',
-                        }}
-                      >
-                        {card.content.badge}
-                      </div>
-
-                      <h2 className="text-xl font-bold mb-2 text-white">
-                        {card.content.title}
-                      </h2>
-                    </>
-                  ) : (
-                    <>
-                      {/* 텍스트 카드 */}
-                      <div
-                        className="text-white mx-auto mb-4 w-8 h-8 flex items-center justify-center p-1.5"
-                        style={{
-                          backgroundColor:
-                            reportData.poo.summary.backgroundColors[0],
-                          borderRadius: '999px',
-                        }}
-                      >
-                        <span
-                          className="font-bold"
-                          style={{ fontSize: '11px' }}
-                        >
-                          {card.content.badge}
-                        </span>
-                      </div>
-
-                      <h2
-                        className="font-bold text-lg mb-4"
-                        style={{
-                          color: reportData.poo.summary.backgroundColors[0],
-                        }}
-                      >
-                        {card.type === 'text' ? card.content.date : ''}
-                      </h2>
-
-                      <p className="text-gray-400 text-body3-m mb-6 leading-relaxed">
-                        {card.type === 'text' ? card.content.advisory : ''}
-                      </p>
-
-                      <div className="space-y-2">
-                        {card.type === 'text' &&
-                          card.content.tags?.map(
-                            (row: string[], rowIndex: number) => (
-                              <div
-                                key={`tag-row-${row.join('-')}-${rowIndex}`}
-                                className="flex flex-wrap gap-2 justify-center"
-                              >
-                                {row.map((tag, _tagIndex) => (
-                                  <span
-                                    key={`tag-${tag}`}
-                                    className="text-body3-m"
-                                    style={{
-                                      paddingTop: '4px',
-                                      paddingRight: '12px',
-                                      paddingBottom: '4px',
-                                      paddingLeft: '12px',
-                                      borderRadius: '6px',
-                                      backgroundColor: '#A5A5A533',
-                                      color: '#707885',
-                                    }}
-                                  >
-                                    {tag}
-                                  </span>
-                                ))}
-                              </div>
-                            )
-                          )}
-                      </div>
-                    </>
-                  )}
-                </div>
-              </button>
-            ))}
+      {isLoading && (
+        // 로딩 상태 처리
+        <div className="flex items-center justify-center h-40">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
+            <p className="text-gray-400">리포트를 불러오는 중...</p>
           </div>
         </div>
+      )}
 
-        {/* 스와이프 인디케이터 */}
-        <div className="flex justify-center gap-2 my-3">
-          {cards.map((card, index) => (
-            <div
-              key={`indicator-${card.type}-${index}`}
-              className={`w-2 h-2 rounded-full transition-colors duration-200 ${
-                index === cardIndex ? 'bg-white' : 'bg-gray-500'
-              }`}
+      {error && (
+        // 에러 상태 처리
+        <div className="flex items-center justify-center h-40">
+          <div className="text-center">
+            <p className="text-red-400 mb-4">
+              리포트를 불러오는데 실패했습니다.
+            </p>
+            <button
+              type="button"
+              onClick={() => window.location.reload()}
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+            >
+              다시 시도
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* 모든 데이터 없을 떄 */}
+      {!isLoading && !error && !reportData && (
+        <NullReport mode="all" nullIcon={newsPaper} />
+      )}
+      {/* 메인 콘텐츠 */}
+      {reportData && (
+        <main className="px-4 pb-20">
+          {reportData && cards.length > 0 ? (
+            <>
+              {/* 캐러셀 컨테이너 */}
+              <div className="relative overflow-hidden w-full max-w-[400px] mx-auto">
+                <div
+                  className="flex transition-transform duration-300 ease-out"
+                  style={{
+                    transform: `translateX(calc(50% - 125.5px - ${cardIndex * 251}px))`, // 중앙 정렬을 위한 오프셋 조정
+                  }}
+                  onTouchStart={handleTouchStart}
+                  onTouchEnd={handleTouchEnd}
+                >
+                  {cards.map((card, index) => (
+                    <button
+                      type="button"
+                      key={`card-${card.type}-${index}`}
+                      className="w-[251px] h-[328px] rounded-2xl text-center relative overflow-hidden flex-shrink-0 cursor-pointer transition-all duration-300"
+                      style={{
+                        background:
+                          card.type === 'character'
+                            ? `linear-gradient(to bottom, ${reportData.poo.summary.backgroundColors[0]} 0%, ${reportData.poo.summary.backgroundColors[1]} 100%)`
+                            : '#ffffff',
+                        padding: '36px 12px',
+                        transform: `scale(${index === cardIndex ? 1 : 0.85})`,
+                        opacity: index === cardIndex ? 1 : 0.6,
+                      }}
+                      onClick={() => setCardIndex(index)}
+                    >
+                      <div className="relative z-10 h-full flex flex-col justify-center">
+                        {card.type === 'character' ? (
+                          <>
+                            {/* 캐릭터 이미지 */}
+                            <div className="w-[227px] h-[162px] mx-auto mb-4 relative">
+                              <Image
+                                src={card.content.character}
+                                alt="화가 난 대장 캐릭터"
+                                width={227}
+                                height={162}
+                                className="w-full h-full object-contain"
+                                priority
+                              />
+                            </div>
+
+                            <div
+                              className="text-white text-body4-m inline-block mb-2 w-fit mx-auto"
+                              style={{
+                                backgroundColor:
+                                  reportData.poo.summary.backgroundColors[0],
+                                paddingTop: '6px',
+                                paddingRight: '16px',
+                                paddingBottom: '6px',
+                                paddingLeft: '16px',
+                                borderRadius: '40px',
+                              }}
+                            >
+                              {card.content.badge}
+                            </div>
+
+                            <h2 className="text-xl font-bold mb-2 text-white">
+                              {card.content.title}
+                            </h2>
+                          </>
+                        ) : (
+                          <>
+                            {/* 텍스트 카드 */}
+                            <div
+                              className="text-white mx-auto mb-4 w-8 h-8 flex items-center justify-center p-1.5"
+                              style={{
+                                backgroundColor:
+                                  reportData.poo.summary.backgroundColors[0],
+                                borderRadius: '999px',
+                              }}
+                            >
+                              <span
+                                className="font-bold"
+                                style={{ fontSize: '11px' }}
+                              >
+                                {card.content.badge}
+                              </span>
+                            </div>
+
+                            <h2
+                              className="font-bold text-lg mb-4"
+                              style={{
+                                color: reportData.poo.summary.backgroundColors[0],
+                              }}
+                            >
+                              {card.type === 'text' ? card.content.date : ''}
+                            </h2>
+
+                            <p className="text-gray-400 text-body3-m mb-6 leading-relaxed">
+                              {card.type === 'text' ? card.content.advisory : ''}
+                            </p>
+
+                            <div className="space-y-2">
+                              {card.type === 'text' &&
+                                card.content.tags?.map(
+                                  (row: string[], rowIndex: number) => (
+                                    <div
+                                      key={`tag-row-${row.join('-')}-${rowIndex}`}
+                                      className="flex flex-wrap gap-2 justify-center"
+                                    >
+                                      {row.map((tag, _tagIndex) => (
+                                        <span
+                                          key={`tag-${tag}`}
+                                          className="text-body3-m"
+                                          style={{
+                                            paddingTop: '4px',
+                                            paddingRight: '12px',
+                                            paddingBottom: '4px',
+                                            paddingLeft: '12px',
+                                            borderRadius: '6px',
+                                            backgroundColor: '#A5A5A533',
+                                            color: '#707885',
+                                          }}
+                                        >
+                                          {tag}
+                                        </span>
+                                      ))}
+                                    </div>
+                                  )
+                                )}
+                            </div>
+                          </>
+                        )}
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* 스와이프 인디케이터 */}
+              <div className="flex justify-center gap-2 my-3">
+                {cards.map((card, index) => (
+                  <div
+                    key={`indicator-${card.type}-${index}`}
+                    className={`w-2 h-2 rounded-full transition-colors duration-200 ${
+                      index === cardIndex ? 'bg-white' : 'bg-gray-500'
+                    }`}
+                  />
+                ))}
+              </div>
+
+              {/* 업데이트 시간 - 카드 밖 하단 */}
+              <p className="text-gray-400 text-sm text-center mt-2">
+                {new Date(reportData.updatedAt).toLocaleString('ko-KR', {
+                  month: 'long',
+                  day: 'numeric',
+                  weekday: 'short',
+                  hour: 'numeric',
+                })}{' '}
+                업데이트
+              </p>
+              {reportData.poo && (
+                <DefecationScore score={reportData.poo.score} />
+              )}
+            </>
+          ) : (
+            <NullReport
+              mode="defecation"
+              nullIcon={poop}
+              title="배변"
+              descrption="배변 점수는 배변 기록이 있어야 확인할 수 있어요."
             />
-          ))}
-        </div>
-
-        {/* 업데이트 시간 - 카드 밖 하단 */}
-        <p className="text-gray-400 text-sm text-center mt-2">
-          {new Date(reportData.updatedAt).toLocaleString('ko-KR', {
-            month: 'long',
-            day: 'numeric',
-            weekday: 'short',
-            hour: 'numeric',
-          })}{' '}
-          업데이트
-        </p>
-
-        <div className="flex flex-col space-y-5 mt-9">
-          {reportData.poo && <DefecationScore score={reportData.poo.score} />}
-          {reportData.food && <FoodReport foodData={reportData.food} />}
-          {reportData.water && <WaterReport waterData={reportData.water} />}
-          {reportData.stress && <StressReport stressData={reportData.stress} />}
-        </div>
-      </main>
-
-      {reportData.suggestion && (
-        <Suggestions suggestion={reportData.suggestion} />
+          )}
+          {reportData.food.items.length > 0 ? (
+            <div className="flex flex-col space-y-5 mt-5">
+              <FoodReport foodData={reportData.food} />
+              {reportData.water && <WaterReport waterData={reportData.water} />}
+              {reportData.stress && (
+                <StressReport stressData={reportData.stress} />
+              )}
+              {reportData.suggestion && (
+                <Suggestions suggestion={reportData.suggestion} />
+              )}
+            </div>
+          ) : (
+            <NullReport
+              mode="lifstyle"
+              nullIcon={emojiOpenMouse}
+              title="생활"
+              descrption="생활을 기록하면 더 자세한 분석을 얻을 수 있어요"
+            />
+          )}
+        </main>
       )}
 
       {/* 하단 여백 추가 */}
