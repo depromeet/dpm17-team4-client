@@ -29,7 +29,10 @@ function LifestylePageContent() {
   const handleDelete = async () => {
     if (!existingRecordId) return;
     try {
-      await deleteMutation.mutateAsync({ id: existingRecordId });
+      await deleteMutation.mutateAsync({
+        id: existingRecordId,
+        date: dateString,
+      });
       router.push('/home');
     } catch (error) {
       console.error('삭제 중 오류가 발생했습니다:', error);
