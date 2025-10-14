@@ -120,3 +120,11 @@ export const getTimeDisplay = (time: string): string => {
     return `오후 ${hour - 12}시`;
   }
 };
+/*금일 연,월,일 을 반환합니다. */
+export const getTodayDate = () => {
+  const date = new Date();
+  const todayYear = date.getFullYear();
+  const todayMonth = date.getMonth() + 1;
+  const todayDay = date.getDate();
+  return { todayYear, todayMonth, todayDay };
+};
