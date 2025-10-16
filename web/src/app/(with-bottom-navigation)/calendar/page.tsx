@@ -167,7 +167,11 @@ export default function CalendarPage() {
               ? format(selectedDate, 'M월 d일 (eee)', { locale: ko })
               : ''}
           </p>
-          <button type='button' onClick={() => router.push('/report/daily')} className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => router.push('/report/daily')}
+            className="flex items-center gap-2"
+          >
             <p className="text-[#99A1B1] text-button-4">리포트 확인하기</p>
             <ChevronIcon type="right" className="w-3.5 h-3.5 text-[#99A1B1]" />
           </button>
