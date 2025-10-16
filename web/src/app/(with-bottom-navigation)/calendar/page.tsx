@@ -15,16 +15,33 @@ import {
   subMonths,
 } from 'date-fns';
 import { ko } from 'date-fns/locale';
-import {  useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { ChevronIcon } from '@/components';
 import { DAYS_OF_WEEK, TOTAL_DAYS } from '@/constants';
 import { DailyRecord } from './_components/DailyRecord';
+import { DefecationRecordBottomSheet } from './_components/DefecationRecordBottomSheet';
 import { Tag } from './_components/Tag';
 
-
 export default function CalendarPage() {
+  const router = useRouter();
+
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
   const [currentMonth, setCurrentMonth] = useState(new Date());
+
+  const [
+    isDefecationRecordBottomSheetOpen,
+    setIsDefecationRecordBottomSheetOpen,
+  ] = useState(false);
+  const [hasRecords, _setHasRecords] = useState(true);
+  const [records, _setRecords] = useState([
+    { id: '1', time: '09:00', type: 'morning' as const },
+    { id: '2', time: '11:00', type: 'morning' as const },
+    { id: '3', time: '13:00', type: 'afternoon' as const },
+    { id: '4', time: '19:00', type: 'evening' as const },
+    { id: '5', time: '22:00', type: 'evening' as const },
+  ]);
+
   const monthStart = startOfMonth(currentMonth);
   const monthEnd = endOfMonth(monthStart);
   const startDate = startOfWeek(monthStart, { weekStartsOn: 0 });
@@ -144,31 +161,55 @@ export default function CalendarPage() {
       <div className="flex w-full h-2 bg-[#3C4149]/20 mt-2.5 mb-5" />
 
       <div className="px-4">
-        <div className='flex items-center justify-between mb-3.5'>
+        <div className="flex items-center justify-between mb-3.5">
           <p className="text-white text-body1-m">
             {selectedDate
               ? format(selectedDate, 'M월 d일 (eee)', { locale: ko })
               : ''}
           </p>
-          <div className="flex items-center gap-2">
+          <button type='button' onClick={() => router.push('/report/daily')} className="flex items-center gap-2">
             <p className="text-[#99A1B1] text-button-4">리포트 확인하기</p>
             <ChevronIcon type="right" className="w-3.5 h-3.5 text-[#99A1B1]" />
-          </div>
+          </button>
         </div>
 
-        <div className='flex items-center justify-between gap-2'>
-          <div className='flex flex-col gap-1 justify-center flex-1 h-[70px] py-3 px-4 bg-[#272B31] rounded-[10px]'>
-            <p className='text-[#707885] text-body4-m'>배변 점수</p>
-            <p className='text-white text-body2-sb'>45점</p>
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex flex-col gap-1 justify-center w-1/3 h-[70px] py-3 px-4 bg-[#272B31] rounded-[10px]">
+            <p className="text-[#707885] text-body4-m">배변 점수</p>
+            <p className="text-white text-body2-sb">45점</p>
           </div>
-                    <div className='flex flex-col gap-1 justify-center flex-1 h-[70px] py-3 px-4 bg-[#272B31] rounded-[10px]'>
-            <p className='text-[#707885] text-body4-m'>배변 기록</p>
-            <p className='text-white text-body2-sb'>1회</p>
-          </div>
-                    <div className='flex flex-col gap-1 justify-center flex-1 h-[70px] py-3 px-4 bg-[#272B31] rounded-[10px]'>
-            <p className='text-[#707885] text-body4-m'>생활 기록</p>
-            <p className='text-white text-body2-sb'>O</p>
-          </div>
+          <button
+            type="button"
+            onClick={() => setIsDefecationRecordBottomSheetOpen(true)}
+            className="flex flex-col gap-1 justify-center items-start w-1/3 h-[70px] py-3 px-4 bg-[#272B31] rounded-[10px]"
+          >
+            <p className="text-[#707885] text-body4-m">배변 기록</p>
+            <p className="text-white text-body2-sb">1회</p>
+          </button>
+          {isDefecationRecordBottomSheetOpen && (
+            <DefecationRecordBottomSheet
+              isOpen={isDefecationRecordBottomSheetOpen}
+              onClose={() => setIsDefecationRecordBottomSheetOpen(false)}
+              date={new Date(2025, 8, 14)}
+              hasRecords={hasRecords}
+              records={hasRecords ? records : []}
+            />
+          )}
+          <button
+            type="button"
+            // NOTE(taehyeon): 서버 api 구현 시 activityId 를 전달하도록 수정 필요
+            onClick={() => {
+              if (selectedDate) {
+                router.push(
+                  `/lifestyle?year=${selectedDate.getFullYear()}&month=${selectedDate.getMonth() + 1}&day=${selectedDate.getDate()}&activityId=1`
+                );
+              }
+            }}
+            className="flex flex-col gap-1 justify-center items-start w-1/3 h-[70px] py-3 px-4 bg-[#272B31] rounded-[10px]"
+          >
+            <p className="text-[#707885] text-body4-m">생활 기록</p>
+            <p className="text-white text-body2-sb">O</p>
+          </button>
         </div>
       </div>
     </div>
