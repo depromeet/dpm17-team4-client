@@ -14,7 +14,7 @@ const BOTTOM_NAV_TABS = [
     id: 'calendar' as const,
     name: '캘린더',
     icon: CalendarIcon,
-    active: false,
+    active: true,
   },
   {
     id: 'report' as const,
