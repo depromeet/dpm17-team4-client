@@ -131,14 +131,6 @@ function AuthContent() {
     
   "
       />
-      {/* <div
-        className="
-      absolute z-10 bottom-0 right-0 translate-x-[6.5rem]
-      w-[17.75rem] h-[17.75rem] rounded-[17.75rem]
-      bg-[radial-gradient(76.29%_76.29%_at_36.71%_24.88%,_rgba(107,192,213,0.24)_0%,_rgba(92,91,167,0.24)_58.07%,_rgba(30,39,43,0.24)_100%)]
-      blur-[10px]
-    "
-      /> */}
       <Image
         src={bgGradient2}
         alt="배경 그라디언트2"
