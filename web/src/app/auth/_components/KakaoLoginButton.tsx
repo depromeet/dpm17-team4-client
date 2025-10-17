@@ -15,7 +15,7 @@ const KakaoLoginButton = () => {
       >
         <Image
           src={kakaoSymbol}
-          alt="카카오 심볼"
+          alt=""
           aria-hidden
           className="w-[1.18806rem] h-[1.12206rem]"
         />
