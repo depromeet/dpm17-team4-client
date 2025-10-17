@@ -60,7 +60,7 @@ const AppleLoginButton = () => {
       type="button"
       onClick={handleAppleLogin}
       disabled={isLoading}
-      className="flex w-[21.4375rem] h-[3.5rem] px-6 items-center gap-1 flex-shrink-0 rounded-[0.625rem] bg-white text-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+      className="flex w-[21.4375rem] h-[3.5rem] px-6 items-center gap-1 flex-shrink-0 rounded-[0.625rem] bg-white text-black  hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
     >
       <svg
         width="24"
