@@ -41,17 +41,20 @@ class AppLockManager {
    * WebView 메시지 리스너 설정
    */
   private setupMessageListener() {
-    if (typeof window !== 'undefined') {
+    if (window?.ReactNativeWebView) {
       window.addEventListener('message', (event) => {
         try {
-          const data = JSON.parse(event.data);
-          if (data.type === 'LOCK_STATUS_RESPONSE') {
-            this.lockStatus = {
-              isEnabled: data.isEnabled,
-              isLocked: data.isLocked,
-              useBiometric: data.useBiometric,
-              autoLockTimeout: data.autoLockTimeout,
-            };
+          // event.data가 문자열인지 확인 후 JSON.parse 실행
+          if (typeof event.data === 'string') {
+            const data = JSON.parse(event.data);
+            if (data.type === 'LOCK_STATUS_RESPONSE') {
+              this.lockStatus = {
+                isEnabled: data.isEnabled,
+                isLocked: data.isLocked,
+                useBiometric: data.useBiometric,
+                autoLockTimeout: data.autoLockTimeout,
+              };
+            }
           }
         } catch (error) {
           console.error('앱 잠금 상태 메시지 파싱 오류:', error);
