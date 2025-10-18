@@ -17,7 +17,7 @@ expo-env.d.ts
 
 # Expo bare workflow generated files
 android/
-ios/
+# ios/ - Info.plist와 같은 중요한 설정 파일들은 git에 포함
 
 # Native
 .kotlin/
@@ -37,15 +37,17 @@ ios/*.xcodeproj/project.xcworkspace/xcuserdata/
 ios/DerivedData/
 ios/*.xcworkspace/xcshareddata/
 ios/*.xcodeproj/xcshareddata/
-ios/*.xcworkspace/xcuserdata/
-ios/*.xcodeproj/xcuserdata/
-ios/*.xcodeproj/project.xcworkspace/xcuserdata/
-ios/build/
-ios/DerivedData/
 ios/*.xcarchive
 ios/*.ipa
 ios/*.dSYM.zip
 ios/*.dSYM
+
+# iOS generated files (Expo)
+ios/.xcode.env
+ios/Podfile.properties.json
+ios/app/GoogleService-Info.plist
+ios/app/Images.xcassets/
+ios/app/Supporting/
 
 # Android build artifacts
 android/build/

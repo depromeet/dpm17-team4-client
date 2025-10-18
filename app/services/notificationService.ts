@@ -14,7 +14,7 @@ const checkNetworkConnection = async (): Promise<boolean> => {
     }, 5000);
     return response.ok;
   } catch (error) {
-    console.log('🌐 서버 연결 확인 실패:', error);
+    // console.log('🌐 서버 연결 확인 실패:', error);
     return false;
   }
 };
@@ -47,7 +47,7 @@ export const registerPendingToken = async (): Promise<void> => {
       await registerTokenToServer(pendingToken);
       pendingToken = null; // 등록 성공 후 저장된 토큰 제거
     } else {
-      console.log('⚠️ 여전히 서버에 연결할 수 없습니다.');
+      // console.log('⚠️ 여전히 서버에 연결할 수 없습니다.');
     }
   } catch (error) {
     console.error('❌ 저장된 토큰 등록 실패:', error);
