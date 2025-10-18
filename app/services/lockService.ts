@@ -41,7 +41,18 @@ export class LockService {
   }
 
   async getSettings(): Promise<LockSettingsInterface> {
-    return { ...this.lockSettings };
+    try {
+      // AsyncStorage에서 최신 설정을 가져옴
+      const stored = await AsyncStorage.getItem(LOCK_SETTINGS_KEY);
+      if (stored) {
+        const storedSettings = JSON.parse(stored);
+        this.lockSettings = { ...DEFAULT_LOCK_SETTINGS, ...storedSettings };
+      }
+      return { ...this.lockSettings };
+    } catch (error) {
+      console.error('설정 가져오기 실패:', error);
+      return { ...this.lockSettings };
+    }
   }
 
   async updateSettings(settings: Partial<LockSettingsInterface>): Promise<void> {
@@ -98,7 +109,7 @@ export class LockService {
       // 성공한 경우
       if (result.success) {
         console.log('생체인증 성공');
-        await this.unlockApp();
+        await this.unlockAppInternal();
         return true;
       }
 
@@ -119,13 +130,20 @@ export class LockService {
 
   async unlockWithPin(inputPin: string): Promise<boolean> {
     if (this.lockSettings.pinCode === inputPin) {
-      await this.unlockApp();
+      await this.unlockAppInternal();
       return true;
     }
     return false;
   }
 
-  private async unlockApp(): Promise<void> {
+  async unlockApp(): Promise<void> {
+    this.isLocked = false;
+    await this.updateSettings({
+      lastUnlockTime: Date.now(),
+    });
+  }
+
+  private async unlockAppInternal(): Promise<void> {
     this.isLocked = false;
     await this.updateSettings({
       lastUnlockTime: Date.now(),

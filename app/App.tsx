@@ -92,8 +92,11 @@ export default function App() {
     }
   };
 
-  const handleUnlock = () => {
+  const handleUnlock = async () => {
+    console.log('잠금 해제 처리');
     setIsLocked(false);
+    // LockService의 잠금 상태도 해제
+    await lockService.unlockApp();
   };
 
   const handleShowLockSettings = () => {
@@ -124,7 +127,21 @@ export default function App() {
   if (showLockSettings) {
     return (
       <SafeAreaView style={styles.container}>
-        <LockSettings onClose={handleCloseLockSettings} />
+        <LockSettings 
+          onClose={handleCloseLockSettings} 
+          onSettingsChanged={async () => {
+            // 설정 변경 시 잠금 상태 확인
+            const settings = await lockService.getSettings();
+            console.log('설정 변경됨:', settings);
+            if (settings.isEnabled && lockService.isAppLocked()) {
+              console.log('잠금 상태로 설정');
+              setIsLocked(true);
+            } else if (!settings.isEnabled) {
+              console.log('잠금 해제 상태로 설정');
+              setIsLocked(false);
+            }
+          }}
+        />
         <StatusBar style="auto" />
       </SafeAreaView>
     );

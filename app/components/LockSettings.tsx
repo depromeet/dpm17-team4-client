@@ -16,9 +16,10 @@ const { width } = Dimensions.get('window');
 
 interface LockSettingsComponentProps {
   onClose: () => void;
+  onSettingsChanged?: () => void;
 }
 
-export default function LockSettings({ onClose }: LockSettingsComponentProps) {
+export default function LockSettings({ onClose, onSettingsChanged }: LockSettingsComponentProps) {
   const [settings, setSettings] = useState<LockSettingsInterface | null>(null);
   const [isBiometricAvailable, setIsBiometricAvailable] = useState(false);
   const [pinCode, setPinCode] = useState('');
@@ -35,6 +36,7 @@ export default function LockSettings({ onClose }: LockSettingsComponentProps) {
       const lockSettings = await lockService.getSettings();
       const biometricAvailable = await lockService.isBiometricAvailable();
       
+      console.log('잠금 설정 로드됨:', lockSettings);
       setSettings(lockSettings);
       setIsBiometricAvailable(biometricAvailable);
     } catch (error) {
@@ -43,17 +45,27 @@ export default function LockSettings({ onClose }: LockSettingsComponentProps) {
   };
 
   const handleToggleLock = async (enabled: boolean) => {
-    if (enabled) {
-      if (!settings?.pinCode) {
-        setIsSettingPin(true);
-        return;
+    try {
+      if (enabled) {
+        if (!settings?.pinCode) {
+          setIsSettingPin(true);
+          return;
+        }
+        await lockService.updateSettings({ isEnabled: enabled });
+        // 잠금 활성화 시 즉시 앱을 잠금
+        await lockService.lockApp();
+        console.log('잠금 활성화됨');
+      } else {
+        await lockService.disableLock();
+        console.log('잠금 비활성화됨');
       }
-      await lockService.updateSettings({ isEnabled: enabled });
-    } else {
-      await lockService.disableLock();
+      
+      await initializeSettings();
+      onSettingsChanged?.();
+    } catch (error) {
+      console.error('잠금 설정 변경 실패:', error);
+      Alert.alert('오류', '설정 변경 중 오류가 발생했습니다.');
     }
-    
-    await initializeSettings();
   };
 
   const handleSetPin = async () => {
@@ -70,10 +82,13 @@ export default function LockSettings({ onClose }: LockSettingsComponentProps) {
     setIsLoading(true);
     try {
       await lockService.enableLock(pinCode);
+      // PIN 설정 후 즉시 앱을 잠금
+      await lockService.lockApp();
       setPinCode('');
       setConfirmPin('');
       setIsSettingPin(false);
       await initializeSettings();
+      onSettingsChanged?.();
       Alert.alert('성공', '앱 잠금이 활성화되었습니다.');
     } catch (error) {
       console.error('PIN 설정 실패:', error);
@@ -95,6 +110,7 @@ export default function LockSettings({ onClose }: LockSettingsComponentProps) {
 
     await lockService.updateSettings({ useBiometric: enabled });
     await initializeSettings();
+    onSettingsChanged?.();
   };
 
 
@@ -186,7 +202,7 @@ export default function LockSettings({ onClose }: LockSettingsComponentProps) {
             <View style={styles.settingInfo}>
               <Text style={styles.settingTitle}>PIN 설정</Text>
               <Text style={styles.settingDescription}>
-                {settings.pinCode ? 'PIN이 설정되어 있습니다' : 'PIN을 설정하세요'}
+                앱 잠금 해제용 PIN 코드
               </Text>
             </View>
             <TouchableOpacity
@@ -206,8 +222,7 @@ export default function LockSettings({ onClose }: LockSettingsComponentProps) {
             <View style={styles.settingInfo}>
               <Text style={styles.settingTitle}>생체인증</Text>
               <Text style={styles.settingDescription}>
-                Face ID, Touch ID, 지문인식 사용{'\n'}
-                실패 시 기기 비밀번호 또는 PIN 사용
+                Face ID, Touch ID, 지문인식 사용
               </Text>
             </View>
             <Switch

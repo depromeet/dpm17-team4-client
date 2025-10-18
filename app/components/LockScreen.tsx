@@ -25,10 +25,16 @@ export default function LockScreen({ onUnlock, onOpenSettings }: LockScreenProps
   const [isBiometricAvailable, setIsBiometricAvailable] = useState(false);
   const [attempts, setAttempts] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [hasTriedBiometric, setHasTriedBiometric] = useState(false);
 
   useEffect(() => {
     initializeLockScreen();
   }, []);
+
+  // 잠금 화면이 표시될 때마다 생체 인증 시도 상태 리셋
+  useEffect(() => {
+    setHasTriedBiometric(false);
+  }, []); // 컴포넌트 마운트 시에만 실행
 
   const initializeLockScreen = async () => {
     try {
@@ -38,9 +44,11 @@ export default function LockScreen({ onUnlock, onOpenSettings }: LockScreenProps
       setSettings(lockSettings);
       setIsBiometricAvailable(biometricAvailable && lockSettings.useBiometric);
 
-      // 생체인증이 가능하면 자동으로 시도
+      // 생체인증이 가능하면 1회 자동으로 시도 (상태와 관계없이)
       if (biometricAvailable && lockSettings.useBiometric) {
-        handleBiometricAuth();
+        setTimeout(() => {
+          handleBiometricAuth();
+        }, 500); // 0.5초 후 자동 실행
       }
     } catch (error) {
       console.error('잠금 화면 초기화 실패:', error);
@@ -48,19 +56,21 @@ export default function LockScreen({ onUnlock, onOpenSettings }: LockScreenProps
   };
 
   const handleBiometricAuth = async () => {
-    console.log('생체인증 버튼 클릭');
+    console.log('생체인증 시도');
     setIsLoading(true);
+    setHasTriedBiometric(true); // 시도했음을 표시
     try {
       const success = await lockService.unlockWithBiometric();
       console.log('생체인증 결과:', success);
       if (success) {
-        console.log('잠금 해제 성공');
+        console.log('잠금 해제 성공 - 화면 전환');
+        // 성공 시 즉시 화면 전환하고 더 이상 처리하지 않음
         onUnlock();
+        return;
       } else {
         // 생체인증 실패 시 PIN 입력으로 전환
         console.log('생체인증 실패, PIN 입력으로 전환');
-        // 생체인증 버튼을 숨기고 PIN 입력에 집중
-        setIsBiometricAvailable(false);
+        // 생체인증 버튼은 유지하되, 다시 시도할 수 있도록 함
       }
     } catch (error) {
       console.error('생체인증 오류:', error);
@@ -196,7 +206,7 @@ export default function LockScreen({ onUnlock, onOpenSettings }: LockScreenProps
             disabled={isLoading}
           >
             <Text style={styles.biometricText}>
-              {isLoading ? '인증 중...' : '🔐 생체인증 또는 기기 비밀번호'}
+              {isLoading ? '인증 중...' : hasTriedBiometric ? '🔐 생체인증 다시 시도' : '🔐 생체인증 또는 기기 비밀번호'}
             </Text>
           </TouchableOpacity>
         )}
