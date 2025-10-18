@@ -42,7 +42,6 @@ export const handleWebViewMessage = async (event: any, onOpenLockSettings?: () =
             isEnabled: settings.isEnabled,
             isLocked: isLocked,
             useBiometric: settings.useBiometric,
-            autoLockTimeout: settings.autoLockTimeout,
           }));
         }
         break;

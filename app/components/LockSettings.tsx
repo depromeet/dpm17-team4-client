@@ -97,19 +97,7 @@ export default function LockSettings({ onClose }: LockSettingsComponentProps) {
     await initializeSettings();
   };
 
-  const handleChangeAutoLock = async (timeout: number) => {
-    await lockService.updateSettings({ autoLockTimeout: timeout });
-    await initializeSettings();
-  };
 
-  const autoLockOptions = [
-    { label: '즉시', value: 0 },
-    { label: '1분', value: 1 },
-    { label: '5분', value: 5 },
-    { label: '10분', value: 10 },
-    { label: '30분', value: 30 },
-    { label: '1시간', value: 60 },
-  ];
 
   if (!settings) {
     return (
@@ -231,41 +219,6 @@ export default function LockSettings({ onClose }: LockSettingsComponentProps) {
           </View>
         )}
 
-        {/* 자동 잠금 */}
-        {settings.isEnabled && (
-          <View style={styles.settingRow}>
-            <View style={styles.settingInfo}>
-              <Text style={styles.settingTitle}>자동 잠금</Text>
-              <Text style={styles.settingDescription}>
-                앱을 사용하지 않을 때 자동으로 잠금
-              </Text>
-            </View>
-          </View>
-        )}
-
-        {settings.isEnabled && (
-          <View style={styles.autoLockOptions}>
-            {autoLockOptions.map((option) => (
-              <TouchableOpacity
-                key={option.value}
-                style={[
-                  styles.autoLockOption,
-                  settings.autoLockTimeout === option.value && styles.autoLockOptionSelected,
-                ]}
-                onPress={() => handleChangeAutoLock(option.value)}
-              >
-                <Text
-                  style={[
-                    styles.autoLockOptionText,
-                    settings.autoLockTimeout === option.value && styles.autoLockOptionTextSelected,
-                  ]}
-                >
-                  {option.label}
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-        )}
       </View>
     </ScrollView>
   );
@@ -346,32 +299,6 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 14,
     fontWeight: '600',
-  },
-  autoLockOptions: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginTop: 8,
-  },
-  autoLockOption: {
-    backgroundColor: 'white',
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    marginRight: 8,
-    marginBottom: 8,
-    borderRadius: 6,
-    borderWidth: 1,
-    borderColor: '#e0e0e0',
-  },
-  autoLockOptionSelected: {
-    backgroundColor: '#007AFF',
-    borderColor: '#007AFF',
-  },
-  autoLockOptionText: {
-    fontSize: 14,
-    color: '#333',
-  },
-  autoLockOptionTextSelected: {
-    color: 'white',
   },
   pinForm: {
     padding: 20,

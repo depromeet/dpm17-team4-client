@@ -48,10 +48,13 @@ export default function LockScreen({ onUnlock, onOpenSettings }: LockScreenProps
   };
 
   const handleBiometricAuth = async () => {
+    console.log('생체인증 버튼 클릭');
     setIsLoading(true);
     try {
       const success = await lockService.unlockWithBiometric();
+      console.log('생체인증 결과:', success);
       if (success) {
+        console.log('잠금 해제 성공');
         onUnlock();
       } else {
         // 생체인증 실패 시 PIN 입력으로 전환
