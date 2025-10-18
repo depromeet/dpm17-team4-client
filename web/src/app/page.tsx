@@ -1,10 +1,19 @@
 'use client';
 
 import Link from 'next/link';
-import { Suspense } from 'react';
+import { Suspense, useEffect, useState } from 'react';
+import AppLockSettings from '@/components/AppLockSettings';
 import LoginContent from '@/components/LoginContent';
 
 function HomeContent() {
+  const [showLockSettings, setShowLockSettings] = useState(false);
+  const [isInApp, setIsInApp] = useState(false);
+
+  useEffect(() => {
+    // React Native WebView 환경인지 확인
+    setIsInApp(typeof window !== 'undefined' && !!window.ReactNativeWebView);
+  }, []);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
       <div className="text-center">
@@ -65,9 +74,27 @@ function HomeContent() {
                   일일 리포트 페이지
                 </Link>
               </li>
+              <li>
+                •{' '}
+                <button
+                  type="button"
+                  onClick={() => setShowLockSettings(true)}
+                  className="text-orange-600 hover:text-orange-800 underline transition-colors cursor-pointer"
+                >
+                  🔒 앱 잠금 설정
+                  {!isInApp && ' (앱 내에서만 사용 가능)'}
+                </button>
+              </li>
             </ul>
           </div>
         </div>
+
+        {/* 잠금 설정 모달 */}
+        {showLockSettings && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <AppLockSettings onClose={() => setShowLockSettings(false)} />
+          </div>
+        )}
       </div>
     </div>
   );
