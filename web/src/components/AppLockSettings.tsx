@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppLock } from '@/utils/appLock';
 
 interface AppLockSettingsProps {
@@ -25,10 +25,11 @@ export default function AppLockSettings({ onClose }: AppLockSettingsProps) {
       }
     } catch (error) {
       console.error('네이티브 설정 열기 실패:', error);
-      alert('앱 잠금 설정을 열 수 없습니다. React Native 앱 내에서 실행해주세요.');
+      alert(
+        '앱 잠금 설정을 열 수 없습니다. React Native 앱 내에서 실행해주세요.'
+      );
     }
   };
-
 
   return (
     <div className="bg-white rounded-lg shadow-lg p-6 max-w-md mx-auto">
@@ -36,6 +37,7 @@ export default function AppLockSettings({ onClose }: AppLockSettingsProps) {
         <h2 className="text-xl font-bold text-gray-800">앱 잠금 설정</h2>
         {onClose && (
           <button
+            type="button"
             onClick={onClose}
             className="text-gray-500 hover:text-gray-700"
           >
@@ -54,12 +56,13 @@ export default function AppLockSettings({ onClose }: AppLockSettingsProps) {
 
         {/* 네이티브 설정 열기 버튼 */}
         <button
+          type="button"
           onClick={handleOpenNativeSettings}
           className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-6 rounded-lg transition-colors text-lg"
         >
           {isInApp ? '잠금 설정 열기' : '앱 내에서만 사용 가능'}
         </button>
-        
+
         {!isInApp && (
           <div className="mt-3 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
             <p className="text-sm text-yellow-800 text-center">

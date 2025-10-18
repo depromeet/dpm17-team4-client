@@ -4,11 +4,13 @@
  */
 
 // React Native WebView 타입 정의
+interface WebViewRef {
+  postMessage: (message: string) => void;
+}
+
 declare global {
   interface Window {
-    ReactNativeWebView?: {
-      postMessage: (message: string) => void;
-    };
+    ReactNativeWebView?: WebViewRef;
   }
 }
 
@@ -20,7 +22,7 @@ export interface LockStatus {
 }
 
 class AppLockManager {
-  private webViewRef: any = null;
+  private webViewRef: WebViewRef | null = null;
   private lockStatus: LockStatus | null = null;
 
   constructor() {
@@ -31,7 +33,7 @@ class AppLockManager {
   /**
    * WebView 참조 설정
    */
-  setWebViewRef(ref: any) {
+  setWebViewRef(ref: WebViewRef) {
     this.webViewRef = ref;
   }
 
@@ -63,20 +65,26 @@ class AppLockManager {
    */
   openLockSettings() {
     // WebView가 있는 경우 (React Native 앱 내에서 실행)
-    if (typeof window !== 'undefined' && window.ReactNativeWebView) {
-      window.ReactNativeWebView.postMessage(JSON.stringify({
-        type: 'OPEN_LOCK_SETTINGS',
-      }));
-    } 
+    if (window?.ReactNativeWebView) {
+      window.ReactNativeWebView.postMessage(
+        JSON.stringify({
+          type: 'OPEN_LOCK_SETTINGS',
+        })
+      );
+    }
     // WebView 참조가 설정된 경우
     else if (this.webViewRef) {
-      this.webViewRef.postMessage(JSON.stringify({
-        type: 'OPEN_LOCK_SETTINGS',
-      }));
-    } 
+      this.webViewRef.postMessage(
+        JSON.stringify({
+          type: 'OPEN_LOCK_SETTINGS',
+        })
+      );
+    }
     // 일반 웹 브라우저에서 실행되는 경우
     else {
-      console.warn('React Native WebView 환경이 아닙니다. 앱 잠금 설정은 앱 내에서만 사용할 수 있습니다.');
+      console.warn(
+        'React Native WebView 환경이 아닙니다. 앱 잠금 설정은 앱 내에서만 사용할 수 있습니다.'
+      );
       alert('앱 잠금 설정은 React Native 앱 내에서만 사용할 수 있습니다.');
     }
   }
@@ -86,10 +94,12 @@ class AppLockManager {
    */
   async checkLockStatus(): Promise<LockStatus | null> {
     if (this.webViewRef) {
-      this.webViewRef.postMessage(JSON.stringify({
-        type: 'CHECK_LOCK_STATUS',
-      }));
-      
+      this.webViewRef.postMessage(
+        JSON.stringify({
+          type: 'CHECK_LOCK_STATUS',
+        })
+      );
+
       // 응답을 기다리는 간단한 폴링 (실제로는 이벤트 기반으로 처리)
       return new Promise((resolve) => {
         const checkStatus = () => {
@@ -102,7 +112,7 @@ class AppLockManager {
         checkStatus();
       });
     }
-    
+
     return null;
   }
 
@@ -171,6 +181,6 @@ export function useAppLock() {
 /**
  * WebView 참조 설정을 위한 함수
  */
-export function setWebViewRef(ref: any) {
+export function setWebViewRef(ref: WebViewRef) {
   appLockManager.setWebViewRef(ref);
 }

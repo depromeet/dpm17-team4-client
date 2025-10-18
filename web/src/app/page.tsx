@@ -1,9 +1,9 @@
 'use client';
 
 import Link from 'next/link';
-import { Suspense, useState, useEffect } from 'react';
-import LoginContent from '@/components/LoginContent';
+import { Suspense, useEffect, useState } from 'react';
 import AppLockSettings from '@/components/AppLockSettings';
+import LoginContent from '@/components/LoginContent';
 
 function HomeContent() {
   const [showLockSettings, setShowLockSettings] = useState(false);
@@ -77,6 +77,7 @@ function HomeContent() {
               <li>
                 •{' '}
                 <button
+                  type="button"
                   onClick={() => setShowLockSettings(true)}
                   className="text-orange-600 hover:text-orange-800 underline transition-colors cursor-pointer"
                 >
