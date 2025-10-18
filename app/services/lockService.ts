@@ -89,35 +89,27 @@ export class LockService {
       const result = await LocalAuthentication.authenticateAsync({
         promptMessage: '앱 잠금 해제',
         fallbackLabel: 'PIN 사용',
-        disableDeviceFallback: false, // 기기 비밀번호 fallback 허용
+        disableDeviceFallback: true, // 기기 비밀번호 fallback 비활성화
         requireConfirmation: false, // 확인 단계 생략
       });
 
       console.log('생체인증 결과:', JSON.stringify(result, null, 2));
 
-      // 성공한 경우 (생체인증 또는 기기 비밀번호)
+      // 성공한 경우
       if (result.success) {
-        console.log('인증 성공 (생체인증 또는 기기 비밀번호)');
+        console.log('생체인증 성공');
         await this.unlockApp();
         return true;
       }
 
-      // 사용자가 취소한 경우만 실패로 처리
+      // 사용자가 취소한 경우
       if (result.error === 'user_cancel') {
         console.log('사용자가 취소함');
         return false;
       }
 
-      // 기기 비밀번호 사용 시에는 success가 false여도 성공으로 처리
-      // (iOS에서 기기 비밀번호 사용 시 success: false, error: null이 반환되는 경우가 있음)
-      if (!result.error || result.error === 'user_fallback') {
-        console.log('기기 비밀번호로 인증 성공으로 처리');
-        await this.unlockApp();
-        return true;
-      }
-
-      // 기타 실패
-      console.log('인증 실패, 에러:', result.error);
+      // 기타 실패 (생체인증 실패, 시스템 오류 등)
+      console.log('생체인증 실패, 에러:', result.error);
       return false;
     } catch (error) {
       console.error('생체인증 오류:', error);

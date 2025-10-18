@@ -59,6 +59,8 @@ export default function LockScreen({ onUnlock, onOpenSettings }: LockScreenProps
       } else {
         // 생체인증 실패 시 PIN 입력으로 전환
         console.log('생체인증 실패, PIN 입력으로 전환');
+        // 생체인증 버튼을 숨기고 PIN 입력에 집중
+        setIsBiometricAvailable(false);
       }
     } catch (error) {
       console.error('생체인증 오류:', error);
