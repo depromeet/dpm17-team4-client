@@ -80,7 +80,7 @@ export default function LockScreen({ onUnlock, onOpenSettings }: LockScreenProps
   };
 
   const handlePinSubmit = async () => {
-    if (!pin.trim()) return;
+    if (!pin.trim() || pin.length !== 6) return;
 
     setIsLoading(true);
     try {
@@ -111,6 +111,13 @@ export default function LockScreen({ onUnlock, onOpenSettings }: LockScreenProps
       setIsLoading(false);
     }
   };
+
+  // PIN이 6자리가 되면 자동으로 확인
+  useEffect(() => {
+    if (pin.length === 6) {
+      handlePinSubmit();
+    }
+  }, [pin]);
 
   const handleNumberPress = (number: string) => {
     if (pin.length < 6) {
@@ -212,16 +219,6 @@ export default function LockScreen({ onUnlock, onOpenSettings }: LockScreenProps
         )}
 
         {renderNumberPad()}
-
-        <TouchableOpacity
-          style={[styles.submitButton, (!pin || isLoading) && styles.submitButtonDisabled]}
-          onPress={handlePinSubmit}
-          disabled={!pin || isLoading}
-        >
-          <Text style={styles.submitText}>
-            {isLoading ? '확인 중...' : '확인'}
-          </Text>
-        </TouchableOpacity>
 
         {/* 설정 버튼 */}
         {onOpenSettings && (

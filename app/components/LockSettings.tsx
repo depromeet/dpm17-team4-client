@@ -52,8 +52,6 @@ export default function LockSettings({ onClose, onSettingsChanged }: LockSetting
           return;
         }
         await lockService.updateSettings({ isEnabled: enabled });
-        // 잠금 활성화 시 즉시 앱을 잠금
-        await lockService.lockApp();
         console.log('잠금 활성화됨');
       } else {
         await lockService.disableLock();
@@ -69,8 +67,8 @@ export default function LockSettings({ onClose, onSettingsChanged }: LockSetting
   };
 
   const handleSetPin = async () => {
-    if (!pinCode.trim() || pinCode.length < 4) {
-      Alert.alert('오류', 'PIN은 최소 4자리 이상이어야 합니다.');
+    if (!pinCode.trim() || pinCode.length !== 6) {
+      Alert.alert('오류', 'PIN은 6자리여야 합니다.');
       return;
     }
 
@@ -82,8 +80,6 @@ export default function LockSettings({ onClose, onSettingsChanged }: LockSetting
     setIsLoading(true);
     try {
       await lockService.enableLock(pinCode);
-      // PIN 설정 후 즉시 앱을 잠금
-      await lockService.lockApp();
       setPinCode('');
       setConfirmPin('');
       setIsSettingPin(false);
@@ -97,6 +93,13 @@ export default function LockSettings({ onClose, onSettingsChanged }: LockSetting
       setIsLoading(false);
     }
   };
+
+  // PIN과 확인 PIN이 모두 6자리이고 일치하면 자동으로 설정
+  useEffect(() => {
+    if (pinCode.length === 6 && confirmPin.length === 6 && pinCode === confirmPin) {
+      handleSetPin();
+    }
+  }, [pinCode, confirmPin]);
 
   const handleChangePin = async () => {
     setIsSettingPin(true);
@@ -139,7 +142,7 @@ export default function LockSettings({ onClose, onSettingsChanged }: LockSetting
             style={styles.pinInput}
             value={pinCode}
             onChangeText={setPinCode}
-            placeholder="PIN을 입력하세요 (최소 4자리)"
+            placeholder="PIN을 입력하세요 (6자리)"
             secureTextEntry
             keyboardType="numeric"
             maxLength={6}
@@ -156,15 +159,6 @@ export default function LockSettings({ onClose, onSettingsChanged }: LockSetting
             maxLength={6}
           />
 
-          <TouchableOpacity
-            style={[styles.saveButton, (!pinCode || !confirmPin || isLoading) && styles.saveButtonDisabled]}
-            onPress={handleSetPin}
-            disabled={!pinCode || !confirmPin || isLoading}
-          >
-            <Text style={styles.saveButtonText}>
-              {isLoading ? '설정 중...' : '설정 완료'}
-            </Text>
-          </TouchableOpacity>
         </View>
       </View>
     );
