@@ -42,6 +42,13 @@ ios/*.ipa
 ios/*.dSYM.zip
 ios/*.dSYM
 
+# iOS generated files (Expo)
+ios/.xcode.env
+ios/Podfile.properties.json
+ios/app/GoogleService-Info.plist
+ios/app/Images.xcassets/
+ios/app/Supporting/
+
 # Android build artifacts
 android/build/
 android/.gradle/
