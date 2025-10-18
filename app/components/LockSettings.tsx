@@ -26,6 +26,7 @@ export default function LockSettings({ onClose, onSettingsChanged }: LockSetting
   const [confirmPin, setConfirmPin] = useState('');
   const [isSettingPin, setIsSettingPin] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [pinError, setPinError] = useState('');
 
   useEffect(() => {
     initializeSettings();
@@ -67,37 +68,35 @@ export default function LockSettings({ onClose, onSettingsChanged }: LockSetting
   };
 
   const handleSetPin = async () => {
-    if (!pinCode.trim() || pinCode.length !== 6) {
-      Alert.alert('오류', 'PIN은 6자리여야 합니다.');
-      return;
-    }
-
-    if (pinCode !== confirmPin) {
-      Alert.alert('오류', 'PIN이 일치하지 않습니다.');
-      return;
-    }
-
     setIsLoading(true);
     try {
       await lockService.enableLock(pinCode);
       setPinCode('');
       setConfirmPin('');
       setIsSettingPin(false);
+      setPinError('');
       await initializeSettings();
       onSettingsChanged?.();
       Alert.alert('성공', '앱 잠금이 활성화되었습니다.');
     } catch (error) {
       console.error('PIN 설정 실패:', error);
-      Alert.alert('오류', 'PIN 설정 중 오류가 발생했습니다.');
+      setPinError('PIN 설정 중 오류가 발생했습니다.');
     } finally {
       setIsLoading(false);
     }
   };
 
-  // PIN과 확인 PIN이 모두 6자리이고 일치하면 자동으로 설정
+  // PIN 입력 실시간 검증
   useEffect(() => {
-    if (pinCode.length === 6 && confirmPin.length === 6 && pinCode === confirmPin) {
+    if (pinCode.length > 0 && pinCode.length < 6) {
+      setPinError('PIN은 6자리여야 합니다.');
+    } else if (pinCode.length === 6 && confirmPin.length > 0 && pinCode !== confirmPin) {
+      setPinError('PIN이 일치하지 않습니다.');
+    } else if (pinCode.length === 6 && confirmPin.length === 6 && pinCode === confirmPin) {
+      setPinError('');
       handleSetPin();
+    } else {
+      setPinError('');
     }
   }, [pinCode, confirmPin]);
 
@@ -139,7 +138,7 @@ export default function LockSettings({ onClose, onSettingsChanged }: LockSetting
         <View style={styles.pinForm}>
           <Text style={styles.label}>새 PIN 입력</Text>
           <TextInput
-            style={styles.pinInput}
+            style={[styles.pinInput, pinError && styles.pinInputError]}
             value={pinCode}
             onChangeText={setPinCode}
             placeholder="PIN을 입력하세요 (6자리)"
@@ -150,7 +149,7 @@ export default function LockSettings({ onClose, onSettingsChanged }: LockSetting
 
           <Text style={styles.label}>PIN 확인</Text>
           <TextInput
-            style={styles.pinInput}
+            style={[styles.pinInput, pinError && styles.pinInputError]}
             value={confirmPin}
             onChangeText={setConfirmPin}
             placeholder="PIN을 다시 입력하세요"
@@ -158,6 +157,10 @@ export default function LockSettings({ onClose, onSettingsChanged }: LockSetting
             keyboardType="numeric"
             maxLength={6}
           />
+
+          {pinError ? (
+            <Text style={styles.errorText}>{pinError}</Text>
+          ) : null}
 
         </View>
       </View>
@@ -327,6 +330,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 12,
     fontSize: 16,
+    marginBottom: 8,
+  },
+  pinInputError: {
+    borderColor: '#ff4444',
+    backgroundColor: '#fff5f5',
+  },
+  errorText: {
+    color: '#ff4444',
+    fontSize: 14,
+    marginTop: 4,
     marginBottom: 8,
   },
   saveButton: {
