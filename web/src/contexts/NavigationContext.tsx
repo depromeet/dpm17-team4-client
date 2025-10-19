@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import {
   createContext,
   type ReactNode,
+  useCallback,
   useContext,
   useEffect,
   useRef,
@@ -52,25 +53,28 @@ export const NavigationProvider = ({ children }: NavigationProviderProps) => {
     }
   }, []);
 
-  const handleTabClick = (tabName: Tab) => {
-    setCurrentTab(tabName);
-    switch (tabName) {
-      case 'home':
-        router.push(PAGE_ROUTES.HOME);
-        break;
-      case 'report':
-        router.push(PAGE_ROUTES.REPORT_DAILY);
-        break;
-      case 'calendar':
-        router.push(PAGE_ROUTES.CALENDAR);
-        break;
-      case 'my':
-        router.push(PAGE_ROUTES.MY);
-        break;
-      default:
-        break;
-    }
-  };
+  const handleTabClick = useCallback(
+    (tabName: Tab) => {
+      setCurrentTab(tabName);
+      switch (tabName) {
+        case 'home':
+          router.push(PAGE_ROUTES.HOME);
+          break;
+        case 'report':
+          router.push(PAGE_ROUTES.REPORT_DAILY);
+          break;
+        case 'calendar':
+          router.push(PAGE_ROUTES.CALENDAR);
+          break;
+        case 'my':
+          router.push(PAGE_ROUTES.MY);
+          break;
+        default:
+          break;
+      }
+    },
+    [router]
+  );
 
   return (
     <NavigationContext.Provider
