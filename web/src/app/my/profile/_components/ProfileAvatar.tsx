@@ -54,7 +54,7 @@ export const ProfileAvatar = ({
       <div className="relative">
         <button
           type="button"
-          className="w-[72px] h-[72px] rounded-full overflow-hidden cursor-pointer"
+          className="w-[4.5rem] h-[4.5rem] rounded-full overflow-hidden cursor-pointer"
           onClick={handleAvatarClick}
         >
           <Image
@@ -62,12 +62,12 @@ export const ProfileAvatar = ({
             alt="Profile"
             width={72}
             height={72}
-            className="w-[72px] h-[72px] rounded-full object-cover"
+            className="w-[4.5rem] h-[4.5rem] rounded-full object-cover"
           />
         </button>
         <button
           type="button"
-          className="absolute -bottom-1 -right-1 w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-600 transition-colors"
+          className="absolute -bottom-0.5 -right-0.5 w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-600 transition-colors"
           onClick={handleAvatarClick}
         >
           <CameraIcon className="w-4 h-4 text-white" />

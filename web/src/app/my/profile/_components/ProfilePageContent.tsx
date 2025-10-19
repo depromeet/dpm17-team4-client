@@ -48,7 +48,6 @@ export default function ProfilePageContent() {
       setProfileState((prev) => ({
         ...prev,
         name: userInfo.nickname || '',
-        // userInfo에서 다른 필드들도 가져올 수 있다면 여기에 추가
       }));
     }
   }, [userInfo]);
@@ -107,7 +106,7 @@ export default function ProfilePageContent() {
       <Navigator>
         <Navigator.Center>내 정보 수정</Navigator.Center>
       </Navigator>
-      <div className="pt-[56px]">
+      <div className="pt-14">
         {/* Profile Avatar Section */}
         <ProfileAvatar
           currentImage={profileState.profileImage || undefined}

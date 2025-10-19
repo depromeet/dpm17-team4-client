@@ -78,9 +78,9 @@ export const NameEditBottomSheet = ({
               <button
                 type="button"
                 onClick={handleClear}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition-colors flex items-center justify-center bg-gray-600 rounded-full w-[1.5rem] h-[1.5rem]"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition-colors flex items-center justify-center bg-gray-600 rounded-full w-6 h-6"
               >
-                <XIcon className="w-[1rem] h-[1rem] text-gray-200" />
+                <XIcon className="w-4 h-4 text-gray-200" />
               </button>
             )}
           </div>
