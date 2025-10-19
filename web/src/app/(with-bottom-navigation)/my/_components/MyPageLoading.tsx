@@ -17,9 +17,9 @@ export default function MyPageLoading() {
           <div className="w-5 h-5 bg-gray-700 animate-pulse" />
         </div>
       </div>
-      
+
       <div className="bg-gray-700 h-[8px]" />
-      
+
       {/* Settings Section Loading */}
       <div className="pt-[28px] px-[16px] pb-[24px]">
         <div className="h-4 bg-gray-700 rounded w-16 mb-4 animate-pulse" />
