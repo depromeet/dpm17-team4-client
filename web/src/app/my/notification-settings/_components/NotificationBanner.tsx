@@ -1,6 +1,6 @@
-import type { NotificationItem } from '../constants';
 import Image from 'next/image';
 import AlarmImage from '@/assets/my/alarm.png';
+import type { NotificationItem } from '../constants';
 
 interface NotificationBannerProps {
   item: NotificationItem;

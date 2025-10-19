@@ -42,7 +42,6 @@ export default function NotificationSettingsPage() {
           }
 
           if (item.type === NOTIFICATION_TYPES.TOGGLE) {
-            console.log(item)
             return (
               <NotificationToggle
                 key={item.id}
