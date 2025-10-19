@@ -32,6 +32,7 @@ module.exports = {
         'button-3': ['0.875rem', { lineHeight: '115%', fontWeight: '600' }],
         'button-4': ['0.75rem', { lineHeight: '135%', fontWeight: '600' }],
         'button-5': ['0.6875rem', { lineHeight: '110%', fontWeight: '600' }],
+        'title-main': ['1.375rem', { lineHeight: '135%', fontWeight: '600' }],
       },
       colors: {
         primary: {
