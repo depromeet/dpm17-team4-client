@@ -4,7 +4,9 @@ export const PAGE_ROUTES = {
   AUTH: '/auth',
   REPORT_DAILY: '/report/daily',
   CALENDAR: '/calendar',
-  MY: '/my',
+  MY_PROFILE: '/my/profile',
+  NOTIFICATION_SETTINGS: '/my/notification-settings',
+  TERMS_PRIVACY: '/my/terms-privacy',
 } as const;
 
 // API 라우트 상수들
