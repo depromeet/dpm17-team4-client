@@ -1,11 +1,13 @@
 'use client';
 
 import Image from 'next/image';
-import ChevronRight from '@/assets/home/IC_Chevron_Right.png';
-import defaultProfileImage from '@/assets/my-page/profile-image-1.png';
-import { useUserInfo } from '@/hooks';
-import { useNavigationContext } from '@/contexts/NavigationContext';
+import Link from 'next/link';
 import { useEffect } from 'react';
+import ChevronRight from '@/assets/home/IC_Chevron_Right.png';
+import defaultProfileImage from '@/assets/my/profile-image-1.png';
+import { PAGE_ROUTES } from '@/constants';
+import { useNavigationContext } from '@/contexts/NavigationContext';
+import { useUserInfo } from '@/hooks';
 
 export default function MyPage() {
   const { userInfo } = useUserInfo();
@@ -24,7 +26,10 @@ export default function MyPage() {
 
       {/* Profile Section */}
       <div className="px-[16px] pt-[20px] py-[28px]">
-        <div className="flex items-center space-x-4">
+        <Link
+          href={PAGE_ROUTES.MY_PROFILE}
+          className="flex items-center space-x-4 cursor-pointer"
+        >
           <div className="w-[48px] h-[48px] rounded-full flex items-center justify-center">
             <Image
               src={defaultProfileImage}
@@ -39,7 +44,7 @@ export default function MyPage() {
             <p className="text-sm text-gray-400">example@example.com</p>
           </div>
           <Image src={ChevronRight} alt="chevron right" className="w-5 h-5" />
-        </div>
+        </Link>
       </div>
       <div className="bg-gray-700 h-[8px]" />
       {/* Settings Section */}
@@ -47,15 +52,20 @@ export default function MyPage() {
         <div className="">
           <h3 className="text-sm text-gray-400 mb-4">설정</h3>
           <div className="space-y-4">
-            <div className="flex items-center justify-between py-2">
+            <Link
+              href={PAGE_ROUTES.NOTIFICATION_SETTINGS}
+              className="flex items-center justify-between py-2 cursor-pointer"
+            >
               <span className="text-body2-sb">알림 설정</span>
               <Image
                 src={ChevronRight}
                 alt="chevron right"
                 className="w-5 h-5"
               />
-            </div>
-            <div className="flex items-center justify-between py-2">
+            </Link>
+            <div
+              className="flex items-center justify-between py-2 cursor-pointer"
+            >
               <span className="text-body2-sb">앱 잠금</span>
               <div className="flex items-center space-x-2">
                 <span className="text-sm text-gray-400">OFF</span>
@@ -75,15 +85,20 @@ export default function MyPage() {
         <div className="border-t border-gray-700 pt-4">
           <h3 className="text-sm text-gray-400 mb-4">앱 정보</h3>
           <div className="space-y-4">
-            <div className="flex items-center justify-between py-2">
+            <Link
+              href={PAGE_ROUTES.TERMS_PRIVACY}
+              className="flex items-center justify-between py-2 cursor-pointer"
+            >
               <span className="text-body2-sb">약관 및 개인정보</span>
               <Image
                 src={ChevronRight}
                 alt="chevron right"
                 className="w-5 h-5"
               />
-            </div>
-            <div className="flex items-center justify-between py-2">
+            </Link>
+            <div
+              className="flex items-center justify-between py-2 cursor-pointer"
+            >
               <span className="text-body2-sb">1.0 버전</span>
               <div className="flex items-center space-x-2">
                 <span className="text-body3-m text-white">업데이트</span>
