@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import {
   createContext,
   type ReactNode,
+  useCallback,
   useContext,
   useEffect,
   useRef,
@@ -52,7 +53,7 @@ export const NavigationProvider = ({ children }: NavigationProviderProps) => {
     }
   }, []);
 
-  const handleTabClick = (tabName: Tab) => {
+  const handleTabClick = useCallback((tabName: Tab) => {
     setCurrentTab(tabName);
     switch (tabName) {
       case 'home':
@@ -70,7 +71,7 @@ export const NavigationProvider = ({ children }: NavigationProviderProps) => {
       default:
         break;
     }
-  };
+  }, [router]);
 
   return (
     <NavigationContext.Provider
