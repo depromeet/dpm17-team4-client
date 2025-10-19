@@ -11,6 +11,7 @@ import {
 } from './constants';
 
 export default function NotificationSettingsPage() {
+  //TODO(seieun): 알림 토글 설정 기능 연동 필요
   const [notifications, setNotifications] =
     useState<NotificationItem[]>(NOTIFICATION_ITEMS);
 

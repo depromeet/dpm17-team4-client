@@ -1,5 +1,6 @@
-import { Bell } from 'lucide-react';
 import type { NotificationItem } from '../constants';
+import Image from 'next/image';
+import AlarmImage from '@/assets/my/alarm.png';
 
 interface NotificationBannerProps {
   item: NotificationItem;
@@ -12,9 +13,7 @@ export function NotificationBanner({
 }: NotificationBannerProps) {
   return (
     <div className="bg-gray-800 rounded-lg p-4 mb-6 flex items-center space-x-4">
-      <div className="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center flex-shrink-0">
-        <Bell className="w-6 h-6 text-black" />
-      </div>
+      <Image src={AlarmImage} alt="alarm" width={24} height={24} />
       <div className="flex-1">
         <h3 className="text-boy3-sb font-semibold text-white mb-1">
           {item.title}
