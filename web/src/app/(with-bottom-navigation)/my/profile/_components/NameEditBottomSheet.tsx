@@ -1,7 +1,7 @@
 'use client';
 
-import { X } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { XIcon } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { BottomSheet } from '@/components/BottomSheet';
 
 interface NameEditBottomSheetProps {
@@ -62,7 +62,7 @@ export const NameEditBottomSheet = ({
         <h2 className="text-lg font-semibold text-white mb-6 text-left">
           변경할 이름을 입력해주세요
         </h2>
-        
+
         <div className="space-y-4">
           {/* Input Field */}
           <div className="relative">
@@ -72,28 +72,29 @@ export const NameEditBottomSheet = ({
               onChange={handleNameChange}
               onKeyPress={handleKeyPress}
               placeholder="이름을 입력하세요"
-              className="w-full px-4 py-3 border-b border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none"
-              autoFocus
+              className="w-full px-4 py-3 border-b border-gray-600  text-white placeholder-gray-400"
             />
             {name && (
               <button
+                type="button"
                 onClick={handleClear}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition-colors flex items-center justify-center bg-gray-600 rounded-full w-[1.5rem] h-[1.5rem]"
               >
-                <X className="w-5 h-5" />
+                <XIcon className="w-[1rem] h-[1rem] text-gray-200" />
               </button>
             )}
           </div>
-          
+
           {/* Character Count */}
           <div className="text-right">
             <span className="text-sm text-gray-400">
               {name.length}/{MAX_NAME_LENGTH}
             </span>
           </div>
-          
+
           {/* Save Button */}
           <button
+            type="button"
             onClick={handleSave}
             disabled={!isValid || !name.trim()}
             className={`w-full py-3 px-4 rounded-lg font-medium transition-colors ${

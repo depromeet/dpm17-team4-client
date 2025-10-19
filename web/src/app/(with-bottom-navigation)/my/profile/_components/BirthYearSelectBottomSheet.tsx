@@ -32,11 +32,12 @@ export const BirthYearSelectBottomSheet = ({
         <h2 className="text-lg font-semibold text-white mb-6 text-left">
           출생 연도를 선택해주세요
         </h2>
-        
+
         <div className="max-h-80 overflow-y-auto space-y-2">
           {BIRTH_YEAR_OPTIONS.map((option) => (
             <button
               key={option.value}
+              type="button"
               onClick={() => handleYearSelect(option.value)}
               className="w-full flex items-center justify-between py-3 rounded-lg hover:bg-gray-700 transition-colors"
             >

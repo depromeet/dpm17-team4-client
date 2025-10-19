@@ -10,11 +10,13 @@ interface ProfileAvatarProps {
   onImageChange?: (imageUrl: string) => void;
 }
 
-export const ProfileAvatar = ({ 
-  currentImage, 
-  onImageChange 
+export const ProfileAvatar = ({
+  currentImage,
+  onImageChange,
 }: ProfileAvatarProps) => {
-  const [previewImage, setPreviewImage] = useState<string | null>(currentImage || null);
+  const [previewImage, setPreviewImage] = useState<string | null>(
+    currentImage || null
+  );
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleAvatarClick = () => {
@@ -50,7 +52,8 @@ export const ProfileAvatar = ({
   return (
     <div className="flex justify-center py-8">
       <div className="relative">
-        <div 
+        <button
+          type="button"
           className="w-24 h-24 rounded-full overflow-hidden cursor-pointer"
           onClick={handleAvatarClick}
         >
@@ -61,13 +64,14 @@ export const ProfileAvatar = ({
             height={96}
             className="w-24 h-24 rounded-full object-cover"
           />
-        </div>
-        <div 
+        </button>
+        <button
+          type="button"
           className="absolute -bottom-1 -right-1 w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-600 transition-colors"
           onClick={handleAvatarClick}
         >
           <CameraIcon className="w-4 h-4 text-white" />
-        </div>
+        </button>
         <input
           ref={fileInputRef}
           type="file"
@@ -78,4 +82,4 @@ export const ProfileAvatar = ({
       </div>
     </div>
   );
-}
+};

@@ -1,16 +1,16 @@
 'use client';
 
 import Image from 'next/image';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import ChevronRight from '@/assets/home/IC_Chevron_Right.png';
 import AppleIcon from '@/assets/my/apple-login.png';
 import KakaoIcon from '@/assets/my/kakao-login.png';
 import { Navigator } from '@/components/Navigator';
 import { useUserInfo } from '@/hooks';
-import { ProfileAvatar } from './_components/ProfileAvatar';
+import { BirthYearSelectBottomSheet } from './BirthYearSelectBottomSheet';
 import { GenderSelectBottomSheet } from './GenderSelectBottomSheet';
-import { BirthYearSelectBottomSheet } from './_components/BirthYearSelectBottomSheet';
-import { NameEditBottomSheet } from './_components/NameEditBottomSheet';
+import { NameEditBottomSheet } from './NameEditBottomSheet';
+import { ProfileAvatar } from './ProfileAvatar';
 
 interface ProfileState {
   name: string;
@@ -27,14 +27,14 @@ interface BottomSheetState {
 
 export default function ProfilePageContent() {
   const { userInfo } = useUserInfo();
-  
+
   const [profileState, setProfileState] = useState<ProfileState>({
     name: '',
     birthYear: '2000',
     gender: 'male',
     profileImage: null,
   });
-  
+
   const [bottomSheetState, setBottomSheetState] = useState<BottomSheetState>({
     isGenderOpen: false,
     isBirthYearOpen: false,
@@ -44,7 +44,7 @@ export default function ProfilePageContent() {
   // userInfo가 변경될 때마다 profileState 업데이트
   useEffect(() => {
     if (userInfo) {
-      setProfileState(prev => ({
+      setProfileState((prev) => ({
         ...prev,
         name: userInfo.nickname || '',
         // userInfo에서 다른 필드들도 가져올 수 있다면 여기에 추가
@@ -53,7 +53,7 @@ export default function ProfilePageContent() {
   }, [userInfo]);
 
   const handleImageChange = (imageUrl: string) => {
-    setProfileState(prev => ({
+    setProfileState((prev) => ({
       ...prev,
       profileImage: imageUrl,
     }));
@@ -61,29 +61,29 @@ export default function ProfilePageContent() {
   };
 
   const handleGenderClick = () => {
-    setBottomSheetState(prev => ({ ...prev, isGenderOpen: true }));
+    setBottomSheetState((prev) => ({ ...prev, isGenderOpen: true }));
   };
 
   const handleBirthYearClick = () => {
-    setBottomSheetState(prev => ({ ...prev, isBirthYearOpen: true }));
+    setBottomSheetState((prev) => ({ ...prev, isBirthYearOpen: true }));
   };
 
   const handleNameClick = () => {
-    setBottomSheetState(prev => ({ ...prev, isNameEditOpen: true }));
+    setBottomSheetState((prev) => ({ ...prev, isNameEditOpen: true }));
   };
 
   const handleGenderSelect = (gender: string) => {
-    setProfileState(prev => ({ ...prev, gender }));
+    setProfileState((prev) => ({ ...prev, gender }));
     console.log('선택된 성별:', gender);
   };
 
   const handleBirthYearSelect = (year: string) => {
-    setProfileState(prev => ({ ...prev, birthYear: year }));
+    setProfileState((prev) => ({ ...prev, birthYear: year }));
     console.log('선택된 출생연도:', year);
   };
 
   const handleNameChange = (name: string) => {
-    setProfileState(prev => ({ ...prev, name }));
+    setProfileState((prev) => ({ ...prev, name }));
     console.log('변경된 이름:', name);
   };
 
@@ -108,7 +108,7 @@ export default function ProfilePageContent() {
       </Navigator>
       <div className="pt-[56px]">
         {/* Profile Avatar Section */}
-        <ProfileAvatar 
+        <ProfileAvatar
           currentImage={profileState.profileImage || undefined}
           onImageChange={handleImageChange}
         />
@@ -116,8 +116,9 @@ export default function ProfilePageContent() {
         {/* Personal Information Section */}
         <div className="px-4 py-4">
           <div className="space-y-4">
-            <div 
-              className="flex items-center justify-between py-3 cursor-pointer"
+            <button
+              type="button"
+              className="flex items-center justify-between py-3 cursor-pointer w-full"
               onClick={handleNameClick}
             >
               <span className="text-body2-sb">이름</span>
@@ -131,8 +132,12 @@ export default function ProfilePageContent() {
                   className="w-5 h-5"
                 />
               </div>
-            </div>
-            <div className="flex items-center justify-between py-3">
+            </button>
+            <button
+              type="button"
+              className="flex items-center justify-between py-3 cursor-pointer w-full"
+              onClick={handleNameClick}
+            >
               <span className="text-body2-sb">연결된 계정</span>
               <div className="flex items-center space-x-2">
                 {userInfo?.providerType === 'KAKAO' ? (
@@ -144,9 +149,10 @@ export default function ProfilePageContent() {
                   example@example.com
                 </span>
               </div>
-            </div>
-            <div 
-              className="flex items-center justify-between py-3 cursor-pointer"
+            </button>
+            <button
+              type="button"
+              className="flex items-center justify-between py-3 cursor-pointer w-full"
               onClick={handleBirthYearClick}
             >
               <span className="text-body2-sb">출생 연도</span>
@@ -160,9 +166,10 @@ export default function ProfilePageContent() {
                   className="w-5 h-5"
                 />
               </div>
-            </div>
-            <div 
-              className="flex items-center justify-between py-3 cursor-pointer"
+            </button>
+            <button
+              type="button"
+              className="flex items-center justify-between py-3 cursor-pointer w-full"
               onClick={handleGenderClick}
             >
               <span className="text-body2-sb">성별</span>
@@ -176,11 +183,14 @@ export default function ProfilePageContent() {
                   className="w-5 h-5"
                 />
               </div>
-            </div>
+            </button>
           </div>
         </div>
 
-        {/* Account Actions Section */}
+        {/* Account Actions Section 
+        TODO: 회원 탈퇴 기능 추가
+        TODO: 로그아웃 기능 추가
+        */}
         <div className="px-4 py-4">
           <div className="border-t border-gray-700 pt-4">
             <div className="space-y-4">
@@ -208,7 +218,9 @@ export default function ProfilePageContent() {
       {/* Gender Select Bottom Sheet */}
       <GenderSelectBottomSheet
         isOpen={bottomSheetState.isGenderOpen}
-        onClose={() => setBottomSheetState(prev => ({ ...prev, isGenderOpen: false }))}
+        onClose={() =>
+          setBottomSheetState((prev) => ({ ...prev, isGenderOpen: false }))
+        }
         currentGender={profileState.gender}
         onGenderSelect={handleGenderSelect}
       />
@@ -216,7 +228,9 @@ export default function ProfilePageContent() {
       {/* Birth Year Select Bottom Sheet */}
       <BirthYearSelectBottomSheet
         isOpen={bottomSheetState.isBirthYearOpen}
-        onClose={() => setBottomSheetState(prev => ({ ...prev, isBirthYearOpen: false }))}
+        onClose={() =>
+          setBottomSheetState((prev) => ({ ...prev, isBirthYearOpen: false }))
+        }
         currentYear={profileState.birthYear}
         onYearSelect={handleBirthYearSelect}
       />
@@ -224,7 +238,9 @@ export default function ProfilePageContent() {
       {/* Name Edit Bottom Sheet */}
       <NameEditBottomSheet
         isOpen={bottomSheetState.isNameEditOpen}
-        onClose={() => setBottomSheetState(prev => ({ ...prev, isNameEditOpen: false }))}
+        onClose={() =>
+          setBottomSheetState((prev) => ({ ...prev, isNameEditOpen: false }))
+        }
         currentName={profileState.name}
         onNameChange={handleNameChange}
       />
