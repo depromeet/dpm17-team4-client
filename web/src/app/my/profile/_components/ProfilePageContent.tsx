@@ -26,6 +26,7 @@ interface BottomSheetState {
 }
 
 export default function ProfilePageContent() {
+  //TODO(seieun): userInfo 에서 email, gender, birthyear 추가하도록 수정
   const { userInfo } = useUserInfo();
 
   const [profileState, setProfileState] = useState<ProfileState>({

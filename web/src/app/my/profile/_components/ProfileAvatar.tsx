@@ -54,15 +54,15 @@ export const ProfileAvatar = ({
       <div className="relative">
         <button
           type="button"
-          className="w-24 h-24 rounded-full overflow-hidden cursor-pointer"
+          className="w-[72px] h-[72px] rounded-full overflow-hidden cursor-pointer"
           onClick={handleAvatarClick}
         >
           <Image
             src={previewImage || defaultProfileImage}
             alt="Profile"
-            width={96}
-            height={96}
-            className="w-24 h-24 rounded-full object-cover"
+            width={72}
+            height={72}
+            className="w-[72px] h-[72px] rounded-full object-cover"
           />
         </button>
         <button
