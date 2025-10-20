@@ -1,16 +1,19 @@
 'use client';
 
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { type FieldErrors, useFormContext } from 'react-hook-form';
 import { BottomBtnBar } from '@/components';
+import { QUERY_KEYS } from '@/constants';
 import { useDefecationMutation } from '@/hooks/mutations';
 import { DEFECATION_TIME_TAKEN_KEYS, DEFECATION_TRY } from '../constants';
 import type { DefecationFormValues } from '../schemas';
 
 export const DefecationSubmit = () => {
+  const router = useRouter();
   const { handleSubmit } = useFormContext<DefecationFormValues>();
   const { mutate: createDefecation } = useDefecationMutation();
-  const router = useRouter();
+  const queryClient = useQueryClient();
 
   const onSubmit = (data: DefecationFormValues) => {
     if (data.selectedPain === undefined) {
@@ -44,6 +47,7 @@ export const DefecationSubmit = () => {
       },
       {
         onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: QUERY_KEYS.REPORT });
           router.push('/defecation-complete');
         },
         onError: (error) => {

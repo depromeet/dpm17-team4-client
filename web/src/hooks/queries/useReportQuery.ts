@@ -8,7 +8,8 @@ export const useReportQuery = () => {
     queryKey: QUERY_KEYS.REPORT,
     queryFn: async () => {
       const response = await reportApi.reportDailyData();
-      return response.data.data; // API 응답의 data.data 필드를 반환
+      return response.data.data;
     },
+    refetchOnMount: 'always',
   });
 };
