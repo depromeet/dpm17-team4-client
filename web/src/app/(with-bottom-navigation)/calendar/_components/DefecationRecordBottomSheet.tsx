@@ -15,6 +15,7 @@ interface DefecationRecordBottomSheetProps {
     id: string;
     time: string;
   }>;
+  toiletRecordId: number;
 }
 
 export const DefecationRecordBottomSheet = ({
@@ -23,6 +24,7 @@ export const DefecationRecordBottomSheet = ({
   date,
   hasRecords,
   records = [],
+  toiletRecordId,
 }: DefecationRecordBottomSheetProps) => {
   const router = useRouter();
 
@@ -35,7 +37,7 @@ export const DefecationRecordBottomSheet = ({
 
   const handleRecordSelect = (time: string) => {
     // NOTE(taehyeon): 서버 api 구현 시 toiletId 를 전달하도록 수정 필요
-    router.push(`${path}?time=${time}`);
+    router.push(`${path}?time=${time}&toiletRecordId=${toiletRecordId}`);
     onClose();
   };
 
