@@ -100,7 +100,6 @@ export default function ProfilePageContent() {
     }
   };
 
-  console.log(userInfo);
   return (
     <div className="min-h-screen bg-gray-900 text-white">
       <Navigator>
@@ -136,7 +135,6 @@ export default function ProfilePageContent() {
             <button
               type="button"
               className="flex items-center justify-between py-3 cursor-pointer w-full"
-              onClick={handleNameClick}
             >
               <span className="text-body2-sb">연결된 계정</span>
               <div className="flex items-center space-x-2">
