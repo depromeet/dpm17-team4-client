@@ -136,14 +136,14 @@ function AuthContent() {
         alt="배경 그라디언트2"
         width={345}
         height={345}
-        className="absolute z-10 top-[207.49px] left-[67.49px]"
+        className="absolute z-10 top-[207.49px] right-0"
       />
       <Image
         src={bgGradient3}
         width={284}
         height={284}
         alt="배경 그라디언트3"
-        className="absolute z-10 top-[496px] left-[195px]"
+        className="absolute z-10 top-[496px] right-0"
       />
 
       <div className="relative z-10">
