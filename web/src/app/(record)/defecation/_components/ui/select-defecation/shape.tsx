@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { cn } from '@/utils/utils-cn';
 import { DEFECATION_SHAPE } from '../../constants';
@@ -10,12 +10,20 @@ import { getEmojiShapeIcon, getRealShapeIcon } from '../../utils';
 import { SelectButton, Switch } from '../common';
 
 export default function Shape({
+  shape,
   onShapeSelect,
 }: {
+  shape?: string;
   onShapeSelect?: () => void;
 }) {
   const { control, setValue } = useFormContext<DefecationFormValues>();
   const [showType, setShowType] = useState<'EMOJI' | 'REAL'>('EMOJI');
+
+  useEffect(() => {
+    if (shape) {
+      setValue('selectedShape', shape);
+    }
+  }, [shape, setValue]);
 
   return (
     <>
