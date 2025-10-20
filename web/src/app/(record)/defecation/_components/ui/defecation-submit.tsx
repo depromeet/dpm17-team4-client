@@ -1,18 +1,27 @@
 'use client';
 
 import { useQueryClient } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
+import { QUERY_KEYS } from '@/constants';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { type FieldErrors, useFormContext } from 'react-hook-form';
 import { BottomBtnBar } from '@/components';
-import { QUERY_KEYS } from '@/constants';
-import { useDefecationMutation } from '@/hooks/mutations';
-import { DEFECATION_TIME_TAKEN_KEYS, DEFECATION_TRY } from '../constants';
+import {
+  useDefecationMutation,
+  useDefecationUpdateMutation,
+} from '@/hooks/mutations';
+import { DEFECATION_TRY } from '../constants';
 import type { DefecationFormValues } from '../schemas';
+import { getToiletDuration } from '../utils/utils-getToiletDuration';
 
 export const DefecationSubmit = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const isEdit = searchParams.get('toiletRecordId') !== null;
+
   const { handleSubmit } = useFormContext<DefecationFormValues>();
+
   const { mutate: createDefecation } = useDefecationMutation();
+  const { mutate: updateDefecation } = useDefecationUpdateMutation();
   const queryClient = useQueryClient();
 
   const onSubmit = (data: DefecationFormValues) => {
@@ -20,32 +29,35 @@ export const DefecationSubmit = () => {
       return;
     }
 
-    let toiletDuration = 0;
-    if (
-      data.selectedTimeTaken === DEFECATION_TIME_TAKEN_KEYS.LESS_THAN_5_MINUTES
-    ) {
-      toiletDuration = 5;
-    } else if (
-      data.selectedTimeTaken === DEFECATION_TIME_TAKEN_KEYS.LESS_THAN_10_MINUTES
-    ) {
-      toiletDuration = 10;
-    } else if (
-      data.selectedTimeTaken === DEFECATION_TIME_TAKEN_KEYS.MORE_THAN_10_MINUTES
-    ) {
-      toiletDuration = 15;
-    }
+    const toiletDuration = getToiletDuration(data.selectedTimeTaken);
 
-    createDefecation(
-      {
-        occurredAt: data.selectedWhen.toISOString(),
-        isSuccessful: data.selectedTry === DEFECATION_TRY.DID_POO,
-        color: data.selectedColor || '',
-        shape: data.selectedShape || '',
-        pain: data.selectedPain,
-        duration: toiletDuration,
-        note: data.selectedOptional || '',
-      },
-      {
+    const defecationData = {
+      occurredAt: data.selectedWhen.toISOString(),
+      isSuccessful: data.selectedTry === DEFECATION_TRY.DID_POO,
+      color: data.selectedColor || '',
+      shape: data.selectedShape || '',
+      pain: data.selectedPain,
+      duration: toiletDuration,
+      note: data.selectedOptional || '',
+    };
+
+    if (isEdit) {
+      updateDefecation(
+        {
+          toiletRecordId: Number(searchParams.get('toiletRecordId')),
+          ...defecationData,
+        },
+        {
+          onSuccess: () => {
+            router.push('/defecation-complete');
+          },
+          onError: (error) => {
+            alert(error.message);
+          },
+        }
+      );
+    } else {
+      createDefecation(defecationData, {
         onSuccess: () => {
           queryClient.invalidateQueries({ queryKey: QUERY_KEYS.REPORT });
           router.push('/defecation-complete');
@@ -53,8 +65,8 @@ export const DefecationSubmit = () => {
         onError: (error) => {
           alert(error.message);
         },
-      }
-    );
+      });
+    }
   };
 
   const onError = (errors: FieldErrors<DefecationFormValues>) => {
@@ -64,5 +76,10 @@ export const DefecationSubmit = () => {
     alert(`${firstError} 필드를 확인해주세요.`);
   };
 
-  return <BottomBtnBar onSubmit={handleSubmit(onSubmit, onError)} />;
+  return (
+    <BottomBtnBar
+      text={isEdit ? '수정' : '다음'}
+      onSubmit={handleSubmit(onSubmit, onError)}
+    />
+  );
 };
