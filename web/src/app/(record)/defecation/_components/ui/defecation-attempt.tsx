@@ -1,17 +1,21 @@
 'use client';
 
+import { useEffect } from 'react';
 import { Controller, type FieldValues, useFormContext } from 'react-hook-form';
+import type { DefecationDataResponseDto } from '@/types/dto/defecation.dto';
 import { cn } from '@/utils/utils-cn';
 import { DEFECATION_TRY, SCROLL_DELAY } from '../constants';
 import type { DefecationFormValues } from '../schemas';
 
 interface DefecationAttemptProps {
+  data?: DefecationDataResponseDto;
   colorRef?: React.RefObject<HTMLDivElement | null>;
   onOpenColorSection?: () => void;
   onCloseColorSection?: () => void;
 }
 
 export const DefecationAttempt = ({
+  data,
   colorRef,
   onOpenColorSection,
   onCloseColorSection,
@@ -19,6 +23,17 @@ export const DefecationAttempt = ({
   const { control, setValue, watch, resetField } =
     useFormContext<DefecationFormValues>();
   const selectedTry = watch('selectedTry');
+
+  useEffect(() => {
+    if (data) {
+      setValue(
+        'selectedTry',
+        data.data.isSuccessful
+          ? DEFECATION_TRY.DID_POO
+          : DEFECATION_TRY.DID_NOT_POO
+      );
+    }
+  }, [data, setValue]);
 
   const handleClick = (value: string, field: FieldValues) => {
     const newValue = selectedTry === value ? '' : value;

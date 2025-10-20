@@ -1,6 +1,7 @@
 'use client';
 
 import { forwardRef, useCallback, useImperativeHandle, useState } from 'react';
+import type { DefecationDataResponseDto } from '@/types/dto/defecation.dto';
 import { DEFECATION_DETAIL } from '../constants';
 import { useScrollToSection } from '../hooks';
 import type { DefecationTryDetailKey } from '../types';
@@ -15,6 +16,7 @@ import {
 } from './select-defecation';
 
 interface DefecationDetailProps {
+  data?: DefecationDataResponseDto;
   colorRef?: (el: HTMLDivElement | null) => void;
 }
 
@@ -26,7 +28,7 @@ export interface DefecationDetailRef {
 export const DefecationDetail = forwardRef<
   DefecationDetailRef,
   DefecationDetailProps
->(({ colorRef }, ref) => {
+>(({ data, colorRef }, ref) => {
   const [openId, setOpenId] = useState<DefecationTryDetailKey | null>(null);
   const { setRef, scrollToSection } =
     useScrollToSection<DefecationTryDetailKey>();
@@ -84,16 +86,34 @@ export const DefecationDetail = forwardRef<
   const renderSelectSection = (value: DefecationTryDetailKey) => {
     switch (value) {
       case 'COLOR':
-        return <DefecationColor onColorSelect={onColorSelect} />;
+        return (
+          <DefecationColor
+            color={data?.data.color}
+            onColorSelect={onColorSelect}
+          />
+        );
       case 'SHAPE':
-        return <DefecationShape onShapeSelect={onShapeSelect} />;
+        return (
+          <DefecationShape
+            shape={data?.data.shape}
+            onShapeSelect={onShapeSelect}
+          />
+        );
       case 'PAIN':
-        return <DefecationPain onPainSelect={onPainSelect} />;
+        return (
+          <DefecationPain pain={data?.data.pain} onPainSelect={onPainSelect} />
+        );
       case 'TIME_TAKEN':
-        return <DefecationTimeTaken onTimeTakenSelect={onTimeTakenSelect} />;
+        return (
+          <DefecationTimeTaken
+            timeTaken={data?.data.duration}
+            onTimeTakenSelect={onTimeTakenSelect}
+          />
+        );
       case 'OPTIONAL':
         return (
           <DefecationOptional
+            note={data?.data.note}
             isOpen={openId === 'OPTIONAL'}
             onOptionalSelect={onOptionalSelect}
           />
