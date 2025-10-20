@@ -2,13 +2,13 @@ export default function ProfilePageLoading() {
   return (
     <div className="min-h-screen bg-gray-900 text-white">
       {/* Navigator Loading */}
-      <div className="fixed top-0 left-0 w-full h-[56px] z-10 bg-gray-900 text-white p-4 flex shrink-0">
+      <div className="fixed top-0 left-0 w-full h-14 z-10 bg-gray-900 text-white p-4 flex shrink-0">
         <div className="flex-1 flex justify-center items-center">
           <div className="h-6 bg-gray-700 rounded w-24 animate-pulse" />
         </div>
       </div>
 
-      <div className="pt-[56px]">
+      <div className="pt-14">
         {/* Profile Avatar Section Loading */}
         <div className="flex justify-center py-8">
           <div className="relative">
