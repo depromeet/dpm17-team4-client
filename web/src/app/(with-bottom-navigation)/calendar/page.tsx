@@ -194,18 +194,17 @@ export default function CalendarPage() {
             <DefecationRecordBottomSheet
               isOpen={isDefecationRecordBottomSheetOpen}
               onClose={() => setIsDefecationRecordBottomSheetOpen(false)}
-              date={new Date(2025, 8, 14)}
+              date={selectedDate ?? new Date()}
               hasRecords={hasRecords}
               records={hasRecords ? records : []}
             />
           )}
           <button
             type="button"
-            // NOTE(taehyeon): 서버 api 구현 시 activityId 를 전달하도록 수정 필요
             onClick={() => {
               if (selectedDate) {
                 router.push(
-                  `/lifestyle?year=${selectedDate.getFullYear()}&month=${selectedDate.getMonth() + 1}&day=${selectedDate.getDate()}&activityId=1`
+                  `/lifestyle?year=${selectedDate.getFullYear()}&month=${selectedDate.getMonth() + 1}&day=${selectedDate.getDate()}`
                 );
               }
             }}
