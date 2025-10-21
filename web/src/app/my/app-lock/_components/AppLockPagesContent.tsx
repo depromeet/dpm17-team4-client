@@ -51,7 +51,6 @@ export default function AppLockPagesContent() {
       const isFirst = !!localStorage.getItem('password');
       setHasPassword(isFirst);
     }
-    console.log(hasPassword, '비밀번홍!');
     const toastMessage = searchParams.get('toastMessage');
     const toastType = searchParams.get('toastType');
 
