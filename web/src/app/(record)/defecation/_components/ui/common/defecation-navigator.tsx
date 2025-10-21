@@ -34,14 +34,16 @@ export const DefecationNavigator = () => {
           closeModal();
 
           queryClient.invalidateQueries({
-            queryKey: [...QUERY_KEYS.DEFECATION, toiletRecordId],
+            queryKey: [QUERY_KEYS.DEFECATION],
           });
           queryClient.invalidateQueries({ queryKey: QUERY_KEYS.REPORT });
 
           router.push('/calendar');
         },
         onError: (error) => {
+          closeModal();
           console.error(error);
+          alert('삭제 중 오류가 발생했습니다');
         },
       }
     );
@@ -66,7 +68,10 @@ export const DefecationNavigator = () => {
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <ModalContent
           onClose={closeModal}
-          onDelete={() => handleDelete(Number(toiletRecordId ?? 0))}
+          onDelete={() => {
+            if (!toiletRecordId) return;
+            handleDelete(Number(toiletRecordId));
+          }}
         />
       </Modal>
     </>

@@ -15,7 +15,7 @@ export default function Pain({
   const { control, setValue } = useFormContext<DefecationFormValues>();
 
   useEffect(() => {
-    if (pain) {
+    if (pain !== undefined) {
       setValue('selectedPain', pain);
     }
   }, [pain, setValue]);
