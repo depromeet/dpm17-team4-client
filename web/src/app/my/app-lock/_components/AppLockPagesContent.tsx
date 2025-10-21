@@ -19,12 +19,12 @@ export default function AppLockPagesContent() {
   const handleAppLockToggle = () => {
     onAppLock();
     const newState = !isAppLock;
-    
+
     if (newState) {
       router.push(PAGE_ROUTES.PASSWORD_SETTINGS);
       return;
     }
-    
+
     toast.success(
       newState ? '앱 잠금 화면을 켰습니다.' : '앱 잠금 화면을 껐습니다.',
       {
@@ -70,21 +70,21 @@ export default function AppLockPagesContent() {
             <div>앱 잠금 화면</div>
             <Toggle isOn={isAppLock} onSwitch={handleAppLockToggle} />
           </li>
-              <li className="text-body2-sb text-white flex justify-between items-center">
-                <div>비밀번호 변경</div>
-                <button
-                  type="button"
-                  className="p-2 -mr-2"
-                  aria-label="비밀번호 설정으로 이동"
-                  onClick={handleGoSettingsPassword}
-                >
-                  <ChevronIcon type="right" />
-                </button>
-              </li>
-              <li className="text-body2-sb text-white flex justify-between items-center">
-                <div>Face ID 사용</div>
-                <Toggle isOn={isFaceID} onSwitch={handleFaceIDToggle} />
-              </li>
+          <li className="text-body2-sb text-white flex justify-between items-center">
+            <div>비밀번호 변경</div>
+            <button
+              type="button"
+              className="p-2 -mr-2"
+              aria-label="비밀번호 설정으로 이동"
+              onClick={handleGoSettingsPassword}
+            >
+              <ChevronIcon type="right" />
+            </button>
+          </li>
+          <li className="text-body2-sb text-white flex justify-between items-center">
+            <div>Face ID 사용</div>
+            <Toggle isOn={isFaceID} onSwitch={handleFaceIDToggle} />
+          </li>
         </ul>
       </div>
     </div>
