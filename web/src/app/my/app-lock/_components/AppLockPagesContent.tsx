@@ -9,8 +9,6 @@ import { useToggle } from '@/hooks/useToggle';
 
 export default function AppLockPagesContent() {
   const { isToggleOn: isFaceID } = useToggle();
-
-  const [hasPassword, setHasPassword] = useState<boolean>();
   const { isToggleOn: isAppLock, handleSwitchToggle: onAppLock } = useToggle();
 
   const router = useRouter();
@@ -20,13 +18,15 @@ export default function AppLockPagesContent() {
   };
   const handleAppLockToggle = () => {
     onAppLock();
-    if (!isAppLock && !hasPassword) {
+    const newState = !isAppLock;
+    
+    if (newState) {
       router.push(PAGE_ROUTES.PASSWORD_SETTINGS);
-    } else {
-      console.log('앱 잠금 기능을 비활성화합니다.');
+      return;
     }
+    
     toast.success(
-      !isAppLock ? '앱 잠금 화면을 켰습니다.' : '앱 잠금 화면을 껐습니다.',
+      newState ? '앱 잠금 화면을 켰습니다.' : '앱 잠금 화면을 껐습니다.',
       {
         position: 'top-center',
         style: {
@@ -47,10 +47,6 @@ export default function AppLockPagesContent() {
   };
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const isFirst = !!localStorage.getItem('password');
-      setHasPassword(isFirst);
-    }
     const toastMessage = searchParams.get('toastMessage');
     const toastType = searchParams.get('toastType');
 
@@ -74,8 +70,6 @@ export default function AppLockPagesContent() {
             <div>앱 잠금 화면</div>
             <Toggle isOn={isAppLock} onSwitch={handleAppLockToggle} />
           </li>
-          {hasPassword && (
-            <>
               <li className="text-body2-sb text-white flex justify-between items-center">
                 <div>비밀번호 변경</div>
                 <button
@@ -91,8 +85,6 @@ export default function AppLockPagesContent() {
                 <div>Face ID 사용</div>
                 <Toggle isOn={isFaceID} onSwitch={handleFaceIDToggle} />
               </li>
-            </>
-          )}
         </ul>
       </div>
     </div>

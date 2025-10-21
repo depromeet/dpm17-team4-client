@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { Navigator } from '@/components';
 import { PAGE_ROUTES } from '@/constants';
-import { PasswordIndicator } from './_components/passoword-indicator';
+import { PasswordIndicator } from './_components/password-indicator';
 import PasswordKeypad from './_components/password-keypad';
 
 const MAX_PASSWORD_LENGTH = 4;

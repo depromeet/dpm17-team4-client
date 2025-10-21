@@ -2,7 +2,7 @@ import { ChevronIcon } from '@/components';
 import { cn } from '@/utils/utils-cn';
 import type { Step } from '../page';
 
-interface PasswrodIndicatorProps {
+interface PasswordIndicatorProps {
   currentPassword: string;
   title: () => string;
   onReset: () => void;
@@ -14,7 +14,7 @@ export const PasswordIndicator = ({
   title,
   onReset,
   step,
-}: PasswrodIndicatorProps) => {
+}: PasswordIndicatorProps) => {
   const length = 4;
   const filled = Math.min(currentPassword.length, length);
 
