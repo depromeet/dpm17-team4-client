@@ -10,11 +10,20 @@ export const Toggle = ({ isOn, onSwitch }: ToggleProps) => {
 
   return (
     <div
+      role="switch"
+      aria-checked={isOn}
+      tabIndex={0}
+      onClick={onSwitch}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onSwitch();
+        }
+      }}
       className={`w-[42px] h-6 rounded-[10rem] px-[3px] py-[3px] relative flex items-center transition-colors duration-300 ${containerClass}`}
     >
       <div
         className={`bg-white w-[18px] h-[18px] rounded-full absolute shadow-md transform transition-transform duration-300 ${switchClass}`}
-        onClick={onSwitch}
       />
     </div>
   );
