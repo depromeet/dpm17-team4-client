@@ -53,7 +53,7 @@ const BottomNavigation = ({ navRef }: BottomNavigationProps) => {
                   alert('아직 개발중..');
                 }
               }}
-              className={`py-[1.19rem] pl-[1.78rem] pr-[1.84rem] cursor-pointer flex flex-col items-center gap-2 bg-transparent border-none  text-button-5 ${currentTab === tab.id ? 'text-white' : 'text-gray-300'}`}
+              className={`py-[1.19rem] pl-[1.78rem] pr-[1.84rem] cursor-pointer flex flex-col items-center gap-2 bg-transparent border-none  text-button-5 ${currentTab === tab.id ? 'text-white' : 'text-gray-500'}`}
             >
               <IconComponent
                 className={cn(
