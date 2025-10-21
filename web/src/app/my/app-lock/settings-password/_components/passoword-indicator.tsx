@@ -25,7 +25,7 @@ export const PasswordIndicator = ({
     length
   );
   return (
-    <section className="pt-[108px] flex-1/2 pb-8 flex flex-col items-center">
+    <section className="pt-[108px] flex-1 pb-8 flex flex-col items-center">
       <h2 className="text-h3">{title()}</h2>
       <ul className="flex gap-4 mt-6">
         {dotIds.map((id, idx) => (
