@@ -9,7 +9,7 @@ import { useToggle } from '@/hooks/useToggle';
 
 export default function AppLockPagesContent() {
   const { isToggleOn: isFaceID } = useToggle();
-  
+
   const [hasPassword, setHasPassword] = useState<boolean>();
   const { isToggleOn: isAppLock, handleSwitchToggle: onAppLock } = useToggle();
 
@@ -19,7 +19,7 @@ export default function AppLockPagesContent() {
     router.push(PAGE_ROUTES.PASSWORD_SETTINGS);
   };
   const handleAppLockToggle = () => {
-    onAppLock()
+    onAppLock();
     if (!isAppLock && !hasPassword) {
       router.push(PAGE_ROUTES.PASSWORD_SETTINGS);
     } else {
