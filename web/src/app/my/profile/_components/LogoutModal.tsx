@@ -31,7 +31,7 @@ export const LogoutModal = ({ isOpen, onClose }: LogoutModalProps) => {
           취소
         </Button>
         <Button
-          className="bg-purple-600 flex-1 hover:bg-purple-700"
+          className="bg-primary-600 flex-1 hover:bg-primary-800"
           onClick={handleLogoutClick}
         >
           로그아웃
