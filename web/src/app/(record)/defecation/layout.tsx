@@ -1,9 +1,9 @@
 'use client';
 
-import type { ReactNode } from 'react';
-import { Navigator } from '@/components';
+import { type ReactNode, Suspense } from 'react';
 import { DefecationProvider } from './_components/providers/defecation-providers';
 import { DefecationSubmit } from './_components/ui';
+import { DefecationNavigator } from './_components/ui/common/defecation-navigator';
 
 export default function DefecationLayout({
   children,
@@ -11,12 +11,18 @@ export default function DefecationLayout({
   children: ReactNode;
 }) {
   return (
-    <DefecationProvider>
-      <Navigator>
-        <Navigator.Center>배변 기록</Navigator.Center>
-      </Navigator>
-      {children}
-      <DefecationSubmit />
-    </DefecationProvider>
+    <Suspense
+      fallback={
+        <div className="px-[4.78rem] py-[1.25rem] text-h3 text-white text-center">
+          로딩 중...
+        </div>
+      }
+    >
+      <DefecationProvider>
+        <DefecationNavigator />
+        {children}
+        <DefecationSubmit />
+      </DefecationProvider>
+    </Suspense>
   );
 }

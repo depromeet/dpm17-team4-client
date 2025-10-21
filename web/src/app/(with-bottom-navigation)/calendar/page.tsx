@@ -197,6 +197,7 @@ export default function CalendarPage() {
               date={selectedDate ?? new Date()}
               hasRecords={hasRecords}
               records={hasRecords ? records : []}
+              toiletRecordId={22} // NOTE(taehyeon): 서버 api 구현 시 toiletRecordId 를 전달하도록 수정 필요
             />
           )}
           <button

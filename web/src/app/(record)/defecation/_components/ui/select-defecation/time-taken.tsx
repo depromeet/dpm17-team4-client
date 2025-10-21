@@ -1,17 +1,28 @@
 'use client';
 
+import { useEffect } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { cn } from '@/utils/utils-cn';
 import { DEFECATION_TIME_TAKEN } from '../../constants';
 import type { DefecationFormValues } from '../../schemas';
+import { getTimeTakenKey } from '../../utils/utils-getToiletDuration';
 import { SelectButton } from '../common';
 
 export default function TimeTaken({
+  timeTaken,
   onTimeTakenSelect,
 }: {
+  timeTaken?: number;
   onTimeTakenSelect?: () => void;
 }) {
   const { control, setValue } = useFormContext<DefecationFormValues>();
+
+  useEffect(() => {
+    if (timeTaken) {
+      setValue('selectedTimeTaken', getTimeTakenKey(timeTaken));
+    }
+  }, [timeTaken, setValue]);
+
   return (
     <div>
       <p className="text-body3-r opacity-80 mb-3.5">

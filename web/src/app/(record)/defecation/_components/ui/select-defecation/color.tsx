@@ -1,16 +1,25 @@
 'use client';
 
+import { useEffect } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { cn } from '@/utils/utils-cn';
 import { DEFECATION_COLOR } from '../../constants';
 import type { DefecationFormValues } from '../../schemas';
 
 export default function Color({
+  color,
   onColorSelect,
 }: {
+  color?: string;
   onColorSelect?: () => void;
 }) {
   const { control, setValue } = useFormContext<DefecationFormValues>();
+
+  useEffect(() => {
+    if (color) {
+      setValue('selectedColor', color);
+    }
+  }, [color, setValue]);
 
   return (
     <div className="flex items-center justify-between gap-[12.6px] max-[398px]:gap-1">
