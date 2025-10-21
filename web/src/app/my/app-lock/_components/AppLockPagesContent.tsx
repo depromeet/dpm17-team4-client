@@ -79,7 +79,14 @@ export default function AppLockPagesContent() {
             <>
               <li className="text-body2-sb text-white flex justify-between items-center">
                 <div>비밀번호 변경</div>
-                <ChevronIcon type="right" onClick={handleGoSettingsPassword} />
+                <button
+                  type="button"
+                  className="p-2 -mr-2"
+                  aria-label="비밀번호 설정으로 이동"
+                  onClick={handleGoSettingsPassword}
+                >
+                  <ChevronIcon type="right" />
+                </button>
               </li>
               <li className="text-body2-sb text-white flex justify-between items-center">
                 <div>Face ID 사용</div>
