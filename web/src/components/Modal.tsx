@@ -63,7 +63,7 @@ export const Modal = ({
       <div className="fixed inset-0 bg-black/50" />
       {/* biome-ignore lint/a11y/noStaticElementInteractions lint/a11y/useKeyWithClickEvents: <This div is for event propagation stopping> */}
       <div
-        className="pt-[2.25rem] pr-4 pl-4 pb-4  w-[19.375rem] rounded-[1.25rem] bg-gray-800 flex-col items-center justify-center fixed left-1/2 top-1/2
+        className="pt-[1.875rem] pr-4 pl-4 pb-4  w-[19.375rem] rounded-[1.25rem] bg-gray-800 flex-col items-center justify-center fixed left-1/2 top-1/2
     -translate-x-1/2 -translate-y-1/2"
         onClick={(e) => e.stopPropagation()}
       >
