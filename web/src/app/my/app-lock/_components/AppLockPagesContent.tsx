@@ -61,7 +61,7 @@ export default function AppLockPagesContent() {
       const newPath = window.location.pathname;
       router.replace(newPath);
     }
-  }, [searchParams, router, hasPassword]);
+  }, [searchParams, router]);
 
   return (
     <div className="min-h-screen bg-gray-900 text-white">
