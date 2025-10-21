@@ -51,7 +51,7 @@ export default function SettingPasswordPage() {
         }
       }
     }
-  }, [currentPassword, step, firstPassword, router.push]);
+  }, [currentPassword, step, firstPassword, router]);
 
   const handleAddNumber = (number: string) => {
     if (error) setError('');
