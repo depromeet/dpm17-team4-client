@@ -26,7 +26,7 @@ const BOTTOM_NAV_TABS = [
     id: 'my' as const,
     name: '마이',
     icon: UserIcon,
-    active: false,
+    active: true,
   },
 ];
 
