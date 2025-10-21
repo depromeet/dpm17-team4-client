@@ -10,7 +10,9 @@ import {
   useMemo,
   useState,
 } from 'react';
-import LoginCharacter from '@/assets/auth/login-character.png';
+import bgGradient2 from '@/assets/auth/bg-gradient2.png';
+import bgGradient3 from '@/assets/auth/bg-gradient3.png';
+import loginCharacter from '@/assets/auth/login-character.png';
 import { API_ENDPOINTS, PAGE_ROUTES } from '@/constants';
 import AppleLoginButton from './_components/AppleLoginButton';
 import {
@@ -98,62 +100,61 @@ function AuthContent() {
     })();
   }, [extractUserInfo, router]);
 
-  // ✅ 깜빡임 방지: 콜백 파라미터가 보이면 렌더 스킵
   if (hasAuthParams) return null;
 
   return (
     <div
       className="
-    min-h-screen relative overflow-hidden
-    [background-color:var(--Background-Background-Primary,#1D1E20)]
+    min-h-screen relative overflow-hidden [background-color:var(--Background-Background-Primary,#1D1E20)]
     bg-[radial-gradient(54.67%_121.62%_at_12.93%_70.32%,_rgba(9,4,27,0.20)_0%,_rgba(73,179,169,0.20)_100%)]
     bg-no-repeat
      [background-size:100%_100%]
     bg-[position:center]
     flex flex-col items-center justify-center
     text-white
+ 
   "
     >
+      <div className="w-full z-20">
+        <Image
+          src={loginCharacter}
+          alt="로그인 캐릭터 이미지"
+          className="w-full"
+        />
+      </div>
       <div
         className="
     pointer-events-none absolute inset-0 z-10
-    bg-[linear-gradient(180deg,_#090318_0%,_#242D58_20%,_#404DDC80_40%,_#404DDC00_100%)]
+    bg-[linear-gradient(180deg,_#090318_0%,#090318_10%,#404DDC80_40%,_#404DDC00_100%)]
     bg-no-repeat bg-top
     [background-size:100%_36.75rem]
     
   "
       />
-
-      <div
-        className="
-      absolute z-10
-      bg-[radial-gradient(66.21%_66.21%_at_45.8%_19.42%,_rgba(107,192,213,0.24)_0%,_rgba(92,91,167,0.24)_58.07%,_rgba(37,49,90,0.24)_100%)]
-      blur-[10px]
-      w-[21.5625rem] h-[21.5625rem]
-      rounded-[21.5625rem]
-      top-0 left-1/2
-      -translate-x-[calc(50%+11.12rem)]
-      -translate-y-[3.81rem]
-    "
+      <Image
+        src={bgGradient2}
+        alt="배경 그라디언트2"
+        width={345}
+        height={345}
+        className="absolute z-10 top-[207.49px] right-0"
       />
-      <div
-        className="
-      absolute z-10 bottom-0 right-0 translate-x-[6.5rem]
-      w-[17.75rem] h-[17.75rem] rounded-[17.75rem]
-      bg-[radial-gradient(76.29%_76.29%_at_36.71%_24.88%,_rgba(107,192,213,0.24)_0%,_rgba(92,91,167,0.24)_58.07%,_rgba(30,39,43,0.24)_100%)]
-      blur-[10px]
-    "
+      <Image
+        src={bgGradient3}
+        width={284}
+        height={284}
+        alt="배경 그라디언트3"
+        className="absolute z-10 top-[496px] right-0"
       />
 
       <div className="relative z-10">
-        <div className="mb-[5rem]">
-          <div className="flex justify-center">
-            <Image src={LoginCharacter} alt="로그인 캐릭터 이미지" />
+        <div className="mb-[21px]">
+          <div className="text-center text-h2">
+            쌓일수록 <br />
+            건강해지는 기록
           </div>
-          <div className="text-center text-h2 mt-[1.37rem]">
-            반가워요 <br />
-            지금 바로 함께해요!
-          </div>
+          <p className="text-body2-m text-gray-400 text-center mt-3">
+            지금 바로 함께 기록하고 관리해봐요
+          </p>
         </div>
 
         {error && (
@@ -170,6 +171,8 @@ function AuthContent() {
           <AppleLoginButton />
         </div>
       </div>
+      {/* 하단 여백 */}
+      <div className="w-full h-[176px]" />
     </div>
   );
 }
