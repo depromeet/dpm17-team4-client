@@ -64,8 +64,8 @@ export default function MyPageContent() {
               />
             </Link>
             <div className="flex items-center justify-between py-2 cursor-pointer">
-              <span className="text-body2-sb">앱 잠금</span>
               <Link href={PAGE_ROUTES.APP_LOCK}>
+              <span className="text-body2-sb">앱 잠금</span>
                 <div className="flex items-center space-x-2">
                   <span className="text-sm text-gray-400">OFF</span>
                   <Image
