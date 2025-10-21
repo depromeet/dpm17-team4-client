@@ -7,8 +7,10 @@ import AppleIcon from '@/assets/my/apple-login.png';
 import KakaoIcon from '@/assets/my/kakao-login.png';
 import { Navigator } from '@/components/Navigator';
 import { useUserInfo } from '@/hooks';
+import { AccountDeletionModal } from './AccountDeletionModal';
 import { BirthYearSelectBottomSheet } from './BirthYearSelectBottomSheet';
 import { GenderSelectBottomSheet } from './GenderSelectBottomSheet';
+import { LogoutModal } from './LogoutModal';
 import { NameEditBottomSheet } from './NameEditBottomSheet';
 import { ProfileAvatar } from './ProfileAvatar';
 
@@ -23,12 +25,13 @@ interface BottomSheetState {
   isGenderOpen: boolean;
   isBirthYearOpen: boolean;
   isNameEditOpen: boolean;
+  isLogoutModalOpen: boolean;
+  isAccountDeletionModalOpen: boolean;
 }
 
 export default function ProfilePageContent() {
   //TODO(seieun): userInfo 에서 email, gender, birthyear 추가하도록 수정
   const { userInfo } = useUserInfo();
-
   const [profileState, setProfileState] = useState<ProfileState>({
     name: '',
     birthYear: '2000',
@@ -40,6 +43,8 @@ export default function ProfilePageContent() {
     isGenderOpen: false,
     isBirthYearOpen: false,
     isNameEditOpen: false,
+    isLogoutModalOpen: false,
+    isAccountDeletionModalOpen: false,
   });
 
   // userInfo가 변경될 때마다 profileState 업데이트
@@ -85,6 +90,17 @@ export default function ProfilePageContent() {
   const handleNameChange = (name: string) => {
     setProfileState((prev) => ({ ...prev, name }));
     console.log('변경된 이름:', name);
+  };
+
+  const handleLogoutClick = () => {
+    setBottomSheetState((prev) => ({ ...prev, isLogoutModalOpen: true }));
+  };
+
+  const handleAccountDeletionClick = () => {
+    setBottomSheetState((prev) => ({
+      ...prev,
+      isAccountDeletionModalOpen: true,
+    }));
   };
 
   const getGenderLabel = (gender: string) => {
@@ -192,22 +208,30 @@ export default function ProfilePageContent() {
         <div className="px-4 py-4">
           <div className="border-t border-gray-700 pt-4">
             <div className="space-y-4">
-              <div className="flex items-center justify-between py-3">
+              <button
+                type="button"
+                className="flex items-center justify-between py-3 cursor-pointer w-full"
+                onClick={handleLogoutClick}
+              >
                 <span className="text-body2-sb">로그아웃</span>
                 <Image
                   src={ChevronRight}
                   alt="chevron right"
                   className="w-5 h-5"
                 />
-              </div>
-              <div className="flex items-center justify-between py-3">
+              </button>
+              <button
+                type="button"
+                className="flex items-center justify-between py-3 cursor-pointer w-full"
+                onClick={handleAccountDeletionClick}
+              >
                 <span className="text-body2-sb">회원 탈퇴</span>
                 <Image
                   src={ChevronRight}
                   alt="chevron right"
                   className="w-5 h-5"
                 />
-              </div>
+              </button>
             </div>
           </div>
         </div>
@@ -241,6 +265,25 @@ export default function ProfilePageContent() {
         }
         currentName={profileState.name}
         onNameChange={handleNameChange}
+      />
+
+      {/* Logout Modal */}
+      <LogoutModal
+        isOpen={bottomSheetState.isLogoutModalOpen}
+        onClose={() =>
+          setBottomSheetState((prev) => ({ ...prev, isLogoutModalOpen: false }))
+        }
+      />
+
+      {/* Account Deletion Modal */}
+      <AccountDeletionModal
+        isOpen={bottomSheetState.isAccountDeletionModalOpen}
+        onClose={() =>
+          setBottomSheetState((prev) => ({
+            ...prev,
+            isAccountDeletionModalOpen: false,
+          }))
+        }
       />
     </div>
   );
