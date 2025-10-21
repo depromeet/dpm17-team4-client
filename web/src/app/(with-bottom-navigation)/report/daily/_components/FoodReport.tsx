@@ -11,6 +11,19 @@ export const FoodReport = ({ foodData }: { foodData: Food }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const isProgrammaticScroll = useRef(false);
 
+  const filteredItems = foodData.items
+    .filter((item, index) => {
+      if (index === 0 && item.meals.length === 0) {
+        return false;
+      }
+      return true;
+    })
+    .sort((a, b) => {
+      return (
+        new Date(a.occurredAt).getTime() - new Date(b.occurredAt).getTime()
+      );
+    });
+
   const handleScroll = () => {
     if (scrollRef.current && !isProgrammaticScroll.current) {
       const scrollLeft = scrollRef.current.scrollLeft;
@@ -53,77 +66,80 @@ export const FoodReport = ({ foodData }: { foodData: Food }) => {
         }}
         onScroll={handleScroll}
       >
-        {foodData.items.map((item, index) => (
-          <div
-            key={item.occurredAt}
-            className={`flex flex-col flex-shrink-0 w-full ${index > 0 ? 'ml-12' : ''}`}
-            style={{ scrollSnapAlign: 'start' }}
-          >
-            <p className="text-white text-[18px] font-semibold whitespace-pre-line">
-              {foodData.message}
-            </p>
-            <span className="w-full h-[1px] bg-[#3C4149] my-5" />
-            <div className="mb-4">
-              <p className="text-[#99A1B1] text-body4-m">
-                {formatDate(new Date(item.occurredAt))},
-                {index === 0 ? '어제' : '오늘'}
+        {filteredItems.map((item, index) => {
+          return (
+            <div
+              key={item.occurredAt}
+              className={`flex flex-col flex-shrink-0 w-full ${index > 0 ? 'ml-12' : ''}`}
+              style={{ scrollSnapAlign: 'start' }}
+            >
+              <p className="text-white text-[18px] font-semibold whitespace-pre-line">
+                {foodData.message}
               </p>
-            </div>
-            <div className="flex flex-col gap-3">
-              {item.meals.map((meal) => (
-                <div
-                  key={meal.mealTime}
-                  className="flex items-center justify-between"
-                >
-                  <div className="flex items-center gap-1 bg-[#3C4149] rounded-[4px] py-1 px-2">
-                    {/* TODO 서버에서 이미지 내려오지 않음 */}
-                    {/*<Image*/}
-                    {/*  src={meal.image}*/}
-                    {/*  alt={getMealTimeLabel(meal.mealTime)}*/}
-                    {/*  width={16}*/}
-                    {/*  height={16}*/}
-                    {/*/>*/}
-                    <p className="text-white text-body3-m text-center">
-                      {getMealTimeLabel(meal.mealTime)}
-                    </p>
-                  </div>
-
-                  {meal.foods.length > 0 ? (
-                    <div className="flex items-center gap-2">
-                      {meal.dangerous && (
-                        <div className="w-[34px] h-5 flex items-center justify-center rounded-[4px] bg-red-100 py-1 px-[7px]">
-                          <p className="text-[11px] font-semibold text-red-600">
-                            주의
-                          </p>
-                        </div>
-                      )}
-                      <div className="flex">
-                        {meal.foods.map((food, foodIndex) => (
-                          <p
-                            key={food}
-                            className="text-white text-caption text-center"
-                          >
-                            {food}
-                            {foodIndex < meal.foods.length - 1 ? (
-                              <>,&nbsp;</>
-                            ) : (
-                              ''
-                            )}
-                          </p>
-                        ))}
-                      </div>
+              <span className="w-full h-[1px] bg-[#3C4149] my-5" />
+              <div className="mb-4">
+                <p className="text-[#99A1B1] text-body4-m">
+                  {formatDate(new Date(item.occurredAt))}
+                </p>
+              </div>
+              <div className="flex flex-col gap-3">
+                {item.meals.map((meal) => (
+                  <div
+                    key={meal.mealTime}
+                    className="flex items-center justify-between"
+                  >
+                    <div className="flex items-center gap-1 bg-[#3C4149] rounded-[4px] py-1 px-2">
+                      {/* TODO 서버에서 이미지 내려오지 않음 */}
+                      {/*<Image*/}
+                      {/*  src={meal.image}*/}
+                      {/*  alt={getMealTimeLabel(meal.mealTime)}*/}
+                      {/*  width={16}*/}
+                      {/*  height={16}*/}
+                      {/*/>*/}
+                      <p className="text-white text-body3-m text-center">
+                        {getMealTimeLabel(meal.mealTime)}
+                      </p>
                     </div>
-                  ) : (
-                    <div className="text-white text-caption text-center">-</div>
-                  )}
-                </div>
-              ))}
+
+                    {meal.foods.length > 0 ? (
+                      <div className="flex items-center gap-2">
+                        {meal.dangerous && (
+                          <div className="w-[34px] h-5 flex items-center justify-center rounded-[4px] bg-red-100 py-1 px-[7px]">
+                            <p className="text-[11px] font-semibold text-red-600">
+                              주의
+                            </p>
+                          </div>
+                        )}
+                        <div className="flex">
+                          {meal.foods.map((food, foodIndex) => (
+                            <p
+                              key={food}
+                              className="text-white text-caption text-center"
+                            >
+                              {food}
+                              {foodIndex < meal.foods.length - 1 ? (
+                                <>,&nbsp;</>
+                              ) : (
+                                ''
+                              )}
+                            </p>
+                          ))}
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="text-white text-caption text-center">
+                        -
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
-      {foodData.items.length > 1 && (
+      {filteredItems.length > 1 && (
         <div className="flex justify-center items-center gap-1 mt-4">
           <button
             type="button"
@@ -136,16 +152,16 @@ export const FoodReport = ({ foodData }: { foodData: Food }) => {
             />
           </button>
           <p className="text-white text-base font-medium">
-            {currentIndex + 1} / {foodData.items.length}
+            {currentIndex + 1} / {filteredItems.length}
           </p>
           <button
             type="button"
             onClick={() => scrollToIndex(currentIndex + 1)}
-            disabled={currentIndex === foodData.items.length - 1}
+            disabled={currentIndex === filteredItems.length - 1}
           >
             <ChevronIcon
               type="right"
-              className={`w-4 h-4 ${currentIndex === foodData.items.length - 1 ? 'text-gray-500' : 'text-white'}`}
+              className={`w-4 h-4 ${currentIndex === filteredItems.length - 1 ? 'text-gray-500' : 'text-white'}`}
             />
           </button>
         </div>

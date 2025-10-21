@@ -1,8 +1,10 @@
 'use client';
 
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useCallback } from 'react';
 import { BottomBtnBar } from '@/components';
+import { QUERY_KEYS } from '@/constants';
 import {
   useActivityRecordMutation,
   useActivityRecordUpdateMutation,
@@ -31,6 +33,7 @@ export const LifeStyleSubmit = ({
     useActivityRecordMutation();
   const { mutate: updateMutation, isPending: isUpdatePending } =
     useActivityRecordUpdateMutation();
+  const queryClient = useQueryClient();
 
   const handleSubmit = useCallback(async () => {
     const year = searchParams.get('year');
@@ -82,6 +85,7 @@ export const LifeStyleSubmit = ({
       createMutation({
         ...data,
         onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: QUERY_KEYS.REPORT });
           router.push('/home?toast-lifestyle=true');
         },
         onError: (error) => {
@@ -98,6 +102,7 @@ export const LifeStyleSubmit = ({
     updateMutation,
     router,
     existingRecordId,
+    queryClient,
   ]);
 
   const isPending = isCreatePending || isUpdatePending;
