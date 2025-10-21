@@ -36,7 +36,9 @@ export const PasswordIndicator = ({
               dotClass(idx)
             )}
           >
-            <span className="sr-only">{idx < filled ? '입력됨' : '미입력'}</span>
+            <span className="sr-only">
+              {idx < filled ? '입력됨' : '미입력'}
+            </span>
           </li>
         ))}
       </ul>

@@ -8,11 +8,7 @@ import { PAGE_ROUTES } from '@/constants';
 import { useToggle } from '@/hooks/useToggle';
 
 export default function AppLockPagesContent() {
-  /* TODO(Yubin): 앱 잠금 플로우를 위한 임시 비밀번호 저장 */
-  const hasPassword = !!localStorage.getItem('password');
-
-  const { isToggleOn: isAppLock, handleSwitchToggle: onAppLock } =
-    useToggle(hasPassword);
+  const { isToggleOn: isAppLock, handleSwitchToggle: onAppLock } = useToggle();
   const { isToggleOn: isFaceID } = useToggle();
 
   const router = useRouter();
@@ -20,10 +16,9 @@ export default function AppLockPagesContent() {
   const handleGoSettingsPassword = () => {
     router.push(PAGE_ROUTES.PASSWORD_SETTINGS);
   };
-
   const handleAppLockToggle = () => {
     onAppLock();
-    if (!isAppLock && !hasPassword) {
+    if (!isAppLock) {
       router.push(PAGE_ROUTES.PASSWORD_SETTINGS);
     } else {
       console.log('앱 잠금 기능을 비활성화합니다.');
@@ -73,18 +68,15 @@ export default function AppLockPagesContent() {
             <div>앱 잠금 화면</div>
             <Toggle isOn={isAppLock} onSwitch={handleAppLockToggle} />
           </li>
-          {hasPassword && (
-            <>
-              <li className="text-body2-sb text-white flex justify-between items-center">
-                <div>비밀번호 변경</div>
-                <ChevronIcon type="right" onClick={handleGoSettingsPassword} />
-              </li>
-              <li className="text-body2-sb text-white flex justify-between items-center">
-                <div>Face ID 사용</div>
-                <Toggle isOn={isFaceID} onSwitch={handleFaceIDToggle} />
-              </li>
-            </>
-          )}
+
+          <li className="text-body2-sb text-white flex justify-between items-center">
+            <div>비밀번호 변경</div>
+            <ChevronIcon type="right" onClick={handleGoSettingsPassword} />
+          </li>
+          <li className="text-body2-sb text-white flex justify-between items-center">
+            <div>Face ID 사용</div>
+            <Toggle isOn={isFaceID} onSwitch={handleFaceIDToggle} />
+          </li>
         </ul>
       </div>
     </div>
