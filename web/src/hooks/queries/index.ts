@@ -1,4 +1,5 @@
 export { useActivityRecordQuery } from './useActivityRecordQuery';
+export { useCalendarQuery } from './useCalendarQuery';
 export { useDefecationQuery } from './useDefecationQuery';
 export { useFoodSearch } from './useFoodSearch';
 export { useReportQuery } from './useReportQuery';

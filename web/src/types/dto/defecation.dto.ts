@@ -23,3 +23,18 @@ export interface DefecationDataResponseDto {
     note: string;
   };
 }
+
+export interface CalendarDataResultDto {
+  date: string;
+  activityExists: boolean;
+  toiletExists: boolean;
+}
+export interface CalendarDataResponseDto {
+  status: number;
+  message: string;
+  data: {
+    startDate: string;
+    endDate: string;
+    results: CalendarDataResultDto[];
+  };
+}

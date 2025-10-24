@@ -10,6 +10,8 @@ export const QUERY_KEYS = {
   TERMS: ['terms'],
   USER_ME: ['user', 'me'],
 
+  CALENDAR: ['calendar'],
+
   FOODS: {
     SEARCH: (query: string, count: number) => ['foods', 'search', query, count],
   },
