@@ -13,7 +13,7 @@ import {
 import bgGradient2 from '@/assets/auth/bg-gradient2.png';
 import bgGradient3 from '@/assets/auth/bg-gradient3.png';
 import loginCharacter from '@/assets/auth/login-character.png';
-import { API_ENDPOINTS, PAGE_ROUTES } from '@/constants';
+import { API_ENDPOINTS } from '@/constants';
 import AppleLoginButton from './_components/AppleLoginButton';
 import {
   getAccessToken,
@@ -23,14 +23,15 @@ import {
   type UserInfo,
 } from './_components/AuthSessionProvider';
 import KakaoLoginButton from './_components/KakaoLoginButton';
+import TermsAgreementBottomSheet from './_components/TermsAgreementBottomSheet';
 
 const API_BASE = process.env.NEXT_PUBLIC_API || 'https://kkruk.com';
 const KAKAO_LOGIN_INITIATE_URL = `${API_BASE}${API_ENDPOINTS.AUTH.KAKAO_LOGIN}`;
 
 function AuthContent() {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const [error, setError] = useState<string | null>(null);
+  const [showTermsBottomSheet, setShowTermsBottomSheet] = useState(false);
 
   const redirectUri = useMemo(() => {
     if (typeof window === 'undefined') return '';
@@ -83,10 +84,10 @@ function AuthContent() {
     url.search = '';
     window.history.replaceState({}, '', url.toString());
 
-    // 먼저 홈으로 이동
-    router.replace(PAGE_ROUTES.HOME);
+    // 약관 동의 바텀시트 표시
+    setShowTermsBottomSheet(true);
 
-    // 토큰은 백그라운드로 시도 (실패해도 화면은 이미 /home)
+    // 토큰은 백그라운드로 시도
     (async () => {
       try {
         const currentAccessToken = getAccessToken();
@@ -98,7 +99,16 @@ function AuthContent() {
         console.error('⚠️ AccessToken 갱신 실패(무시하고 진행):', e);
       }
     })();
-  }, [extractUserInfo, router]);
+  }, [extractUserInfo]);
+
+  const handleTermsAgree = () => {
+    setShowTermsBottomSheet(false);
+    //TODO 다음 퍼널로 이동(생년월일 선택 페이지)
+  };
+
+  const handleTermsClose = () => {
+    setShowTermsBottomSheet(false);
+  };
 
   if (hasAuthParams) return null;
 
@@ -173,6 +183,13 @@ function AuthContent() {
       </div>
       {/* 하단 여백 */}
       <div className="w-full h-[176px]" />
+
+      {/* 약관 동의 바텀시트 */}
+      <TermsAgreementBottomSheet
+        isOpen={showTermsBottomSheet}
+        onClose={handleTermsClose}
+        onAgree={handleTermsAgree}
+      />
     </div>
   );
 }
