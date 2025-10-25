@@ -24,7 +24,7 @@ import {
 } from './_components/AuthSessionProvider';
 import KakaoLoginButton from './_components/KakaoLoginButton';
 
-const API_BASE = process.env.NEXT_PUBLIC_API || 'https://211.188.58.167';
+const API_BASE = process.env.NEXT_PUBLIC_API || 'https://kkruk.com';
 const KAKAO_LOGIN_INITIATE_URL = `${API_BASE}${API_ENDPOINTS.AUTH.KAKAO_LOGIN}`;
 
 function AuthContent() {
