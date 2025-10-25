@@ -100,8 +100,6 @@ export default function ProfilePageContent() {
   };
 
   const handleGenderSelect = async (gender: string) => {
-    setProfileState((prev) => ({ ...prev, gender }));
-
     // TODO: 성별 업데이트 선택안함 옵션 서버 대응 필요
     try {
       await updateUserMutation.mutateAsync({
@@ -113,8 +111,6 @@ export default function ProfilePageContent() {
   };
 
   const handleBirthYearSelect = async (year: string) => {
-    setProfileState((prev) => ({ ...prev, birthYear: year }));
-
     try {
       await updateUserMutation.mutateAsync({
         birthYear: parseInt(year),
@@ -125,8 +121,6 @@ export default function ProfilePageContent() {
   };
 
   const handleNameChange = async (name: string) => {
-    setProfileState((prev) => ({ ...prev, name }));
-    console.log('변경된 이름:', name);
 
     try {
       await updateUserMutation.mutateAsync({
