@@ -11,6 +11,8 @@ const WATER_MAX_VALUE = 2000;
 const LITER_UNIT = 1000;
 
 export const WaterReport = ({ waterData }: { waterData: Water }) => {
+  const filteredItems = waterData.items.filter((item) => item.value > 0);
+
   return (
     <div className="bg-[#272B31] rounded-[14px] py-7 px-6 w-full">
       <p className="text-[#707885] text-body3-m mb-2">물 섭취량 분석 결과</p>
@@ -18,7 +20,7 @@ export const WaterReport = ({ waterData }: { waterData: Water }) => {
         {waterData.message}
       </p>
       <div className="flex gap-6 items-end justify-center px-4 pt-4 pb-4">
-        {waterData.items.map((item) => (
+        {filteredItems.map((item) => (
           <div key={item.name} className="flex flex-col items-center">
             {item.name !== 'STANDARD' && (
               <div

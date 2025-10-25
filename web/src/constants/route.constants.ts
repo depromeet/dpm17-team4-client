@@ -9,6 +9,9 @@ export const PAGE_ROUTES = {
   NOTIFICATION_SETTINGS: '/my/notification-settings',
   TERMS_PRIVACY: '/my/terms-privacy',
   TERMS: '/terms',
+  ONBOARDING_PROFILE: '/onboarding/profile',
+  APP_LOCK: '/my/app-lock',
+  PASSWORD_SETTINGS: '/my/app-lock/settings-password',
 } as const;
 
 // API 라우트 상수들

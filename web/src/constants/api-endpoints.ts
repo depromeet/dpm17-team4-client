@@ -36,4 +36,7 @@ export const API_ENDPOINTS = {
   TERMS: {
     BASE: '/api/v1/terms',
   },
+  USERS: {
+    ME: '/api/v1/users/me',
+  },
 } as const;

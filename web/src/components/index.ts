@@ -3,3 +3,4 @@ export * from './Button';
 export * from './icons';
 export * from './Modal';
 export * from './Navigator';
+export * from './Toggle';

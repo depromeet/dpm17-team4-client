@@ -7,10 +7,10 @@ import ChevronRight from '@/assets/home/IC_Chevron_Right.png';
 import defaultProfileImage from '@/assets/my/profile-image-1.png';
 import { PAGE_ROUTES } from '@/constants';
 import { useNavigationContext } from '@/contexts/NavigationContext';
-import { useUserInfo } from '@/hooks';
+import { useUserMeQuery } from '@/hooks';
 
 export default function MyPageContent() {
-  const { userInfo } = useUserInfo();
+  const { data: userMeData } = useUserMeQuery();
   const { handleTabClick } = useNavigationContext();
 
   useEffect(() => {
@@ -40,8 +40,8 @@ export default function MyPageContent() {
             />
           </div>
           <div className="flex-1">
-            <h2 className="text-lg font-semibold">{userInfo?.nickname}</h2>
-            <p className="text-sm text-gray-400">example@example.com</p>
+            <h2 className="text-lg font-semibold">{userMeData?.nickname}</h2>
+            <p className="text-sm text-gray-400">{userMeData?.email}</p>
           </div>
           <Image src={ChevronRight} alt="chevron right" className="w-5 h-5" />
         </Link>
@@ -65,14 +65,16 @@ export default function MyPageContent() {
             </Link>
             <div className="flex items-center justify-between py-2 cursor-pointer">
               <span className="text-body2-sb">앱 잠금</span>
-              <div className="flex items-center space-x-2">
-                <span className="text-sm text-gray-400">OFF</span>
-                <Image
-                  src={ChevronRight}
-                  alt="chevron right"
-                  className="w-5 h-5"
-                />
-              </div>
+              <Link href={PAGE_ROUTES.APP_LOCK}>
+                <div className="flex items-center space-x-2">
+                  <span className="text-sm text-gray-400">OFF</span>
+                  <Image
+                    src={ChevronRight}
+                    alt="chevron right"
+                    className="w-5 h-5"
+                  />
+                </div>
+              </Link>
             </div>
           </div>
         </div>

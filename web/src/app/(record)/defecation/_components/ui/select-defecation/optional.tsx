@@ -6,9 +6,11 @@ import { DeleteIcon } from '@/components';
 import type { DefecationFormValues } from '../../schemas';
 
 export default function Optional({
+  note,
   isOpen,
   onOptionalSelect,
 }: {
+  note?: string;
   isOpen: boolean;
   onOptionalSelect?: () => void;
 }) {
@@ -29,6 +31,12 @@ export default function Optional({
       setShowDelete(inputRef.current.value.length > 0);
     }
   }, [isOpen, getValues]);
+
+  useEffect(() => {
+    if (note) {
+      setValue('selectedOptional', note);
+    }
+  }, [note, setValue]);
 
   return (
     <div>

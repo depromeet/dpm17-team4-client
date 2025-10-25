@@ -1,11 +1,24 @@
 'use client';
 
+import { useEffect } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import type { DefecationFormValues } from '../../schemas';
 import { DraggableProgressBar } from '../common';
 
-export default function Pain({ onPainSelect }: { onPainSelect?: () => void }) {
-  const { control } = useFormContext<DefecationFormValues>();
+export default function Pain({
+  pain,
+  onPainSelect,
+}: {
+  pain?: number;
+  onPainSelect?: () => void;
+}) {
+  const { control, setValue } = useFormContext<DefecationFormValues>();
+
+  useEffect(() => {
+    if (pain !== undefined) {
+      setValue('selectedPain', pain);
+    }
+  }, [pain, setValue]);
 
   return (
     <div>

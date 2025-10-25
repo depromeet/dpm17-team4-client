@@ -1,16 +1,27 @@
 'use client';
 
-import { type ChangeEvent, useState } from 'react';
+import { type ChangeEvent, useEffect, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { ChevronIcon } from '@/components';
+import type { DefecationDataResponseDto } from '@/types/dto/defecation.dto';
 import { cn } from '@/utils/utils-cn';
 import type { DefecationFormValues } from '../schemas';
 import { formatDate } from '../utils';
 import { DefecationBottomSheet } from './defecation-bottom-sheet';
 
-export const DefecationTime = () => {
-  const { control } = useFormContext<DefecationFormValues>();
+export const DefecationTime = ({
+  data,
+}: {
+  data?: DefecationDataResponseDto;
+}) => {
+  const { control, setValue } = useFormContext<DefecationFormValues>();
   const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    if (data) {
+      setValue('selectedWhen', new Date(data.data.occurredAt));
+    }
+  }, [data, setValue]);
 
   return (
     <Controller

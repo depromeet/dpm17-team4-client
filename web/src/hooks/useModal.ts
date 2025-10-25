@@ -28,9 +28,7 @@ export const useModal = (
     }
   }, [isOpen]);
   const onClickDialog = (e: React.MouseEvent<HTMLDialogElement>) => {
-    if (e.target === e.currentTarget) {
-      onClose();
-    }
+    onClose();
   };
 
   return { dialogRef, targetContainer, onClickDialog };
