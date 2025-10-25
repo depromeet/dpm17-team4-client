@@ -1,4 +1,6 @@
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Navigator } from '@/components';
+import { PAGE_ROUTES } from '@/constants';
 
 interface LifeStyleNavigatorProps {
   existingRecordId: number | null;
@@ -11,11 +13,27 @@ export const LifeStyleNavigator = ({
   onOpen,
   isDeleting,
 }: LifeStyleNavigatorProps) => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const from = searchParams.get('from');
+
+  const handleSkip = () => {
+    router.push(PAGE_ROUTES.HOME);
+  };
   return (
     <Navigator>
       <Navigator.Center>생활 기록</Navigator.Center>
-      {existingRecordId && (
-        <Navigator.Right>
+      <Navigator.Right>
+        {from === 'defecation' && (
+          <button
+            type="button"
+            onClick={handleSkip}
+            className="text-body2-m text-primary-600 hover:text-primary-600"
+          >
+            건너뛰기
+          </button>
+        )}
+        {existingRecordId && (
           <button
             type="button"
             onClick={onOpen}
@@ -24,8 +42,8 @@ export const LifeStyleNavigator = ({
           >
             {isDeleting ? '삭제 중...' : '삭제'}
           </button>
-        </Navigator.Right>
-      )}
+        )}
+      </Navigator.Right>
     </Navigator>
   );
 };
