@@ -3,7 +3,7 @@ import { getAccessToken } from '@/app/auth/_components/AuthSessionProvider';
 
 const apiClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL || 'https://kkruk.com', // TODO(seonghyun): env vercel 세팅,
-  withCredentials:true,
+  withCredentials: true,
   timeout: 5000,
   headers: {
     'Content-Type': 'application/json',
