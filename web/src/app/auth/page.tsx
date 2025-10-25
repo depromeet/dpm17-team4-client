@@ -104,6 +104,8 @@ function AuthContent() {
 
   const handleTermsAgree = () => {
     setShowTermsBottomSheet(false);
+
+    //TODO: 약관 동의한 이후에 알림 바텀싯
     router.push(PAGE_ROUTES.ONBOARDING_PROFILE);
   };
 
