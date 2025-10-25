@@ -103,7 +103,7 @@ function AuthContent() {
   }, [extractUserInfo]);
 
   const handleTermsAgree = () => {
-    setShowTermsBottomSheet(false)
+    setShowTermsBottomSheet(false);
     router.push(PAGE_ROUTES.ONBOARDING_PROFILE);
   };
 
