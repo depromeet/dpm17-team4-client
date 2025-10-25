@@ -1,19 +1,22 @@
 'use client';
 
 import { X } from 'lucide-react';
+import { BottomSheet } from '@/components/BottomSheet';
 import { useTermsQuery } from '@/hooks/queries';
 import type { TermsItem } from '@/types/dto/terms.dto';
 
 interface TermsContentBottomSheetProps {
   isOpen: boolean;
   onClose: () => void;
-  type: 'service' | 'privacy-policy';
+  onBack?: () => void;
+  type?: 'service' | 'privacy-policy';
 }
 
 export default function TermsContentBottomSheet({
   isOpen,
   onClose,
-  type,
+  onBack,
+  type = 'service',
 }: TermsContentBottomSheetProps) {
   const { data: terms, isLoading, error } = useTermsQuery();
 
@@ -49,34 +52,29 @@ export default function TermsContentBottomSheet({
 
   const filteredTerms = getFilteredTerms();
 
-  if (!isOpen) return null;
-
   return (
-    <div 
-      className="fixed inset-0 z-[60] bg-black bg-opacity-50 flex items-end"
-      onClick={(e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        onClose();
-      }}
-      id="terms-content-bottom-sheet"
-    >
-      <div 
-        className="bg-[#121213] w-full max-h-[90vh] rounded-t-2xl overflow-hidden"
-        onClick={(e) => e.stopPropagation()}
-      >
+    <BottomSheet isOpen={isOpen} onClose={onClose}>
+      <div className="w-full max-h-[90vh] rounded-t-2xl overflow-hidden">
         {/* Header */}
-        <div className="sticky top-0 bg-[#121213] border-b border-gray-800 px-4 py-4 flex items-center justify-between">
-          <h2 className="text-xl font-semibold text-white">{getPageTitle()}</h2>
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              onClose();
-            }}
-            className="p-2 hover:bg-gray-800 rounded-full transition-colors"
-          >
-            <X className="w-6 h-6 text-white" />
-          </button>
+        <div className="sticky top-0 px-4 py-4 flex items-center justify-between">
+          <div className="flex items-center">
+            {onBack && (
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onBack();
+                }}
+                className="p-2"
+              >
+                <X className="w-6 h-6 text-white" />
+              </button>
+            )}
+          </div>
+          <h2 className="text-xl font-semibold text-white absolute left-1/2 transform -translate-x-1/2">
+            {getPageTitle()}
+          </h2>
+          <div></div>
         </div>
 
         {/* Content */}
@@ -87,7 +85,9 @@ export default function TermsContentBottomSheet({
             </div>
           ) : error ? (
             <div className="flex items-center justify-center py-8">
-              <div className="text-red-500">약관 정보를 불러오는데 실패했습니다.</div>
+              <div className="text-red-500">
+                약관 정보를 불러오는데 실패했습니다.
+              </div>
             </div>
           ) : !filteredTerms || filteredTerms.length === 0 ? (
             <div className="flex items-center justify-center py-8">
@@ -96,7 +96,10 @@ export default function TermsContentBottomSheet({
           ) : (
             <div className="space-y-6">
               {filteredTerms.map((term: TermsItem, index: number) => (
-                <div key={index} className="border-b border-gray-800 pb-6 last:border-b-0">
+                <div
+                  key={`${term.title}-${index}`}
+                  className="border-b border-gray-800 pb-6 last:border-b-0"
+                >
                   <div className="text-body3-r text-[#D7E1EF] leading-relaxed whitespace-pre-line">
                     {term.content}
                   </div>
@@ -106,6 +109,6 @@ export default function TermsContentBottomSheet({
           )}
         </div>
       </div>
-    </div>
+    </BottomSheet>
   );
 }

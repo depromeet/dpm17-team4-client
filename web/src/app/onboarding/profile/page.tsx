@@ -64,7 +64,7 @@ export default function OnboardingProfilePage() {
   // 로딩 상태 처리
   if (isLoading) {
     return (
-      <div className="min-h-screen text-white bg-black">
+      <div className="min-h-screen text-white bg-gray-900">
         <Navigator>
           <Navigator.Center>기본 정보</Navigator.Center>
         </Navigator>
@@ -78,7 +78,7 @@ export default function OnboardingProfilePage() {
   // 에러 상태 처리
   if (error) {
     return (
-      <div className="min-h-screen text-white bg-black">
+      <div className="min-h-screen text-white bg-gray-900">
         <Navigator>
           <Navigator.Center>기본 정보</Navigator.Center>
         </Navigator>
@@ -92,7 +92,7 @@ export default function OnboardingProfilePage() {
   }
 
   return (
-    <div className="min-h-screen text-white bg-black">
+    <div className="min-h-screen text-white bg-gray-900">
       {/* Header */}
       <Navigator>
         <Navigator.Center>기본 정보</Navigator.Center>

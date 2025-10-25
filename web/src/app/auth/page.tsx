@@ -22,8 +22,8 @@ import {
   setUserInfo,
   type UserInfo,
 } from './_components/AuthSessionProvider';
+import BottomSheetContainer from './_components/BottomSheetContainer';
 import KakaoLoginButton from './_components/KakaoLoginButton';
-import TermsAgreementBottomSheet from './_components/TermsAgreementBottomSheet';
 
 const API_BASE = process.env.NEXT_PUBLIC_API || 'https://kkruk.com';
 const KAKAO_LOGIN_INITIATE_URL = `${API_BASE}${API_ENDPOINTS.AUTH.KAKAO_LOGIN}`;
@@ -109,7 +109,8 @@ function AuthContent() {
     router.push(PAGE_ROUTES.ONBOARDING_PROFILE);
   };
 
-  const handleTermsClose = () => {
+  const handleBottomSheetClose = () => {
+    //TODO: 바텀싯을 닫으면 회원 탈퇴처리를 해야함.
     setShowTermsBottomSheet(false);
   };
 
@@ -187,10 +188,10 @@ function AuthContent() {
       {/* 하단 여백 */}
       <div className="w-full h-[176px]" />
 
-      {/* 약관 동의 바텀시트 */}
-      <TermsAgreementBottomSheet
+      {/* 바텀시트 */}
+      <BottomSheetContainer
         isOpen={showTermsBottomSheet}
-        onClose={handleTermsClose}
+        onClose={handleBottomSheetClose}
         onAgree={handleTermsAgree}
       />
     </div>

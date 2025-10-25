@@ -3,24 +3,25 @@
 import { ChevronRight } from 'lucide-react';
 import { useState } from 'react';
 import { BottomSheet } from '@/components/BottomSheet';
-import TermsContentBottomSheet from './TermsContentBottomSheet';
 
 interface TermsAgreementBottomSheetProps {
   isOpen: boolean;
   onClose: () => void;
   onAgree: () => void;
+  onNavigateToService?: () => void;
+  onNavigateToPrivacy?: () => void;
 }
 
 export default function TermsAgreementBottomSheet({
   isOpen,
   onClose,
   onAgree,
+  onNavigateToService,
+  onNavigateToPrivacy,
 }: TermsAgreementBottomSheetProps) {
   const [allAgreed, setAllAgreed] = useState(false);
   const [termsAgreed, setTermsAgreed] = useState(false);
   const [privacyAgreed, setPrivacyAgreed] = useState(false);
-  const [showTermsContent, setShowTermsContent] = useState(false);
-  const [showPrivacyContent, setShowPrivacyContent] = useState(false);
 
   const handleAllAgree = () => {
     const newAllAgreed = !allAgreed;
@@ -56,11 +57,15 @@ export default function TermsAgreementBottomSheet({
   };
 
   const handleTermsClick = () => {
-    setShowTermsContent(true);
+    if (onNavigateToService) {
+      onNavigateToService();
+    }
   };
 
   const handlePrivacyClick = () => {
-    setShowPrivacyContent(true);
+    if (onNavigateToPrivacy) {
+      onNavigateToPrivacy();
+    }
   };
 
   return (
@@ -212,24 +217,6 @@ export default function TermsAgreementBottomSheet({
           다음
         </button>
       </div>
-
-      {/* Terms Content Bottom Sheet */}
-      {showTermsContent && (
-        <TermsContentBottomSheet
-          isOpen={showTermsContent}
-          onClose={() => setShowTermsContent(false)}
-          type="service"
-        />
-      )}
-
-      {/* Privacy Content Bottom Sheet */}
-      {showPrivacyContent && (
-        <TermsContentBottomSheet
-          isOpen={showPrivacyContent}
-          onClose={() => setShowPrivacyContent(false)}
-          type="privacy-policy"
-        />
-      )}
     </BottomSheet>
   );
 }
