@@ -7,6 +7,8 @@ export const QUERY_KEYS = {
 
   DEFECATION: ['defecation'],
 
+  USER_ME: ['user', 'me'],
+
   FOODS: {
     SEARCH: (query: string, count: number) => ['foods', 'search', query, count],
   },

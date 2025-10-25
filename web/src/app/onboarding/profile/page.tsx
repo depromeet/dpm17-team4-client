@@ -2,18 +2,31 @@
 
 import { Calendar } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BirthYearSelectBottomSheet } from '@/app/my/profile/_components/BirthYearSelectBottomSheet';
 import { Navigator } from '@/components/Navigator';
 import { PAGE_ROUTES } from '@/constants';
+import { useUserMeQuery } from '@/hooks';
 
 export default function OnboardingProfilePage() {
-  //TODO(seieun) 로그인 하고 나서 유저의 정보(생년월일) 를 가져오는 부분 필요
   const router = useRouter();
+  const { data: userMeData, isLoading, error } = useUserMeQuery();
   const [birthYear, setBirthYear] = useState('');
   const [gender, setGender] = useState<'male' | 'female' | null>(null);
   const [isBirthYearBottomSheetOpen, setIsBirthYearBottomSheetOpen] =
     useState(false);
+
+  // API 데이터로 초기값 설정
+  useEffect(() => {
+    if (userMeData) {
+      if (userMeData.birthYear) {
+        setBirthYear(userMeData.birthYear.toString());
+      }
+      if (userMeData.gender) {
+        setGender(userMeData.gender === 'M' ? 'male' : 'female');
+      }
+    }
+  }, [userMeData]);
 
   const handleComplete = () => {
     if (birthYear && gender) {
@@ -38,8 +51,36 @@ export default function OnboardingProfilePage() {
 
   const isComplete = birthYear && gender;
 
+  // 로딩 상태 처리
+  if (isLoading) {
+    return (
+      <div className="min-h-screen text-white bg-black">
+        <Navigator>
+          <Navigator.Center>기본 정보</Navigator.Center>
+        </Navigator>
+        <div className="flex items-center justify-center min-h-[calc(100vh-56px)]">
+          <div className="text-white">로딩 중...</div>
+        </div>
+      </div>
+    );
+  }
+
+  // 에러 상태 처리
+  if (error) {
+    return (
+      <div className="min-h-screen text-white bg-black">
+        <Navigator>
+          <Navigator.Center>기본 정보</Navigator.Center>
+        </Navigator>
+        <div className="flex items-center justify-center min-h-[calc(100vh-56px)]">
+          <div className="text-red-500">사용자 정보를 불러오는데 실패했습니다.</div>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen text-white">
+    <div className="min-h-screen text-white bg-black">
       {/* Header */}
       <Navigator>
         <Navigator.Center>기본 정보</Navigator.Center>
