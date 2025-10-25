@@ -77,6 +77,7 @@ export default function ProfilePageContent() {
     }));
     console.log('새로운 프로필 이미지:', imageUrl);
 
+    // TODO: 프로필 이미지 수정 blob 파일 형태로 추가
     try {
       await updateUserMutation.mutateAsync({
         profileImage: imageUrl,
@@ -100,8 +101,8 @@ export default function ProfilePageContent() {
 
   const handleGenderSelect = async (gender: string) => {
     setProfileState((prev) => ({ ...prev, gender }));
-    console.log('선택된 성별:', gender);
 
+    // TODO: 성별 업데이트 선택안함 옵션 서버 대응 필요
     try {
       await updateUserMutation.mutateAsync({
         gender: gender === 'male' ? 'M' : gender === 'female' ? 'F' : null,
@@ -113,7 +114,6 @@ export default function ProfilePageContent() {
 
   const handleBirthYearSelect = async (year: string) => {
     setProfileState((prev) => ({ ...prev, birthYear: year }));
-    console.log('선택된 출생연도:', year);
 
     try {
       await updateUserMutation.mutateAsync({
