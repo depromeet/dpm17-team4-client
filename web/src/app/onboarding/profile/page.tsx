@@ -2,7 +2,7 @@
 
 import { Calendar } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { BirthYearSelectBottomSheet } from '@/app/my/profile/_components/BirthYearSelectBottomSheet';
 import { Navigator } from '@/components/Navigator';
 import { PAGE_ROUTES } from '@/constants';
@@ -36,7 +36,7 @@ export default function OnboardingProfilePage() {
           birthYear: parseInt(birthYear),
           gender: gender === 'male' ? 'M' : 'F',
         });
-        
+
         //TODO(seieun): 회원가입 완료 페이지로 수정 필요
         router.push(PAGE_ROUTES.HOME);
       } catch (error) {
@@ -83,7 +83,9 @@ export default function OnboardingProfilePage() {
           <Navigator.Center>기본 정보</Navigator.Center>
         </Navigator>
         <div className="flex items-center justify-center min-h-[calc(100vh-56px)]">
-          <div className="text-red-500">사용자 정보를 불러오는데 실패했습니다.</div>
+          <div className="text-red-500">
+            사용자 정보를 불러오는데 실패했습니다.
+          </div>
         </div>
       </div>
     );
