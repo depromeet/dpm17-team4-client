@@ -1,7 +1,7 @@
 'use client';
 
-import { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
 import { Navigator } from '@/components/Navigator';
 import { useTermsQuery } from '@/hooks/queries';
 import type { TermsItem } from '@/types/dto/terms.dto';
@@ -119,11 +119,13 @@ const TermsPageContent = () => {
 
 const TermsPage = () => {
   return (
-    <Suspense fallback={
-      <div className="min-h-screen bg-[#121213] flex items-center justify-center">
-        <div className="text-lg text-white">로딩 중...</div>
-      </div>
-    }>
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-[#121213] flex items-center justify-center">
+          <div className="text-lg text-white">로딩 중...</div>
+        </div>
+      }
+    >
       <TermsPageContent />
     </Suspense>
   );
