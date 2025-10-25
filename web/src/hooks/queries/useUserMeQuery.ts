@@ -8,7 +8,8 @@ export const useUserMeQuery = () => {
     queryKey: QUERY_KEYS.USER_ME,
     queryFn: async () => {
       const response = await userApi.getMe();
-      return response.data; // API 응답의 data 필드만 반환
+      return response.data;
     },
+    staleTime: 5 * 60 * 1000,
   });
 };

@@ -6,7 +6,7 @@ import ChevronRight from '@/assets/home/IC_Chevron_Right.png';
 import AppleIcon from '@/assets/my/apple-login.png';
 import KakaoIcon from '@/assets/my/kakao-login.png';
 import { Navigator } from '@/components/Navigator';
-import { useUserInfo } from '@/hooks';
+import { useUserMeQuery, useUserUpdateMutation } from '@/hooks';
 import { AccountDeletionModal } from './AccountDeletionModal';
 import { BirthYearSelectBottomSheet } from './BirthYearSelectBottomSheet';
 import { GenderSelectBottomSheet } from './GenderSelectBottomSheet';
@@ -18,7 +18,9 @@ interface ProfileState {
   name: string;
   birthYear: string;
   gender: string;
+  email: string;
   profileImage: string | null;
+  type: 'KAKAO' | 'APPLE';
 }
 
 interface BottomSheetState {
@@ -30,13 +32,15 @@ interface BottomSheetState {
 }
 
 export default function ProfilePageContent() {
-  //TODO(seieun): userInfo 에서 email, gender, birthyear 추가하도록 수정
-  const { userInfo } = useUserInfo();
+  const { data: userMeData, isLoading, error } = useUserMeQuery();
+  const updateUserMutation = useUserUpdateMutation();
   const [profileState, setProfileState] = useState<ProfileState>({
     name: '',
     birthYear: '2000',
     gender: 'male',
+    email: '',
     profileImage: null,
+    type: 'KAKAO',
   });
 
   const [bottomSheetState, setBottomSheetState] = useState<BottomSheetState>({
@@ -47,22 +51,40 @@ export default function ProfilePageContent() {
     isAccountDeletionModalOpen: false,
   });
 
-  // userInfo가 변경될 때마다 profileState 업데이트
   useEffect(() => {
-    if (userInfo) {
+    if (userMeData) {
       setProfileState((prev) => ({
         ...prev,
-        name: userInfo.nickname || '',
+        name: userMeData.nickname,
+        birthYear: userMeData.birthYear.toString(),
+        gender:
+          userMeData.gender === 'M'
+            ? 'male'
+            : userMeData.gender === 'F'
+              ? 'female'
+              : 'none',
+        email: userMeData.email,
+        profileImage: userMeData.profileImage,
+        type: userMeData.provider?.type,
       }));
     }
-  }, [userInfo]);
+  }, [userMeData]);
 
-  const handleImageChange = (imageUrl: string) => {
+  const handleImageChange = async (imageUrl: string) => {
     setProfileState((prev) => ({
       ...prev,
       profileImage: imageUrl,
     }));
     console.log('새로운 프로필 이미지:', imageUrl);
+
+    // TODO: 프로필 이미지 수정 blob 파일 형태로 추가
+    try {
+      await updateUserMutation.mutateAsync({
+        profileImage: imageUrl,
+      });
+    } catch (error) {
+      console.error('프로필 이미지 업데이트 실패:', error);
+    }
   };
 
   const handleGenderClick = () => {
@@ -77,19 +99,35 @@ export default function ProfilePageContent() {
     setBottomSheetState((prev) => ({ ...prev, isNameEditOpen: true }));
   };
 
-  const handleGenderSelect = (gender: string) => {
-    setProfileState((prev) => ({ ...prev, gender }));
-    console.log('선택된 성별:', gender);
+  const handleGenderSelect = async (gender: string) => {
+    // TODO: 성별 업데이트 선택안함 옵션 서버 대응 필요
+    try {
+      await updateUserMutation.mutateAsync({
+        gender: gender === 'male' ? 'M' : gender === 'female' ? 'F' : null,
+      });
+    } catch (error) {
+      console.error('성별 업데이트 실패:', error);
+    }
   };
 
-  const handleBirthYearSelect = (year: string) => {
-    setProfileState((prev) => ({ ...prev, birthYear: year }));
-    console.log('선택된 출생연도:', year);
+  const handleBirthYearSelect = async (year: string) => {
+    try {
+      await updateUserMutation.mutateAsync({
+        birthYear: parseInt(year),
+      });
+    } catch (error) {
+      console.error('출생연도 업데이트 실패:', error);
+    }
   };
 
-  const handleNameChange = (name: string) => {
-    setProfileState((prev) => ({ ...prev, name }));
-    console.log('변경된 이름:', name);
+  const handleNameChange = async (name: string) => {
+    try {
+      await updateUserMutation.mutateAsync({
+        nickname: name,
+      });
+    } catch (error) {
+      console.error('이름 업데이트 실패:', error);
+    }
   };
 
   const handleLogoutClick = () => {
@@ -116,6 +154,38 @@ export default function ProfilePageContent() {
     }
   };
 
+  const isUpdating = updateUserMutation.isPending;
+
+  // 로딩 상태 처리
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-900 text-white">
+        <Navigator>
+          <Navigator.Center>내 정보 수정</Navigator.Center>
+        </Navigator>
+        <div className="pt-14 flex items-center justify-center min-h-[calc(100vh-56px)]">
+          <div className="text-white">로딩 중...</div>
+        </div>
+      </div>
+    );
+  }
+
+  // 에러 상태 처리
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-900 text-white">
+        <Navigator>
+          <Navigator.Center>내 정보 수정</Navigator.Center>
+        </Navigator>
+        <div className="pt-14 flex items-center justify-center min-h-[calc(100vh-56px)]">
+          <div className="text-red-500">
+            사용자 정보를 불러오는데 실패했습니다.
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-900 text-white">
       <Navigator>
@@ -135,6 +205,7 @@ export default function ProfilePageContent() {
               type="button"
               className="flex items-center justify-between py-3 cursor-pointer w-full"
               onClick={handleNameClick}
+              disabled={isUpdating}
             >
               <span className="text-body2-sb">이름</span>
               <div className="flex items-center space-x-2">
@@ -154,13 +225,13 @@ export default function ProfilePageContent() {
             >
               <span className="text-body2-sb">연결된 계정</span>
               <div className="flex items-center space-x-2">
-                {userInfo?.providerType === 'KAKAO' ? (
+                {profileState.type === 'KAKAO' ? (
                   <Image src={KakaoIcon} alt="kakao" className="w-6 h-6" />
                 ) : (
                   <Image src={AppleIcon} alt="apple" className="w-6 h-6" />
                 )}
                 <span className="text-body2-r text-white">
-                  example@example.com
+                  {profileState.email}
                 </span>
               </div>
             </button>
@@ -168,6 +239,7 @@ export default function ProfilePageContent() {
               type="button"
               className="flex items-center justify-between py-3 cursor-pointer w-full"
               onClick={handleBirthYearClick}
+              disabled={isUpdating}
             >
               <span className="text-body2-sb">출생 연도</span>
               <div className="flex items-center space-x-2">
@@ -185,6 +257,7 @@ export default function ProfilePageContent() {
               type="button"
               className="flex items-center justify-between py-3 cursor-pointer w-full"
               onClick={handleGenderClick}
+              disabled={isUpdating}
             >
               <span className="text-body2-sb">성별</span>
               <div className="flex items-center space-x-2">
