@@ -6,11 +6,12 @@ import { useState, useEffect } from 'react';
 import { BirthYearSelectBottomSheet } from '@/app/my/profile/_components/BirthYearSelectBottomSheet';
 import { Navigator } from '@/components/Navigator';
 import { PAGE_ROUTES } from '@/constants';
-import { useUserMeQuery } from '@/hooks';
+import { useUserMeQuery, useUserUpdateMutation } from '@/hooks';
 
 export default function OnboardingProfilePage() {
   const router = useRouter();
   const { data: userMeData, isLoading, error } = useUserMeQuery();
+  const updateUserMutation = useUserUpdateMutation();
   const [birthYear, setBirthYear] = useState('');
   const [gender, setGender] = useState<'male' | 'female' | null>(null);
   const [isBirthYearBottomSheetOpen, setIsBirthYearBottomSheetOpen] =
@@ -28,12 +29,20 @@ export default function OnboardingProfilePage() {
     }
   }, [userMeData]);
 
-  const handleComplete = () => {
+  const handleComplete = async () => {
     if (birthYear && gender) {
-      // 가입 완료 로직
-      console.log('가입 완료:', { birthYear, gender });
-      // 다음 단계로 이동하거나 홈으로 이동
-      router.push(PAGE_ROUTES.HOME);
+      try {
+        await updateUserMutation.mutateAsync({
+          birthYear: parseInt(birthYear),
+          gender: gender === 'male' ? 'M' : 'F',
+        });
+        
+        //TODO(seieun): 회원가입 완료 페이지로 수정 필요
+        router.push(PAGE_ROUTES.HOME);
+      } catch (error) {
+        console.error('사용자 정보 업데이트 실패:', error);
+        // 에러 처리 (토스트 메시지 등)
+      }
     }
   };
 
@@ -50,6 +59,7 @@ export default function OnboardingProfilePage() {
   };
 
   const isComplete = birthYear && gender;
+  const isUpdating = updateUserMutation.isPending;
 
   // 로딩 상태 처리
   if (isLoading) {
@@ -153,14 +163,14 @@ export default function OnboardingProfilePage() {
         <button
           type="button"
           onClick={handleComplete}
-          disabled={!isComplete}
+          disabled={!isComplete || isUpdating}
           className={`w-full py-4 rounded-lg font-medium transition-colors ${
-            isComplete
+            isComplete && !isUpdating
               ? 'bg-primary-600 text-white'
               : 'bg-gray-600 text-gray-400 cursor-not-allowed'
           }`}
         >
-          가입 완료
+          {isUpdating ? '저장 중...' : '가입 완료'}
         </button>
       </div>
 
