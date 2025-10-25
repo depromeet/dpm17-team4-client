@@ -32,4 +32,8 @@ export const API_ENDPOINTS = {
   DEFECATION: {
     BASE: '/api/v1/poo-records',
   },
+
+  TERMS: {
+    BASE: '/api/v1/terms',
+  },
 } as const;
