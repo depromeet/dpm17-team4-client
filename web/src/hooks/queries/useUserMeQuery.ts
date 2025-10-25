@@ -10,5 +10,6 @@ export const useUserMeQuery = () => {
       const response = await userApi.getMe();
       return response.data;
     },
+    staleTime: 5 * 60 * 1000,
   });
 };
