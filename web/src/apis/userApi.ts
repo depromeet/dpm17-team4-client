@@ -1,6 +1,9 @@
 import { API_ENDPOINTS } from '@/constants';
 import apiClient from '@/lib/api-client';
-import type { UserMeResponseDto, UserUpdateRequestDto } from '@/types/dto/user.dto';
+import type {
+  UserMeResponseDto,
+  UserUpdateRequestDto,
+} from '@/types/dto/user.dto';
 
 export const userApi = {
   getMe: async () => {
