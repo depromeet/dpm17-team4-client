@@ -9,7 +9,7 @@ export interface UserData {
   nickname: string;
   profileImage: string;
   provider: Provider;
-  gender: 'M' | 'F';
+  gender: 'M' | 'F' | null;
   birthYear: number;
 }
 
@@ -23,6 +23,6 @@ export interface UserMeResponseDto {
 export interface UserUpdateRequestDto {
   nickname?: string;
   profileImage?: string;
-  gender?: 'M' | 'F';
+  gender?: 'M' | 'F' | null;
   birthYear?: number;
 }

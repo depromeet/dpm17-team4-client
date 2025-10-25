@@ -1,10 +1,10 @@
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { userApi } from '@/apis/userApi';
 import { QUERY_KEYS } from '@/constants';
 import type { UserData } from '@/types/dto/user.dto';
 
 export const useUserMeQuery = () => {
-  return useQuery<UserData>({
+  return useSuspenseQuery<UserData>({
     queryKey: QUERY_KEYS.USER_ME,
     queryFn: async () => {
       const response = await userApi.getMe();

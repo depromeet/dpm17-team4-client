@@ -6,7 +6,7 @@ import ChevronRight from '@/assets/home/IC_Chevron_Right.png';
 import AppleIcon from '@/assets/my/apple-login.png';
 import KakaoIcon from '@/assets/my/kakao-login.png';
 import { Navigator } from '@/components/Navigator';
-import { useUserMeQuery } from '@/hooks';
+import { useUserMeQuery, useUserUpdateMutation } from '@/hooks';
 import { AccountDeletionModal } from './AccountDeletionModal';
 import { BirthYearSelectBottomSheet } from './BirthYearSelectBottomSheet';
 import { GenderSelectBottomSheet } from './GenderSelectBottomSheet';
@@ -20,6 +20,7 @@ interface ProfileState {
   gender: string;
   email: string;
   profileImage: string | null;
+  type: 'KAKAO' | 'APPLE';
 }
 
 interface BottomSheetState {
@@ -32,12 +33,14 @@ interface BottomSheetState {
 
 export default function ProfilePageContent() {
   const { data: userMeData, isLoading, error } = useUserMeQuery();
+  const updateUserMutation = useUserUpdateMutation();
   const [profileState, setProfileState] = useState<ProfileState>({
     name: '',
     birthYear: '2000',
     gender: 'male',
     email: '',
     profileImage: null,
+    type: 'KAKAO',
   });
 
   const [bottomSheetState, setBottomSheetState] = useState<BottomSheetState>({
@@ -54,19 +57,28 @@ export default function ProfilePageContent() {
         ...prev,
         name: userMeData.nickname,
         birthYear: userMeData.birthYear.toString(),
-        gender: userMeData.gender === 'M' ? 'male' : 'female',
+        gender: userMeData.gender === 'M' ? 'male' : userMeData.gender === 'F' ? 'female' : 'none',
         email: userMeData.email,
         profileImage: userMeData.profileImage,
+        type: userMeData.provider?.type,
       }));
     }
   }, [userMeData]);
 
-  const handleImageChange = (imageUrl: string) => {
+  const handleImageChange = async (imageUrl: string) => {
     setProfileState((prev) => ({
       ...prev,
       profileImage: imageUrl,
     }));
     console.log('새로운 프로필 이미지:', imageUrl);
+    
+    try {
+      await updateUserMutation.mutateAsync({
+        profileImage: imageUrl,
+      });
+    } catch (error) {
+      console.error('프로필 이미지 업데이트 실패:', error);
+    }
   };
 
   const handleGenderClick = () => {
@@ -81,19 +93,43 @@ export default function ProfilePageContent() {
     setBottomSheetState((prev) => ({ ...prev, isNameEditOpen: true }));
   };
 
-  const handleGenderSelect = (gender: string) => {
+  const handleGenderSelect = async (gender: string) => {
     setProfileState((prev) => ({ ...prev, gender }));
     console.log('선택된 성별:', gender);
+    
+    try {
+      await updateUserMutation.mutateAsync({
+        gender: gender === 'male' ? 'M' : gender === 'female' ? 'F' : null,
+      });
+    } catch (error) {
+      console.error('성별 업데이트 실패:', error);
+    }
   };
 
-  const handleBirthYearSelect = (year: string) => {
+  const handleBirthYearSelect = async (year: string) => {
     setProfileState((prev) => ({ ...prev, birthYear: year }));
     console.log('선택된 출생연도:', year);
+    
+    try {
+      await updateUserMutation.mutateAsync({
+        birthYear: parseInt(year),
+      });
+    } catch (error) {
+      console.error('출생연도 업데이트 실패:', error);
+    }
   };
 
-  const handleNameChange = (name: string) => {
+  const handleNameChange = async (name: string) => {
     setProfileState((prev) => ({ ...prev, name }));
     console.log('변경된 이름:', name);
+    
+    try {
+      await updateUserMutation.mutateAsync({
+        nickname: name,
+      });
+    } catch (error) {
+      console.error('이름 업데이트 실패:', error);
+    }
   };
 
   const handleLogoutClick = () => {
@@ -119,6 +155,8 @@ export default function ProfilePageContent() {
         return '남성';
     }
   };
+
+  const isUpdating = updateUserMutation.isPending;
 
   // 로딩 상태 처리
   if (isLoading) {
@@ -167,6 +205,7 @@ export default function ProfilePageContent() {
               type="button"
               className="flex items-center justify-between py-3 cursor-pointer w-full"
               onClick={handleNameClick}
+              disabled={isUpdating}
             >
               <span className="text-body2-sb">이름</span>
               <div className="flex items-center space-x-2">
@@ -186,7 +225,7 @@ export default function ProfilePageContent() {
             >
               <span className="text-body2-sb">연결된 계정</span>
               <div className="flex items-center space-x-2">
-                {userMeData?.provider.type === 'KAKAO' ? (
+                {profileState.type === 'KAKAO' ? (
                   <Image src={KakaoIcon} alt="kakao" className="w-6 h-6" />
                 ) : (
                   <Image src={AppleIcon} alt="apple" className="w-6 h-6" />
@@ -200,6 +239,7 @@ export default function ProfilePageContent() {
               type="button"
               className="flex items-center justify-between py-3 cursor-pointer w-full"
               onClick={handleBirthYearClick}
+              disabled={isUpdating}
             >
               <span className="text-body2-sb">출생 연도</span>
               <div className="flex items-center space-x-2">
@@ -217,6 +257,7 @@ export default function ProfilePageContent() {
               type="button"
               className="flex items-center justify-between py-3 cursor-pointer w-full"
               onClick={handleGenderClick}
+              disabled={isUpdating}
             >
               <span className="text-body2-sb">성별</span>
               <div className="flex items-center space-x-2">
