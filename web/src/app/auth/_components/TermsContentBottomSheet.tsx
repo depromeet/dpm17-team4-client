@@ -4,12 +4,17 @@ import { X } from 'lucide-react';
 import { BottomSheet } from '@/components/BottomSheet';
 import { useTermsQuery } from '@/hooks/queries';
 import type { TermsItem } from '@/types/dto/terms.dto';
+import {
+  filterTermsByType,
+  getTermsPageTitle,
+  type TermsContentType,
+} from '@/utils/termUtils';
 
 interface TermsContentBottomSheetProps {
   isOpen: boolean;
   onClose: () => void;
   onBack?: () => void;
-  type?: 'service' | 'privacy-policy';
+  type?: TermsContentType;
 }
 
 export default function TermsContentBottomSheet({
@@ -20,37 +25,7 @@ export default function TermsContentBottomSheet({
 }: TermsContentBottomSheetProps) {
   const { data: terms, isLoading, error } = useTermsQuery();
 
-  const getPageTitle = () => {
-    if (type === 'service') {
-      return '이용약관';
-    }
-    if (type === 'privacy-policy') {
-      return '개인정보 처리방침';
-    }
-    return '약관 및 정책';
-  };
-
-  // 파라미터에 따른 필터링
-  const getFilteredTerms = () => {
-    if (!terms) return [];
-
-    switch (type) {
-      case 'service':
-        return terms.filter(
-          (term) =>
-            term.title.includes('서비스') || term.title.includes('이용약관')
-        );
-      case 'privacy-policy':
-        return terms.filter(
-          (term) =>
-            term.title.includes('개인정보') || term.title.includes('처리방침')
-        );
-      default:
-        return terms;
-    }
-  };
-
-  const filteredTerms = getFilteredTerms();
+  const filteredTerms = filterTermsByType(terms, type);
 
   return (
     <BottomSheet isOpen={isOpen} onClose={onClose}>
@@ -72,7 +47,7 @@ export default function TermsContentBottomSheet({
             )}
           </div>
           <h2 className="text-xl font-semibold text-white absolute left-1/2 transform -translate-x-1/2">
-            {getPageTitle()}
+            {getTermsPageTitle(type)}
           </h2>
           <div></div>
         </div>

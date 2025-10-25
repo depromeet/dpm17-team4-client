@@ -5,56 +5,19 @@ import { Suspense } from 'react';
 import { Navigator } from '@/components/Navigator';
 import { useTermsQuery } from '@/hooks/queries';
 import type { TermsItem } from '@/types/dto/terms.dto';
-
-export type TermsType = 'service' | 'privacy-policy';
+import {
+  filterTermsByType,
+  getTermsPageTitle,
+  type TermsContentType,
+} from '@/utils/termUtils';
 
 const TermsPageContent = () => {
   const searchParams = useSearchParams();
-  const type = searchParams.get('type') as TermsType;
+  const type = searchParams.get('type') as TermsContentType;
 
   const { data: terms, isLoading, error } = useTermsQuery();
 
-  const getPageTitle = () => {
-    // service 타입일 때는 "서비스"나 "이용약관"이 포함된 title 찾기
-    if (type === 'service') {
-      const serviceTerm = filteredTerms.find(
-        (term) =>
-          term.title.includes('서비스') || term.title.includes('이용약관')
-      );
-      return serviceTerm?.title;
-    }
-
-    // privacy-policy 타입일 때는 "개인정보"나 "처리방침"이 포함된 title 찾기
-    if (type === 'privacy-policy') {
-      const privacyTerm = filteredTerms.find(
-        (term) =>
-          term.title.includes('개인정보') || term.title.includes('처리방침')
-      );
-      return privacyTerm?.title;
-    }
-  };
-
-  // 파라미터에 따른 필터링
-  const getFilteredTerms = () => {
-    if (!terms) return [];
-
-    switch (type) {
-      case 'service':
-        return terms.filter(
-          (term) =>
-            term.title.includes('서비스') || term.title.includes('이용약관')
-        );
-      case 'privacy-policy':
-        return terms.filter(
-          (term) =>
-            term.title.includes('개인정보') || term.title.includes('처리방침')
-        );
-      default:
-        return terms;
-    }
-  };
-
-  const filteredTerms = getFilteredTerms();
+  const filteredTerms = filterTermsByType(terms, type);
 
   if (isLoading) {
     return (
@@ -78,7 +41,7 @@ const TermsPageContent = () => {
     return (
       <div className="min-h-screen bg-[#121213]">
         <Navigator>
-          <Navigator.Center>{getPageTitle()}</Navigator.Center>
+          <Navigator.Center>{getTermsPageTitle(type)}</Navigator.Center>
         </Navigator>
 
         <div className="flex items-center justify-center min-h-[calc(100vh-56px)] pt-[56px]">
@@ -91,7 +54,7 @@ const TermsPageContent = () => {
   return (
     <div className="min-h-screen bg-[#121213]">
       <Navigator>
-        <Navigator.Center>{getPageTitle()}</Navigator.Center>
+        <Navigator.Center>{getTermsPageTitle(type)}</Navigator.Center>
       </Navigator>
 
       {/* Content */}
