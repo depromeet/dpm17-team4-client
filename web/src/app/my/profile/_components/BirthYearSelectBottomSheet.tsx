@@ -28,7 +28,7 @@ export const BirthYearSelectBottomSheet = ({
 
   return (
     <BottomSheet isOpen={isOpen} onClose={onClose}>
-      <div className="px-6 pb-6 h-[800px]">
+      <div className="px-6 pb-6 h-[calc(100vh-80px)]">
         <h2 className="text-lg font-semibold text-white mb-6 text-left">
           출생 연도를 선택해주세요
         </h2>
