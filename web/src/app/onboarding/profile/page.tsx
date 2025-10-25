@@ -120,9 +120,11 @@ export default function OnboardingProfilePage() {
             <button
               type="button"
               onClick={handleOpenBirthYearBottomSheet}
-              className="w-full px-4 py-4 bg-gray-800 rounded-lg text-left text-white focus:outline-none focus:ring-2 focus:ring-primary-600"
+              className={`w-full px-4 py-4 bg-gray-800 rounded-lg text-left text-white focus:outline-none focus:ring-2 focus:ring-primary-600 ${
+                birthYear ? 'text-white' : 'text-gray-600'
+              }`}
             >
-              {birthYear ? `${birthYear}년` : '2025'}
+              {birthYear ? `${birthYear}년` : '생년원일'}
             </button>
             <Calendar className="absolute right-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
           </div>
