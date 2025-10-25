@@ -97,9 +97,9 @@ const TermsPageContent = () => {
       {/* Content */}
       <div className="max-w-4xl mx-auto px-4 py-8 pt-[72px]">
         <div className="space-y-8">
-          {filteredTerms.map((term: TermsItem, index: number) => (
+          {filteredTerms.map((term: TermsItem) => (
             <div
-              key={index}
+              key={`${term.title}-${term.content.slice(0, 20)}`}
               className="border-b border-gray-800 pb-6 last:border-b-0"
             >
               <div className="text-body3-r text-[#D7E1EF] leading-relaxed whitespace-pre-line">
