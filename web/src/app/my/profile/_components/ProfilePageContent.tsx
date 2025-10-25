@@ -57,7 +57,12 @@ export default function ProfilePageContent() {
         ...prev,
         name: userMeData.nickname,
         birthYear: userMeData.birthYear.toString(),
-        gender: userMeData.gender === 'M' ? 'male' : userMeData.gender === 'F' ? 'female' : 'none',
+        gender:
+          userMeData.gender === 'M'
+            ? 'male'
+            : userMeData.gender === 'F'
+              ? 'female'
+              : 'none',
         email: userMeData.email,
         profileImage: userMeData.profileImage,
         type: userMeData.provider?.type,
@@ -71,7 +76,7 @@ export default function ProfilePageContent() {
       profileImage: imageUrl,
     }));
     console.log('새로운 프로필 이미지:', imageUrl);
-    
+
     try {
       await updateUserMutation.mutateAsync({
         profileImage: imageUrl,
@@ -96,7 +101,7 @@ export default function ProfilePageContent() {
   const handleGenderSelect = async (gender: string) => {
     setProfileState((prev) => ({ ...prev, gender }));
     console.log('선택된 성별:', gender);
-    
+
     try {
       await updateUserMutation.mutateAsync({
         gender: gender === 'male' ? 'M' : gender === 'female' ? 'F' : null,
@@ -109,7 +114,7 @@ export default function ProfilePageContent() {
   const handleBirthYearSelect = async (year: string) => {
     setProfileState((prev) => ({ ...prev, birthYear: year }));
     console.log('선택된 출생연도:', year);
-    
+
     try {
       await updateUserMutation.mutateAsync({
         birthYear: parseInt(year),
@@ -122,7 +127,7 @@ export default function ProfilePageContent() {
   const handleNameChange = async (name: string) => {
     setProfileState((prev) => ({ ...prev, name }));
     console.log('변경된 이름:', name);
-    
+
     try {
       await updateUserMutation.mutateAsync({
         nickname: name,
@@ -180,7 +185,9 @@ export default function ProfilePageContent() {
           <Navigator.Center>내 정보 수정</Navigator.Center>
         </Navigator>
         <div className="pt-14 flex items-center justify-center min-h-[calc(100vh-56px)]">
-          <div className="text-red-500">사용자 정보를 불러오는데 실패했습니다.</div>
+          <div className="text-red-500">
+            사용자 정보를 불러오는데 실패했습니다.
+          </div>
         </div>
       </div>
     );
