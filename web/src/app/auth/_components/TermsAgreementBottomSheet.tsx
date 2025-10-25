@@ -27,15 +27,21 @@ export default function TermsAgreementBottomSheet({
   };
 
   const handleTermsAgree = () => {
-    setTermsAgreed(!termsAgreed);
-    if (!termsAgreed) {
+    const newTermsAgreed = !termsAgreed;
+    setTermsAgreed(newTermsAgreed);
+    if (newTermsAgreed && privacyAgreed) {
+      setAllAgreed(true);
+    } else {
       setAllAgreed(false);
     }
   };
 
   const handlePrivacyAgree = () => {
-    setPrivacyAgreed(!privacyAgreed);
-    if (!privacyAgreed) {
+    const newPrivacyAgreed = !privacyAgreed;
+    setPrivacyAgreed(newPrivacyAgreed);
+    if (termsAgreed && newPrivacyAgreed) {
+      setAllAgreed(true);
+    } else {
       setAllAgreed(false);
     }
   };
