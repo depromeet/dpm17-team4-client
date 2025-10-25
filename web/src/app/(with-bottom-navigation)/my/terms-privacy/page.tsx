@@ -1,9 +1,9 @@
 'use client';
 
-import { Navigator } from '@/components/Navigator';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import ChevronRight from '@/assets/home/IC_Chevron_Right.png';
+import { Navigator } from '@/components/Navigator';
 import { PAGE_ROUTES } from '@/constants/route.constants';
 
 const TermsPrivacyPage = () => {
@@ -22,34 +22,28 @@ const TermsPrivacyPage = () => {
       <Navigator>
         <Navigator.Center>약관 및 개인정보</Navigator.Center>
       </Navigator>
-      
+
       {/* Content */}
       <div className="pt-[56px] text-white text-body2-sb">
         {/* 이용약관 */}
-         <div 
-           className="flex items-center justify-between px-4 py-4 cursor-pointer hover:bg-gray-800/50 transition-colors"
-           onClick={handleTermsClick}
-         >
-           <span>이용약관</span>
-           <Image
-             src={ChevronRight}
-             alt="chevron right"
-             className="w-5 h-5"
-           />
-         </div>
-         
-         {/* 개인정보 처리방침 */}
-         <div 
-           className="flex items-center justify-between px-4 py-4 cursor-pointer hover:bg-gray-800/50 transition-colors"
-           onClick={handlePrivacyClick}
-         >
-           <span>개인정보 처리방침</span>
-           <Image
-             src={ChevronRight}
-             alt="chevron right"
-             className="w-5 h-5"
-           />
-         </div>
+        <button
+          type="button"
+          className="flex items-center justify-between px-4 py-4 cursor-pointer hover:bg-gray-800/50 transition-colors w-full text-left"
+          onClick={handleTermsClick}
+        >
+          <span>이용약관</span>
+          <Image src={ChevronRight} alt="chevron right" className="w-5 h-5" />
+        </button>
+
+        {/* 개인정보 처리방침 */}
+        <button
+          type="button"
+          className="flex items-center justify-between px-4 py-4 cursor-pointer hover:bg-gray-800/50 transition-colors w-full text-left"
+          onClick={handlePrivacyClick}
+        >
+          <span>개인정보 처리방침</span>
+          <Image src={ChevronRight} alt="chevron right" className="w-5 h-5" />
+        </button>
       </div>
     </div>
   );
