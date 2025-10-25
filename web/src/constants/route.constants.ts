@@ -8,6 +8,7 @@ export const PAGE_ROUTES = {
   MY_PROFILE: '/my/profile',
   NOTIFICATION_SETTINGS: '/my/notification-settings',
   TERMS_PRIVACY: '/my/terms-privacy',
+  ONBOARDING_PROFILE: '/onboarding/profile',
   APP_LOCK: '/my/app-lock',
   PASSWORD_SETTINGS: '/my/app-lock/settings-password',
 } as const;

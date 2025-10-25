@@ -13,7 +13,7 @@ import {
 import bgGradient2 from '@/assets/auth/bg-gradient2.png';
 import bgGradient3 from '@/assets/auth/bg-gradient3.png';
 import loginCharacter from '@/assets/auth/login-character.png';
-import { API_ENDPOINTS } from '@/constants';
+import { API_ENDPOINTS, PAGE_ROUTES } from '@/constants';
 import AppleLoginButton from './_components/AppleLoginButton';
 import {
   getAccessToken,
@@ -29,6 +29,7 @@ const API_BASE = process.env.NEXT_PUBLIC_API || 'https://kkruk.com';
 const KAKAO_LOGIN_INITIATE_URL = `${API_BASE}${API_ENDPOINTS.AUTH.KAKAO_LOGIN}`;
 
 function AuthContent() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const [error, setError] = useState<string | null>(null);
   const [showTermsBottomSheet, setShowTermsBottomSheet] = useState(false);
@@ -102,8 +103,8 @@ function AuthContent() {
   }, [extractUserInfo]);
 
   const handleTermsAgree = () => {
-    setShowTermsBottomSheet(false);
-    //TODO 다음 퍼널로 이동(생년월일 선택 페이지)
+    setShowTermsBottomSheet(false)
+    router.push(PAGE_ROUTES.ONBOARDING_PROFILE);
   };
 
   const handleTermsClose = () => {
