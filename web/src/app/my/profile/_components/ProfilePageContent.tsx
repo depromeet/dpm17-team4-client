@@ -6,7 +6,7 @@ import ChevronRight from '@/assets/home/IC_Chevron_Right.png';
 import AppleIcon from '@/assets/my/apple-login.png';
 import KakaoIcon from '@/assets/my/kakao-login.png';
 import { Navigator } from '@/components/Navigator';
-import { useUserInfo } from '@/hooks';
+import { useUserMeQuery } from '@/hooks';
 import { AccountDeletionModal } from './AccountDeletionModal';
 import { BirthYearSelectBottomSheet } from './BirthYearSelectBottomSheet';
 import { GenderSelectBottomSheet } from './GenderSelectBottomSheet';
@@ -18,6 +18,7 @@ interface ProfileState {
   name: string;
   birthYear: string;
   gender: string;
+  email: string;
   profileImage: string | null;
 }
 
@@ -30,12 +31,12 @@ interface BottomSheetState {
 }
 
 export default function ProfilePageContent() {
-  //TODO(seieun): userInfo 에서 email, gender, birthyear 추가하도록 수정
-  const { userInfo } = useUserInfo();
+  const { data: userMeData, isLoading, error } = useUserMeQuery();
   const [profileState, setProfileState] = useState<ProfileState>({
     name: '',
     birthYear: '2000',
     gender: 'male',
+    email: '',
     profileImage: null,
   });
 
@@ -47,15 +48,18 @@ export default function ProfilePageContent() {
     isAccountDeletionModalOpen: false,
   });
 
-  // userInfo가 변경될 때마다 profileState 업데이트
   useEffect(() => {
-    if (userInfo) {
+    if (userMeData) {
       setProfileState((prev) => ({
         ...prev,
-        name: userInfo.nickname || '',
+        name: userMeData.nickname,
+        birthYear: userMeData.birthYear.toString(),
+        gender: userMeData.gender === 'M' ? 'male' : 'female',
+        email: userMeData.email,
+        profileImage: userMeData.profileImage,
       }));
     }
-  }, [userInfo]);
+  }, [userMeData]);
 
   const handleImageChange = (imageUrl: string) => {
     setProfileState((prev) => ({
@@ -116,6 +120,34 @@ export default function ProfilePageContent() {
     }
   };
 
+  // 로딩 상태 처리
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-900 text-white">
+        <Navigator>
+          <Navigator.Center>내 정보 수정</Navigator.Center>
+        </Navigator>
+        <div className="pt-14 flex items-center justify-center min-h-[calc(100vh-56px)]">
+          <div className="text-white">로딩 중...</div>
+        </div>
+      </div>
+    );
+  }
+
+  // 에러 상태 처리
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-900 text-white">
+        <Navigator>
+          <Navigator.Center>내 정보 수정</Navigator.Center>
+        </Navigator>
+        <div className="pt-14 flex items-center justify-center min-h-[calc(100vh-56px)]">
+          <div className="text-red-500">사용자 정보를 불러오는데 실패했습니다.</div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-900 text-white">
       <Navigator>
@@ -154,13 +186,13 @@ export default function ProfilePageContent() {
             >
               <span className="text-body2-sb">연결된 계정</span>
               <div className="flex items-center space-x-2">
-                {userInfo?.providerType === 'KAKAO' ? (
+                {userMeData?.provider.type === 'KAKAO' ? (
                   <Image src={KakaoIcon} alt="kakao" className="w-6 h-6" />
                 ) : (
                   <Image src={AppleIcon} alt="apple" className="w-6 h-6" />
                 )}
                 <span className="text-body2-r text-white">
-                  example@example.com
+                  {profileState.email}
                 </span>
               </div>
             </button>
