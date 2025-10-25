@@ -121,7 +121,6 @@ export default function ProfilePageContent() {
   };
 
   const handleNameChange = async (name: string) => {
-
     try {
       await updateUserMutation.mutateAsync({
         nickname: name,
