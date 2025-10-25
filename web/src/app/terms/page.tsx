@@ -6,9 +6,11 @@ import { Navigator } from '@/components/Navigator';
 import { useTermsQuery } from '@/hooks/queries';
 import type { TermsItem } from '@/types/dto/terms.dto';
 
+export type TermsType = 'service' | 'privacy-policy';
+
 const TermsPageContent = () => {
   const searchParams = useSearchParams();
-  const type = searchParams.get('type');
+  const type = searchParams.get('type') as TermsType;
 
   const { data: terms, isLoading, error } = useTermsQuery();
 
@@ -43,15 +45,9 @@ const TermsPageContent = () => {
             term.title.includes('서비스') || term.title.includes('이용약관')
         );
       case 'privacy-policy':
-      case 'personalInformation':
         return terms.filter(
           (term) =>
-            term.title.includes('개인정보') ||
-            term.title.includes('처리방침') ||
-            term.title.includes('개인정보 처리방침') ||
-            term.title.includes('개인정보처리방침') ||
-            term.title.includes('Privacy Policy') ||
-            term.title.includes('privacy')
+            term.title.includes('개인정보') || term.title.includes('처리방침')
         );
       default:
         return terms;
