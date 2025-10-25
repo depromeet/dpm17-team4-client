@@ -33,6 +33,9 @@ export const API_ENDPOINTS = {
     BASE: '/api/v1/poo-records',
   },
 
+  TERMS: {
+    BASE: '/api/v1/terms',
+  },
   USERS: {
     ME: '/api/v1/users/me',
   },

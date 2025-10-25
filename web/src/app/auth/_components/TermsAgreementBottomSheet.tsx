@@ -8,12 +8,16 @@ interface TermsAgreementBottomSheetProps {
   isOpen: boolean;
   onClose: () => void;
   onAgree: () => void;
+  onNavigateToService?: () => void;
+  onNavigateToPrivacy?: () => void;
 }
 
 export default function TermsAgreementBottomSheet({
   isOpen,
   onClose,
   onAgree,
+  onNavigateToService,
+  onNavigateToPrivacy,
 }: TermsAgreementBottomSheetProps) {
   const [allAgreed, setAllAgreed] = useState(false);
   const [termsAgreed, setTermsAgreed] = useState(false);
@@ -49,6 +53,18 @@ export default function TermsAgreementBottomSheet({
   const handleNext = () => {
     if (termsAgreed && privacyAgreed) {
       onAgree();
+    }
+  };
+
+  const handleTermsClick = () => {
+    if (onNavigateToService) {
+      onNavigateToService();
+    }
+  };
+
+  const handlePrivacyClick = () => {
+    if (onNavigateToPrivacy) {
+      onNavigateToPrivacy();
     }
   };
 
@@ -100,12 +116,12 @@ export default function TermsAgreementBottomSheet({
           </button>
 
           {/* Terms of Service */}
-          <button
-            type="button"
-            className="flex items-center justify-between pl-4 cursor-pointer w-full text-left"
-            onClick={handleTermsAgree}
-          >
-            <div className="flex items-center space-x-3">
+          <div className="flex items-center justify-between pl-4 w-full">
+            <button
+              type="button"
+              className="flex items-center space-x-3 cursor-pointer text-left flex-1"
+              onClick={handleTermsAgree}
+            >
               <div
                 className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
                   termsAgreed
@@ -132,17 +148,23 @@ export default function TermsAgreementBottomSheet({
               <span className="text-white">
                 이용약관 동의 <span className="text-primary-400">(필수)</span>
               </span>
-            </div>
-            <ChevronRight className="w-5 h-5 text-gray-400" />
-          </button>
+            </button>
+            <button
+              type="button"
+              onClick={handleTermsClick}
+              className="p-2 hover:bg-gray-800 rounded-full transition-colors"
+            >
+              <ChevronRight className="w-5 h-5 text-gray-400" />
+            </button>
+          </div>
 
           {/* Privacy Policy */}
-          <button
-            type="button"
-            className="flex items-center justify-between pl-4 cursor-pointer w-full text-left"
-            onClick={handlePrivacyAgree}
-          >
-            <div className="flex items-center space-x-3">
+          <div className="flex items-center justify-between pl-4 w-full">
+            <button
+              type="button"
+              className="flex items-center space-x-3 cursor-pointer text-left flex-1"
+              onClick={handlePrivacyAgree}
+            >
               <div
                 className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
                   privacyAgreed
@@ -170,9 +192,15 @@ export default function TermsAgreementBottomSheet({
                 개인정보처리방침 동의{' '}
                 <span className="text-primary-400">(필수)</span>
               </span>
-            </div>
-            <ChevronRight className="w-5 h-5 text-gray-400" />
-          </button>
+            </button>
+            <button
+              type="button"
+              onClick={handlePrivacyClick}
+              className="p-2 hover:bg-gray-800 rounded-full transition-colors"
+            >
+              <ChevronRight className="w-5 h-5 text-gray-400" />
+            </button>
+          </div>
         </div>
 
         {/* Next Button */}
