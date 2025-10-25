@@ -19,3 +19,10 @@ export interface UserMeResponseDto {
   data: UserData;
   externalLink: string;
 }
+
+export interface UserUpdateRequestDto {
+  nickname?: string;
+  profileImage?: string;
+  gender?: 'M' | 'F';
+  birthYear?: number;
+}
