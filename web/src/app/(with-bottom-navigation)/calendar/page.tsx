@@ -15,6 +15,8 @@ export default function CalendarPage() {
   const router = useRouter();
   const {
     data,
+    calendarByDateData,
+    defecationRecordListData,
     selectedDate,
     currentMonth,
     finalDateRange,
@@ -27,14 +29,6 @@ export default function CalendarPage() {
     isDefecationRecordBottomSheetOpen,
     setIsDefecationRecordBottomSheetOpen,
   ] = useState(false);
-  const [hasRecords, _setHasRecords] = useState(true);
-  const [records, _setRecords] = useState([
-    { id: '1', time: '09:00', type: 'morning' as const },
-    { id: '2', time: '11:00', type: 'morning' as const },
-    { id: '3', time: '13:00', type: 'afternoon' as const },
-    { id: '4', time: '19:00', type: 'evening' as const },
-    { id: '5', time: '22:00', type: 'evening' as const },
-  ]);
 
   return (
     <div className="min-h-screen bg-[#1D1E20] text-white">
@@ -157,7 +151,9 @@ export default function CalendarPage() {
         <div className="flex items-center justify-between gap-2">
           <div className="flex flex-col gap-1 justify-center w-1/3 h-[70px] py-3 px-4 bg-[#272B31] rounded-[10px]">
             <p className="text-[#707885] text-body4-m">배변 점수</p>
-            <p className="text-white text-body2-sb">45점</p>
+            <p className="text-white text-body2-sb">
+              {calendarByDateData?.data.score ?? 0}점
+            </p>
           </div>
           <button
             type="button"
@@ -165,16 +161,22 @@ export default function CalendarPage() {
             className="flex flex-col gap-1 justify-center items-start w-1/3 h-[70px] py-3 px-4 bg-[#272B31] rounded-[10px]"
           >
             <p className="text-[#707885] text-body4-m">배변 기록</p>
-            <p className="text-white text-body2-sb">1회</p>
+            <p className="text-white text-body2-sb">
+              {calendarByDateData?.data.toiletRecordCount ?? 0}회
+            </p>
           </button>
           {isDefecationRecordBottomSheetOpen && (
             <DefecationRecordBottomSheet
               isOpen={isDefecationRecordBottomSheetOpen}
               onClose={() => setIsDefecationRecordBottomSheetOpen(false)}
               date={selectedDate ?? new Date()}
-              hasRecords={hasRecords}
-              records={hasRecords ? records : []}
-              toiletRecordId={22} // NOTE(taehyeon): 서버 api 구현 시 toiletRecordId 를 전달하도록 수정 필요
+              hasRecords={
+                !!(
+                  defecationRecordListData?.data.items?.length &&
+                  defecationRecordListData.data.items.length > 0
+                )
+              }
+              records={defecationRecordListData?.data.items}
             />
           )}
           <button
@@ -189,7 +191,9 @@ export default function CalendarPage() {
             className="flex flex-col gap-1 justify-center items-start w-1/3 h-[70px] py-3 px-4 bg-[#272B31] rounded-[10px]"
           >
             <p className="text-[#707885] text-body4-m">생활 기록</p>
-            <p className="text-white text-body2-sb">O</p>
+            <p className="text-white text-body2-sb">
+              {calendarByDateData?.data.hasActivityRecord ? 'O' : 'X'}
+            </p>
           </button>
         </div>
       </div>

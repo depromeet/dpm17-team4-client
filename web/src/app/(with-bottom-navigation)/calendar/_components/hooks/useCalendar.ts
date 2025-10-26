@@ -15,6 +15,10 @@ import {
 import { useMemo, useState } from 'react';
 import { TOTAL_DAYS } from '@/constants';
 import { useCalendarQuery } from '@/hooks';
+import {
+  useCalendarByDateQuery,
+  useDefecationRecordListQuery,
+} from '@/hooks/queries/useCalendarQuery';
 
 export const useCalendar = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
@@ -37,6 +41,14 @@ export const useCalendar = () => {
   const { data } = useCalendarQuery(
     format(startDate, 'yyyy-MM-dd'),
     format(endDate, 'yyyy-MM-dd')
+  );
+
+  const { data: calendarByDateData } = useCalendarByDateQuery(
+    format(selectedDate ?? new Date(), 'yyyy-MM-dd') ?? ''
+  );
+
+  const { data: defecationRecordListData } = useDefecationRecordListQuery(
+    format(selectedDate ?? new Date(), 'yyyy-MM-dd') ?? ''
   );
 
   const handlePrevMonth = () => {
@@ -67,6 +79,8 @@ export const useCalendar = () => {
 
   return {
     data,
+    calendarByDateData,
+    defecationRecordListData,
     selectedDate,
     currentMonth,
     finalDateRange,

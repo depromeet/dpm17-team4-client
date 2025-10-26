@@ -38,3 +38,29 @@ export interface CalendarDataResponseDto {
     results: CalendarDataResultDto[];
   };
 }
+
+export interface CalendarDataByDateResponseDto {
+  score: number;
+  toiletRecordCount: number;
+  hasActivityRecord: boolean;
+}
+
+export interface CalendarDataByDateResponseDtoResponseDto {
+  status: number;
+  message: string;
+  data: CalendarDataByDateResponseDto;
+}
+
+export interface DefecationRecordListResponseDto {
+  date: string;
+  items: {
+    id: number;
+    activityTime: string;
+  }[];
+}
+
+export interface DefecationRecordListResponseDtoResponseDto {
+  status: number;
+  message: string;
+  data: DefecationRecordListResponseDto;
+}

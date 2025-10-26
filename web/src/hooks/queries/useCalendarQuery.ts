@@ -10,3 +10,21 @@ export const useCalendarQuery = (start: string, end: string) => {
     staleTime: 5 * 60 * 1000,
   });
 };
+
+export const useCalendarByDateQuery = (date: string) => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.CALENDAR_BY_DATE, date],
+    queryFn: () => calendarApi.getCalendarDataByDate(date),
+    enabled: !!date,
+    staleTime: 5 * 60 * 1000,
+  });
+};
+
+export const useDefecationRecordListQuery = (date: string) => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.DEFECATION_RECORD_LIST, date],
+    queryFn: () => calendarApi.getDefecationRecordList(date),
+    enabled: !!date,
+    staleTime: 5 * 60 * 1000,
+  });
+};
