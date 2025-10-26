@@ -146,7 +146,14 @@ export default function CalendarPage() {
           </p>
           <button
             type="button"
-            onClick={() => router.push('/report/daily')}
+            onClick={() => {
+              const dateParam = selectedDate
+                ? format(selectedDate, 'yyyy-MM-dd')
+                : '';
+              router.push(
+                `/report/daily${dateParam ? `?date=${dateParam}` : ''}`
+              );
+            }}
             className="flex items-center gap-2"
           >
             <p className="text-[#99A1B1] text-button-4">리포트 확인하기</p>

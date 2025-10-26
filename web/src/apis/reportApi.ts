@@ -9,8 +9,15 @@ interface ApiResponse<T> {
 }
 
 export const reportApi = {
-  reportDailyData: () =>
-    apiClient.get<ApiResponse<ReportDataResponseDto>>(
+  reportDailyData: (dateTime?: string) => {
+    if (dateTime) {
+      const localDateTime = `${dateTime}T00:00:00`;
+      const url = `${API_ENDPOINTS.REPORT.BASE}?dateTime=${localDateTime}`;
+      return apiClient.get<ApiResponse<ReportDataResponseDto>>(url);
+    }
+
+    return apiClient.get<ApiResponse<ReportDataResponseDto>>(
       API_ENDPOINTS.REPORT.BASE
-    ),
+    );
+  },
 };
