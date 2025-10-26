@@ -3,6 +3,7 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { type FieldErrors, useFormContext } from 'react-hook-form';
+import { getDateQueryParams } from '@/app/(with-bottom-navigation)/home/_components/utils';
 import { BottomBtnBar } from '@/components';
 import { QUERY_KEYS } from '@/constants';
 import {
@@ -60,7 +61,9 @@ export const DefecationSubmit = () => {
       createDefecation(defecationData, {
         onSuccess: () => {
           queryClient.invalidateQueries({ queryKey: QUERY_KEYS.REPORT });
-          router.push('/defecation-complete');
+          router.push(
+            `/lifestyle${getDateQueryParams(data.selectedWhen)}&from=defecation`
+          );
         },
         onError: (error) => {
           alert(error.message);
