@@ -35,25 +35,33 @@ type BottomNavigationProps = {
 };
 
 const BottomNavigation = ({ navRef }: BottomNavigationProps) => {
-  const { handleTabClick, currentTab } = useNavigationContext();
+  const { handleTabClick, currentTab, hasNotification, handleOffNotification } =
+    useNavigationContext();
 
   return (
     <nav ref={navRef} className="bg-gray-900 fixed bottom-0 border-none w-full">
       <div className="flex justify-between">
         {BOTTOM_NAV_TABS.map((tab) => {
           const IconComponent = tab.icon;
+          const shouldShowDot = tab.id === 'report' && hasNotification;
+          const AlertDot = shouldShowDot && (
+            <div className="rounded-full bg-red-600 w-[6px] h-[6px] absolute top-[11px] right-[24px]"></div>
+          );
           return (
             <button
               type="button"
               key={tab.id}
               onClick={() => {
                 if (tab.active) {
+                  if (tab.id === 'report' && hasNotification) {
+                    handleOffNotification();
+                  }
                   handleTabClick(tab.id);
                 } else {
                   alert('아직 개발중..');
                 }
               }}
-              className={`py-[1.19rem] pl-[1.78rem] pr-[1.84rem] cursor-pointer flex flex-col items-center gap-2 bg-transparent border-none  text-button-5 ${currentTab === tab.id ? 'text-white' : 'text-gray-500'}`}
+              className={`relative py-[1.19rem] pl-[1.78rem] pr-[1.84rem] cursor-pointer flex flex-col items-center gap-2 bg-transparent border-none  text-button-5 ${currentTab === tab.id ? 'text-white' : 'text-gray-500'}`}
             >
               <IconComponent
                 className={cn(
@@ -62,6 +70,7 @@ const BottomNavigation = ({ navRef }: BottomNavigationProps) => {
                 )}
               />
               {tab.name}
+              {AlertDot}
             </button>
           );
         })}
