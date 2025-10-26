@@ -62,7 +62,7 @@ export default function ProfilePageContent() {
             ? 'male'
             : userMeData.gender === 'F'
               ? 'female'
-              : 'none',
+              : 'male', // 개발 중 - 선택안함 옵션 제거, 기본값으로 남성 설정
         email: userMeData.email,
         profileImage: userMeData.profileImage,
         type: userMeData.provider?.type,
@@ -70,7 +70,7 @@ export default function ProfilePageContent() {
     }
   }, [userMeData]);
 
-  const handleImageChange = async (imageUrl: string) => {
+  const _handleImageChange = async (imageUrl: string) => {
     setProfileState((prev) => ({
       ...prev,
       profileImage: imageUrl,
@@ -147,8 +147,8 @@ export default function ProfilePageContent() {
         return '남성';
       case 'female':
         return '여성';
-      case 'none':
-        return '선택 안 함';
+      // case 'none':
+      //   return '선택 안 함'; // 개발 중 - 선택안함 옵션 제거
       default:
         return '남성';
     }
@@ -193,9 +193,10 @@ export default function ProfilePageContent() {
       </Navigator>
       <div className="pt-14">
         {/* Profile Avatar Section */}
+        {/* 개발 중 - 프로필 이미지 수정 기능 주석 */}
         <ProfileAvatar
           currentImage={profileState.profileImage || undefined}
-          onImageChange={handleImageChange}
+          // onImageChange={handleImageChange}
         />
 
         {/* Personal Information Section */}

@@ -13,7 +13,7 @@ interface GenderSelectBottomSheetProps {
 const GENDER_OPTIONS = [
   { value: 'male', label: '남성' },
   { value: 'female', label: '여성' },
-  { value: 'none', label: '선택 안 함' },
+  // { value: 'none', label: '선택 안 함' }, // 개발 중 - 선택안함 옵션 제거
 ];
 
 export const GenderSelectBottomSheet = ({

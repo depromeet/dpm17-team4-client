@@ -27,13 +27,15 @@ export const DefecationRecordBottomSheet = ({
   const path = getRecordPath('defecation', date);
 
   const handleAddRecord = () => {
-    router.push(path);
+    router.push(`${path}&from=calendar`);
     onClose();
   };
 
   const handleRecordSelect = (time: string, toiletRecordId: number) => {
     // NOTE(taehyeon): 서버 api 구현 시 toiletId 를 전달하도록 수정 필요
-    router.push(`${path}?time=${time}&toiletRecordId=${toiletRecordId}`);
+    router.push(
+      `${path}?time=${time}&toiletRecordId=${toiletRecordId}&from=calendar`
+    );
     onClose();
   };
 
@@ -66,7 +68,7 @@ export const DefecationRecordBottomSheet = ({
             </div>
           ) : (
             // Records List
-            <div className="space-y-[0.75rem]">
+            <div className="space-y-[0.75rem] max-h-[400px] overflow-y-auto">
               {records?.map((record) => (
                 <button
                   key={record.id}

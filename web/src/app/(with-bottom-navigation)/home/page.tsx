@@ -19,9 +19,13 @@ import { useUserInfo } from '@/hooks';
 import { RecordSection, Tutorial } from './_components/ui';
 
 function HomeContent() {
-  const { navHeight } = useNavigationContext();
+  const { navHeight, handleTabClick } = useNavigationContext();
   const searchParams = useSearchParams();
   const router = useRouter();
+
+  useEffect(() => {
+    handleTabClick('home');
+  }, [handleTabClick]);
 
   const { userInfo: savedUserInfo } = useUserInfo();
   const [isTutorialOpen, setIsTutorialOpen] = useState(false);
