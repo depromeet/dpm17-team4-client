@@ -34,10 +34,20 @@ export const DefecationNavigator = () => {
         onSuccess: () => {
           closeModal();
 
+          // 모든 관련 쿼리 무효화
           queryClient.invalidateQueries({
             queryKey: [QUERY_KEYS.DEFECATION],
           });
           queryClient.invalidateQueries({ queryKey: QUERY_KEYS.REPORT });
+          queryClient.invalidateQueries({ 
+            queryKey: [QUERY_KEYS.DEFECATION_RECORD_LIST] 
+          });
+          queryClient.invalidateQueries({ 
+            queryKey: [QUERY_KEYS.CALENDAR] 
+          });
+          queryClient.invalidateQueries({ 
+            queryKey: [QUERY_KEYS.CALENDAR_BY_DATE] 
+          });
 
           // 생활 기록에서 온 경우 홈으로, 그렇지 않으면 캘린더로
           if (from === 'lifestyle') {

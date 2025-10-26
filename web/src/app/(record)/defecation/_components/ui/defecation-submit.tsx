@@ -52,7 +52,18 @@ export const DefecationSubmit = () => {
         {
           onSuccess: async () => {
             console.log('🔍 DefecationSubmit - updateDefecation success');
+            
+            // 모든 관련 쿼리 무효화
             queryClient.invalidateQueries({ queryKey: QUERY_KEYS.REPORT });
+            queryClient.invalidateQueries({ 
+              queryKey: [QUERY_KEYS.DEFECATION_RECORD_LIST] 
+            });
+            queryClient.invalidateQueries({ 
+              queryKey: [QUERY_KEYS.CALENDAR] 
+            });
+            queryClient.invalidateQueries({ 
+              queryKey: [QUERY_KEYS.CALENDAR_BY_DATE] 
+            });
 
             // 해당 날짜의 생활 기록이 있는지 확인
             const dateString = data.selectedWhen.toISOString().slice(0, 10);
@@ -103,7 +114,18 @@ export const DefecationSubmit = () => {
             '🔍 DefecationSubmit - createDefecation success:',
             response
           );
+          
+          // 모든 관련 쿼리 무효화
           queryClient.invalidateQueries({ queryKey: QUERY_KEYS.REPORT });
+          queryClient.invalidateQueries({ 
+            queryKey: [QUERY_KEYS.DEFECATION_RECORD_LIST] 
+          });
+          queryClient.invalidateQueries({ 
+            queryKey: [QUERY_KEYS.CALENDAR] 
+          });
+          queryClient.invalidateQueries({ 
+            queryKey: [QUERY_KEYS.CALENDAR_BY_DATE] 
+          });
 
           // 해당 날짜의 생활 기록이 있는지 확인
           const dateString = data.selectedWhen.toISOString().slice(0, 10);
