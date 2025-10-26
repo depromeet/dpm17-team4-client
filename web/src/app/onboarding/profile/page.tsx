@@ -2,9 +2,8 @@
 
 import { Calendar } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { BirthYearSelectBottomSheet } from '@/app/my/profile/_components/BirthYearSelectBottomSheet';
-import { Navigator } from '@/components/Navigator';
 import { PAGE_ROUTES } from '@/constants';
 import { useUserMeQuery, useUserUpdateMutation } from '@/hooks';
 
@@ -17,6 +16,33 @@ export default function OnboardingProfilePage() {
   const [isBirthYearBottomSheetOpen, setIsBirthYearBottomSheetOpen] =
     useState(false);
 
+  // 온보딩 중 이탈 감지 및 회원 탈퇴 처리
+  const handleOnboardingExit = useCallback(async () => {
+    try {
+      const { userApi } = await import('@/apis/userApi');
+      await userApi.deleteMe();
+      console.log('✅ 온보딩 중 이탈 - 회원 탈퇴 완료');
+    } catch (error) {
+      console.error('❌ 온보딩 중 이탈 - 회원 탈퇴 실패:', error);
+    } finally {
+      // 로컬 데이터 정리 및 인증 페이지로 리다이렉트
+      const { clearAccessToken, clearUserInfo } = await import('@/app/auth/_components/AuthSessionProvider');
+      clearAccessToken();
+      clearUserInfo();
+      
+      // 세션 캐시도 정리
+      try {
+        const { clearClientSessionCache } = await import('@/lib/session');
+        clearClientSessionCache();
+      } catch (error) {
+        console.warn('⚠️ 세션 캐시 정리 실패:', error);
+      }
+      
+      // 인증 페이지로 리다이렉트
+      window.location.href = PAGE_ROUTES.AUTH;
+    }
+  }, []);
+
   // API 데이터로 초기값 설정
   useEffect(() => {
     if (userMeData) {
@@ -28,6 +54,22 @@ export default function OnboardingProfilePage() {
       }
     }
   }, [userMeData]);
+
+  // 온보딩 중 이탈 감지 (브라우저 뒤로가기)
+  useEffect(() => {
+    const handlePopState = () => {
+      // 브라우저 뒤로가기 감지
+      handleOnboardingExit();
+    };
+
+    // 이벤트 리스너 등록
+    window.addEventListener('popstate', handlePopState);
+
+    // 컴포넌트 언마운트 시 정리
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, [handleOnboardingExit]);
 
   const handleComplete = async () => {
     if (birthYear && gender) {
@@ -65,9 +107,33 @@ export default function OnboardingProfilePage() {
   if (isLoading) {
     return (
       <div className="min-h-screen text-white bg-gray-900">
-        <Navigator>
-          <Navigator.Center>기본 정보</Navigator.Center>
-        </Navigator>
+        <div className="fixed top-0 left-0 w-full h-[56px] z-10 bg-gray-900 text-white p-4 flex shrink-0">
+          <button
+            type="button"
+            onClick={handleOnboardingExit}
+            className="w-6 h-6 absolute left-4 top-1/2 -translate-y-1/2 z-10"
+          >
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="text-white"
+            >
+              <path
+                d="M15 18L9 12L15 6"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
+          <div className="flex-1 flex justify-center items-center">
+            <span className="text-h3">기본 정보</span>
+          </div>
+        </div>
         <div className="flex items-center justify-center min-h-[calc(100vh-56px)]">
           <div className="text-white">로딩 중...</div>
         </div>
@@ -79,9 +145,33 @@ export default function OnboardingProfilePage() {
   if (error) {
     return (
       <div className="min-h-screen text-white bg-gray-900">
-        <Navigator>
-          <Navigator.Center>기본 정보</Navigator.Center>
-        </Navigator>
+        <div className="fixed top-0 left-0 w-full h-[56px] z-10 bg-gray-900 text-white p-4 flex shrink-0">
+          <button
+            type="button"
+            onClick={handleOnboardingExit}
+            className="w-6 h-6 absolute left-4 top-1/2 -translate-y-1/2 z-10"
+          >
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="text-white"
+            >
+              <path
+                d="M15 18L9 12L15 6"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
+          <div className="flex-1 flex justify-center items-center">
+            <span className="text-h3">기본 정보</span>
+          </div>
+        </div>
         <div className="flex items-center justify-center min-h-[calc(100vh-56px)]">
           <div className="text-red-500">
             사용자 정보를 불러오는데 실패했습니다.
@@ -94,9 +184,33 @@ export default function OnboardingProfilePage() {
   return (
     <div className="min-h-screen text-white bg-gray-900">
       {/* Header */}
-      <Navigator>
-        <Navigator.Center>기본 정보</Navigator.Center>
-      </Navigator>
+      <div className="fixed top-0 left-0 w-full h-[56px] z-10 bg-gray-900 text-white p-4 flex shrink-0">
+        <button
+          type="button"
+          onClick={handleOnboardingExit}
+          className="w-6 h-6 absolute left-4 top-1/2 -translate-y-1/2 z-10"
+        >
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="text-white"
+          >
+            <path
+              d="M15 18L9 12L15 6"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </button>
+        <div className="flex-1 flex justify-center items-center">
+          <span className="text-h3">기본 정보</span>
+        </div>
+      </div>
 
       {/* Main Content */}
       <div className="px-4 pt-20">
