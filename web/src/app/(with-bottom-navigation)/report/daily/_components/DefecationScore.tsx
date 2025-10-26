@@ -9,7 +9,7 @@ export const DefecationScore = ({ score }: ScoreProgressBarProps) => {
     <div className="bg-[#272B31] rounded-[14px] py-5 px-6 w-full mt-9">
       <div className="flex justify-between items-center mb-3 text-body2-sb">
         <p>배변 점수</p>
-        <p>{score}점</p>
+        <p>{Math.round(score)}점</p>
       </div>
       {score < 0 || score > 100 ? (
         <div>확인되지 않은 점수입니다.</div>
