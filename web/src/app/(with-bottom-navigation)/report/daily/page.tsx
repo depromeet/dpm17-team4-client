@@ -427,7 +427,13 @@ function DailyReportContent() {
 
 export default function DailyReportPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-black text-white flex items-center justify-center">로딩 중...</div>}>
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-black text-white flex items-center justify-center">
+          로딩 중...
+        </div>
+      }
+    >
       <DailyReportContent />
     </Suspense>
   );

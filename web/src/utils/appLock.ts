@@ -43,7 +43,7 @@ class AppLockManager {
    * WebView 메시지 리스너 설정
    */
   private setupMessageListener() {
-    if (typeof window !== 'undefined' && window?.ReactNativeWebView) {
+    if (window?.ReactNativeWebView) {
       window.addEventListener('message', (event) => {
         try {
           // event.data가 문자열인지 확인 후 JSON.parse 실행
@@ -70,7 +70,7 @@ class AppLockManager {
    */
   openLockSettings() {
     // WebView가 있는 경우 (React Native 앱 내에서 실행)
-    if (typeof window !== 'undefined' && window?.ReactNativeWebView) {
+    if (window?.ReactNativeWebView) {
       window.ReactNativeWebView.postMessage(
         JSON.stringify({
           type: 'OPEN_LOCK_SETTINGS',
