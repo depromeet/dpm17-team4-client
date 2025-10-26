@@ -52,11 +52,13 @@ export const ProfileAvatar = ({
   return (
     <div className="flex justify-center py-8">
       <div className="relative">
-        <button
+        {/* 개발 중 - 프로필 이미지 수정 기능 주석 */}
+        {/* <button
           type="button"
           className="w-[4.5rem] h-[4.5rem] rounded-full overflow-hidden cursor-pointer"
           onClick={handleAvatarClick}
-        >
+        > */}
+        <div className="w-[4.5rem] h-[4.5rem] rounded-full overflow-hidden">
           <Image
             src={previewImage || defaultProfileImage}
             alt="Profile"
@@ -64,21 +66,23 @@ export const ProfileAvatar = ({
             height={72}
             className="w-[4.5rem] h-[4.5rem] rounded-full object-cover"
           />
-        </button>
-        <button
+        </div>
+        {/* </button> */}
+        {/* 개발 중 - 카메라 아이콘 주석 */}
+        {/* <button
           type="button"
           className="absolute -bottom-0.5 -right-0.5 w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-600 transition-colors"
           onClick={handleAvatarClick}
         >
           <CameraIcon className="w-4 h-4 text-white" />
-        </button>
-        <input
+        </button> */}
+        {/* <input
           ref={fileInputRef}
           type="file"
           accept="image/*"
           onChange={handleFileChange}
           className="hidden"
-        />
+        /> */}
       </div>
     </div>
   );
