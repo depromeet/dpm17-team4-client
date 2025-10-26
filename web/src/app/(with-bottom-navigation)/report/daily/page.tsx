@@ -35,12 +35,16 @@ function DailyReportContent() {
     if (toastShownRef.current) return;
 
     if (searchParams.get('toast-lifestyle')) {
-      toast.success('새로운 생활 기록이 등록되었어요!');
+      toast.success('새로운 생활 기록이 등록되었어요!', {
+        position: 'top-center',
+      });
       onAlert();
       toastShownRef.current = true;
     }
     if (searchParams.get('toast-defecation')) {
-      toast.success('새로운 배변 기록이 등록되었어요!');
+      toast.success('새로운 배변 기록이 등록되었어요!', {
+        position: 'top-center',
+      });
       onAlert();
       toastShownRef.current = true;
     }
