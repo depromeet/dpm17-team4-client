@@ -42,12 +42,12 @@ export const LifeStyleNavigator = ({
       
       if (toiletRecordId) {
         // 기존 배변 기록이 있으면 편집 모드로 돌아가기
-        const targetUrl = `/defecation${getDateQueryParams(currentDate)}&toiletRecordId=${toiletRecordId}`;
+        const targetUrl = `/defecation${getDateQueryParams(currentDate)}&toiletRecordId=${toiletRecordId}&from=lifestyle`;
         console.log('🔍 LifeStyleNavigator - navigating to:', targetUrl);
         router.push(targetUrl);
       } else {
         // 새로운 배변 기록 페이지로 돌아가기
-        const targetUrl = `/defecation${getDateQueryParams(currentDate)}`;
+        const targetUrl = `/defecation${getDateQueryParams(currentDate)}&from=lifestyle`;
         console.log('🔍 LifeStyleNavigator - navigating to:', targetUrl);
         router.push(targetUrl);
       }
