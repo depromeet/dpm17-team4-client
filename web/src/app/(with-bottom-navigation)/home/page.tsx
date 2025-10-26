@@ -80,7 +80,7 @@ function HomeContent() {
         console.error('Home Auth 처리 중 에러:', error);
       }
     })();
-  }, [router, searchParams]);
+  }, [router, searchParams, savedUserInfo]);
 
   return (
     <>

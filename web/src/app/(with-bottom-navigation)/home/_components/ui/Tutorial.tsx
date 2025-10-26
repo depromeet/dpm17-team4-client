@@ -7,13 +7,13 @@ import { cn } from '@/utils/utils-cn';
 
 const TUTORIAL_CONTENTS = [
   {
-    id: 1,
+    id: 0,
     title: '빠르게 배변/생활을 기록하기',
     description: ` 당일이 아닌 지난 날도 상관없어요.<br/>패턴 파악을 위해 차곡차곡 기록을 보세요!`,
     illust: illust1,
   },
   {
-    id: 2,
+    id: 1,
     title: '리포트를 통한 패턴 파악',
     description: `일간, 주간, 월간 리포트를 통해<br/>나의 배변 패턴을 파악하고 개선해가요!`,
     illust: illust2,
@@ -62,6 +62,7 @@ const Tutorial = ({ onClose }: TutorialProps) => {
             <h2 className="text-body2-sb">{current.title}</h2>
             <p
               className="text-body3-m text-gray-600 text-center"
+              /* biome-ignore lint/security/noDangerouslySetInnerHtml: static copy only */
               dangerouslySetInnerHTML={{ __html: current.description }}
             />
           </section>
@@ -76,12 +77,12 @@ const Tutorial = ({ onClose }: TutorialProps) => {
             건너뛰기
           </button>
           <div className="flex gap-[5px]">
-            {TUTORIAL_CONTENTS.map((_, index) => (
+            {TUTORIAL_CONTENTS.map((item) => (
               <span
-                key={index}
+                key={item.id}
                 className={cn(
                   'w-[5px] h-[5px] block rounded-full',
-                  index === step ? 'bg-primary-600' : 'bg-gray-300'
+                  item.id === step ? 'bg-primary-600' : 'bg-gray-300'
                 )}
               />
             ))}
