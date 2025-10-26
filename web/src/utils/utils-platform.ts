@@ -20,4 +20,3 @@ export const isIOS = (): boolean => {
 export const isMobile = (): boolean => {
   return isAndroid() || isIOS();
 };
-
