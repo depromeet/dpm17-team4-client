@@ -10,6 +10,10 @@ export const QUERY_KEYS = {
   TERMS: ['terms'],
   USER_ME: ['user', 'me'],
 
+  CALENDAR: ['calendar'],
+  CALENDAR_BY_DATE: ['calendar-by-date'],
+  DEFECATION_RECORD_LIST: ['defecation-record-list'],
+
   FOODS: {
     SEARCH: (query: string, count: number) => ['foods', 'search', query, count],
   },

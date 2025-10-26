@@ -40,4 +40,8 @@ export const API_ENDPOINTS = {
   USERS: {
     ME: '/api/v1/users/me',
   },
+
+  CALENDAR: {
+    BASE: '/api/v1/calendar',
+  },
 } as const;

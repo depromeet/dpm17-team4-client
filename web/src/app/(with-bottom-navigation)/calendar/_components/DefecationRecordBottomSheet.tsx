@@ -4,6 +4,7 @@ import { ChevronRightIcon, Plus } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { getRecordPath } from '@/app/(with-bottom-navigation)/home/_components/utils/util-route';
 import { BottomSheet } from '@/components/BottomSheet';
+import type { DefecationRecordListResponseDto } from '@/types/dto/defecation.dto';
 import { getDateDisplayTextFromDate, getTimeDisplay } from '@/utils/utils-date';
 
 interface DefecationRecordBottomSheetProps {
@@ -11,11 +12,7 @@ interface DefecationRecordBottomSheetProps {
   onClose: () => void;
   date: Date;
   hasRecords: boolean;
-  records?: Array<{
-    id: string;
-    time: string;
-  }>;
-  toiletRecordId: number;
+  records?: DefecationRecordListResponseDto['items'] | undefined;
 }
 
 export const DefecationRecordBottomSheet = ({
@@ -23,8 +20,7 @@ export const DefecationRecordBottomSheet = ({
   onClose,
   date,
   hasRecords,
-  records = [],
-  toiletRecordId,
+  records,
 }: DefecationRecordBottomSheetProps) => {
   const router = useRouter();
 
@@ -35,7 +31,7 @@ export const DefecationRecordBottomSheet = ({
     onClose();
   };
 
-  const handleRecordSelect = (time: string) => {
+  const handleRecordSelect = (time: string, toiletRecordId: number) => {
     // NOTE(taehyeon): 서버 api 구현 시 toiletId 를 전달하도록 수정 필요
     router.push(`${path}?time=${time}&toiletRecordId=${toiletRecordId}`);
     onClose();
@@ -71,11 +67,13 @@ export const DefecationRecordBottomSheet = ({
           ) : (
             // Records List
             <div className="space-y-[0.75rem]">
-              {records.map((record) => (
+              {records?.map((record) => (
                 <button
                   key={record.id}
                   type="button"
-                  onClick={() => handleRecordSelect(record.time)}
+                  onClick={() =>
+                    handleRecordSelect(record.activityTime, record.id)
+                  }
                   className={`w-full p-[1rem] rounded-[0.75rem] transition-colors bg-gray-700 hover:bg-gray-600
                   `}
                 >
@@ -83,7 +81,7 @@ export const DefecationRecordBottomSheet = ({
                     <div className="flex items-center gap-[0.75rem]">
                       <div className="w-[0.5rem] h-[0.5rem] bg-yellow-600 rounded-full" />
                       <span className="text-body2-m text-white">
-                        {getTimeDisplay(record.time)}
+                        {getTimeDisplay(record.activityTime)}
                       </span>
                     </div>
                     <ChevronRightIcon className="w-[1.25rem] h-[1.25rem] text-white" />
