@@ -25,7 +25,7 @@ export const StressForm = memo(
           </div>
 
           <div className="overflow-x-auto">
-            <div className="flex gap-[1.5rem] min-w-max">
+            <div className="flex gap-[1.5rem] min-w-max justify-center">
               {STRESS_LEVELS.map((level) => (
                 <button
                   key={level.id}
