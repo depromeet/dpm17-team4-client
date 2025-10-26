@@ -13,7 +13,7 @@ export default function Shape({
   shape,
   onShapeSelect,
 }: {
-  shape?: string;
+  shape?: string | null;
   onShapeSelect?: () => void;
 }) {
   const { control, setValue } = useFormContext<DefecationFormValues>();

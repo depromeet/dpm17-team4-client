@@ -10,7 +10,7 @@ export default function Color({
   color,
   onColorSelect,
 }: {
-  color?: string;
+  color?: string | null;
   onColorSelect?: () => void;
 }) {
   const { control, setValue } = useFormContext<DefecationFormValues>();
