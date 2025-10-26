@@ -151,7 +151,7 @@ export default function App() {
     <SafeAreaView style={styles.container}>
       <WebView
         ref={webViewRef}
-        source={{ uri: 'http://192.168.45.175:3000' }}
+        source={{ uri: 'https://kkruk.com/' }}
         style={styles.webview}
         javaScriptEnabled={true}
         domStorageEnabled={true}
