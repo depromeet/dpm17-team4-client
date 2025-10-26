@@ -79,12 +79,13 @@ export const NavigationProvider = ({ children }: NavigationProviderProps) => {
     },
     [router]
   );
-  const handleOnNotification = () => {
+  const handleOnNotification = useCallback(() => {
     setHasNotification(true);
-  };
-  const handleOffNotification = () => {
+  }, []);
+
+  const handleOffNotification = useCallback(() => {
     setHasNotification(false);
-  };
+  }, []);
 
   return (
     <NavigationContext.Provider
