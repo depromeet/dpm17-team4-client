@@ -47,6 +47,11 @@ export const clearUserInfo = () => {
   localStorage.removeItem('userInfo');
 };
 
+export const clearAccessToken = () => {
+  accessToken = null;
+  localStorage.removeItem('accessToken');
+};
+
 export function setAccessToken(token: string | null) {
   accessToken = token;
   if (token) {
@@ -85,6 +90,45 @@ export async function requestAccessToken() {
   } else {
     const data = await res.json();
     return typeof data === 'string' ? { accessToken: data } : data;
+  }
+}
+
+export async function logout() {
+  try {
+    // 로그아웃 API 호출
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL || 'https://kkruk.com'}${API_ENDPOINTS.AUTH.LOGOUT}`,
+      {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          Authorization: `Bearer ${getAccessToken()}`,
+        },
+      }
+    );
+
+    console.log('📥 로그아웃 응답 상태:', res.status, res.statusText);
+
+    // API 호출이 실패해도 로컬 데이터는 정리
+    if (!res.ok) {
+      console.warn('⚠️ 로그아웃 API 호출 실패, 로컬 데이터만 정리:', res.status);
+    }
+  } catch (error) {
+    console.error('❌ 로그아웃 API 호출 중 오류:', error);
+  } finally {
+    // 로컬 저장소 및 메모리에서 토큰과 사용자 정보 제거
+    clearAccessToken();
+    clearUserInfo();
+    
+    // 세션 캐시도 정리
+    try {
+      const { clearClientSessionCache } = await import('@/lib/session');
+      clearClientSessionCache();
+    } catch (error) {
+      console.warn('⚠️ 세션 캐시 정리 실패:', error);
+    }
   }
 }
 

@@ -1,10 +1,8 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { Button } from '@/components/Button';
 import { Modal } from '@/components/Modal';
-import { PAGE_ROUTES } from '@/constants';
-import { useUserInfo } from '@/hooks';
+import { useLogout } from '@/hooks';
 
 interface LogoutModalProps {
   isOpen: boolean;
@@ -12,12 +10,11 @@ interface LogoutModalProps {
 }
 
 export const LogoutModal = ({ isOpen, onClose }: LogoutModalProps) => {
-  const { handleLogOut } = useUserInfo();
-  const router = useRouter();
+  const { handleLogout } = useLogout();
 
   const handleLogoutClick = () => {
-    handleLogOut();
-    router.push(PAGE_ROUTES.AUTH);
+    handleLogout();
+    onClose();
   };
   return (
     <Modal isOpen={isOpen} onClose={onClose}>

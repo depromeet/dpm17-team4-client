@@ -6,6 +6,7 @@ export const API_ENDPOINTS = {
     APPLE_LOGIN: `/api/v1/auth/apple/login`,
     APPLE_CALLBACK: `/api/v1/auth/apple/callback`,
     REFRESH: '/api/v1/auth/refresh',
+    LOGOUT: '/api/v1/auth/logout',
   },
 
   RECORD: {
