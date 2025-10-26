@@ -7,7 +7,7 @@
     <key>CFBundleDevelopmentRegion</key>
     <string>$(DEVELOPMENT_LANGUAGE)</string>
     <key>CFBundleDisplayName</key>
-    <string>app</string>
+    <string>kkruk</string>
     <key>CFBundleExecutable</key>
     <string>$(EXECUTABLE_NAME)</string>
     <key>CFBundleIdentifier</key>
@@ -37,10 +37,15 @@
     <string>12.0</string>
     <key>LSRequiresIPhoneOS</key>
     <true/>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+      <string>kakaotalk</string>
+      <string>kakaolink</string>
+    </array>
     <key>NSAppTransportSecurity</key>
     <dict>
       <key>NSAllowsArbitraryLoads</key>
-      <false/>
+      <true/>
       <key>NSAllowsLocalNetworking</key>
       <true/>
     </dict>

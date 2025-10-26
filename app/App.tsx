@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, SafeAreaView, AppState } from 'react-native';
+import { StyleSheet, SafeAreaView, AppState, Linking } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { useEffect, useRef, useState } from 'react';
 import { setupNotificationHandler, registerForPushNotificationsAsync, registerPendingToken, showLocalNotification, testServerPushNotification } from './services/notificationService';
@@ -151,7 +151,7 @@ export default function App() {
     <SafeAreaView style={styles.container}>
       <WebView
         ref={webViewRef}
-        source={{ uri: 'https://cushionlike-shallowly-nancie.ngrok-free.dev' }}
+        source={{ uri: 'http://192.168.45.175:3000' }}
         style={styles.webview}
         javaScriptEnabled={true}
         domStorageEnabled={true}
@@ -160,6 +160,28 @@ export default function App() {
         allowsInlineMediaPlayback={true}
         mediaPlaybackRequiresUserAction={false}
         onMessage={(event) => handleWebViewMessage(event, handleShowLockSettings)}
+        onShouldStartLoadWithRequest={(request) => {
+          console.log('🔗 WebView 로드 요청:', request.url);
+          
+          // WebView 내에서 로드 (외부 브라우저로 열지 않음)
+          // true 반환 = WebView에서 로드
+          // false 반환 = 외부 브라우저로 열림
+          
+          // 카카오톡 앱 스킴은 외부 앱으로 열기
+          if (request.url.startsWith('kakaotalk://')) {
+            // Linking.openURL으로 열려고 시도
+            Linking.canOpenURL(request.url).then(() => {
+              Linking.openURL(request.url);
+            }).catch(() => {});
+            return false; // WebView에서 로드하지 않음
+          }
+          
+          // 나머지는 모두 WebView 내에서 로드
+          return true;
+        }}
+        originWhitelist={['*']}
+        thirdPartyCookiesEnabled={true}
+        sharedCookiesEnabled={true}
       />
       <StatusBar style="auto" />
     </SafeAreaView>

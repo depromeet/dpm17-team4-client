@@ -12,7 +12,11 @@
       "distribution": "internal"
     },
     "production": {
-      "autoIncrement": true
+      "autoIncrement": true,
+      "node": "22.0.0",
+      "android": {
+        "buildType": "app-bundle"
+      }
     }
   },
   "submit": {

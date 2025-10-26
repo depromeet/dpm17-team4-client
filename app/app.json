@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "app",
+    "name": "kkruk",
     "slug": "app",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -44,7 +44,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.leeseonghyun316.app"
     },
     "web": {
       "favicon": "./assets/favicon.png"
