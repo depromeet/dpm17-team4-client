@@ -36,6 +36,10 @@ export default function DailyReportPage() {
       toast.success('새로운 생활 기록이 등록되었어요!');
       toastShownRef.current = true;
     }
+    if (searchParams.get('toast-defecation')) {
+      toast.success('새로운 배변 기록이 등록되었어요!');
+      toastShownRef.current = true;
+    }
   }, [searchParams]);
 
   // NOTE(seonghyun): 임시 - Suggestion 아이템의 이미지를 동적으로 생성
