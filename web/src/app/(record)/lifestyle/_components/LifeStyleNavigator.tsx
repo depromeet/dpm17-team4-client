@@ -1,7 +1,7 @@
 import { useRouter, useSearchParams } from 'next/navigation';
+import { getDateQueryParams } from '@/app/(with-bottom-navigation)/home/_components/utils';
 import { Navigator } from '@/components';
 import { PAGE_ROUTES } from '@/constants';
-import { getDateQueryParams } from '@/app/(with-bottom-navigation)/home/_components/utils';
 
 interface LifeStyleNavigatorProps {
   existingRecordId: number | null;
@@ -33,18 +33,22 @@ export const LifeStyleNavigator = ({
   const handleBack = () => {
     if (from === 'defecation' && year && month && day) {
       // 배변 기록에서 온 경우, 해당 날짜의 배변 기록으로 돌아가기
-      const currentDate = new Date(parseInt(year, 10), parseInt(month, 10) - 1, parseInt(day, 10));
+      const currentDate = new Date(
+        parseInt(year, 10),
+        parseInt(month, 10) - 1,
+        parseInt(day, 10)
+      );
       const toiletRecordId = searchParams.get('toiletRecordId');
-      
+
       console.log('🔍 LifeStyleNavigator - handleBack:', {
         from,
         year,
         month,
         day,
         toiletRecordId,
-        currentDate
+        currentDate,
       });
-      
+
       if (toiletRecordId) {
         // 기존 배변 기록이 있으면 편집 모드로 돌아가기
         const targetUrl = `/defecation${getDateQueryParams(currentDate)}&toiletRecordId=${toiletRecordId}&from=lifestyle`;
@@ -68,7 +72,7 @@ export const LifeStyleNavigator = ({
       <div className="flex-1 flex justify-center items-center">
         <Navigator.Center>생활 기록</Navigator.Center>
       </div>
-      
+
       {/* 수정 모드일 때: 건너뛰기 또는 뒤로가기(왼쪽), 삭제(오른쪽) */}
       {existingRecordId ? (
         <>
@@ -82,11 +86,7 @@ export const LifeStyleNavigator = ({
                 건너뛰기
               </button>
             ) : (
-              <button
-                type="button"
-                onClick={handleBack}
-                className="w-6 h-6"
-              >
+              <button type="button" onClick={handleBack} className="w-6 h-6">
                 <svg
                   width="24"
                   height="24"
@@ -95,6 +95,7 @@ export const LifeStyleNavigator = ({
                   xmlns="http://www.w3.org/2000/svg"
                   className="text-white"
                 >
+                  <title>뒤로가기</title>
                   <path
                     d="M15 18L9 12L15 6"
                     stroke="currentColor"
@@ -133,6 +134,7 @@ export const LifeStyleNavigator = ({
               xmlns="http://www.w3.org/2000/svg"
               className="text-white"
             >
+              <title>뒤로가기</title>
               <path
                 d="M15 18L9 12L15 6"
                 stroke="currentColor"

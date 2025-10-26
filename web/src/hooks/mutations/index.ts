@@ -5,5 +5,5 @@ export { useDefecationMutation } from './useDefecationDefecation';
 export { useDefecationDeleteMutation } from './useDefecationDeleteMutation';
 export { useDefecationUpdateMutation } from './useDefecationUpdateMutation';
 export { useRecordMutation } from './useRecordMutation';
-export { useUserUpdateMutation } from './useUserUpdateMutation';
 export { useUserDeleteMutation } from './useUserDeleteMutation';
+export { useUserUpdateMutation } from './useUserUpdateMutation';

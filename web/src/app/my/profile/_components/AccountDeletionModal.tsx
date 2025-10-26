@@ -14,7 +14,7 @@ export const AccountDeletionModal = ({
   onClose,
 }: AccountDeletionModalProps) => {
   const { mutate: deleteUser, isPending } = useUserDeleteMutation();
-  
+
   const handleAccountDeletion = () => {
     deleteUser();
     onClose();
@@ -31,8 +31,8 @@ export const AccountDeletionModal = ({
         </p>
       </div>
       <div className="flex gap-2">
-        <Button 
-          className="!bg-gray-700 flex-1" 
+        <Button
+          className="!bg-gray-700 flex-1"
           onClick={onClose}
           disabled={isPending}
         >

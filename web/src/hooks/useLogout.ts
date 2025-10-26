@@ -6,7 +6,7 @@ import { logout } from '@/app/auth/_components/AuthSessionProvider';
 import { PAGE_ROUTES } from '@/constants';
 
 export const useLogout = () => {
-  const router = useRouter();
+  const _router = useRouter();
 
   const handleLogout = useCallback(async () => {
     console.log('🚪 로그아웃 시작');

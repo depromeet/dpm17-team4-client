@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import poop from '@/assets/home/poop.svg';
 import emojiOpenMouse from '@/assets/report/emoji_open_mouse.png';
@@ -31,7 +31,7 @@ export default function DailyReportPage() {
   // Toast 표시를 위한 별도 useEffect
   useEffect(() => {
     if (toastShownRef.current) return;
-    
+
     if (searchParams.get('toast-lifestyle')) {
       toast.success('새로운 생활 기록이 등록되었어요!');
       toastShownRef.current = true;

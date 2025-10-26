@@ -50,7 +50,7 @@ export const clearUserInfo = () => {
     if (userInfo) {
       const parsed = JSON.parse(userInfo);
       const userId = parsed?.id;
-      
+
       // 해당 사용자의 튜토리얼 데이터 삭제
       if (userId) {
         localStorage.removeItem(`hasSeenTutorial_${userId}`);
@@ -59,7 +59,7 @@ export const clearUserInfo = () => {
   } catch (error) {
     console.error('localStorage 정리 중 에러:', error);
   }
-  
+
   // userInfo 삭제
   localStorage.removeItem('userInfo');
 };
@@ -138,7 +138,7 @@ export async function logout() {
     // 로컬 저장소 및 메모리에서 토큰과 사용자 정보 제거
     clearAccessToken();
     clearUserInfo();
-    
+
     // 세션 캐시도 정리
     try {
       const { clearClientSessionCache } = await import('@/lib/session');

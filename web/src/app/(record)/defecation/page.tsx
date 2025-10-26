@@ -20,10 +20,19 @@ export default function DefecationPage() {
   const defecationDetailRef = useRef<DefecationDetailRef>(null);
 
   const { data, isLoading, error } = useDefecationQuery(
-    toiletRecordId && toiletRecordId !== 'undefined' ? Number(toiletRecordId) : 0
+    toiletRecordId && toiletRecordId !== 'undefined'
+      ? Number(toiletRecordId)
+      : 0
   );
-  
-  console.log('🔍 DefecationPage - data:', data, 'isLoading:', isLoading, 'error:', error);
+
+  console.log(
+    '🔍 DefecationPage - data:',
+    data,
+    'isLoading:',
+    isLoading,
+    'error:',
+    error
+  );
 
   const handleOpenColorSection = () => {
     defecationDetailRef.current?.openColorSection();

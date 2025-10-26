@@ -113,7 +113,7 @@ export default function ProfilePageContent() {
   const handleBirthYearSelect = async (year: string) => {
     try {
       await updateUserMutation.mutateAsync({
-        birthYear: parseInt(year),
+        birthYear: parseInt(year, 10),
       });
     } catch (error) {
       console.error('출생연도 업데이트 실패:', error);

@@ -74,7 +74,7 @@ const Tutorial = ({ onClose }: TutorialProps) => {
         <section className="flex justify-between items-center p-5">
           <button
             type="button"
-            className={`text-body4-sb min-w-[43px] ${isFirstStep ? "text-gray-300" : "text-gray-600"}`}
+            className={`text-body4-sb min-w-[43px] ${isFirstStep ? 'text-gray-300' : 'text-gray-600'}`}
             onClick={handlePreviousStep}
             disabled={isFirstStep}
           >

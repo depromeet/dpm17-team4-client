@@ -80,6 +80,7 @@ export const DefecationNavigator = () => {
             xmlns="http://www.w3.org/2000/svg"
             className="text-white"
           >
+            <title>뒤로가기</title>
             <path
               d="M15 18L9 12L15 6"
               stroke="currentColor"

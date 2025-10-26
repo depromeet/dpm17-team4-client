@@ -2,7 +2,7 @@
 
 import { Calendar } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { BirthYearSelectBottomSheet } from '@/app/my/profile/_components/BirthYearSelectBottomSheet';
 import { PAGE_ROUTES } from '@/constants';
 import { useUserMeQuery, useUserUpdateMutation } from '@/hooks';
@@ -26,10 +26,12 @@ export default function OnboardingProfilePage() {
       console.error('❌ 온보딩 중 이탈 - 회원 탈퇴 실패:', error);
     } finally {
       // 로컬 데이터 정리 및 인증 페이지로 리다이렉트
-      const { clearAccessToken, clearUserInfo } = await import('@/app/auth/_components/AuthSessionProvider');
+      const { clearAccessToken, clearUserInfo } = await import(
+        '@/app/auth/_components/AuthSessionProvider'
+      );
       clearAccessToken();
       clearUserInfo();
-      
+
       // 세션 캐시도 정리
       try {
         const { clearClientSessionCache } = await import('@/lib/session');
@@ -37,7 +39,7 @@ export default function OnboardingProfilePage() {
       } catch (error) {
         console.warn('⚠️ 세션 캐시 정리 실패:', error);
       }
-      
+
       // 인증 페이지로 리다이렉트
       window.location.href = PAGE_ROUTES.AUTH;
     }
@@ -75,7 +77,7 @@ export default function OnboardingProfilePage() {
     if (birthYear && gender) {
       try {
         await updateUserMutation.mutateAsync({
-          birthYear: parseInt(birthYear),
+          birthYear: parseInt(birthYear, 10),
           gender: gender === 'male' ? 'M' : 'F',
         });
 
@@ -121,6 +123,7 @@ export default function OnboardingProfilePage() {
               xmlns="http://www.w3.org/2000/svg"
               className="text-white"
             >
+              <title>뒤로가기</title>
               <path
                 d="M15 18L9 12L15 6"
                 stroke="currentColor"
@@ -159,6 +162,7 @@ export default function OnboardingProfilePage() {
               xmlns="http://www.w3.org/2000/svg"
               className="text-white"
             >
+              <title>뒤로가기</title>
               <path
                 d="M15 18L9 12L15 6"
                 stroke="currentColor"
@@ -198,6 +202,7 @@ export default function OnboardingProfilePage() {
             xmlns="http://www.w3.org/2000/svg"
             className="text-white"
           >
+            <title>뒤로가기</title>
             <path
               d="M15 18L9 12L15 6"
               stroke="currentColor"

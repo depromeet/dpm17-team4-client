@@ -38,7 +38,7 @@ function HomeContent() {
   // Toast 표시를 위한 별도 useEffect
   useEffect(() => {
     if (toastShownRef.current) return;
-    
+
     if (searchParams.get('toast-defecation')) {
       toast.success('새로운 배변 기록이 등록되었어요!');
       toastShownRef.current = true;
@@ -54,8 +54,14 @@ function HomeContent() {
       try {
         const currentAccessToken = getAccessToken();
         // 신규 사용자이고 튜토리얼을 아직 본 적이 없을 때만 표시
-        if (savedUserInfo?.isNew === true && typeof window !== 'undefined' && savedUserInfo?.id) {
-          const hasSeenTutorial = localStorage.getItem(`hasSeenTutorial_${savedUserInfo.id}`);
+        if (
+          savedUserInfo?.isNew === true &&
+          typeof window !== 'undefined' &&
+          savedUserInfo?.id
+        ) {
+          const hasSeenTutorial = localStorage.getItem(
+            `hasSeenTutorial_${savedUserInfo.id}`
+          );
           if (!hasSeenTutorial) {
             setIsTutorialOpen(true);
           }
@@ -87,7 +93,7 @@ function HomeContent() {
           // URL 정리 후 toast ref 리셋
           toastShownRef.current = false;
         }
-        
+
         if (savedUserInfo) {
           router.replace('/home', { scroll: false });
         }

@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useCallback, useMemo } from 'react';
 import toast from 'react-hot-toast';
 import { BottomBtnBar } from '@/components';
-import { QUERY_KEYS, PAGE_ROUTES } from '@/constants';
+import { PAGE_ROUTES, QUERY_KEYS } from '@/constants';
 import {
   useActivityRecordMutation,
   useActivityRecordUpdateMutation,
@@ -38,7 +38,9 @@ export const LifeStyleSubmit = ({
 
   // 폼 유효성 검사
   const validation = useMemo(() => {
-    const validFoods = foods.filter((food) => food.name && food.mealTime !== '');
+    const validFoods = foods.filter(
+      (food) => food.name && food.mealTime !== ''
+    );
     const missingItems: string[] = [];
 
     if (validFoods.length === 0) {
@@ -75,7 +77,9 @@ export const LifeStyleSubmit = ({
     // searchParams에서 가져온 날짜를 그대로 사용 (YYYY-MM-DD 형식)
     const occurredAt = `${year}-${month.padStart(2, '0')}-${date.padStart(2, '0')}T00:00:00.000`;
 
-    const validFoods = foods.filter((food) => food.name && food.mealTime !== '');
+    const validFoods = foods.filter(
+      (food) => food.name && food.mealTime !== ''
+    );
 
     const data = {
       water,
