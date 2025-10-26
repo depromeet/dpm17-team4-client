@@ -34,8 +34,8 @@ function HomeContent() {
     (async () => {
       try {
         const currentAccessToken = getAccessToken();
-        // TODO(YUBIN): 테스트를 위해 우선 false일때로 조건 부
-        if (savedUserInfo?.isNew !== true) {
+        // 신규 사용자일 때만 튜토리얼 표시
+        if (savedUserInfo?.isNew === true) {
           setIsTutorialOpen(true);
         }
         // 사용자 정보가 있고 accessToken이 없을 때만 refresh 요청

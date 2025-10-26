@@ -85,8 +85,13 @@ function AuthContent() {
     url.search = '';
     window.history.replaceState({}, '', url.toString());
 
-    // 약관 동의 바텀시트 표시
-    setShowTermsBottomSheet(true);
+    // 신규 사용자일 때만 약관 동의 바텀시트 표시
+    if (userInfo.isNew) {
+      setShowTermsBottomSheet(true);
+    } else {
+      // 기존 사용자는 바로 홈으로 이동
+      router.push('/home');
+    }
 
     // 토큰은 백그라운드로 시도
     (async () => {
@@ -100,7 +105,7 @@ function AuthContent() {
         console.error('⚠️ AccessToken 갱신 실패(무시하고 진행):', e);
       }
     })();
-  }, [extractUserInfo]);
+  }, [extractUserInfo, router]);
 
   const handleTermsAgree = () => {
     setShowTermsBottomSheet(false);
