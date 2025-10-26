@@ -6,3 +6,4 @@ export { useDefecationDeleteMutation } from './useDefecationDeleteMutation';
 export { useDefecationUpdateMutation } from './useDefecationUpdateMutation';
 export { useRecordMutation } from './useRecordMutation';
 export { useUserUpdateMutation } from './useUserUpdateMutation';
+export { useUserDeleteMutation } from './useUserDeleteMutation';
