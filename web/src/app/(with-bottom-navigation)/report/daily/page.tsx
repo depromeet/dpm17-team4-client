@@ -20,19 +20,23 @@ import { formatDate, getColorLabel, getShapeLabel } from './utils';
 
 function DailyReportContent() {
   const [selectedPeriod, _setSelectedPeriod] = useState<ReportPeriod>('daily');
-  const [selectedDate, _setSelectedDate] = useState(new Date());
   const [cardIndex, setCardIndex] = useState(0);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const searchParams = useSearchParams();
   const toastShownRef = useRef(false);
   const { handleTabClick } = useNavigationContext();
 
+  const dateParam = searchParams.get('date');
+
   useEffect(() => {
     handleTabClick('report');
   }, [handleTabClick]);
 
-  // API 호출로 데이터 가져오기
-  const { data: reportData, isLoading, error } = useReportQuery();
+  const {
+    data: reportData,
+    isLoading,
+    error,
+  } = useReportQuery(dateParam ? { dateTime: dateParam } : undefined);
   const { handleOnNotification: onAlert } = useNavigationContext();
 
   // Toast 표시를 위한 별도 useEffect
@@ -179,7 +183,9 @@ function DailyReportContent() {
         {/*<button className="p-2">*/}
         {/*  <ChevronLeft className="w-5 h-5" />*/}
         {/*</button>*/}
-        <span className="text-body2-m">{formatDate(selectedDate)}</span>
+        <span className="text-body2-m">
+          {formatDate(new Date(String(reportData?.updatedAt)))}
+        </span>
         {/*<button className="p-2">*/}
         {/*  <ChevronRight className="w-5 h-5" />*/}
         {/*</button>*/}
