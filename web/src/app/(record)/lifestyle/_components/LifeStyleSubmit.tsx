@@ -30,6 +30,7 @@ export const LifeStyleSubmit = ({
 }: LifeStyleSubmitProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const from = searchParams.get('from');
   const { mutate: createMutation, isPending: isCreatePending } =
     useActivityRecordMutation();
   const { mutate: updateMutation, isPending: isUpdatePending } =
@@ -100,8 +101,20 @@ export const LifeStyleSubmit = ({
         },
         {
           onSuccess: () => {
-            // 생활 기록 수정 완료 후 리포트로 이동
-            router.push(`${PAGE_ROUTES.REPORT_DAILY}?toast-lifestyle=true`);
+            // 캘린더 관련 쿼리 무효화
+            queryClient.invalidateQueries({ 
+              queryKey: [QUERY_KEYS.CALENDAR] 
+            });
+            queryClient.invalidateQueries({ 
+              queryKey: [QUERY_KEYS.CALENDAR_BY_DATE] 
+            });
+            
+            // 캘린더에서 온 경우 캘린더로, 그렇지 않으면 리포트로
+            if (from === 'calendar') {
+              router.push('/calendar');
+            } else {
+              router.push(`${PAGE_ROUTES.REPORT_DAILY}?toast-lifestyle=true`);
+            }
           },
           onError: (error) => {
             console.error('수정 실패:', error);
@@ -114,8 +127,20 @@ export const LifeStyleSubmit = ({
         ...data,
         onSuccess: () => {
           queryClient.invalidateQueries({ queryKey: QUERY_KEYS.REPORT });
-          // 생활 기록 생성 완료 후 리포트로 이동
-          router.push(`${PAGE_ROUTES.REPORT_DAILY}?toast-lifestyle=true`);
+          // 캘린더 관련 쿼리 무효화
+          queryClient.invalidateQueries({ 
+            queryKey: [QUERY_KEYS.CALENDAR] 
+          });
+          queryClient.invalidateQueries({ 
+            queryKey: [QUERY_KEYS.CALENDAR_BY_DATE] 
+          });
+          
+          // 캘린더에서 온 경우 캘린더로, 그렇지 않으면 리포트로
+          if (from === 'calendar') {
+            router.push('/calendar');
+          } else {
+            router.push(`${PAGE_ROUTES.REPORT_DAILY}?toast-lifestyle=true`);
+          }
         },
         onError: (error) => {
           console.error('저장 실패:', error);
@@ -128,6 +153,7 @@ export const LifeStyleSubmit = ({
     water,
     stress,
     searchParams,
+    from,
     createMutation,
     updateMutation,
     router,

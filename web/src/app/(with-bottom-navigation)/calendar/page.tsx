@@ -184,7 +184,7 @@ export default function CalendarPage() {
             onClick={() => {
               if (selectedDate) {
                 router.push(
-                  `/lifestyle?year=${selectedDate.getFullYear()}&month=${selectedDate.getMonth() + 1}&day=${selectedDate.getDate()}`
+                  `/lifestyle?year=${selectedDate.getFullYear()}&month=${selectedDate.getMonth() + 1}&day=${selectedDate.getDate()}&from=calendar`
                 );
               }
             }}

@@ -19,6 +19,14 @@ export const useActivityRecordDeleteMutation = (
       return activityRecordApi.deleteActivityRecord(id);
     },
     onSuccess: (_, variables) => {
+      // 캘린더 관련 쿼리 무효화
+      queryClient.invalidateQueries({ 
+        queryKey: [QUERY_KEYS.CALENDAR] 
+      });
+      queryClient.invalidateQueries({ 
+        queryKey: [QUERY_KEYS.CALENDAR_BY_DATE] 
+      });
+
       // 특정 날짜의 쿼리만 정확히 무효화하고 즉시 refetch
       if (variables.date) {
         // 즉시 refetch로 최신 데이터 확보

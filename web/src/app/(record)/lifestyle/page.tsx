@@ -24,7 +24,17 @@ function LifestylePageContent() {
   const [existingRecordId, setExistingRecordId] = useState<number | null>(null);
 
   const router = useRouter();
-  const deleteMutation = useActivityRecordDeleteMutation();
+  const from = searchParams.get('from');
+  const deleteMutation = useActivityRecordDeleteMutation({
+    onSuccess: () => {
+      // 캘린더에서 온 경우 캘린더로 돌아가기
+      if (from === 'calendar') {
+        router.push('/calendar');
+      } else {
+        router.push('/home');
+      }
+    },
+  });
 
   const handleDelete = async () => {
     if (!existingRecordId) return;
@@ -33,7 +43,6 @@ function LifestylePageContent() {
         id: existingRecordId,
         date: dateString,
       });
-      router.push('/home');
     } catch (error) {
       console.error('삭제 중 오류가 발생했습니다:', error);
       alert('삭제 중 오류가 발생했습니다.');
