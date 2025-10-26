@@ -14,6 +14,7 @@ import bgGradient2 from '@/assets/auth/bg-gradient2.png';
 import bgGradient3 from '@/assets/auth/bg-gradient3.png';
 import loginCharacter from '@/assets/auth/login-character.png';
 import { API_ENDPOINTS, PAGE_ROUTES } from '@/constants';
+import { isIOS } from '@/utils/utils-platform';
 import AppleLoginButton from './_components/AppleLoginButton';
 import {
   getAccessToken,
@@ -38,6 +39,9 @@ function AuthContent() {
     if (typeof window === 'undefined') return '';
     return `${window.location.origin}/auth`;
   }, []);
+
+  // iOS 기기에서만 Apple 로그인 버튼 표시
+  const showAppleLogin = useMemo(() => isIOS(), []);
 
   // ✅ 인증 콜백 파라미터 존재 여부 (있으면 렌더 스킵)
   const hasAuthParams = useMemo(() => {
@@ -213,7 +217,7 @@ function AuthContent() {
             <input type="hidden" name="redirectUri" value={redirectUri} />
             <KakaoLoginButton />
           </form>
-          <AppleLoginButton />
+          {showAppleLogin && <AppleLoginButton />}
         </div>
       </div>
       {/* 하단 여백 */}
