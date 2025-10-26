@@ -34,7 +34,7 @@ function HomeContent() {
     (async () => {
       try {
         const currentAccessToken = getAccessToken();
-        // TODO(YUBIN): 테스트를 위해 우선 false일때로 조건 부 
+        // TODO(YUBIN): 테스트를 위해 우선 false일때로 조건 부
         if (savedUserInfo?.isNew !== true) {
           setIsTutorialOpen(true);
         }
