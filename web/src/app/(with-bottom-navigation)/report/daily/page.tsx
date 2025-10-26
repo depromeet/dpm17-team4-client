@@ -1,7 +1,9 @@
 'use client';
 
 import Image from 'next/image';
-import { useState } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { useState, useEffect, useRef } from 'react';
+import toast from 'react-hot-toast';
 import poop from '@/assets/home/poop.svg';
 import emojiOpenMouse from '@/assets/report/emoji_open_mouse.png';
 import newsPaper from '@/assets/report/newspaper.png';
@@ -20,9 +22,21 @@ export default function DailyReportPage() {
   const [selectedDate, _setSelectedDate] = useState(new Date());
   const [cardIndex, setCardIndex] = useState(0);
   const [touchStart, setTouchStart] = useState<number | null>(null);
+  const searchParams = useSearchParams();
+  const toastShownRef = useRef(false);
 
   // API 호출로 데이터 가져오기
   const { data: reportData, isLoading, error } = useReportQuery();
+
+  // Toast 표시를 위한 별도 useEffect
+  useEffect(() => {
+    if (toastShownRef.current) return;
+    
+    if (searchParams.get('toast-lifestyle')) {
+      toast.success('새로운 생활 기록이 등록되었어요!');
+      toastShownRef.current = true;
+    }
+  }, [searchParams]);
 
   // NOTE(seonghyun): 임시 - Suggestion 아이템의 이미지를 동적으로 생성
   // const getSuggestionIcon = (index: number) => {

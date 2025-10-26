@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useCallback, useMemo } from 'react';
 import toast from 'react-hot-toast';
 import { BottomBtnBar } from '@/components';
-import { QUERY_KEYS } from '@/constants';
+import { QUERY_KEYS, PAGE_ROUTES } from '@/constants';
 import {
   useActivityRecordMutation,
   useActivityRecordUpdateMutation,
@@ -96,7 +96,8 @@ export const LifeStyleSubmit = ({
         },
         {
           onSuccess: () => {
-            router.push('/home?toast-lifestyle=true');
+            // 생활 기록 수정 완료 후 리포트로 이동
+            router.push(`${PAGE_ROUTES.REPORT_DAILY}?toast-lifestyle=true`);
           },
           onError: (error) => {
             console.error('수정 실패:', error);
@@ -109,7 +110,8 @@ export const LifeStyleSubmit = ({
         ...data,
         onSuccess: () => {
           queryClient.invalidateQueries({ queryKey: QUERY_KEYS.REPORT });
-          router.push('/home?toast-lifestyle=true');
+          // 생활 기록 생성 완료 후 리포트로 이동
+          router.push(`${PAGE_ROUTES.REPORT_DAILY}?toast-lifestyle=true`);
         },
         onError: (error) => {
           console.error('저장 실패:', error);
