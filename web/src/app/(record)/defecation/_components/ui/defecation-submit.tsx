@@ -59,13 +59,15 @@ export const DefecationSubmit = () => {
       );
     } else {
       createDefecation(defecationData, {
-        onSuccess: () => {
+        onSuccess: (response) => {
+          console.log('🔍 DefecationSubmit - createDefecation success:', response);
           queryClient.invalidateQueries({ queryKey: QUERY_KEYS.REPORT });
-          router.push(
-            `/lifestyle${getDateQueryParams(data.selectedWhen)}&from=defecation`
-          );
+          const targetUrl = `/lifestyle${getDateQueryParams(data.selectedWhen)}&from=defecation&toiletRecordId=${response.data.id}`;
+          console.log('🔍 DefecationSubmit - navigating to:', targetUrl);
+          router.push(targetUrl);
         },
         onError: (error) => {
+          console.error('🔍 DefecationSubmit - createDefecation error:', error);
           alert(error.message);
         },
       });
