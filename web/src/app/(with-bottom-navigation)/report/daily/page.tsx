@@ -16,6 +16,7 @@ import { Suggestions } from './_components/Suggestions';
 import { WaterReport } from './_components/WaterReport';
 import type { Card, ReportPeriod } from './types';
 import { formatDate, getColorLabel, getShapeLabel } from './utils';
+import { useNavigationContext } from '@/contexts/NavigationContext';
 
 function DailyReportContent() {
   const [selectedPeriod, _setSelectedPeriod] = useState<ReportPeriod>('daily');
@@ -27,6 +28,7 @@ function DailyReportContent() {
 
   // API 호출로 데이터 가져오기
   const { data: reportData, isLoading, error } = useReportQuery();
+  const {handleOnNotification:onAlert}=useNavigationContext()
 
   // Toast 표시를 위한 별도 useEffect
   useEffect(() => {
@@ -34,10 +36,12 @@ function DailyReportContent() {
 
     if (searchParams.get('toast-lifestyle')) {
       toast.success('새로운 생활 기록이 등록되었어요!');
+      onAlert()
       toastShownRef.current = true;
     }
     if (searchParams.get('toast-defecation')) {
       toast.success('새로운 배변 기록이 등록되었어요!');
+      onAlert()
       toastShownRef.current = true;
     }
   }, [searchParams]);
