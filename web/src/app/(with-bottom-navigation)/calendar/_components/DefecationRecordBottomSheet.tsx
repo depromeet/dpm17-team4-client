@@ -66,7 +66,7 @@ export const DefecationRecordBottomSheet = ({
             </div>
           ) : (
             // Records List
-            <div className="space-y-[0.75rem]">
+            <div className="space-y-[0.75rem] max-h-[400px] overflow-y-auto">
               {records?.map((record) => (
                 <button
                   key={record.id}
