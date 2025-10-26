@@ -151,7 +151,7 @@ export default function App() {
     <SafeAreaView style={styles.container}>
       <WebView
         ref={webViewRef}
-        source={{ uri: 'https://cushionlike-shallowly-nancie.ngrok-free.dev' }}
+        source={{ uri: 'https://kkruk.com/auth' }}
         style={styles.webview}
         javaScriptEnabled={true}
         domStorageEnabled={true}
