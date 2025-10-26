@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useRef, useState } from 'react';
+import { Suspense, useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import poop from '@/assets/home/poop.svg';
 import emojiOpenMouse from '@/assets/report/emoji_open_mouse.png';
@@ -17,7 +17,7 @@ import { WaterReport } from './_components/WaterReport';
 import type { Card, ReportPeriod } from './types';
 import { formatDate, getColorLabel, getShapeLabel } from './utils';
 
-export default function DailyReportPage() {
+function DailyReportContent() {
   const [selectedPeriod, _setSelectedPeriod] = useState<ReportPeriod>('daily');
   const [selectedDate, _setSelectedDate] = useState(new Date());
   const [cardIndex, setCardIndex] = useState(0);
@@ -422,5 +422,13 @@ export default function DailyReportPage() {
       {/*  </div>*/}
       {/*</nav>*/}
     </div>
+  );
+}
+
+export default function DailyReportPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-black text-white flex items-center justify-center">로딩 중...</div>}>
+      <DailyReportContent />
+    </Suspense>
   );
 }

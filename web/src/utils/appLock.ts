@@ -26,8 +26,10 @@ class AppLockManager {
   private lockStatus: LockStatus | null = null;
 
   constructor() {
-    // WebView 메시지 리스너 등록
-    this.setupMessageListener();
+    // WebView 메시지 리스너 등록 (클라이언트 사이드에서만)
+    if (typeof window !== 'undefined') {
+      this.setupMessageListener();
+    }
   }
 
   /**
@@ -41,7 +43,7 @@ class AppLockManager {
    * WebView 메시지 리스너 설정
    */
   private setupMessageListener() {
-    if (window?.ReactNativeWebView) {
+    if (typeof window !== 'undefined' && window?.ReactNativeWebView) {
       window.addEventListener('message', (event) => {
         try {
           // event.data가 문자열인지 확인 후 JSON.parse 실행
@@ -68,7 +70,7 @@ class AppLockManager {
    */
   openLockSettings() {
     // WebView가 있는 경우 (React Native 앱 내에서 실행)
-    if (window?.ReactNativeWebView) {
+    if (typeof window !== 'undefined' && window?.ReactNativeWebView) {
       window.ReactNativeWebView.postMessage(
         JSON.stringify({
           type: 'OPEN_LOCK_SETTINGS',
@@ -88,7 +90,9 @@ class AppLockManager {
       console.warn(
         'React Native WebView 환경이 아닙니다. 앱 잠금 설정은 앱 내에서만 사용할 수 있습니다.'
       );
-      alert('앱 잠금 설정은 React Native 앱 내에서만 사용할 수 있습니다.');
+      if (typeof window !== 'undefined') {
+        alert('앱 잠금 설정은 React Native 앱 내에서만 사용할 수 있습니다.');
+      }
     }
   }
 
