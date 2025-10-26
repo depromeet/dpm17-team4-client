@@ -46,9 +46,9 @@ export default function MyPageContent() {
           <Image src={ChevronRight} alt="chevron right" className="w-5 h-5" />
         </Link>
       </div>
-      <div className="bg-gray-700 h-[8px]" />
-      {/* Settings Section */}
-      <div className="pt-[28px] px-[16px] pb-[24px]">
+      {/* 개발 중 - 설정 섹션 전체 */}
+      {/* <div className="bg-gray-700 h-[8px]" /> */}
+      {/* <div className="pt-[28px] px-[16px] pb-[24px]">
         <div className="">
           <h3 className="text-sm text-gray-400 mb-4">설정</h3>
           <div className="space-y-4">
@@ -78,7 +78,7 @@ export default function MyPageContent() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* App Information Section */}
       <div className="px-4">
@@ -96,7 +96,8 @@ export default function MyPageContent() {
                 className="w-5 h-5"
               />
             </Link>
-            <div className="flex items-center justify-between py-2">
+            {/* 개발 중 - 버전 정보 */}
+            {/* <div className="flex items-center justify-between py-2">
               <span className="text-body2-sb">1.0 버전</span>
               <div className="flex items-center space-x-2">
                 <span className="text-body3-m text-white">업데이트</span>
@@ -106,7 +107,7 @@ export default function MyPageContent() {
                   className="w-5 h-5"
                 />
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
