@@ -20,6 +20,9 @@ type NavigationContextType = {
   // 탭 상태 관련
   currentTab: Tab;
   handleTabClick: (tabName: Tab) => void;
+  hasNotification: boolean;
+  handleOnNotification: () => void;
+  handleOffNotification: () => void;
 };
 
 const NavigationContext = createContext<NavigationContextType | undefined>(
@@ -45,6 +48,7 @@ export const NavigationProvider = ({ children }: NavigationProviderProps) => {
   const [currentTab, setCurrentTab] = useState<Tab>('home');
   const navRef = useRef<HTMLElement | null>(null);
   const router = useRouter();
+  const [hasNotification, setHasNotification] = useState(false);
 
   // 네비게이션 바 높이 계산
   useEffect(() => {
@@ -75,6 +79,12 @@ export const NavigationProvider = ({ children }: NavigationProviderProps) => {
     },
     [router]
   );
+  const handleOnNotification = () => {
+    setHasNotification(true);
+  };
+  const handleOffNotification = () => {
+    setHasNotification(false);
+  };
 
   return (
     <NavigationContext.Provider
@@ -82,7 +92,10 @@ export const NavigationProvider = ({ children }: NavigationProviderProps) => {
         navHeight,
         navRef,
         currentTab,
+        hasNotification,
         handleTabClick,
+        handleOnNotification,
+        handleOffNotification,
       }}
     >
       {children}
