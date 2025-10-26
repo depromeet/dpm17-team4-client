@@ -22,7 +22,12 @@ export const LifeStyleNavigator = ({
   const day = searchParams.get('day');
 
   const handleSkip = () => {
-    router.push(PAGE_ROUTES.HOME);
+    if (from === 'defecation') {
+      // 배변 기록에서 온 경우, 배변 기록 완료 토스트와 함께 홈으로 이동
+      router.push(`${PAGE_ROUTES.HOME}?toast-defecation=true`);
+    } else {
+      router.push(PAGE_ROUTES.HOME);
+    }
   };
 
   const handleBack = () => {
@@ -72,7 +77,7 @@ export const LifeStyleNavigator = ({
               <button
                 type="button"
                 onClick={handleSkip}
-                className="text-body2-m text-primary-600 hover:text-primary-600"
+                className="text-body2-m text-primary-600새 hover:text-primary-600"
               >
                 건너뛰기
               </button>
