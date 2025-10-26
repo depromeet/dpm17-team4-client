@@ -60,52 +60,73 @@ export const LifeStyleNavigator = ({
 
   return (
     <div className="fixed top-0 left-0 w-full h-[56px] z-10 bg-gray-900 text-white p-4 flex shrink-0">
-      <button
-        type="button"
-        onClick={handleBack}
-        className="w-6 h-6 absolute left-4 top-1/2 -translate-y-1/2 z-10"
-      >
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="text-white"
-        >
-          <path
-            d="M15 18L9 12L15 6"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </button>
       <div className="flex-1 flex justify-center items-center">
         <Navigator.Center>생활 기록</Navigator.Center>
       </div>
-      <Navigator.Right>
-        {from === 'defecation' && (
+      
+      {/* 수정 모드일 때: 건너뛰기(왼쪽), 삭제(오른쪽) */}
+      {existingRecordId ? (
+        <>
+          <div className="absolute left-4 top-1/2 -translate-y-1/2">
+            {from === 'defecation' && (
+              <button
+                type="button"
+                onClick={handleSkip}
+                className="text-body2-m text-primary-600 hover:text-primary-600"
+              >
+                건너뛰기
+              </button>
+            )}
+          </div>
+          <div className="absolute right-4 top-1/2 -translate-y-1/2">
+            <button
+              type="button"
+              onClick={onOpen}
+              disabled={isDeleting}
+              className="text-body2-m text-red-600 hover:text-red-500 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isDeleting ? '삭제 중...' : '삭제'}
+            </button>
+          </div>
+        </>
+      ) : (
+        /* 신규 작성 모드일 때: 뒤로가기(왼쪽), 건너뛰기(오른쪽) */
+        <>
           <button
             type="button"
-            onClick={handleSkip}
-            className="text-body2-m text-primary-600 hover:text-primary-600"
+            onClick={handleBack}
+            className="w-6 h-6 absolute left-4 top-1/2 -translate-y-1/2 z-10"
           >
-            건너뛰기
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="text-white"
+            >
+              <path
+                d="M15 18L9 12L15 6"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
           </button>
-        )}
-        {existingRecordId && (
-          <button
-            type="button"
-            onClick={onOpen}
-            disabled={isDeleting}
-            className="text-body2-m text-red-600 hover:text-red-500 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {isDeleting ? '삭제 중...' : '삭제'}
-          </button>
-        )}
-      </Navigator.Right>
+          {from === 'defecation' && (
+            <div className="absolute right-4 top-1/2 -translate-y-1/2">
+              <button
+                type="button"
+                onClick={handleSkip}
+                className="text-body2-m text-primary-600 hover:text-primary-600"
+              >
+                건너뛰기
+              </button>
+            </div>
+          )}
+        </>
+      )}
     </div>
   );
 };
