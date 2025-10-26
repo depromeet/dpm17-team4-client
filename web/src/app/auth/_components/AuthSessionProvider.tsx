@@ -44,6 +44,23 @@ export const setUserInfo = (userInfo: UserInfo) => {
 };
 
 export const clearUserInfo = () => {
+  try {
+    // userInfo를 먼저 가져와서 userId 확인
+    const userInfo = localStorage.getItem('userInfo');
+    if (userInfo) {
+      const parsed = JSON.parse(userInfo);
+      const userId = parsed?.id;
+      
+      // 해당 사용자의 튜토리얼 데이터 삭제
+      if (userId) {
+        localStorage.removeItem(`hasSeenTutorial_${userId}`);
+      }
+    }
+  } catch (error) {
+    console.error('localStorage 정리 중 에러:', error);
+  }
+  
+  // userInfo 삭제
   localStorage.removeItem('userInfo');
 };
 

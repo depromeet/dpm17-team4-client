@@ -29,6 +29,10 @@ function HomeContent() {
 
   const handleCloseTutorial = () => {
     setIsTutorialOpen(false);
+    // 튜토리얼을 본 후 localStorage에 저장 (사용자별로)
+    if (typeof window !== 'undefined' && savedUserInfo?.id) {
+      localStorage.setItem(`hasSeenTutorial_${savedUserInfo.id}`, 'true');
+    }
   };
 
   // Toast 표시를 위한 별도 useEffect
@@ -49,9 +53,12 @@ function HomeContent() {
     (async () => {
       try {
         const currentAccessToken = getAccessToken();
-        // 신규 사용자일 때만 튜토리얼 표시
-        if (savedUserInfo?.isNew === true) {
-          setIsTutorialOpen(true);
+        // 신규 사용자이고 튜토리얼을 아직 본 적이 없을 때만 표시
+        if (savedUserInfo?.isNew === true && typeof window !== 'undefined' && savedUserInfo?.id) {
+          const hasSeenTutorial = localStorage.getItem(`hasSeenTutorial_${savedUserInfo.id}`);
+          if (!hasSeenTutorial) {
+            setIsTutorialOpen(true);
+          }
         }
         // 사용자 정보가 있고 accessToken이 없을 때만 refresh 요청
         if (savedUserInfo && !currentAccessToken) {
