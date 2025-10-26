@@ -1,9 +1,8 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { Button } from '@/components/Button';
 import { Modal } from '@/components/Modal';
-import { PAGE_ROUTES } from '@/constants';
+import { useUserDeleteMutation } from '@/hooks';
 
 interface AccountDeletionModalProps {
   isOpen: boolean;
@@ -14,11 +13,11 @@ export const AccountDeletionModal = ({
   isOpen,
   onClose,
 }: AccountDeletionModalProps) => {
-  //TODO: 회원탈퇴 api 연동
-  const router = useRouter();
+  const { mutate: deleteUser, isPending } = useUserDeleteMutation();
+
   const handleAccountDeletion = () => {
-    console.log('회원탈퇴');
-    router.push(PAGE_ROUTES.AUTH);
+    deleteUser();
+    onClose();
   };
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -32,14 +31,19 @@ export const AccountDeletionModal = ({
         </p>
       </div>
       <div className="flex gap-2">
-        <Button className="!bg-gray-700 flex-1" onClick={onClose}>
+        <Button
+          className="!bg-gray-700 flex-1"
+          onClick={onClose}
+          disabled={isPending}
+        >
           취소
         </Button>
         <Button
           className="bg-red-600 flex-1 hover:bg-red-700"
           onClick={handleAccountDeletion}
+          disabled={isPending}
         >
-          탈퇴하기
+          {isPending ? '탈퇴 중...' : '탈퇴하기'}
         </Button>
       </div>
     </Modal>

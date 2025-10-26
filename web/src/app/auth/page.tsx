@@ -85,8 +85,13 @@ function AuthContent() {
     url.search = '';
     window.history.replaceState({}, '', url.toString());
 
-    // 약관 동의 바텀시트 표시
-    setShowTermsBottomSheet(true);
+    // 신규 사용자일 때만 약관 동의 바텀시트 표시
+    if (userInfo.isNew) {
+      setShowTermsBottomSheet(true);
+    } else {
+      // 기존 사용자는 바로 홈으로 이동
+      router.push('/home');
+    }
 
     // 토큰은 백그라운드로 시도
     (async () => {
@@ -100,7 +105,7 @@ function AuthContent() {
         console.error('⚠️ AccessToken 갱신 실패(무시하고 진행):', e);
       }
     })();
-  }, [extractUserInfo]);
+  }, [extractUserInfo, router]);
 
   const handleTermsAgree = () => {
     setShowTermsBottomSheet(false);
@@ -109,9 +114,35 @@ function AuthContent() {
     router.push(PAGE_ROUTES.ONBOARDING_PROFILE);
   };
 
-  const handleBottomSheetClose = () => {
-    //TODO: 바텀싯을 닫으면 회원 탈퇴처리를 해야함.
+  const handleBottomSheetClose = async () => {
+    // 약관 동의 바텀시트를 닫으면 회원 탈퇴 처리
     setShowTermsBottomSheet(false);
+
+    try {
+      const { userApi } = await import('@/apis/userApi');
+      await userApi.deleteMe();
+      console.log('✅ 온보딩 중 이탈 - 회원 탈퇴 완료');
+    } catch (error) {
+      console.error('❌ 온보딩 중 이탈 - 회원 탈퇴 실패:', error);
+    } finally {
+      // 로컬 데이터 정리 및 인증 페이지로 리다이렉트
+      const { clearAccessToken, clearUserInfo } = await import(
+        '@/app/auth/_components/AuthSessionProvider'
+      );
+      clearAccessToken();
+      clearUserInfo();
+
+      // 세션 캐시도 정리
+      try {
+        const { clearClientSessionCache } = await import('@/lib/session');
+        clearClientSessionCache();
+      } catch (error) {
+        console.warn('⚠️ 세션 캐시 정리 실패:', error);
+      }
+
+      // 인증 페이지로 리다이렉트
+      window.location.href = PAGE_ROUTES.AUTH;
+    }
   };
 
   if (hasAuthParams) return null;

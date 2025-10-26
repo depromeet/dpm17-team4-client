@@ -75,11 +75,11 @@ export default function CalendarPage() {
 
   const finalDateRange = fixedDateRange.slice(0, TOTAL_DAYS);
   return (
-    <div className="min-h-screen bg-[#1D1E20] text-white">
+    <div className="min-h-screen bg-[#1D1E20] text-white pb-32">
       <header className="w-full flex items-center justify-center px-10 py-4">
         <p className="text-[18px] font-semibold">캘린더</p>
       </header>
-      <div>
+      <div className="overflow-y-auto">
         <div className="flex items-center justify-between mb-5 px-4">
           <p className="text-body1-m">
             {format(currentMonth, 'yyyy년 M월', { locale: ko })}

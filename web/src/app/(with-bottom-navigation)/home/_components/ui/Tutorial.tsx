@@ -34,13 +34,16 @@ const Tutorial = ({ onClose }: TutorialProps) => {
       onClose();
     }
   };
-  const handleSkip = () => {
-    onClose();
+  const handlePreviousStep = () => {
+    if (step > 0) {
+      setStep((prev) => prev - 1);
+    }
   };
 
   const current = TUTORIAL_CONTENTS[step];
 
   const isLastStep = step === TUTORIAL_CONTENTS.length - 1;
+  const isFirstStep = step === 0;
   const buttonText = isLastStep ? '닫기' : '다음';
 
   return (
@@ -71,10 +74,11 @@ const Tutorial = ({ onClose }: TutorialProps) => {
         <section className="flex justify-between items-center p-5">
           <button
             type="button"
-            className="text-body4-sb text-gray-600 min-w-[43px]"
-            onClick={handleSkip}
+            className={`text-body4-sb min-w-[43px] ${isFirstStep ? 'text-gray-300' : 'text-gray-600'}`}
+            onClick={handlePreviousStep}
+            disabled={isFirstStep}
           >
-            건너뛰기
+            이전
           </button>
           <div className="flex gap-[5px]">
             {TUTORIAL_CONTENTS.map((item) => (

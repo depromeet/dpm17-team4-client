@@ -46,7 +46,6 @@ export const Modal = ({
   isOpen,
   onClose,
   children,
-  className,
   mode = 'modal',
 }: PropsWithChildren<ModalProps>) => {
   const { dialogRef, targetContainer, onClickDialog } = useModal(

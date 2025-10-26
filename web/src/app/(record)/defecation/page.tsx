@@ -14,10 +14,25 @@ export default function DefecationPage() {
   const searchParams = useSearchParams();
   const toiletRecordId = searchParams.get('toiletRecordId');
 
+  console.log('🔍 DefecationPage - toiletRecordId:', toiletRecordId);
+
   const colorRef = useRef<HTMLDivElement>(null);
   const defecationDetailRef = useRef<DefecationDetailRef>(null);
 
-  const { data } = useDefecationQuery(Number(toiletRecordId ?? 0));
+  const { data, isLoading, error } = useDefecationQuery(
+    toiletRecordId && toiletRecordId !== 'undefined'
+      ? Number(toiletRecordId)
+      : 0
+  );
+
+  console.log(
+    '🔍 DefecationPage - data:',
+    data,
+    'isLoading:',
+    isLoading,
+    'error:',
+    error
+  );
 
   const handleOpenColorSection = () => {
     defecationDetailRef.current?.openColorSection();

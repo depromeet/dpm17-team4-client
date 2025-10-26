@@ -85,7 +85,7 @@ export default function FetchTestPage() {
                 <div className="flex justify-between items-center p-4 bg-blue-50 rounded-lg">
                   <span className="text-gray-700 font-medium">배변 점수:</span>
                   <span className="text-3xl font-bold text-blue-600">
-                    {scoreData.poo.score}
+                    {Math.round(scoreData.poo.score)}
                   </span>
                 </div>
 

@@ -19,4 +19,8 @@ export const userApi = {
     );
     return response.data;
   },
+  deleteMe: async () => {
+    const response = await apiClient.delete(API_ENDPOINTS.USERS.ME);
+    return response.data;
+  },
 };

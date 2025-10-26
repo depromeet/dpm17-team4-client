@@ -3,7 +3,7 @@
 import { Bell } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import {
   getAccessToken,
@@ -25,18 +25,46 @@ function HomeContent() {
 
   const { userInfo: savedUserInfo } = useUserInfo();
   const [isTutorialOpen, setIsTutorialOpen] = useState(false);
+  const toastShownRef = useRef(false);
 
   const handleCloseTutorial = () => {
     setIsTutorialOpen(false);
+    // 튜토리얼을 본 후 localStorage에 저장 (사용자별로)
+    if (typeof window !== 'undefined' && savedUserInfo?.id) {
+      localStorage.setItem(`hasSeenTutorial_${savedUserInfo.id}`, 'true');
+    }
   };
+
+  // Toast 표시를 위한 별도 useEffect
+  useEffect(() => {
+    if (toastShownRef.current) return;
+
+    if (searchParams.get('toast-defecation')) {
+      toast.success('새로운 배변 기록이 등록되었어요!');
+      toastShownRef.current = true;
+    }
+    if (searchParams.get('toast-lifestyle')) {
+      toast.success('새로운 생활 기록이 등록되었어요!');
+      toastShownRef.current = true;
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     (async () => {
       try {
         const currentAccessToken = getAccessToken();
-        // TODO(YUBIN): 테스트를 위해 우선 false일때로 조건 부
-        if (savedUserInfo?.isNew !== true) {
-          setIsTutorialOpen(true);
+        // 신규 사용자이고 튜토리얼을 아직 본 적이 없을 때만 표시
+        if (
+          savedUserInfo?.isNew === true &&
+          typeof window !== 'undefined' &&
+          savedUserInfo?.id
+        ) {
+          const hasSeenTutorial = localStorage.getItem(
+            `hasSeenTutorial_${savedUserInfo.id}`
+          );
+          if (!hasSeenTutorial) {
+            setIsTutorialOpen(true);
+          }
         }
         // 사용자 정보가 있고 accessToken이 없을 때만 refresh 요청
         if (savedUserInfo && !currentAccessToken) {
@@ -62,25 +90,18 @@ function HomeContent() {
           const url = new URL(window.location.href);
           url.search = '';
           window.history.replaceState({}, '', url.toString());
+          // URL 정리 후 toast ref 리셋
+          toastShownRef.current = false;
         }
-        if (searchParams.get('toast-defecation')) {
-          toast.success('새로운 배변 기록이 등록되었어요!');
-        }
-        if (searchParams.get('toast-lifestyle')) {
-          toast.success('새로운 생활 기록이 등록되었어요!');
-        }
-        if (
-          savedUserInfo ||
-          searchParams.get('toast-defecation') ||
-          searchParams.get('toast-lifestyle')
-        ) {
+
+        if (savedUserInfo) {
           router.replace('/home', { scroll: false });
         }
       } catch (error) {
         console.error('Home Auth 처리 중 에러:', error);
       }
     })();
-  }, [router, searchParams, savedUserInfo]);
+  }, [router, savedUserInfo]);
 
   return (
     <>
