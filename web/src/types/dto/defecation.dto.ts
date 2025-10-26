@@ -1,8 +1,8 @@
 export interface PostDefecationDataRequestDto {
   occurredAt: string;
   isSuccessful: boolean;
-  color: string;
-  shape: string;
+  color: string | null;
+  shape: string | null;
   pain: number;
   duration: number;
   note: string;
@@ -16,8 +16,8 @@ export interface DefecationDataResponseDto {
     userId: number;
     occurredAt: string;
     isSuccessful: boolean;
-    color: string;
-    shape: string;
+    color: string | null;
+    shape: string | null;
     pain: number;
     duration: number;
     note: string;

@@ -37,8 +37,8 @@ export const DefecationSubmit = () => {
     const defecationData = {
       occurredAt: data.selectedWhen.toISOString(),
       isSuccessful: data.selectedTry === DEFECATION_TRY.DID_POO,
-      color: data.selectedColor || '',
-      shape: data.selectedShape || '',
+      color: data.selectedColor || null,
+      shape: data.selectedShape || null,
       pain: data.selectedPain,
       duration: toiletDuration,
       note: data.selectedOptional || '',
