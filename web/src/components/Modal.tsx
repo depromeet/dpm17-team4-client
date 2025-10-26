@@ -1,6 +1,7 @@
 import type { PropsWithChildren } from 'react';
 import { createPortal } from 'react-dom';
 import { useModal } from '@/hooks/useModal';
+import { cn } from '@/utils/utils-cn';
 import { Button } from './Button';
 
 interface ModalContentProps {
@@ -11,6 +12,8 @@ interface ModalContentProps {
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
+  className?: string;
+  mode?: 'modal' | 'tutorial';
 }
 
 export const ModalContent = ({ onClose, onDelete }: ModalContentProps) => {
@@ -43,6 +46,8 @@ export const Modal = ({
   isOpen,
   onClose,
   children,
+  className,
+  mode = 'modal',
 }: PropsWithChildren<ModalProps>) => {
   const { dialogRef, targetContainer, onClickDialog } = useModal(
     isOpen,
@@ -52,7 +57,10 @@ export const Modal = ({
   if (!targetContainer) {
     return null;
   }
-
+  const modalContainerClassName =
+    'pt-[1.875rem] pr-4 pl-4 pb-4  w-[19.375rem] rounded-[1.25rem] bg-gray-800 flex-col items-center justify-center fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2';
+  const tutorialContainerClassName =
+    'w-[17.4375rem] h-[21.75rem] bg-white rounded-[1.25rem] flex-col items-center justify-center fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2';
   return createPortal(
     // biome-ignore lint/a11y/useKeyWithClickEvents: <Backdrop click is mouse-only>
     <dialog
@@ -63,8 +71,11 @@ export const Modal = ({
       <div className="fixed inset-0 bg-black/50" />
       {/* biome-ignore lint/a11y/noStaticElementInteractions lint/a11y/useKeyWithClickEvents: <This div is for event propagation stopping> */}
       <div
-        className="pt-[1.875rem] pr-4 pl-4 pb-4  w-[19.375rem] rounded-[1.25rem] bg-gray-800 flex-col items-center justify-center fixed left-1/2 top-1/2
-    -translate-x-1/2 -translate-y-1/2"
+        className={cn(
+          mode === 'modal'
+            ? modalContainerClassName
+            : tutorialContainerClassName
+        )}
         onClick={(e) => e.stopPropagation()}
       >
         {children}

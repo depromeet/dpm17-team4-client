@@ -3,54 +3,43 @@
 import { Bell } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Suspense, useCallback, useEffect } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import {
   getAccessToken,
   requestAccessToken,
   setAccessToken,
   setUserInfo,
-  type UserInfo,
 } from '@/app/auth/_components/AuthSessionProvider';
 import Character from '@/assets/home/character.png';
 import MaskGroup from '@/assets/home/Mask group.svg';
+import { Modal } from '@/components';
 import { useNavigationContext } from '@/contexts/NavigationContext';
 import { useUserInfo } from '@/hooks';
-import { RecordSection } from './_components/ui';
+import { RecordSection, Tutorial } from './_components/ui';
 
 function HomeContent() {
   const { navHeight } = useNavigationContext();
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const extractUserInfo = useCallback((): UserInfo | null => {
-    const id = searchParams.get('id');
-    const nickname = searchParams.get('nickname');
-    const profileImage = searchParams.get('profileImage');
-    const isNew = searchParams.get('isNew');
-    const providerType = searchParams.get('providerType');
+  const { userInfo: savedUserInfo } = useUserInfo();
+  const [isTutorialOpen, setIsTutorialOpen] = useState(false);
 
-    if (id && nickname && profileImage && isNew && providerType) {
-      const userInfo = {
-        id,
-        nickname: decodeURIComponent(nickname),
-        profileImage: decodeURIComponent(profileImage),
-        isNew: isNew === 'true',
-        providerType,
-      };
-      return userInfo;
-    }
-    return null;
-  }, [searchParams]);
+  const handleCloseTutorial = () => {
+    setIsTutorialOpen(false);
+  };
 
   useEffect(() => {
     (async () => {
       try {
-        const userInfo = extractUserInfo();
         const currentAccessToken = getAccessToken();
-
+        // TODO(YUBIN): 테스트를 위해 우선 false일때로 조건 부
+        if (savedUserInfo?.isNew !== true) {
+          setIsTutorialOpen(true);
+        }
         // 사용자 정보가 있고 accessToken이 없을 때만 refresh 요청
-        if (userInfo && !currentAccessToken) {
+        if (savedUserInfo && !currentAccessToken) {
           console.log('🔄 Home에서 Refresh 요청 시작...');
           const { accessToken } = await requestAccessToken();
           if (accessToken) {
@@ -61,13 +50,15 @@ function HomeContent() {
           }
         } else {
           console.log('⏭️ Home에서 Refresh 요청 건너뜀:', {
-            reason: !userInfo ? '사용자 정보 없음' : '이미 accessToken 있음',
+            reason: !savedUserInfo
+              ? '사용자 정보 없음'
+              : '이미 accessToken 있음',
           });
         }
 
         // 사용자 정보가 있으면 항상 저장하고 URL 정리
-        if (userInfo && typeof window !== 'undefined') {
-          setUserInfo(userInfo);
+        if (savedUserInfo && typeof window !== 'undefined') {
+          setUserInfo(savedUserInfo);
           const url = new URL(window.location.href);
           url.search = '';
           window.history.replaceState({}, '', url.toString());
@@ -79,7 +70,7 @@ function HomeContent() {
           toast.success('새로운 생활 기록이 등록되었어요!');
         }
         if (
-          userInfo ||
+          savedUserInfo ||
           searchParams.get('toast-defecation') ||
           searchParams.get('toast-lifestyle')
         ) {
@@ -89,12 +80,17 @@ function HomeContent() {
         console.error('Home Auth 처리 중 에러:', error);
       }
     })();
-  }, [extractUserInfo, router, searchParams]);
-
-  const { userInfo: savedUserInfo } = useUserInfo();
+  }, [router, searchParams, savedUserInfo]);
 
   return (
     <>
+      <Modal
+        isOpen={isTutorialOpen}
+        onClose={handleCloseTutorial}
+        mode="tutorial"
+      >
+        <Tutorial onClose={handleCloseTutorial} />
+      </Modal>
       <main className="min-w-[3.75rem] min-h-screen text-white relative px-4 pb-20 bg-gradient-to-br from-[#140927] via-[#403397] to-[#4665F3]">
         {/* Radial gradient 배경 */}
         <div className="absolute inset-0 opacity-70">
