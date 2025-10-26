@@ -70,7 +70,7 @@ export default function ProfilePageContent() {
     }
   }, [userMeData]);
 
-  const handleImageChange = async (imageUrl: string) => {
+  const _handleImageChange = async (imageUrl: string) => {
     setProfileState((prev) => ({
       ...prev,
       profileImage: imageUrl,

@@ -102,13 +102,13 @@ export const LifeStyleSubmit = ({
         {
           onSuccess: () => {
             // 캘린더 관련 쿼리 무효화
-            queryClient.invalidateQueries({ 
-              queryKey: [QUERY_KEYS.CALENDAR] 
+            queryClient.invalidateQueries({
+              queryKey: [QUERY_KEYS.CALENDAR],
             });
-            queryClient.invalidateQueries({ 
-              queryKey: [QUERY_KEYS.CALENDAR_BY_DATE] 
+            queryClient.invalidateQueries({
+              queryKey: [QUERY_KEYS.CALENDAR_BY_DATE],
             });
-            
+
             // 캘린더에서 온 경우 캘린더로, 그렇지 않으면 리포트로
             if (from === 'calendar') {
               router.push('/calendar');
@@ -128,13 +128,13 @@ export const LifeStyleSubmit = ({
         onSuccess: () => {
           queryClient.invalidateQueries({ queryKey: QUERY_KEYS.REPORT });
           // 캘린더 관련 쿼리 무효화
-          queryClient.invalidateQueries({ 
-            queryKey: [QUERY_KEYS.CALENDAR] 
+          queryClient.invalidateQueries({
+            queryKey: [QUERY_KEYS.CALENDAR],
           });
-          queryClient.invalidateQueries({ 
-            queryKey: [QUERY_KEYS.CALENDAR_BY_DATE] 
+          queryClient.invalidateQueries({
+            queryKey: [QUERY_KEYS.CALENDAR_BY_DATE],
           });
-          
+
           // 캘린더에서 온 경우 캘린더로, 그렇지 않으면 리포트로
           if (from === 'calendar') {
             router.push('/calendar');

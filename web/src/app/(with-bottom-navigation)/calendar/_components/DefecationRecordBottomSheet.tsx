@@ -33,7 +33,9 @@ export const DefecationRecordBottomSheet = ({
 
   const handleRecordSelect = (time: string, toiletRecordId: number) => {
     // NOTE(taehyeon): 서버 api 구현 시 toiletId 를 전달하도록 수정 필요
-    router.push(`${path}?time=${time}&toiletRecordId=${toiletRecordId}&from=calendar`);
+    router.push(
+      `${path}?time=${time}&toiletRecordId=${toiletRecordId}&from=calendar`
+    );
     onClose();
   };
 

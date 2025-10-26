@@ -53,17 +53,17 @@ export const DefecationSubmit = () => {
         {
           onSuccess: async () => {
             console.log('🔍 DefecationSubmit - updateDefecation success');
-            
+
             // 모든 관련 쿼리 무효화
             queryClient.invalidateQueries({ queryKey: QUERY_KEYS.REPORT });
-            queryClient.invalidateQueries({ 
-              queryKey: [QUERY_KEYS.DEFECATION_RECORD_LIST] 
+            queryClient.invalidateQueries({
+              queryKey: [QUERY_KEYS.DEFECATION_RECORD_LIST],
             });
-            queryClient.invalidateQueries({ 
-              queryKey: [QUERY_KEYS.CALENDAR] 
+            queryClient.invalidateQueries({
+              queryKey: [QUERY_KEYS.CALENDAR],
             });
-            queryClient.invalidateQueries({ 
-              queryKey: [QUERY_KEYS.CALENDAR_BY_DATE] 
+            queryClient.invalidateQueries({
+              queryKey: [QUERY_KEYS.CALENDAR_BY_DATE],
             });
 
             // 캘린더에서 온 경우 캘린더로 리디렉션
@@ -122,17 +122,17 @@ export const DefecationSubmit = () => {
             '🔍 DefecationSubmit - createDefecation success:',
             response
           );
-          
+
           // 모든 관련 쿼리 무효화
           queryClient.invalidateQueries({ queryKey: QUERY_KEYS.REPORT });
-          queryClient.invalidateQueries({ 
-            queryKey: [QUERY_KEYS.DEFECATION_RECORD_LIST] 
+          queryClient.invalidateQueries({
+            queryKey: [QUERY_KEYS.DEFECATION_RECORD_LIST],
           });
-          queryClient.invalidateQueries({ 
-            queryKey: [QUERY_KEYS.CALENDAR] 
+          queryClient.invalidateQueries({
+            queryKey: [QUERY_KEYS.CALENDAR],
           });
-          queryClient.invalidateQueries({ 
-            queryKey: [QUERY_KEYS.CALENDAR_BY_DATE] 
+          queryClient.invalidateQueries({
+            queryKey: [QUERY_KEYS.CALENDAR_BY_DATE],
           });
 
           // 캘린더에서 온 경우 캘린더로 리디렉션

@@ -1,6 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { userApi } from '@/apis/userApi';
-import { getUserInfo, setUserInfo } from '@/app/auth/_components/AuthSessionProvider';
+import {
+  getUserInfo,
+  setUserInfo,
+} from '@/app/auth/_components/AuthSessionProvider';
 import { QUERY_KEYS } from '@/constants';
 import type { UserUpdateRequestDto } from '@/types/dto/user.dto';
 
@@ -14,7 +17,7 @@ export const useUserUpdateMutation = () => {
     },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.USER_ME });
-      
+
       // localStorage에 저장된 사용자 정보도 업데이트
       if (variables.nickname) {
         const userInfo = getUserInfo();

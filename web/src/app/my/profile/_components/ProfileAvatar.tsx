@@ -1,6 +1,5 @@
 'use client';
 
-import { CameraIcon } from 'lucide-react';
 import Image from 'next/image';
 import { useRef, useState } from 'react';
 import defaultProfileImage from '@/assets/my/profile-image-1.png';
@@ -19,11 +18,11 @@ export const ProfileAvatar = ({
   );
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleAvatarClick = () => {
+  const _handleAvatarClick = () => {
     fileInputRef.current?.click();
   };
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const _handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       // 파일 타입 검증

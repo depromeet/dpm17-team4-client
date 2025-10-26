@@ -29,7 +29,12 @@ export const DefecationProvider = ({
       );
       const now = new Date();
       // 시간 정보는 현재 시간 사용
-      dateFromParams.setHours(now.getHours(), now.getMinutes(), now.getSeconds(), 0);
+      dateFromParams.setHours(
+        now.getHours(),
+        now.getMinutes(),
+        now.getSeconds(),
+        0
+      );
       return dateFromParams;
     }
 

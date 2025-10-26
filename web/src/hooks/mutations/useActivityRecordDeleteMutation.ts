@@ -20,11 +20,11 @@ export const useActivityRecordDeleteMutation = (
     },
     onSuccess: (_, variables) => {
       // 캘린더 관련 쿼리 무효화
-      queryClient.invalidateQueries({ 
-        queryKey: [QUERY_KEYS.CALENDAR] 
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.CALENDAR],
       });
-      queryClient.invalidateQueries({ 
-        queryKey: [QUERY_KEYS.CALENDAR_BY_DATE] 
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.CALENDAR_BY_DATE],
       });
 
       // 특정 날짜의 쿼리만 정확히 무효화하고 즉시 refetch
