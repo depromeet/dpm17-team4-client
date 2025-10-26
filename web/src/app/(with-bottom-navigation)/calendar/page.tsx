@@ -3,9 +3,10 @@
 import { format, isAfter, isSameDay, isSameMonth, startOfDay } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ChevronIcon } from '@/components';
 import { DAYS_OF_WEEK } from '@/constants';
+import { useNavigationContext } from '@/contexts/NavigationContext';
 import { DailyRecord } from './_components/DailyRecord';
 import { DefecationRecordBottomSheet } from './_components/DefecationRecordBottomSheet';
 import { useCalendar } from './_components/hooks/useCalendar';
@@ -13,6 +14,11 @@ import { Tag } from './_components/Tag';
 
 export default function CalendarPage() {
   const router = useRouter();
+  const { handleTabClick } = useNavigationContext();
+
+  useEffect(() => {
+    handleTabClick('calendar');
+  }, [handleTabClick]);
   const {
     data,
     calendarByDateData,
@@ -31,11 +37,11 @@ export default function CalendarPage() {
   ] = useState(false);
 
   return (
-    <div className="min-h-screen bg-[#1D1E20] text-white pb-32">
-      <header className="w-full flex items-center justify-center px-10 py-4">
+    <div className="h-screen bg-[#1D1E20] text-white overflow-y-auto pb-32">
+      <header className="w-full flex items-center justify-center px-10 py-4 flex-shrink-0">
         <p className="text-[18px] font-semibold">캘린더</p>
       </header>
-      <div className="overflow-y-auto">
+      <div>
         <div className="flex items-center justify-between mb-5 px-4">
           <p className="text-body1-m">
             {format(currentMonth, 'yyyy년 M월', { locale: ko })}

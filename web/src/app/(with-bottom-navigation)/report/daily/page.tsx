@@ -7,6 +7,7 @@ import toast from 'react-hot-toast';
 import poop from '@/assets/home/poop.svg';
 import emojiOpenMouse from '@/assets/report/emoji_open_mouse.png';
 import newsPaper from '@/assets/report/newspaper.png';
+import { useNavigationContext } from '@/contexts/NavigationContext';
 import { useReportQuery } from '@/hooks/queries/useReportQuery';
 import { DefecationScore } from './_components/DefecationScore';
 import { FoodReport } from './_components/FoodReport';
@@ -24,6 +25,11 @@ function DailyReportContent() {
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const searchParams = useSearchParams();
   const toastShownRef = useRef(false);
+  const { handleTabClick } = useNavigationContext();
+
+  useEffect(() => {
+    handleTabClick('report');
+  }, [handleTabClick]);
 
   // API 호출로 데이터 가져오기
   const { data: reportData, isLoading, error } = useReportQuery();

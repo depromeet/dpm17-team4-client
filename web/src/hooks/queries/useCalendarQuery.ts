@@ -8,6 +8,9 @@ export const useCalendarQuery = (start: string, end: string) => {
     queryFn: () => calendarApi.getCalendarData(start, end),
     enabled: !!start && !!end,
     staleTime: 5 * 60 * 1000,
+    retry: false,
+    throwOnError: false,
+    refetchOnWindowFocus: false,
   });
 };
 
@@ -17,6 +20,9 @@ export const useCalendarByDateQuery = (date: string) => {
     queryFn: () => calendarApi.getCalendarDataByDate(date),
     enabled: !!date,
     staleTime: 5 * 60 * 1000,
+    retry: false,
+    throwOnError: false,
+    refetchOnWindowFocus: false,
   });
 };
 
@@ -26,5 +32,8 @@ export const useDefecationRecordListQuery = (date: string) => {
     queryFn: () => calendarApi.getDefecationRecordList(date),
     enabled: !!date,
     staleTime: 5 * 60 * 1000,
+    retry: false,
+    throwOnError: false,
+    refetchOnWindowFocus: false,
   });
 };

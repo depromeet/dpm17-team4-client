@@ -7,7 +7,9 @@ export const useActivityRecordQuery = (date: string) => {
     queryKey: [QUERY_KEYS.ACTIVITY_RECORDS, date],
     queryFn: () => activityRecordApi.getActivityRecord(date),
     enabled: !!date,
-    retry: 1,
+    retry: false,
+    throwOnError: false,
     staleTime: 5 * 60 * 1000, // 5분
+    refetchOnWindowFocus: false,
   });
 };
