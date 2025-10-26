@@ -107,7 +107,7 @@ export default function OnboardingProfilePage() {
             알려주세요
           </h2>
           <p className="text-gray-400 text-body4-m">
-            더 질높은 정보를 제공하기 위해 사용됩니다.
+            더 좋은 정보를 제공하기 위해 사용됩니다.
           </p>
         </div>
 
