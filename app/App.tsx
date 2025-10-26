@@ -1,5 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, SafeAreaView, AppState, Linking } from 'react-native';
+import { StyleSheet, AppState, Linking } from 'react-native';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { WebView } from 'react-native-webview';
 import { useEffect, useRef, useState } from 'react';
 import { setupNotificationHandler, registerForPushNotificationsAsync, registerPendingToken, showLocalNotification, testServerPushNotification } from './services/notificationService';
@@ -109,82 +110,90 @@ export default function App() {
 
   if (!isInitialized) {
     return (
-      <SafeAreaView style={styles.container}>
-        <StatusBar style="auto" />
-      </SafeAreaView>
+      <SafeAreaProvider>
+        <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
+          <StatusBar style="auto" />
+        </SafeAreaView>
+      </SafeAreaProvider>
     );
   }
 
   if (isLocked) {
     return (
-      <SafeAreaView style={styles.container}>
-        <LockScreen onUnlock={handleUnlock} onOpenSettings={handleShowLockSettings} />
-        <StatusBar style="auto" />
-      </SafeAreaView>
+      <SafeAreaProvider>
+        <SafeAreaView style={styles.container} edges={['top', 'left', 'right', 'bottom']}>
+          <LockScreen onUnlock={handleUnlock} onOpenSettings={handleShowLockSettings} />
+          <StatusBar style="auto" />
+        </SafeAreaView>
+      </SafeAreaProvider>
     );
   }
 
   if (showLockSettings) {
     return (
-      <SafeAreaView style={styles.container}>
-        <LockSettings 
-          onClose={handleCloseLockSettings} 
-          onSettingsChanged={async () => {
-            // 설정 변경 시 잠금 상태 확인
-            const settings = await lockService.getSettings();
-            console.log('설정 변경됨:', settings);
-            if (settings.isEnabled && lockService.isAppLocked()) {
-              console.log('잠금 상태로 설정');
-              setIsLocked(true);
-            } else if (!settings.isEnabled) {
-              console.log('잠금 해제 상태로 설정');
-              setIsLocked(false);
-            }
-          }}
-        />
-        <StatusBar style="auto" />
-      </SafeAreaView>
+      <SafeAreaProvider>
+        <SafeAreaView style={styles.container} edges={['top', 'left', 'right', 'bottom']}>
+          <LockSettings 
+            onClose={handleCloseLockSettings} 
+            onSettingsChanged={async () => {
+              // 설정 변경 시 잠금 상태 확인
+              const settings = await lockService.getSettings();
+              console.log('설정 변경됨:', settings);
+              if (settings.isEnabled && lockService.isAppLocked()) {
+                console.log('잠금 상태로 설정');
+                setIsLocked(true);
+              } else if (!settings.isEnabled) {
+                console.log('잠금 해제 상태로 설정');
+                setIsLocked(false);
+              }
+            }}
+          />
+          <StatusBar style="auto" />
+        </SafeAreaView>
+      </SafeAreaProvider>
     );
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <WebView
-        ref={webViewRef}
-        source={{ uri: 'https://kkruk.com/auth' }}
-        style={styles.webview}
-        javaScriptEnabled={true}
-        domStorageEnabled={true}
-        startInLoadingState={true}
-        scalesPageToFit={true}
-        allowsInlineMediaPlayback={true}
-        mediaPlaybackRequiresUserAction={false}
-        onMessage={(event) => handleWebViewMessage(event, handleShowLockSettings)}
-        onShouldStartLoadWithRequest={(request) => {
-          console.log('🔗 WebView 로드 요청:', request.url);
-          
-          // WebView 내에서 로드 (외부 브라우저로 열지 않음)
-          // true 반환 = WebView에서 로드
-          // false 반환 = 외부 브라우저로 열림
-          
-          // 카카오톡 앱 스킴은 외부 앱으로 열기
-          if (request.url.startsWith('kakaotalk://')) {
-            // Linking.openURL으로 열려고 시도
-            Linking.canOpenURL(request.url).then(() => {
-              Linking.openURL(request.url);
-            }).catch(() => {});
-            return false; // WebView에서 로드하지 않음
-          }
-          
-          // 나머지는 모두 WebView 내에서 로드
-          return true;
-        }}
-        originWhitelist={['*']}
-        thirdPartyCookiesEnabled={true}
-        sharedCookiesEnabled={true}
-      />
-      <StatusBar style="auto" />
-    </SafeAreaView>
+    <SafeAreaProvider>
+      <SafeAreaView style={styles.container} edges={['top', 'left', 'right', 'bottom']}>
+        <WebView
+          ref={webViewRef}
+          source={{ uri: 'https://kkruk.com/auth' }}
+          style={styles.webview}
+          javaScriptEnabled={true}
+          domStorageEnabled={true}
+          startInLoadingState={true}
+          scalesPageToFit={true}
+          allowsInlineMediaPlayback={true}
+          mediaPlaybackRequiresUserAction={false}
+          onMessage={(event) => handleWebViewMessage(event, handleShowLockSettings)}
+          onShouldStartLoadWithRequest={(request) => {
+            console.log('🔗 WebView 로드 요청:', request.url);
+            
+            // WebView 내에서 로드 (외부 브라우저로 열지 않음)
+            // true 반환 = WebView에서 로드
+            // false 반환 = 외부 브라우저로 열림
+            
+            // 카카오톡 앱 스킴은 외부 앱으로 열기
+            if (request.url.startsWith('kakaotalk://')) {
+              // Linking.openURL으로 열려고 시도
+              Linking.canOpenURL(request.url).then(() => {
+                Linking.openURL(request.url);
+              }).catch(() => {});
+              return false; // WebView에서 로드하지 않음
+            }
+            
+            // 나머지는 모두 WebView 내에서 로드
+            return true;
+          }}
+          originWhitelist={['*']}
+          thirdPartyCookiesEnabled={true}
+          sharedCookiesEnabled={true}
+        />
+        <StatusBar style="auto" />
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
 
