@@ -28,6 +28,7 @@ function DailyReportContent() {
 
   const dateParam = searchParams.get('date');
 
+  console.log('dateParam', dateParam);
   useEffect(() => {
     handleTabClick('report');
   }, [handleTabClick]);
