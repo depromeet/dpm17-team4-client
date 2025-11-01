@@ -15,11 +15,10 @@ import { NullReport } from './_components/NullReport';
 import { StressReport } from './_components/StressReport';
 import { Suggestions } from './_components/Suggestions';
 import { WaterReport } from './_components/WaterReport';
-import type { Card, ReportPeriod } from './types';
+import type { Card } from './types';
 import { formatDate, getColorLabel, getShapeLabel } from './utils';
 
 function DailyReportContent() {
-  const [selectedPeriod, _setSelectedPeriod] = useState<ReportPeriod>('daily');
   const [cardIndex, setCardIndex] = useState(0);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const searchParams = useSearchParams();
@@ -143,41 +142,7 @@ function DailyReportContent() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white">
-      {/* 헤더 */}
-      <header className="flex items-center justify-between px-4 py-4">
-        <h1 className="text-xl font-bold">리포트</h1>
-        {/*TODO(seonghyun): notification*/}
-        {/*<Bell className="w-6 h-6" />*/}
-      </header>
-
-      {/* 세그먼트 컨트롤 */}
-      <div className="px-4">
-        <div className="flex bg-gray-800 rounded-lg p-1">
-          {[
-            { key: 'daily', label: '일간' },
-            { key: 'weekly', label: '주간' },
-            { key: 'monthly', label: '월간' },
-          ].map((period) => (
-            <button
-              type="button"
-              key={period.key}
-              onClick={() => {
-                // TODO(seonghyun): 주간, 월간
-                // setSelectedPeriod(period.key as ReportPeriod)
-              }}
-              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
-                selectedPeriod === period.key
-                  ? 'bg-gray-700 text-white'
-                  : 'text-gray-400 hover:text-white'
-              }`}
-            >
-              {period.label}
-            </button>
-          ))}
-        </div>
-      </div>
-
+    <>
       {/* 날짜 네비게이션 */}
       <div className="flex items-center justify-center gap-4 px-4 py-4 mt-4 mb-2">
         {/* TODO(seonghyun): 다른 날짜 이동 */}
@@ -415,33 +380,7 @@ function DailyReportContent() {
           )}
         </main>
       )}
-
-      {/* 하단 여백 추가 */}
-      <div className="h-40"></div>
-
-      {/* TOEO(seonghyun): 하단 네비게이션 */}
-      {/*<nav className="fixed bottom-0 left-0 right-0 bg-gray-900 border-t border-gray-700">*/}
-      {/*  <div className="flex justify-around py-2">*/}
-      {/*    {[*/}
-      {/*      { icon: '🏠', label: '홈' },*/}
-      {/*      { icon: '🗓️', label: '캘린더' },*/}
-      {/*      { icon: '📄', label: '리포트', active: true },*/}
-      {/*      { icon: '👤', label: '마이' },*/}
-      {/*    ].map((item, index) => (*/}
-      {/*      <button*/}
-      {/*        type="button"*/}
-      {/*        key={`nav-${item.label}-${index}`}*/}
-      {/*        className={`flex flex-col items-center py-2 px-4 ${*/}
-      {/*          item.active ? 'text-white' : 'text-gray-400'*/}
-      {/*        }`}*/}
-      {/*      >*/}
-      {/*        <span className="text-lg mb-1">{item.icon}</span>*/}
-      {/*        <span className="text-xs">{item.label}</span>*/}
-      {/*      </button>*/}
-      {/*    ))}*/}
-      {/*  </div>*/}
-      {/*</nav>*/}
-    </div>
+    </>
   );
 }
 
