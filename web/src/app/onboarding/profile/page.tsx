@@ -80,9 +80,7 @@ export default function OnboardingProfilePage() {
           birthYear: parseInt(birthYear, 10),
           gender: gender === 'male' ? 'M' : 'F',
         });
-
-        //TODO(seieun): 회원가입 완료 페이지로 수정 필요
-        router.push(PAGE_ROUTES.HOME);
+        router.push(PAGE_ROUTES.ONBOARDING_COMPLETE);
       } catch (error) {
         console.error('사용자 정보 업데이트 실패:', error);
         // 에러 처리 (토스트 메시지 등)
