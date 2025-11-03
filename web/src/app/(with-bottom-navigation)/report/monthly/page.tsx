@@ -1,4 +1,4 @@
-import { DefecationAnalysis } from "./_components/DefecationAnalysis";
+import { DefecationAnalysis } from './_components/DefecationAnalysis';
 
 export default function MonthlyReportPage() {
   return (

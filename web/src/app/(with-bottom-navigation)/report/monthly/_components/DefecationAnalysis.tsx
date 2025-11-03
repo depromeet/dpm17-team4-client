@@ -2,15 +2,21 @@
 
 import { useEffect, useState } from 'react';
 import { cn } from '@/utils/utils-cn';
-import { ShapeAnalysis, type AnalysisItem } from './ShapeAnalysis';
-import { TimeAnalysis, type TimeDistribution } from './TimeAnalysis';
 import { ColorAnalysis, type ColorAnalysisItem } from './ColorAnalysis';
 import { PainAnalysis } from './PainAnalysis';
+import { type AnalysisItem, ShapeAnalysis } from './ShapeAnalysis';
+import { TimeAnalysis, type TimeDistribution } from './TimeAnalysis';
 import { TimeOfDayAnalysis, type TimeOfDayItem } from './TimeOfDayAnalysis';
 
 type FilterType = '모양' | '소요 시간' | '색상' | '복통' | '배변 시각';
 
-const filterTabs: FilterType[] = ['모양', '소요 시간', '색상', '복통', '배변 시각'];
+const filterTabs: FilterType[] = [
+  '모양',
+  '소요 시간',
+  '색상',
+  '복통',
+  '배변 시각',
+];
 
 // Mock 데이터
 const mockShapeItems: AnalysisItem[] = [
@@ -67,11 +73,14 @@ const mockTimeOfDayItems: TimeOfDayItem[] = [
   },
 ];
 
-const mockMessage = '혈변은 건강의 적신호예요. 대장염, 대장암, 치질 등의 문제일 수 있어요. 빠른 병원 방문을 권장해요.';
+const mockMessage =
+  '혈변은 건강의 적신호예요. 대장염, 대장암, 치질 등의 문제일 수 있어요. 빠른 병원 방문을 권장해요.';
 
 export function DefecationAnalysis() {
   const [selectedFilter, setSelectedFilter] = useState<FilterType>('모양');
-  const [displayMessage, setDisplayMessage] = useState<string>('배변 기록 분석 결과');
+  const [displayMessage, setDisplayMessage] = useState<string>(
+    '배변 기록 분석 결과'
+  );
 
   // 필터 변경 시 메시지 초기화
   useEffect(() => {
@@ -110,21 +119,17 @@ export function DefecationAnalysis() {
       </div>
 
       {/* 필터별 UI 렌더링 */}
-      {selectedFilter === '모양' && (
-        <ShapeAnalysis items={mockShapeItems} />
-      )}
+      {selectedFilter === '모양' && <ShapeAnalysis items={mockShapeItems} />}
 
-        {selectedFilter === '소요 시간' && (
-            <TimeAnalysis distribution={mockTimeDistribution} />
-        )}
+      {selectedFilter === '소요 시간' && (
+        <TimeAnalysis distribution={mockTimeDistribution} />
+      )}
 
       {selectedFilter === '색상' && (
-        <ColorAnalysis items={mockColorItems} message={mockMessage}/>
+        <ColorAnalysis items={mockColorItems} message={mockMessage} />
       )}
 
-      {selectedFilter === '복통' && (
-        <PainAnalysis />
-      )}
+      {selectedFilter === '복통' && <PainAnalysis />}
 
       {selectedFilter === '배변 시각' && (
         <TimeOfDayAnalysis items={mockTimeOfDayItems} />
@@ -132,4 +137,3 @@ export function DefecationAnalysis() {
     </div>
   );
 }
-

@@ -1,10 +1,13 @@
 'use client';
 
 import React, { useState } from 'react';
+import {
+  getEmojiShapeIcon,
+  getRealShapeIcon,
+} from '@/app/(record)/defecation/_components/utils/utils-getShapeIcon';
 import { Toggle } from '@/components';
-import { getShapeLabel } from '../../daily/utils';
 import type { PooShape } from '../../daily/types';
-import { getRealShapeIcon, getEmojiShapeIcon } from '@/app/(record)/defecation/_components/utils/utils-getShapeIcon';
+import { getShapeLabel } from '../../daily/utils';
 
 export type AnalysisItem = {
   shape: PooShape;
@@ -31,11 +34,14 @@ export function ShapeAnalysis({ items: propItems }: ShapeAnalysisProps) {
 
   return (
     <>
-    <div className="h-[1.25rem]" />
+      <div className="h-[1.25rem]" />
       {/* 토글 스위치 */}
       <div className="flex items-center justify-start gap-[0.75rem] mb-6">
         <span className="text-white text-sm">실제 모양 보기</span>
-        <Toggle isOn={showRealShape} onSwitch={() => setShowRealShape(!showRealShape)} />
+        <Toggle
+          isOn={showRealShape}
+          onSwitch={() => setShowRealShape(!showRealShape)}
+        />
       </div>
 
       {/* 랭킹 리스트 */}
@@ -54,9 +60,7 @@ export function ShapeAnalysis({ items: propItems }: ShapeAnalysisProps) {
             >
               {/* 순위 아이콘 */}
               <span className="text-gray-600 text-body2-sb">{index + 1}</span>
-              <div 
-                className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center bg-gray-700"
-              >
+              <div className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center bg-gray-700">
                 {shapeIcon}
               </div>
 
@@ -83,4 +87,3 @@ export function ShapeAnalysis({ items: propItems }: ShapeAnalysisProps) {
     </>
   );
 }
-

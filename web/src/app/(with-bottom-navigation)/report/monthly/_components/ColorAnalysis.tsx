@@ -27,11 +27,11 @@ export function ColorAnalysis({ items, message }: ColorAnalysisProps) {
   return (
     <>
       <div className="h-[1.25rem]" />
-      
+
       {/* 랭킹 리스트 */}
       <div className="space-y-4">
         {items.map((item, index) => {
-          const colorCode = DEFECATION_COLOR[item.color][1];;
+          const colorCode = DEFECATION_COLOR[item.color][1];
           const colorLabel = DEFECATION_COLOR[item.color][0];
 
           return (
@@ -41,18 +41,16 @@ export function ColorAnalysis({ items, message }: ColorAnalysisProps) {
             >
               {/* 순위 */}
               <span className="text-gray-600 text-body2-sb">{index + 1}</span>
-              
+
               {/* 색상 원형 스와치 */}
-              <div 
+              <div
                 className="flex-shrink-0 w-[40px] h-[40px] rounded-full flex items-center justify-center"
                 style={{ backgroundColor: colorCode }}
               />
 
               {/* 이름과 횟수 */}
               <div className="flex-1">
-                <p className="text-white text-body2-m">
-                  {colorLabel}
-                </p>
+                <p className="text-white text-body2-m">{colorLabel}</p>
                 <p className="text-gray-500 text-body3-m">{item.count}회</p>
               </div>
 
@@ -71,9 +69,7 @@ export function ColorAnalysis({ items, message }: ColorAnalysisProps) {
 
       {/* 경고 메시지 */}
       <div className="mt-6 bg-gray-700 rounded-lg px-4 py-3">
-        <p className="text-white text-body4-m whitespace-pre-line">
-          {message}
-        </p>
+        <p className="text-white text-body4-m whitespace-pre-line">{message}</p>
       </div>
     </>
   );

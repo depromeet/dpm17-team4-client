@@ -14,22 +14,29 @@ interface TimeAnalysisProps {
 }
 
 // 원형 차트 컴포넌트 (스톱워치 형태)
-function TimeDistributionChart({ distribution }: { distribution: TimeDistribution }) {
-  const total = distribution.within5min + distribution.over5min + distribution.over10min;
-  const within5minPercent = total > 0 ? (distribution.within5min / total) * 100 : 0;
+function TimeDistributionChart({
+  distribution,
+}: {
+  distribution: TimeDistribution;
+}) {
+  const total =
+    distribution.within5min + distribution.over5min + distribution.over10min;
+  const within5minPercent =
+    total > 0 ? (distribution.within5min / total) * 100 : 0;
   const over5minPercent = total > 0 ? (distribution.over5min / total) * 100 : 0;
-  const over10minPercent = total > 0 ? (distribution.over10min / total) * 100 : 0;
+  const over10minPercent =
+    total > 0 ? (distribution.over10min / total) * 100 : 0;
 
   // SVG 원형 차트 계산
   const radius = 80;
   const centerX = 100;
   const centerY = 100;
-  
+
   // 시작 각도 (12시 방향부터 시계방향)
   const startAngle = -90; // 12시 방향
   const within5minAngle = (within5minPercent / 100) * 360;
   const over5minAngle = (over5minPercent / 100) * 360;
-  
+
   // 각 세그먼트의 시작/끝 각도
   const within5minStart = startAngle;
   const within5minEnd = within5minStart + within5minAngle;
@@ -66,20 +73,14 @@ function TimeDistributionChart({ distribution }: { distribution: TimeDistributio
           )}
           {/* 5분 이상 - 어두운 회색 */}
           {over5minPercent > 0 && (
-            <path
-              d={createArc(over5minStart, over5minEnd)}
-              fill="#4E5560"
-            />
+            <path d={createArc(over5minStart, over5minEnd)} fill="#4E5560" />
           )}
           {/* 10분 이상 - 빨간색 */}
           {over10minPercent > 0 && (
-            <path
-              d={createArc(over10minStart, over10minEnd)}
-              fill="#F13A49"
-            />
+            <path d={createArc(over10minStart, over10minEnd)} fill="#F13A49" />
           )}
-                    {/* 상단 정보 박스 */}
-           <rect
+          {/* 상단 정보 박스 */}
+          <rect
             x={centerX - 17.5}
             y={2}
             width={33}
@@ -87,13 +88,7 @@ function TimeDistributionChart({ distribution }: { distribution: TimeDistributio
             rx={2}
             fill="#6B7280"
           />
-             <rect
-            x={centerX - 9.5}
-            y={10}
-            width={16}
-            height={9}
-            fill="#6B7280"
-          />
+          <rect x={centerX - 9.5} y={10} width={16} height={9} fill="#6B7280" />
           {/* 원형 border */}
           <circle
             cx={centerX}
@@ -105,12 +100,13 @@ function TimeDistributionChart({ distribution }: { distribution: TimeDistributio
           />
         </svg>
       </div>
-
     </div>
   );
 }
 
-export function TimeAnalysis({ distribution: propDistribution }: TimeAnalysisProps) {
+export function TimeAnalysis({
+  distribution: propDistribution,
+}: TimeAnalysisProps) {
   const displayDistribution = propDistribution;
   if (!displayDistribution) {
     return (
@@ -128,7 +124,7 @@ export function TimeAnalysis({ distribution: propDistribution }: TimeAnalysisPro
 
   return (
     <>
-    <div className="h-[2rem]" />
+      <div className="h-[2rem]" />
       {/* 원형 차트 */}
       <TimeDistributionChart distribution={displayDistribution} />
       {/* 범례 */}
@@ -149,4 +145,3 @@ export function TimeAnalysis({ distribution: propDistribution }: TimeAnalysisPro
     </>
   );
 }
-
