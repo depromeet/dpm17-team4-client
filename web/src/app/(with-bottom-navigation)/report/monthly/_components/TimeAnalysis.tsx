@@ -120,25 +120,25 @@ export function TimeAnalysis({ distribution: propDistribution }: TimeAnalysisPro
     );
   }
 
+  const legendItems = [
+    { label: '5분 이내', color: 'bg-gray-400' },
+    { label: '5분 이상', color: 'bg-gray-600' },
+    { label: '10분 이상', color: 'bg-red-600' },
+  ];
+
   return (
     <>
-    <div className="h-[32px]" />
+    <div className="h-[2rem]" />
       {/* 원형 차트 */}
       <TimeDistributionChart distribution={displayDistribution} />
       {/* 범례 */}
-      <div className="flex items-center justify-center gap-[10px]">
-        <div className="flex items-center gap-[4px]">
-          <div className="w-4 h-4 rounded bg-gray-400 flex-shrink-0" />
-          <span className="text-gray-500 text-body4-r">5분 이내</span>
-        </div>
-        <div className="flex items-center gap-[4px]">
-          <div className="w-4 h-4 rounded bg-gray-600 flex-shrink-0" />
-          <span className="text-gray-500 text-body4-r">5분 이상</span>
-        </div>
-        <div className="flex items-center gap-[4px]">
-          <div className="w-4 h-4 rounded bg-red-600 flex-shrink-0" />
-          <span className="text-gray-500 text-body4-r">10분 이상</span>
-        </div>
+      <div className="flex items-center justify-center gap-[0.625rem]">
+        {legendItems.map((item) => (
+          <div key={item.label} className="flex items-center gap-[0.25rem]">
+            <div className={`w-4 h-4 rounded ${item.color} flex-shrink-0`} />
+            <span className="text-gray-500 text-body4-r">{item.label}</span>
+          </div>
+        ))}
       </div>
       {/* 경고 메시지 */}
       <div className="mt-6 bg-red-100 rounded-lg px-4 py-3">
