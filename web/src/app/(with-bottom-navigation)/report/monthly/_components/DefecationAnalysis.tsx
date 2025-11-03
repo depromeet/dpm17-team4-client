@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { cn } from '@/utils/utils-cn';
 import { ShapeAnalysis, type AnalysisItem } from './ShapeAnalysis';
-import { TimeAnalysis } from './TimeAnalysis';
+import { TimeAnalysis, type TimeDistribution } from './TimeAnalysis';
 import { ColorAnalysis } from './ColorAnalysis';
 import { PainAnalysis } from './PainAnalysis';
 import { TimeOfDayAnalysis } from './TimeOfDayAnalysis';
@@ -29,6 +29,12 @@ const mockShapeItems: AnalysisItem[] = [
     warning: '설사 의심',
   },
 ];
+
+const mockTimeDistribution: TimeDistribution = {
+  within5min: 2, // 5분 이내
+  over5min: 4, // 5분 이상
+  over10min: 10, // 10분 이상
+};
 
 export function DefecationAnalysis() {
   const [selectedFilter, setSelectedFilter] = useState<FilterType>('모양');
@@ -75,9 +81,9 @@ export function DefecationAnalysis() {
         <ShapeAnalysis items={mockShapeItems} />
       )}
 
-      {selectedFilter === '소요 시간' && (
-        <TimeAnalysis />
-      )}
+        {selectedFilter === '소요 시간' && (
+            <TimeAnalysis distribution={mockTimeDistribution} />
+        )}
 
       {selectedFilter === '색상' && (
         <ColorAnalysis />
