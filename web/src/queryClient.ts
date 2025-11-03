@@ -12,5 +12,4 @@ export const queryClient = new QueryClient({
       retry: 1,
     },
   },
-  
 });
