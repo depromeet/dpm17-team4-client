@@ -13,42 +13,42 @@ import Rabbit_EMOJI from '@/assets/defecation/Real/Rabbit.png';
 import Water_EMOJI from '@/assets/defecation/Real/Water.png';
 import type { DefecationTryShapeKey } from '../types';
 
-const getRealShapeIcon = (shape: DefecationTryShapeKey) => {
+const getRealShapeIcon = (shape: DefecationTryShapeKey, width: number = 36, height: number = 36) => {
   switch (shape) {
     case 'RABBIT':
-      return <Image src={Rabbit_EMOJI} alt="rabbit" width={36} height={36} />;
+      return <Image src={Rabbit_EMOJI} alt="rabbit" width={width} height={height} />;
     case 'ROCK':
-      return <Image src={Water_EMOJI} alt="water" width={36} height={36} />;
+      return <Image src={Water_EMOJI} alt="water" width={width} height={height} />;
     case 'CORN':
-      return <Image src={Corn_EMOJI} alt="corn" width={36} height={36} />;
+      return <Image src={Corn_EMOJI} alt="corn" width={width} height={height} />;
     case 'BANANA':
-      return <Image src={Banana_EMOJI} alt="banana" width={36} height={36} />;
+      return <Image src={Banana_EMOJI} alt="banana" width={width} height={height} />;
     case 'CREAM':
-      return <Image src={Cream_EMOJI} alt="cream" width={36} height={36} />;
+      return <Image src={Cream_EMOJI} alt="cream" width={width} height={height} />;
     case 'PORRIDGE':
       return (
-        <Image src={Porridge_EMOJI} alt="porridge" width={36} height={36} />
+        <Image src={Porridge_EMOJI} alt="porridge" width={width} height={height} />
       );
     default:
       return null;
   }
 };
 
-const getEmojiShapeIcon = (shape: DefecationTryShapeKey) => {
+const getEmojiShapeIcon = (shape: DefecationTryShapeKey, width: number = 36, height: number = 36) => {
   switch (shape) {
     case 'RABBIT':
-      return <Image src={Rabbit_IILUST} alt="rabbit" width={36} height={36} />;
+      return <Image src={Rabbit_IILUST} alt="rabbit" width={width} height={height} />;
     case 'ROCK':
-      return <Image src={Water_IILUST} alt="water" width={36} height={36} />;
+      return <Image src={Water_IILUST} alt="water" width={width} height={height} />;
     case 'CORN':
-      return <Image src={Corn_IILUST} alt="corn" width={36} height={36} />;
+      return <Image src={Corn_IILUST} alt="corn" width={width} height={height} />;
     case 'BANANA':
-      return <Image src={Banana_IILUST} alt="banana" width={36} height={36} />;
+      return <Image src={Banana_IILUST} alt="banana" width={width} height={height} />;
     case 'CREAM':
-      return <Image src={Cream_IILUST} alt="cream" width={36} height={36} />;
+      return <Image src={Cream_IILUST} alt="cream" width={width} height={height} />;
     case 'PORRIDGE':
       return (
-        <Image src={Porridge_IILUST} alt="porridge" width={36} height={36} />
+        <Image src={Porridge_IILUST} alt="porridge" width={width} height={height} />
       );
     default:
       return null;
