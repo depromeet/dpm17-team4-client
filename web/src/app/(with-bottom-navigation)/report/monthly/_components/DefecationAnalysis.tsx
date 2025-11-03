@@ -6,7 +6,7 @@ import { ShapeAnalysis, type AnalysisItem } from './ShapeAnalysis';
 import { TimeAnalysis, type TimeDistribution } from './TimeAnalysis';
 import { ColorAnalysis, type ColorAnalysisItem } from './ColorAnalysis';
 import { PainAnalysis } from './PainAnalysis';
-import { TimeOfDayAnalysis } from './TimeOfDayAnalysis';
+import { TimeOfDayAnalysis, type TimeOfDayItem } from './TimeOfDayAnalysis';
 
 type FilterType = '모양' | '소요 시간' | '색상' | '복통' | '배변 시각';
 
@@ -52,6 +52,21 @@ const mockColorItems: ColorAnalysisItem[] = [
   },
 ];
 
+const mockTimeOfDayItems: TimeOfDayItem[] = [
+  {
+    period: 'MORNING',
+    count: 18,
+  },
+  {
+    period: 'AFTERNOON',
+    count: 3,
+  },
+  {
+    period: 'EVENING',
+    count: 8,
+  },
+];
+
 const mockMessage = '혈변은 건강의 적신호예요. 대장염, 대장암, 치질 등의 문제일 수 있어요. 빠른 병원 방문을 권장해요.';
 
 export function DefecationAnalysis() {
@@ -74,14 +89,14 @@ export function DefecationAnalysis() {
       </p>
 
       {/* 필터 탭 */}
-      <div className="flex gap-2 justify-between">
+      <div className="flex gap-[8px] justify-between">
         {filterTabs.map((filter) => (
           <button
             key={filter}
             type="button"
             onClick={() => setSelectedFilter(filter)}
             className={cn(
-              'px-[10px] py-[4px] rounded-lg transition-colors font-semibold text-[13px] leading-[20px] tracking-[-0.2px] whitespace-nowrap',
+              'w-full py-[4px] rounded-lg transition-colors font-semibold text-[13px] leading-[20px] tracking-[-0.2px] whitespace-nowrap',
               {
                 'bg-gray-600 text-white': selectedFilter === filter,
                 'bg-gray-700 text-gray-400 hover:text-white':
@@ -112,7 +127,7 @@ export function DefecationAnalysis() {
       )}
 
       {selectedFilter === '배변 시각' && (
-        <TimeOfDayAnalysis />
+        <TimeOfDayAnalysis items={mockTimeOfDayItems} />
       )}
     </div>
   );
