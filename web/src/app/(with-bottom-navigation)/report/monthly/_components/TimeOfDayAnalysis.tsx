@@ -40,12 +40,12 @@ export function TimeOfDayAnalysis({ items }: TimeOfDayAnalysisProps) {
   return (
     <>
       <div className="h-[1.25rem]" />
-      
+
       {/* 카드 리스트 */}
       <div className="flex gap-4 justify-center">
         {items.map((item) => {
           const data = timeOfDayData[item.period];
-          
+
           return (
             <div
               key={item.period}
@@ -63,12 +63,12 @@ export function TimeOfDayAnalysis({ items }: TimeOfDayAnalysisProps) {
                   />
                 </div>
               )}
-              
-              <div className='h-[8px]'/>
+
+              <div className="h-[8px]" />
               {/* 시간대 라벨 */}
               <p className="text-gray-400 text-body4-r">{data.label}</p>
-              
-              <div className='h-[2px]'/>
+
+              <div className="h-[2px]" />
               {/* 횟수 */}
               <p className="text-white text-body2-sb">{item.count}회</p>
             </div>
