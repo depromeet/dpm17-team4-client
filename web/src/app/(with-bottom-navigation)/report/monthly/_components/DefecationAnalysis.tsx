@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { cn } from '@/utils/utils-cn';
 import { ShapeAnalysis, type AnalysisItem } from './ShapeAnalysis';
 import { TimeAnalysis, type TimeDistribution } from './TimeAnalysis';
-import { ColorAnalysis } from './ColorAnalysis';
+import { ColorAnalysis, type ColorAnalysisItem } from './ColorAnalysis';
 import { PainAnalysis } from './PainAnalysis';
 import { TimeOfDayAnalysis } from './TimeOfDayAnalysis';
 
@@ -35,6 +35,24 @@ const mockTimeDistribution: TimeDistribution = {
   over5min: 4, // 5분 이상
   over10min: 10, // 10분 이상
 };
+
+const mockColorItems: ColorAnalysisItem[] = [
+  {
+    color: 'DARK_BROWN',
+    count: 8,
+  },
+  {
+    color: 'GOLD',
+    count: 4,
+  },
+  {
+    color: 'RED',
+    count: 1,
+    warning: '전문가 상담 권장',
+  },
+];
+
+const mockMessage = '혈변은 건강의 적신호예요. 대장염, 대장암, 치질 등의 문제일 수 있어요. 빠른 병원 방문을 권장해요.';
 
 export function DefecationAnalysis() {
   const [selectedFilter, setSelectedFilter] = useState<FilterType>('모양');
@@ -86,7 +104,7 @@ export function DefecationAnalysis() {
         )}
 
       {selectedFilter === '색상' && (
-        <ColorAnalysis />
+        <ColorAnalysis items={mockColorItems} message={mockMessage}/>
       )}
 
       {selectedFilter === '복통' && (
