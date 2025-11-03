@@ -1,12 +1,13 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import {
   createContext,
   type ReactNode,
   useCallback,
   useContext,
   useEffect,
+  useLayoutEffect,
   useRef,
   useState,
 } from 'react';
@@ -48,7 +49,21 @@ export const NavigationProvider = ({ children }: NavigationProviderProps) => {
   const [currentTab, setCurrentTab] = useState<Tab>('home');
   const navRef = useRef<HTMLElement | null>(null);
   const router = useRouter();
+  const pathname = usePathname();
   const [hasNotification, setHasNotification] = useState(false);
+
+  // 경로에 따라 탭 상태 업데이트
+  useLayoutEffect(() => {
+    if (pathname.startsWith('/report')) {
+      setCurrentTab('report');
+    } else if (pathname.startsWith('/home')) {
+      setCurrentTab('home');
+    } else if (pathname.startsWith('/calendar')) {
+      setCurrentTab('calendar');
+    } else if (pathname.startsWith('/my')) {
+      setCurrentTab('my');
+    }
+  }, [pathname]);
 
   // 네비게이션 바 높이 계산
   useEffect(() => {
