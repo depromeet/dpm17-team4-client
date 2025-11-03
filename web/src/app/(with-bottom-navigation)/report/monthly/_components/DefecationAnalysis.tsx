@@ -85,7 +85,7 @@ export function DefecationAnalysis() {
   // 필터 변경 시 메시지 초기화
   useEffect(() => {
     setDisplayMessage('배변 기록 분석 결과');
-  }, [selectedFilter]);
+  }, []);
 
   return (
     <div className="bg-gray-800 rounded-[14px] py-7 px-6 w-full">

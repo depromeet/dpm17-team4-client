@@ -63,7 +63,14 @@ function TimeDistributionChart({
     <div className="flex flex-col items-center">
       {/* 스톱워치 아이콘 */}
       <div className="relative mb-6">
-        <svg width="200" height="200" viewBox="0 0 200 200">
+        <svg
+          width="200"
+          height="200"
+          viewBox="0 0 200 200"
+          role="img"
+          aria-label="배변 소요 시간 분포 차트"
+        >
+          <title>배변 소요 시간 분포 차트</title>
           {/* 5분 이내 - 밝은 회색 */}
           {within5minPercent > 0 && (
             <path
