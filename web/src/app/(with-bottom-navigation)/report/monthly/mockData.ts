@@ -1,6 +1,6 @@
+import type { ColorAnalysisItem } from './_components/ColorAnalysis';
 import type { AnalysisItem } from './_components/ShapeAnalysis';
 import type { TimeDistribution } from './_components/TimeAnalysis';
-import type { ColorAnalysisItem } from './_components/ColorAnalysis';
 import type { TimeOfDayItem } from './_components/TimeOfDayAnalysis';
 
 export interface MonthlyReportMockData {
@@ -66,4 +66,3 @@ export const mockMonthlyReportData: MonthlyReportMockData = {
   colorMessage:
     '혈변은 건강의 적신호예요. 대장염, 대장암, 치질 등의 문제일 수 있어요. 빠른 병원 방문을 권장해요.',
 };
-

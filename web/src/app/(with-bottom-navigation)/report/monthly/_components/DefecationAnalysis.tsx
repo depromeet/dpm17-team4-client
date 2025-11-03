@@ -1,15 +1,15 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { DEFECATION_COLOR } from '@/app/(record)/defecation/_components/constants';
 import { cn } from '@/utils/utils-cn';
+import { getShapeLabel } from '../../daily/utils';
+import { mockMonthlyReportData } from '../mockData';
 import { ColorAnalysis } from './ColorAnalysis';
 import { PainAnalysis } from './PainAnalysis';
 import { ShapeAnalysis } from './ShapeAnalysis';
 import { TimeAnalysis } from './TimeAnalysis';
 import { TimeOfDayAnalysis } from './TimeOfDayAnalysis';
-import { mockMonthlyReportData } from '../mockData';
-import { getShapeLabel } from '../../daily/utils';
-import { DEFECATION_COLOR } from '@/app/(record)/defecation/_components/constants';
 
 type FilterType = '모양' | '소요 시간' | '색상' | '복통' | '배변 시각';
 
@@ -23,7 +23,9 @@ const filterTabs: FilterType[] = [
 
 export function DefecationAnalysis() {
   const [selectedFilter, setSelectedFilter] = useState<FilterType>('모양');
-  const [displayMessage, setDisplayMessage] = useState<string>('배변 기록 분석 결과');
+  const [displayMessage, setDisplayMessage] = useState<string>(
+    '배변 기록 분석 결과'
+  );
 
   // 필터 변경 시 메시지 업데이트
   useEffect(() => {
@@ -35,7 +37,9 @@ export function DefecationAnalysis() {
             prev.count > current.count ? prev : current
           );
           const shapeLabel = getShapeLabel(mostFrequentShape.shape);
-          setDisplayMessage(`가장 많이 확인한 모양은 \n${shapeLabel} 모양이에요`);
+          setDisplayMessage(
+            `가장 많이 확인한 모양은 \n${shapeLabel} 모양이에요`
+          );
         } else {
           setDisplayMessage('배변 기록 분석 결과');
         }
@@ -50,7 +54,6 @@ export function DefecationAnalysis() {
         if (total > 0) {
           const over10minPercent = (distribution.over10min / total) * 100;
           const over5minPercent = (distribution.over5min / total) * 100;
-          const within5minPercent = (distribution.within5min / total) * 100;
 
           if (over10minPercent > 50) {
             setDisplayMessage('배변 소요 시간은 주로 \n10분 이상이었어요');
@@ -70,7 +73,8 @@ export function DefecationAnalysis() {
           const mostFrequentColor = colorItems.reduce((prev, current) =>
             prev.count > current.count ? prev : current
           );
-          const colorKey = mostFrequentColor.color as keyof typeof DEFECATION_COLOR;
+          const colorKey =
+            mostFrequentColor.color as keyof typeof DEFECATION_COLOR;
           const colorLabel = DEFECATION_COLOR[colorKey]?.[0] || '';
           setDisplayMessage(`가장 많이 확인한 색상은 \n${colorLabel}이에요`);
         } else {
