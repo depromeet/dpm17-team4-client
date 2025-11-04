@@ -68,7 +68,7 @@ export function DefecationAnalysis() {
         break;
       }
       case '색상': {
-        const colorItems = mockMonthlyReportData.color;
+        const colorItems = mockMonthlyReportData.color.items;
         if (colorItems && colorItems.length > 0) {
           const mostFrequentColor = colorItems.reduce((prev, current) =>
             prev.count > current.count ? prev : current
@@ -101,7 +101,20 @@ export function DefecationAnalysis() {
         break;
       }
       case '복통': {
-        setDisplayMessage('배변 기록 분석 결과');
+        const painData = mockMonthlyReportData.pain;
+        const total =
+          painData.veryLow +
+          painData.low +
+          painData.medium +
+          painData.high +
+          painData.veryHigh;
+        if (total > 0) {
+          setDisplayMessage(
+            `이번 달은 배를 부여잡은 날들이\n${painData.veryHigh + painData.high}회 있었어요`
+          );
+        } else {
+          setDisplayMessage('배변 기록 분석 결과');
+        }
         break;
       }
       default:
@@ -151,12 +164,14 @@ export function DefecationAnalysis() {
 
       {selectedFilter === '색상' && (
         <ColorAnalysis
-          items={mockMonthlyReportData.color}
-          message={mockMonthlyReportData.colorMessage}
+          items={mockMonthlyReportData.color.items}
+          message={mockMonthlyReportData.color.colorMessage}
         />
       )}
 
-      {selectedFilter === '복통' && <PainAnalysis />}
+      {selectedFilter === '복통' && (
+        <PainAnalysis data={mockMonthlyReportData.pain} />
+      )}
 
       {selectedFilter === '배변 시각' && (
         <TimeOfDayAnalysis items={mockMonthlyReportData.timeOfDay} />
