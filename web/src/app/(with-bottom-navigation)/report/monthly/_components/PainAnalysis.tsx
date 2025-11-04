@@ -199,7 +199,8 @@ export function PainAnalysis({ data }: PainAnalysisProps) {
                     : 'text-blue-600 font-semibold'
                 }
               >
-                {data.comparison.count}회
+                {' '}
+                {data.comparison.count}회{' '}
               </span>{' '}
               {isIncreased ? '늘었어요' : '줄었어요'}
             </>
@@ -208,7 +209,7 @@ export function PainAnalysis({ data }: PainAnalysisProps) {
       </div>
 
       {/* 프로그래스바 영역 */}
-      <div className="relative mb-4">
+      <div className="relative mb-[4px]">
         {/* 지시자 버블 - 클릭 시에만 표시 */}
         {showBubble && selectedLevel && (
           <div
@@ -234,7 +235,7 @@ export function PainAnalysis({ data }: PainAnalysisProps) {
         {/* biome-ignore lint/a11y/useSemanticElements: 프로그래스바는 div로 구현 필요 */}
         <div
           ref={progressBarRef}
-          className="flex h-6 rounded-full overflow-hidden cursor-pointer"
+          className="flex h-[30px] rounded-full overflow-hidden cursor-pointer"
           onClick={handleProgressBarClick}
           role="button"
           tabIndex={0}
