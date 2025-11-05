@@ -1,7 +1,5 @@
 'use client';
 
-import React from 'react';
-
 export type TimeDistribution = {
   within5min: number; // 5분 이내
   over5min: number; // 5분 이상

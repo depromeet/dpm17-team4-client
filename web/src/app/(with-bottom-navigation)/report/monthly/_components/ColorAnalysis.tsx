@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import { DEFECATION_COLOR } from '@/app/(record)/defecation/_components/constants';
 import type { PooColor } from '../../daily/types';
 
