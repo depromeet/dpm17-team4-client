@@ -1,10 +1,15 @@
+import { Suggestion } from '../daily/types';
 import type { ColorAnalysisItem } from './_components/ColorAnalysis';
+import type { MonthlyScore, WeeklyMonthlyStress, WeeklyMonthlyWater } from './types';
+import type { WeeklyMonthlyFoodReport } from './types';
 import type { PainData } from './_components/PainAnalysis';
 import type { AnalysisItem } from './_components/ShapeAnalysis';
 import type { TimeDistribution } from './_components/TimeAnalysis';
 import type { TimeOfDayItem } from './_components/TimeOfDayAnalysis';
+import StressImage from '@/assets/report/emoji_anger.png';
 
 export interface MonthlyReportMockData {
+  monthlyScore: MonthlyScore;
   shape: AnalysisItem[];
   timeDistribution: TimeDistribution;
   color: {
@@ -13,10 +18,25 @@ export interface MonthlyReportMockData {
   };
   timeOfDay: TimeOfDayItem[];
   pain: PainData;
+  food: WeeklyMonthlyFoodReport;
+  water: WeeklyMonthlyWater;
+  stress: WeeklyMonthlyStress;
+  suggestion: Suggestion;
 }
 
 // NOTE: 월간 리포트 Mock 데이터
 export const mockMonthlyReportData: MonthlyReportMockData = {
+  // 월간 기록 분석 결과 스코어
+  monthlyScore: {
+    best: {
+      occurredAt: '2025-10-15T14:33:12.110939406',
+      score: 82,
+    },
+    worst: {
+      occurredAt: '2025-10-17T14:33:12.110939406',
+      score: 43,
+    },
+  },
   //배변 분석 기록 결과 -모양
   shape: [
     {
@@ -87,4 +107,182 @@ export const mockMonthlyReportData: MonthlyReportMockData = {
       count: 8,
     },
   ],
+  food: {
+    monthlyComparison: {
+      lastMonth: 9,
+      thisMonth: 14,
+    },
+    weeklyGroups: [
+      {
+        weekLabel: '1주차',
+        startDate: '2025-10-01T14:33:12.110939406',
+        endDate: '2025-10-05T14:33:12.110939406',
+        items: [
+          {
+            occurredAt: '2025-10-01T14:33:12.110939406',
+            mealTime: 'LUNCH',
+            foods: ['마라탕', '꿔바로우'],
+          },
+          {
+            occurredAt: '2025-10-03T14:33:12.110939406',
+            mealTime: 'DINNER',
+            foods: ['불닭볶음면'],
+          },
+          {
+            occurredAt: '2025-10-04T14:33:12.110939406',
+            mealTime: 'DINNER',
+            foods: ['짬뽕'],
+          },
+        ],
+      },
+      {
+        weekLabel: '2주차',
+        startDate: '2025-10-06T14:33:12.110939406',
+        endDate: '2025-10-12T14:33:12.110939406',
+        items: [],
+      },
+      {
+        weekLabel: '3주차',
+        startDate: '2025-10-13T14:33:12.110939406',
+        endDate: '2025-10-19T14:33:12.110939406',
+        items: [
+          {
+            occurredAt: '2025-10-13T14:33:12.110939406',
+            mealTime: 'LUNCH',
+            foods: ['마라탕', '꿔바로우'],
+          },
+          {
+            occurredAt: '2025-10-15T14:33:12.110939406',
+            mealTime: 'DINNER',
+            foods: ['불닭볶음면'],
+          },
+          {
+            occurredAt: '2025-10-18T14:33:12.110939406',
+            mealTime: 'DINNER',
+            foods: ['짬뽕'],
+          },
+          {
+            occurredAt: '2025-10-19T14:33:12.110939406',
+            mealTime: 'BREAKFAST',
+            foods: ['떡볶이'],
+          },
+        ],
+      },
+      {
+        weekLabel: '4주차',
+        startDate: '2025-10-20T14:33:12.110939406',
+        endDate: '2025-10-26T14:33:12.110939406',
+        items: [
+          {
+            occurredAt: '2025-10-20T14:33:12.110939406',
+            mealTime: 'LUNCH',
+            foods: ['마라탕', '꿔바로우'],
+          },
+          {
+            occurredAt: '2025-10-22T14:33:12.110939406',
+            mealTime: 'DINNER',
+            foods: ['불닭볶음면'],
+          },
+          {
+            occurredAt: '2025-10-25T14:33:12.110939406',
+            mealTime: 'DINNER',
+            foods: ['짬뽕'],
+          },
+          {
+            occurredAt: '2025-10-26T14:33:12.110939406',
+            mealTime: 'BREAKFAST',
+            foods: ['떡볶이'],
+          },
+        ],
+      },
+      {
+        weekLabel: '5주차',
+        startDate: '2025-10-27T14:33:12.110939406',
+        endDate: '2025-10-31T14:33:12.110939406',
+        items: [
+          {
+            occurredAt: '2025-10-27T14:33:12.110939406',
+            mealTime: 'LUNCH',
+            foods: ['마라탕', '꿔바로우'],
+          },
+          {
+            occurredAt: '2025-10-29T14:33:12.110939406',
+            mealTime: 'DINNER',
+            foods: ['불닭볶음면'],
+          },
+        ],
+      },
+    ],
+  },
+   water: {
+    message: '보통 수준이에요. 조금 더 자주 물을 마셔보세요!',
+    items: [
+      {
+        name: '1주차',
+        value: 2000.0,
+      },
+      {
+        name: '2주차',
+        value: 500.0,
+      },
+      {
+        name: '3주차',
+        value: 1800.0,
+      },
+      {
+        name: '4주차',
+        value: 300.0,
+      },
+      {
+        name: '5주차',
+        value: 2500.0,
+      },
+    ],
+  },
+  stress: {
+    message: '긍정적인 당신! 그 마인드 오래도록 유지해봐요',
+    image: StressImage,
+    items: [
+      {
+        day: '1주차',
+        stress: 'VERY_LOW',
+      },
+      {
+        day: '2주차',
+        stress: 'LOW',
+      },
+      {
+        day: '3주차',
+        stress: 'MEDIUM',
+      },
+      {
+        day: '4주차',
+        stress: 'HIGH',
+      },
+      {
+        day: '5주차',
+        stress: 'VERY_HIGH',
+      },
+    ],
+  },
+  suggestion: {
+    message: '장 상태를 개선하려면 이런 습관을 추천해요',
+    items: [
+      {
+        image: '/icons/water-droplet.png',
+        title: '물 섭취량을 더 늘려보세요',
+        content: '하루 권장 물 섭취량은 성인 기준 2L 예요',
+      },
+      {
+        image: '/icons/banana.png',
+        title: '충분한 식이섬유가 중요해요',
+        content: '과일과 채소를 섭취하면 좋은 흐름이 유지돼요',
+      },
+      {
+        image: '/icons/record.png',
+        title: '지속적으로 배변을 기록해요',
+        content: '배변이 잘 되는 나만의 루틴을 만들 수 있어요',
+      },
+    ],
+  },
 };
