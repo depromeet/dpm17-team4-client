@@ -13,7 +13,12 @@ export const BottomBtnBar = ({
   className?: string;
 }) => {
   return (
-    <div className={cn("fixed bottom-0 left-0 w-full h-30 z-10 pt-4 px-4 bg-gray-900", className)}>
+    <div
+      className={cn(
+        'fixed bottom-0 left-0 w-full h-30 z-10 pt-4 px-4 bg-gray-900',
+        className
+      )}
+    >
       <Button
         size="56"
         color="primary"
