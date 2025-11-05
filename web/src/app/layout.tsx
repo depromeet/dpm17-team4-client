@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import { Toaster } from 'react-hot-toast';
 import QueryProvider from '@/providers/query-provider';
+import CookieCleanup from '@/components/CookieCleanup';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -36,6 +37,8 @@ export default function RootLayout({
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
           suppressHydrationWarning={true}
         >
+          {/* NOTE(Yubin):.kkruk.com , kkruk.com 쿠키로 2개의 리프레시 값이 들어오는 현상을 위한 임시 해결 */}
+          <CookieCleanup />
           {children}
           {/* biome-ignore lint/correctness/useUniqueElementIds: <This is a global portal root> */}
           <div id="modal-root"></div>
