@@ -1,7 +1,6 @@
 'use client';
 
 import Image from 'next/image';
-import React from 'react';
 import { MEAL_TIMES } from '@/app/(record)/lifestyle/constants';
 
 export type TimeOfDayItem = {

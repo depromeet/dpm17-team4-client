@@ -10,6 +10,8 @@ import { useEffect } from 'react';
 export default function CookieCleanup() {
   useEffect(() => {
     try {
+      // 오래된 .kkruk.com 도메인 쿠키를 삭제 (과거 날짜로 만료 설정)
+      // biome-ignore lint: 쿠키 삭제를 위한 브라우저 표준 방법
       document.cookie =
         'refreshToken=; domain=.kkruk.com; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; Secure; SameSite=None';
       console.log('🧹 앱 초기화: 오래된 .kkruk.com 쿠키 정리 완료');
@@ -20,4 +22,3 @@ export default function CookieCleanup() {
 
   return null;
 }
-
