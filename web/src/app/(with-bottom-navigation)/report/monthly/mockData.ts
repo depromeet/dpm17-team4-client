@@ -227,7 +227,7 @@ export const mockMonthlyReportData: MonthlyReportMockData = {
     ],
   },
   water: {
-    message: '보통 수준이에요. 조금 더 자주 물을 마셔보세요!',
+    message: '보통 수준이에요.\n조금 더 자주 물을 마셔보세요!',
     items: [
       {
         name: '1주차',

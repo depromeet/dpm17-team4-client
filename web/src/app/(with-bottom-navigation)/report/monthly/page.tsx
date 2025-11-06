@@ -1,3 +1,4 @@
+import { NWaterReport } from '../_components/NWaterReport';
 import { DefecationAnalysis } from './_components/DefecationAnalysis';
 import { MonthlyFoodReport } from './_components/MonthlyFoodReport';
 import { MonthlyScore } from './_components/MonthlyScore';
@@ -8,6 +9,7 @@ export default function MonthlyReportPage() {
       <MonthlyScore />
       <DefecationAnalysis />
       <MonthlyFoodReport />
+      <NWaterReport />
     </div>
   );
 }
