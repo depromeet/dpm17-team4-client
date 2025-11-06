@@ -57,11 +57,11 @@ function HomeContent() {
   useEffect(() => {
     if (toastShownRef.current) return;
 
-    if (searchParams.get('toast-defecation')) {
+    if (searchParams.get('toast-defecation') === 'true') {
       toast.success('새로운 배변 기록이 등록되었어요!');
       toastShownRef.current = true;
     }
-    if (searchParams.get('toast-lifestyle')) {
+    if (searchParams.get('toast-lifestyle') === 'true') {
       toast.success('새로운 생활 기록이 등록되었어요!');
       toastShownRef.current = true;
     }
