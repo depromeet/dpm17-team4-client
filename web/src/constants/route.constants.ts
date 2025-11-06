@@ -10,6 +10,7 @@ export const PAGE_ROUTES = {
   TERMS_PRIVACY: '/my/terms-privacy',
   TERMS: '/terms',
   ONBOARDING_PROFILE: '/onboarding/profile',
+  ONBOARDING_COMPLETE: '/onboarding-complete',
   APP_LOCK: '/my/app-lock',
   PASSWORD_SETTINGS: '/my/app-lock/settings-password',
 } as const;

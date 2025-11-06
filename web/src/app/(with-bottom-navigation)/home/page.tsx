@@ -18,6 +18,9 @@ import { useNavigationContext } from '@/contexts/NavigationContext';
 import { useUserInfo } from '@/hooks';
 import { RecordSection, Tutorial } from './_components/ui';
 
+// import { BottomSheet } from '@/components/BottomSheet';
+// import { NotifcationSet } from './_components/ui';
+
 function HomeContent() {
   const { navHeight, handleTabClick } = useNavigationContext();
   const searchParams = useSearchParams();
@@ -28,8 +31,19 @@ function HomeContent() {
   }, [handleTabClick]);
 
   const { userInfo: savedUserInfo } = useUserInfo();
+  // const [isNotificationSheetOpen, setIsNotificationSheetOpen] = useState(false);
   const [isTutorialOpen, setIsTutorialOpen] = useState(false);
   const toastShownRef = useRef(false);
+
+  // const handleCloseNotificationSheet = () => {
+  //   setIsNotificationSheetOpen(false);
+  //   setIsTutorialOpen(true);
+  // };
+
+  // const handleEnableNotification = () => {
+  //   // NOTE(taehyeon): 알림 설정 페이지로 이동 로직 구현 필요
+  //   console.log('🔍 알림 활성화 페이지로 이동');
+  // };
 
   const handleCloseTutorial = () => {
     setIsTutorialOpen(false);
@@ -43,11 +57,11 @@ function HomeContent() {
   useEffect(() => {
     if (toastShownRef.current) return;
 
-    if (searchParams.get('toast-defecation')) {
+    if (searchParams.get('toast-defecation') === 'true') {
       toast.success('새로운 배변 기록이 등록되었어요!');
       toastShownRef.current = true;
     }
-    if (searchParams.get('toast-lifestyle')) {
+    if (searchParams.get('toast-lifestyle') === 'true') {
       toast.success('새로운 생활 기록이 등록되었어요!');
       toastShownRef.current = true;
     }
@@ -63,11 +77,16 @@ function HomeContent() {
           typeof window !== 'undefined' &&
           savedUserInfo?.id
         ) {
+          console.log(
+            '🔍 신규 사용자 - 알림 설정 바텀시트와 튜토리얼 플로우 시작'
+          );
           const hasSeenTutorial = localStorage.getItem(
             `hasSeenTutorial_${savedUserInfo.id}`
           );
           if (!hasSeenTutorial) {
+            // NOTE(taehyeon): 알림 기능 구현 완료 시 바텀 시트 여는 로직으로 변경
             setIsTutorialOpen(true);
+            // setIsNotificationSheetOpen(true);
           }
         }
         // 사용자 정보가 있고 accessToken이 없을 때만 refresh 요청
@@ -109,6 +128,18 @@ function HomeContent() {
 
   return (
     <>
+      {/* 알림 설정 바텀시트 */}
+      {/* <BottomSheet
+        isOpen={isNotificationSheetOpen}
+        onClose={handleCloseNotificationSheet}
+      >
+        <NotifcationSet
+          onEnableNotification={handleEnableNotification}
+          onSkip={handleCloseNotificationSheet}
+        />
+      </BottomSheet> */}
+
+      {/* 튜토리얼 모달 */}
       <Modal
         isOpen={isTutorialOpen}
         onClose={handleCloseTutorial}
@@ -116,6 +147,7 @@ function HomeContent() {
       >
         <Tutorial onClose={handleCloseTutorial} />
       </Modal>
+
       <main className="min-w-[3.75rem] min-h-screen text-white relative px-4 pb-20 bg-gradient-to-br from-[#140927] via-[#403397] to-[#4665F3]">
         {/* Radial gradient 배경 */}
         <div className="absolute inset-0 opacity-70">
