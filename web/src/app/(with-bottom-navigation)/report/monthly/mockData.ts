@@ -1,12 +1,16 @@
-import { Suggestion } from '../daily/types';
+import StressImage from '@/assets/report/emoji_anger.png';
+import type { Suggestion } from '../daily/types';
 import type { ColorAnalysisItem } from './_components/ColorAnalysis';
-import type { MonthlyScore, WeeklyMonthlyStress, WeeklyMonthlyWater } from './types';
-import type { WeeklyMonthlyFoodReport } from './types';
 import type { PainData } from './_components/PainAnalysis';
 import type { AnalysisItem } from './_components/ShapeAnalysis';
 import type { TimeDistribution } from './_components/TimeAnalysis';
 import type { TimeOfDayItem } from './_components/TimeOfDayAnalysis';
-import StressImage from '@/assets/report/emoji_anger.png';
+import type {
+  MonthlyScore,
+  WeeklyMonthlyFoodReport,
+  WeeklyMonthlyStress,
+  WeeklyMonthlyWater,
+} from './types';
 
 export interface MonthlyReportMockData {
   monthlyScore: MonthlyScore;
@@ -108,9 +112,10 @@ export const mockMonthlyReportData: MonthlyReportMockData = {
     },
   ],
   food: {
+    message: '자극적인 음식을 10회 이상 섭취했어요\n식단 관리가 필요해요!', // or 건강한 식단을\n열심히 유지하고 계시네요! or 자극적인 음식을 10회 미만으로\n 섭취했어요. 지속적으로 줄여나가요! or 자극적인 음식을 5회 미만으로\n섭취했어요. 아주 좋아요!
     monthlyComparison: {
       lastMonth: 9,
-      thisMonth: 14,
+      thisMonth: 13,
     },
     weeklyGroups: [
       {
@@ -121,7 +126,14 @@ export const mockMonthlyReportData: MonthlyReportMockData = {
           {
             occurredAt: '2025-10-01T14:33:12.110939406',
             mealTime: 'LUNCH',
-            foods: ['마라탕', '꿔바로우'],
+            foods: [
+              '마라탕',
+              '꿔바로우',
+              '크림새우',
+              '마라샹궈',
+              '맥주',
+              '옥수수 온면',
+            ],
           },
           {
             occurredAt: '2025-10-03T14:33:12.110939406',
@@ -214,7 +226,7 @@ export const mockMonthlyReportData: MonthlyReportMockData = {
       },
     ],
   },
-   water: {
+  water: {
     message: '보통 수준이에요. 조금 더 자주 물을 마셔보세요!',
     items: [
       {

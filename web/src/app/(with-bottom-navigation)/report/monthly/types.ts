@@ -1,5 +1,5 @@
-import { StressLevel } from "@/app/(record)/lifestyle/types/entitites";
-import { MealTime, Stress } from "../daily/types";
+import type { StressLevel } from '@/app/(record)/lifestyle/types/entitites';
+import type { MealTime, Stress } from '../daily/types';
 
 // NOTE(taehyeon): 월간 기록 분석 결과 스코어 타입
 export type MonthlyScore = {
@@ -15,6 +15,7 @@ export type MonthlyScore = {
 
 // NOTE(taehyeon): 월간 식단 분석 결과 타입
 export type WeeklyMonthlyFoodReport = {
+  message: string;
   monthlyComparison: {
     lastMonth: number;
     thisMonth: number;
@@ -38,10 +39,10 @@ export type Weekly = '1주차' | '2주차' | '3주차' | '4주차' | '5주차';
 export type WeeklyMonthlyWater = {
   message: string;
   items: {
-    name: Weekly
+    name: Weekly;
     value: number;
   }[];
-}
+};
 
 // NOTE(taehyeon): 월간 스트레스 분석 결과 타입
 export type WeeklyMonthlyStress = Stress & {
@@ -49,4 +50,4 @@ export type WeeklyMonthlyStress = Stress & {
     day: Weekly;
     stress: StressLevel;
   }[];
-}
+};
