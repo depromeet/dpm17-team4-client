@@ -35,7 +35,7 @@ export default function ReportLayout({
       {children}
 
       {/* 하단 여백 추가 */}
-      <div className="h-40"></div>
+      <div className="h-10"></div>
     </div>
   );
 }

@@ -120,6 +120,7 @@ export const getTimeDisplay = (time: string): string => {
     return `오후 ${hour - 12}시`;
   }
 };
+
 /*금일 연,월,일 을 반환합니다. */
 export const getTodayDate = () => {
   const date = new Date();
@@ -127,4 +128,40 @@ export const getTodayDate = () => {
   const todayMonth = date.getMonth() + 1;
   const todayDay = date.getDate();
   return { todayYear, todayMonth, todayDay };
+};
+
+/** 날짜 문자열에서 일자를 반환합니다. */
+export const getDateFromDateString = (dateString: string): number => {
+  const date = new Date(dateString);
+  return date.getDate();
+};
+
+/**
+ * 날짜 문자열을 "MM.DD" 형식으로 변환합니다.
+ * @param dateString - ISO 형식의 날짜 문자열 (예: "2025-10-01T14:33:12.110939406")
+ * @returns "MM.DD" 형식의 문자열 (예: "10.01")
+ * @example
+ * formatToMonthDay("2025-10-01T14:33:12.110939406") // "10.01"
+ * formatToMonthDay("2025-01-05T00:00:00") // "01.05"
+ */
+export const formatToMonthDay = (dateString: string): string => {
+  const date = new Date(dateString);
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${month}.${day}`;
+};
+
+/**
+ * 날짜 문자열을 "DD일 (요일)" 형식으로 변환합니다.
+ * @param dateString - ISO 형식의 날짜 문자열 (예: "2025-10-01T14:33:12.110939406")
+ * @returns "DD일 (요일)" 형식의 문자열 (예: "01일 (수)")
+ * @example
+ * formatToDayWithWeekday("2025-10-01T14:33:12.110939406") // "01일 (수)"
+ * formatToDayWithWeekday("2025-01-05T00:00:00") // "05일 (일)"
+ */
+export const formatToDayWithWeekday = (dateString: string): string => {
+  const date = new Date(dateString);
+  const day = String(date.getDate()).padStart(2, '0');
+  const dayName = getDayName(date);
+  return `${day}일 (${dayName})`;
 };

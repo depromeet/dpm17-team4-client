@@ -13,7 +13,7 @@ import { DefecationScore } from './_components/DefecationScore';
 import { FoodReport } from './_components/FoodReport';
 import { NullReport } from './_components/NullReport';
 import { StressReport } from './_components/StressReport';
-import { Suggestions } from './_components/Suggestions';
+// import { Suggestions } from './_components/Suggestions';
 import { WaterReport } from './_components/WaterReport';
 import type { Card } from './types';
 import { formatDate, getColorLabel, getShapeLabel } from './utils';
@@ -364,11 +364,12 @@ function DailyReportContent() {
               <FoodReport foodData={reportData.food} />
               {reportData.water && <WaterReport waterData={reportData.water} />}
               {reportData.stress && (
-                <StressReport stressData={reportData.stress} />
+                <StressReport stressData={reportData.stress} type="daily" />
               )}
-              {reportData.suggestion && (
+              {/* //NOTE(taehyeon): 일간 리포트에는 추천 습관 영역 제거 (만약 대비 주석 처리) */}
+              {/* {reportData.suggestion && (
                 <Suggestions suggestion={reportData.suggestion} />
-              )}
+              )} */}
             </div>
           ) : (
             <NullReport
