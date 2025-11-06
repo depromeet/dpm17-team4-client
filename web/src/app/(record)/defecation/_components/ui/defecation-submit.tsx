@@ -33,9 +33,10 @@ export const DefecationSubmit = () => {
     }
 
     const toiletDuration = getToiletDuration(data.selectedTimeTaken);
+    const kstDate = new Date(data.selectedWhen.getTime() + (9 * 60 * 60 * 1000));
 
     const defecationData = {
-      occurredAt: data.selectedWhen.toISOString(),
+      occurredAt: kstDate.toISOString(),
       isSuccessful: data.selectedTry === DEFECATION_TRY.DID_POO,
       color: data.selectedColor || null,
       shape: data.selectedShape || null,
