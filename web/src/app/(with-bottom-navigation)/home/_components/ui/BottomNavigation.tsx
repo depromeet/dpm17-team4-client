@@ -39,7 +39,10 @@ const BottomNavigation = ({ navRef }: BottomNavigationProps) => {
     useNavigationContext();
 
   return (
-    <nav ref={navRef} className="bg-gray-900 fixed bottom-0 border-none w-full">
+    <nav
+      ref={navRef}
+      className="bg-gray-900 fixed bottom-0 border-none w-full z-50"
+    >
       <div className="flex justify-between">
         {BOTTOM_NAV_TABS.map((tab) => {
           const IconComponent = tab.icon;
