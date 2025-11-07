@@ -19,7 +19,7 @@ export interface WeeklyReportMockData {
       stress: StressLevel | null;
     }[];
   };
-    food: WeeklyFoodReport;
+  food: WeeklyFoodReport;
   water: Water;
   // stress: WeeklyMonthlyStress;
   suggestion: Suggestion;
@@ -37,7 +37,7 @@ export const WeeklyMockData: WeeklyReportMockData = {
     average: 55,
     topPercent: 35,
   },
-   food: {
+  food: {
     message: '자극적인 음식을 3회 이상 섭취했어요\n식단 관리가 필요해요!', // or 건강한 식단을\n열심히 유지하고 계시네요! or 자극적인 음식을 10회 미만으로\n 섭취했어요. 지속적으로 줄여나가요! or 자극적인 음식을 5회 미만으로\n섭취했어요. 아주 좋아요!
     weeklyComparison: {
       lastWeek: 2,

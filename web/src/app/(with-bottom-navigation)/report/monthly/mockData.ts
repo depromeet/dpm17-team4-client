@@ -1,4 +1,5 @@
 import StressImage from '@/assets/report/emoji_anger.png';
+import type { UserAverage } from '../_components/UserAverageChart';
 import type { Suggestion, Water } from '../daily/types';
 import type { ColorAnalysisItem } from './_components/ColorAnalysis';
 import type { MonthlyRecordCounts } from './_components/MonthlyRecord';
