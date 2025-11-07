@@ -73,7 +73,7 @@ export default function RadialBarChart({
   };
 
   return (
-    <div id="chart-container" className="relative w-[140px] h-[140px]">
+    <div className="relative w-[140px] h-[140px]">
       <TotalText />
       <Chart
         options={chartOptions}
