@@ -10,7 +10,7 @@ import { Suggestions } from '../daily/_components/Suggestions';
 import { DefecationAnalysis } from './_components/DefecationAnalysis';
 import { MonthlyFoodReport } from './_components/MonthlyFoodReport';
 import { MonthlyScore } from './_components/MonthlyScore';
-import { MonthlyRecord } from './_components/MontlyRecord';
+import { MonthlyRecord } from './_components/MonthlyRecord';
 import { SelectDate } from './_components/SelectMonthDate';
 import { mockMonthlyReportData } from './mockData';
 
@@ -33,7 +33,7 @@ export default function MonthlyReportPage() {
         isNextDisabled={isNextDisabled}
       />
       <MonthlyRecord
-        recordCounts={mockMonthlyReportData.montlyRecordCounts}
+        recordCounts={mockMonthlyReportData.monthlyRecordCounts}
         currentMonth={month}
       />
       <DefecationScoreChart
