@@ -9,8 +9,8 @@ import { StressReport } from '../daily/_components/StressReport';
 import { Suggestions } from '../daily/_components/Suggestions';
 import { DefecationAnalysis } from './_components/DefecationAnalysis';
 import { MonthlyFoodReport } from './_components/MonthlyFoodReport';
-import { MonthlyScore } from './_components/MonthlyScore';
 import { MonthlyRecord } from './_components/MonthlyRecord';
+import { MonthlyScore } from './_components/MonthlyScore';
 import { SelectDate } from './_components/SelectMonthDate';
 import { mockMonthlyReportData } from './mockData';
 

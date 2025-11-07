@@ -2,10 +2,9 @@ import StressImage from '@/assets/report/emoji_anger.png';
 import type { UserAverage } from '../_components/UserAverageChart';
 import type { Suggestion } from '../daily/types';
 import type { ColorAnalysisItem } from './_components/ColorAnalysis';
-
+import type { MonthlyRecordCounts } from './_components/MonthlyRecord';
 import type { PainData } from './_components/PainAnalysis';
 import type { AnalysisItem } from './_components/ShapeAnalysis';
-import type { MonthlyRecordCounts } from './_components/MonthlyRecord';
 import type { TimeDistribution } from './_components/TimeAnalysis';
 import type { TimeOfDayItem } from './_components/TimeOfDayAnalysis';
 import type {
