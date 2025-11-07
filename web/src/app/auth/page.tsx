@@ -29,11 +29,10 @@ import KakaoLoginButton from './_components/KakaoLoginButton';
 const API_BASE = process.env.NEXT_PUBLIC_API || 'https://kkruk.com';
 const KAKAO_LOGIN_INITIATE_URL = `${API_BASE}${API_ENDPOINTS.AUTH.KAKAO_LOGIN}`;
 
-function AuthContent() {
+export function AuthContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [error, setError] = useState<string | null>(null);
-  const [showTermsBottomSheet, setShowTermsBottomSheet] = useState(false);
 
   const redirectUri = useMemo(() => {
     if (typeof window === 'undefined') return '';
@@ -108,7 +107,7 @@ function AuthContent() {
 
     // 신규 사용자일 때만 약관 동의 바텀시트 표시
     if (userInfo.isNew) {
-      setShowTermsBottomSheet(true);
+      router.push(`${PAGE_ROUTES.AUTH}/terms-bottomsheet`);
     } else {
       // 기존 사용자는 바로 홈으로 이동
       router.push('/home');
@@ -127,44 +126,6 @@ function AuthContent() {
       }
     })();
   }, [extractUserInfo, router]);
-
-  const handleTermsAgree = () => {
-    setShowTermsBottomSheet(false);
-
-    //TODO: 약관 동의한 이후에 알림 바텀싯
-    router.push(PAGE_ROUTES.ONBOARDING_PROFILE);
-  };
-
-  const handleBottomSheetClose = async () => {
-    // 약관 동의 바텀시트를 닫으면 회원 탈퇴 처리
-    setShowTermsBottomSheet(false);
-
-    try {
-      const { userApi } = await import('@/apis/userApi');
-      await userApi.deleteMe();
-      console.log('✅ 온보딩 중 이탈 - 회원 탈퇴 완료');
-    } catch (error) {
-      console.error('❌ 온보딩 중 이탈 - 회원 탈퇴 실패:', error);
-    } finally {
-      // 로컬 데이터 정리 및 인증 페이지로 리다이렉트
-      const { clearAccessToken, clearUserInfo } = await import(
-        '@/app/auth/_components/AuthSessionProvider'
-      );
-      clearAccessToken();
-      clearUserInfo();
-
-      // 세션 캐시도 정리
-      try {
-        const { clearClientSessionCache } = await import('@/lib/session');
-        clearClientSessionCache();
-      } catch (error) {
-        console.warn('⚠️ 세션 캐시 정리 실패:', error);
-      }
-
-      // 인증 페이지로 리다이렉트
-      window.location.href = PAGE_ROUTES.AUTH;
-    }
-  };
 
   if (hasAuthParams) return null;
 
@@ -239,13 +200,6 @@ function AuthContent() {
       </div>
       {/* 하단 여백 */}
       <div className="w-full h-[176px]" />
-
-      {/* 바텀시트 */}
-      <BottomSheetContainer
-        isOpen={showTermsBottomSheet}
-        onClose={handleBottomSheetClose}
-        onAgree={handleTermsAgree}
-      />
     </div>
   );
 }
