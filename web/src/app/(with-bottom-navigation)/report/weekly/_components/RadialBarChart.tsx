@@ -1,36 +1,48 @@
 'use client';
 
-import type { ApexOptions } from 'apexcharts';
 import dynamic from 'next/dynamic';
+import React from 'react';
+import type { ApexOptions } from 'apexcharts'; 
 
-const ApexChart = dynamic(() => import('react-apexcharts'), { ssr: false });
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
-interface RadialBarChartProps {
-  chartSeries: number[];
-  chartLabels: string[];
-}
+const TotalText = () => (
+  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none z-10 scale-90">
+    <div className="text-body4-r text-gray-500">배변점수</div>
+    <div className="text-h4 text-white">99점</div>
+  </div>
+);
 
-export default function RadialBarChart({
-  chartSeries,
-  chartLabels,
-}: RadialBarChartProps) {
-  const options: ApexOptions = {
+export default function RadialBarChart({ chartSeries, chartLabels }: { chartSeries: number[], chartLabels: string[] }) {
+  
+  const chartOptions: ApexOptions = {
     chart: {
       type: 'radialBar',
-      toolbar: {
-        show: false,
+      offsetX: 0, 
+      offsetY: 0, 
+      parentHeightOffset: 0,
+    },
+    colors: ['#7850FB', '#4E5560'],
+    stroke: {
+      lineCap: 'round',
+    },
+    tooltip: {
+      enabled: false,
+    },
+    states: {
+      hover: {
+        filter: {
+          type: 'none',
+        },
+      },
+      active: {
+        filter: {
+          type: 'none',
+        },
       },
     },
     plotOptions: {
       radialBar: {
-        offsetY: 0,
-        startAngle: 0,
-        endAngle: 270,
-        hollow: {
-          margin: 5,
-          size: '30%',
-          background: 'transparent',
-        },
         dataLabels: {
           name: {
             show: false,
@@ -38,41 +50,32 @@ export default function RadialBarChart({
           value: {
             show: false,
           },
-        },
-        barLabels: {
-          enabled: true,
-          useSeriesColors: true,
-          offsetX: -8,
-          fontSize: '16px',
-          formatter: (seriesName, opts) =>
-            seriesName + ':  ' + opts.w.globals.series[opts.seriesIndex],
-        },
-      },
-    },
-    colors: ['#796AFF', '#D1CEEC'],
-    labels: chartLabels,
-    responsive: [
-      {
-        breakpoint: 480,
-        options: {
-          legend: {
+          total: {
             show: false,
           },
         },
+        track: {
+          background: '#333333',
+          strokeWidth: '97%',
+          margin: 5, 
+        },
+        hollow: {
+          size: '45%', 
+        },
       },
-    ],
-    legend: {
-      show: false,
     },
+    labels: chartLabels,
   };
 
   return (
-    <div className="w-[200px] h-[200px]">
-      <ApexChart
-        options={options}
+    <div id="chart-container" className="relative w-[140px] h-[140px]">
+      <TotalText />
+      <Chart
+        options={chartOptions}
         series={chartSeries}
         type="radialBar"
-        height={200}
+        height={140}
+        width={140}
       />
     </div>
   );
