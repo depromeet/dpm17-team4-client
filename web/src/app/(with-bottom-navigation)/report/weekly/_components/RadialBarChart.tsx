@@ -44,9 +44,8 @@ export default function RadialBarChart({
           useSeriesColors: true,
           offsetX: -8,
           fontSize: '16px',
-          formatter: function (seriesName, opts) {
-            return seriesName + ':  ' + opts.w.globals.series[opts.seriesIndex];
-          },
+          formatter: (seriesName, opts) =>
+            seriesName + ':  ' + opts.w.globals.series[opts.seriesIndex],
         },
       },
     },
@@ -78,4 +77,3 @@ export default function RadialBarChart({
     </div>
   );
 }
-
