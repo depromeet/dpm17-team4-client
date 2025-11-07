@@ -1,5 +1,5 @@
 import StressImage from '@/assets/report/emoji_anger.png';
-// import type { UserAverage } from '../_components/UserAverageChart';
+import type { UserAverage } from '../_components/UserAverageChart';
 import type { Suggestion } from '../daily/types';
 import type { ColorAnalysisItem } from './_components/ColorAnalysis';
 // import type { MontlyRecordCounts } from './_components/MontlyRecord';
@@ -26,7 +26,7 @@ export interface MonthlyReportMockData {
   colorMessage: string;
   // montlyRecordCounts: MontlyRecordCounts;
   monthlyScores: number[];
-  // userAverage: UserAverage;
+  userAverage: UserAverage;
   pain: PainData;
   food: WeeklyMonthlyFoodReport;
   water: WeeklyMonthlyWater;
@@ -108,11 +108,11 @@ export const mockMonthlyReportData: MonthlyReportMockData = {
       count: 5,
     },
   },
-  // userAverage: {
-  //   me: 20,
-  //   average: 100,
-  //   topPercent: 50,
-  // },
+  userAverage: {
+    me: 30,
+    average: 100,
+    topPercent: 50,
+  },
   timeOfDay: [
     {
       period: 'MORNING',
