@@ -70,7 +70,7 @@ export default function TermsAgreementBottomSheet({
 
   return (
     <BottomSheet isOpen={isOpen} onClose={onClose}>
-      <div className="p-6">
+      <div className="p-4">
         {/* Title */}
         <h2
           className="text-white mb-2"
@@ -99,7 +99,7 @@ export default function TermsAgreementBottomSheet({
           {/* All Agree */}
           <button
             type="button"
-            className="flex items-center justify-between p-4 bg-[#3C414999] rounded-[8px] cursor-pointer border-[1px] border-[#FFFFFF1A] w-full text-left"
+            className="flex items-center justify-between py-4 px-3 bg-[#3C414999] rounded-[8px] cursor-pointer border-[1px] border-[#FFFFFF1A] w-full text-left"
             onClick={handleAllAgree}
           >
             <div className="flex items-center space-x-3">
@@ -124,14 +124,14 @@ export default function TermsAgreementBottomSheet({
                   />
                 </svg>
               </div>
-              <span className="text-white font-medium">
+              <span className="text-white text-[14px] font-medium">
                 모든 약관에 동의합니다.
               </span>
             </div>
           </button>
 
           {/* Terms of Service */}
-          <div className="flex items-center justify-between pl-4 w-full">
+          <div className="flex items-center justify-between pl-3 w-full">
             <button
               type="button"
               className="flex items-center space-x-3 cursor-pointer text-left flex-1"
@@ -158,7 +158,7 @@ export default function TermsAgreementBottomSheet({
                   />
                 </svg>
               </div>
-              <span className="text-white">
+              <span className="text-white text-[14px] font-medium">
                 이용약관 동의 <span className="text-primary-400">(필수)</span>
               </span>
             </button>
@@ -172,7 +172,7 @@ export default function TermsAgreementBottomSheet({
           </div>
 
           {/* Privacy Policy */}
-          <div className="flex items-center justify-between pl-4 w-full">
+          <div className="flex items-center justify-between pl-3 w-full">
             <button
               type="button"
               className="flex items-center space-x-3 cursor-pointer text-left flex-1"
@@ -197,7 +197,7 @@ export default function TermsAgreementBottomSheet({
                   />
                 </svg>
               </div>
-              <span className="text-white">
+              <span className="text-white text-[14px] font-medium">
                 개인정보처리방침 동의{' '}
                 <span className="text-primary-400">(필수)</span>
               </span>
