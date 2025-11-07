@@ -33,7 +33,7 @@ export const DefecationSubmit = () => {
     }
 
     const toiletDuration = getToiletDuration(data.selectedTimeTaken);
-    const kstDate = new Date(data.selectedWhen.getTime() + (9 * 60 * 60 * 1000));
+    const kstDate = new Date(data.selectedWhen.getTime() + 9 * 60 * 60 * 1000);
 
     const defecationData = {
       occurredAt: kstDate.toISOString(),
