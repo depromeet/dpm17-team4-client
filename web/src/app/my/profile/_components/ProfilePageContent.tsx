@@ -56,7 +56,7 @@ export default function ProfilePageContent() {
       setProfileState((prev) => ({
         ...prev,
         name: userMeData.nickname,
-        birthYear: userMeData.birthYear.toString(),
+        birthYear: userMeData.birthYear?.toString() ?? '2000', // 미 선택 시 2000 으로 임시 고정
         gender:
           userMeData.gender === 'M'
             ? 'male'

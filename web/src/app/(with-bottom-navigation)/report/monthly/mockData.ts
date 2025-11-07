@@ -1,6 +1,8 @@
 import StressImage from '@/assets/report/emoji_anger.png';
+// import type { UserAverage } from '../_components/UserAverageChart';
 import type { Suggestion } from '../daily/types';
 import type { ColorAnalysisItem } from './_components/ColorAnalysis';
+// import type { MontlyRecordCounts } from './_components/MontlyRecord';
 import type { PainData } from './_components/PainAnalysis';
 import type { AnalysisItem } from './_components/ShapeAnalysis';
 import type { TimeDistribution } from './_components/TimeAnalysis';
@@ -21,6 +23,10 @@ export interface MonthlyReportMockData {
     colorMessage: string;
   };
   timeOfDay: TimeOfDayItem[];
+  colorMessage: string;
+  // montlyRecordCounts: MontlyRecordCounts;
+  monthlyScores: number[];
+  // userAverage: UserAverage;
   pain: PainData;
   food: WeeklyMonthlyFoodReport;
   water: WeeklyMonthlyWater;
@@ -42,6 +48,11 @@ export const mockMonthlyReportData: MonthlyReportMockData = {
     },
   },
   //배변 분석 기록 결과 -모양
+  // montlyRecordCounts: {
+  //   totalRecordCounts: 37,
+  //   defecationRecordCounts: 21,
+  //   lifestyleRecordCounts: 16,
+  // },
   shape: [
     {
       shape: 'RABBIT',
@@ -97,6 +108,11 @@ export const mockMonthlyReportData: MonthlyReportMockData = {
       count: 5,
     },
   },
+  // userAverage: {
+  //   me: 20,
+  //   average: 100,
+  //   topPercent: 50,
+  // },
   timeOfDay: [
     {
       period: 'MORNING',
@@ -297,4 +313,7 @@ export const mockMonthlyReportData: MonthlyReportMockData = {
       },
     ],
   },
+  colorMessage:
+    '혈변은 건강의 적신호예요. 대장염, 대장암, 치질 등의 문제일 수 있어요. 빠른 병원 방문을 권장해요.',
+  monthlyScores: [75, 82, 78, 85, 80],
 };
