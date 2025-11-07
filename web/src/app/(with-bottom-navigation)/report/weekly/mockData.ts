@@ -1,5 +1,5 @@
-import StressImage from '@/assets/report/emoji_anger.png';
 import type { StressLevel } from '@/app/(record)/lifestyle/types/entitites';
+import StressImage from '@/assets/report/emoji_anger.png';
 import type { UserAverage } from '../_components/UserAverageChart';
 
 export interface WeeklyReportMockData {
