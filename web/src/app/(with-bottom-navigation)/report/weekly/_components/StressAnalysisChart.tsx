@@ -4,7 +4,7 @@ import type { ApexOptions } from 'apexcharts';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import streching from '@/assets/report/stretching.png';
-import type { WeeklyStress, DayOfWeek } from '../types';
+import type { DayOfWeek, WeeklyStress } from '../types';
 
 const ApexChart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
@@ -205,9 +205,14 @@ export function StressAnalysisChart({
           />
         </div>
         {/* 꺾은선 그래프 영역 */}
-        <div className='pr-6'>
-
-        <ApexChart options={options} series={series} type="line" width='100%'  height={232} />
+        <div className="pr-6">
+          <ApexChart
+            options={options}
+            series={series}
+            type="line"
+            width="100%"
+            height={232}
+          />
         </div>
       </div>
     </section>

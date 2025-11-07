@@ -1,26 +1,28 @@
 import { WeeklyMockData } from '../mockData';
 import RadialBarChart from './RadialBarChart';
 
-
-export type DefecationScore ={
-    lastWeek: number;
-    thisWeek: number;
-    dailyScore: number[];
+export type DefecationScore = {
+  lastWeek: number;
+  thisWeek: number;
+  dailyScore: number[];
+};
+interface WeeklyComparisonChartProps {
+  defecationScore: DefecationScore;
 }
-interface WeeklyComparisonChartProps{
-  defecationScore:DefecationScore
-}
 
-export function WeeklyComparisonChart({defecationScore}:WeeklyComparisonChartProps) {
-  const chartSeries = [
-    defecationScore.lastWeek,
-    defecationScore.thisWeek,
-  ];
+export function WeeklyComparisonChart({
+  defecationScore,
+}: WeeklyComparisonChartProps) {
+  const chartSeries = [defecationScore.lastWeek, defecationScore.thisWeek];
   const chartLabels = Object.keys(defecationScore);
 
   return (
     <section className="flex gap-6 items-center mb-2 ">
-      <RadialBarChart chartSeries={chartSeries} chartLabels={chartLabels} defecationDailyScore={defecationScore.dailyScore}/>
+      <RadialBarChart
+        chartSeries={chartSeries}
+        chartLabels={chartLabels}
+        defecationDailyScore={defecationScore.dailyScore}
+      />
       <div className="flex flex-col gap-3">
         <div className="flex gap-2.5">
           <div className="flex items-center gap-1">

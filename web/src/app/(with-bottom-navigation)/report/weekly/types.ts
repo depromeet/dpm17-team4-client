@@ -18,4 +18,3 @@ export type WeeklyStress = Stress & {
     stress: StressLevel | null; // null 허용 (기록 없는 날)
   }[];
 };
-

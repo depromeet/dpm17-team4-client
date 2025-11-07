@@ -133,8 +133,8 @@ export function StressAnalysisChart({
     },
     grid: {
       borderColor: '#707885',
-      padding:{
-        left:10,
+      padding: {
+        left: 10,
       },
       xaxis: {
         lines: {
@@ -216,9 +216,14 @@ export function StressAnalysisChart({
           />
         </div>
         {/* 꺾은선 그래프 영역 */}
-        <div className='w-full'>
-        <ApexChart options={options} series={series} type="line" width='100%'  height={232} />
-
+        <div className="w-full">
+          <ApexChart
+            options={options}
+            series={series}
+            type="line"
+            width="100%"
+            height={232}
+          />
         </div>
       </div>
     </section>

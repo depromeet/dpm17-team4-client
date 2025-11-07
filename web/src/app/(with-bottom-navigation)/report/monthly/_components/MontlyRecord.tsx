@@ -17,7 +17,7 @@ export function MontlyRecord({
   currentMonth,
 }: MontlyRecordProps) {
   return (
-    <section className='w-full'>
+    <section className="w-full">
       <div className="flex justify-between">
         <div className="text-body1-m">
           {currentMonth}월 동안 <br /> 총 &nbsp;
