@@ -1,5 +1,4 @@
 'use client';
-import { getKoreanDate } from '@/utils/utils-date';
 import { DefecationScoreChart } from '../_components/DefecationScoreChart';
 import { UserAverageChart } from '../_components/UserAverageChart';
 import { SelectDate } from './_components/SelectWeekDate';

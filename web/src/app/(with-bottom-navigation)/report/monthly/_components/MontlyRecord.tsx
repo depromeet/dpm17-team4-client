@@ -1,18 +1,18 @@
 import Image from 'next/image';
 import memo from '@/assets/report/memo.png';
 
-export type MontlyRecordCounts = {
+export type MonthlyRecordCounts = {
   totalRecordCounts: number;
   defecationRecordCounts: number;
   lifestyleRecordCounts: number;
 };
 
 interface MontlyRecordProps {
-  recordCounts: MontlyRecordCounts;
+  recordCounts: MonthlyRecordCounts;
   currentMonth: number;
 }
 
-export function MontlyRecord({
+export function MontlhyRecord({
   recordCounts,
   currentMonth,
 }: MontlyRecordProps) {
@@ -42,7 +42,7 @@ export function MontlyRecord({
         <div className="py-3 px-4 bg-gray-800 rounded-[10px] flex-1">
           <div className="flex gap-1 items-center">
             <div className="w-1.5 h-1.5 rounded-full bg-green-600" />
-            <div className="text-body4-m">배변 기록</div>
+            <div className="text-body4-m">생활 기록</div>
           </div>
           <div className="text-body2-sb">
             {recordCounts.lifestyleRecordCounts}회

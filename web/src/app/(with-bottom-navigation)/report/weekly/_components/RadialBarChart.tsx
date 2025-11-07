@@ -15,7 +15,7 @@ export default function RadialBarChart({
   chartLabels: string[];
   defecationDailyScore: number[];
 }) {
-  const dailyScore = defecationDailyScore.reduce((arr, cur) => arr + cur);
+  const dailyScore = defecationDailyScore.reduce((acc, cur) => acc + cur,0);
   const chartOptions: ApexOptions = {
     chart: {
       type: 'radialBar',
