@@ -72,8 +72,25 @@ export default function TermsAgreementBottomSheet({
     <BottomSheet isOpen={isOpen} onClose={onClose}>
       <div className="p-6">
         {/* Title */}
-        <h2 className="text-white text-xl font-bold mb-2">약관 동의</h2>
-        <p className="text-gray-400 text-sm mb-6">
+        <h2
+          className="text-white mb-2"
+          style={{
+            fontWeight: 600,
+            fontSize: '16px',
+            lineHeight: '150%',
+            letterSpacing: '0%',
+          }}
+        >
+          약관 동의
+        </h2>
+        <p
+          className="text-gray-600 mb-[20px]"
+          style={{
+            fontWeight: 500,
+            fontSize: '14px',
+            lineHeight: '145%',
+          }}
+        >
           서비스 이용을 위해 약관에 동의해 주세요
         </p>
 
@@ -87,27 +104,25 @@ export default function TermsAgreementBottomSheet({
           >
             <div className="flex items-center space-x-3">
               <div
-                className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+                className={`w-5 h-5 rounded-full flex items-center justify-center ${
                   allAgreed
                     ? 'bg-primary-600 border-primary-600'
-                    : 'border-gray-400'
+                    : ' bg-gray-600'
                 }`}
               >
-                {allAgreed && (
-                  <svg
-                    className="w-3 h-3 text-white"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    role="img"
-                    aria-label="체크 표시"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                )}
+                <svg
+                  className={`w-3 h-3 ${allAgreed ? 'text-white' : 'text-gray-500'}`}
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  role="img"
+                  aria-label="체크 표시"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                    clipRule="evenodd"
+                  />
+                </svg>
               </div>
               <span className="text-white font-medium">
                 모든 약관에 동의합니다.
@@ -123,27 +138,25 @@ export default function TermsAgreementBottomSheet({
               onClick={handleTermsAgree}
             >
               <div
-                className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+                className={`w-5 h-5 rounded-full flex items-center justify-center ${
                   termsAgreed
                     ? 'bg-primary-600 border-primary-600'
-                    : 'border-gray-400'
+                    : ' bg-gray-600'
                 }`}
               >
-                {termsAgreed && (
-                  <svg
-                    className="w-3 h-3 text-white"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    role="img"
-                    aria-label="체크 표시"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                )}
+                <svg
+                  className={`w-3 h-3 ${termsAgreed ? 'text-white' : 'text-gray-500'}`}
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  role="img"
+                  aria-label="체크 표시"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                    clipRule="evenodd"
+                  />
+                </svg>
               </div>
               <span className="text-white">
                 이용약관 동의 <span className="text-primary-400">(필수)</span>
@@ -166,27 +179,23 @@ export default function TermsAgreementBottomSheet({
               onClick={handlePrivacyAgree}
             >
               <div
-                className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
-                  privacyAgreed
-                    ? 'bg-primary-600 border-primary-600'
-                    : 'border-gray-400'
+                className={`w-5 h-5 rounded-full flex items-center justify-center ${
+                  privacyAgreed ? 'bg-primary-600 ' : ' bg-gray-600'
                 }`}
               >
-                {privacyAgreed && (
-                  <svg
-                    className="w-3 h-3 text-white"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    role="img"
-                    aria-label="체크 표시"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                )}
+                <svg
+                  className={`w-3 h-3 ${privacyAgreed ? 'text-white' : 'text-gray-500'}`}
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  role="img"
+                  aria-label="체크 표시"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                    clipRule="evenodd"
+                  />
+                </svg>
               </div>
               <span className="text-white">
                 개인정보처리방침 동의{' '}
@@ -208,10 +217,10 @@ export default function TermsAgreementBottomSheet({
           type="button"
           onClick={handleNext}
           disabled={!termsAgreed || !privacyAgreed}
-          className={`w-full py-4 rounded-lg font-medium transition-colors ${
+          className={`w-full py-[19px] rounded-[10px] text-button-2 transition-colors ${
             termsAgreed && privacyAgreed
               ? 'bg-primary-600 text-white'
-              : 'bg-gray-600 text-gray-400 cursor-not-allowed'
+              : 'bg-[#523E98] text-[#FFFFFF66] cursor-not-allowed'
           }`}
         >
           다음

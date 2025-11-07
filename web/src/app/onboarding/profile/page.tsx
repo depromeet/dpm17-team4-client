@@ -1,12 +1,13 @@
 'use client';
 
-import { Calendar } from 'lucide-react';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import { BirthYearSelectBottomSheet } from '@/app/my/profile/_components/BirthYearSelectBottomSheet';
+import CalendarIcon from '@/assets/onboarding/calendar.svg';
+import { ArrowIcon } from '@/components/icons/Arrow';
 import { PAGE_ROUTES } from '@/constants';
 import { useUserMeQuery, useUserUpdateMutation } from '@/hooks';
-
 export default function OnboardingProfilePage() {
   const router = useRouter();
   const { data: userMeData, isLoading, error } = useUserMeQuery();
@@ -113,23 +114,7 @@ export default function OnboardingProfilePage() {
             onClick={handleOnboardingExit}
             className="w-6 h-6 absolute left-4 top-1/2 -translate-y-1/2 z-10"
           >
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="text-white"
-            >
-              <title>뒤로가기</title>
-              <path
-                d="M15 18L9 12L15 6"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+            <ArrowIcon type="left" />
           </button>
           <div className="flex-1 flex justify-center items-center">
             <span className="text-h3">기본 정보</span>
@@ -152,23 +137,7 @@ export default function OnboardingProfilePage() {
             onClick={handleOnboardingExit}
             className="w-6 h-6 absolute left-4 top-1/2 -translate-y-1/2 z-10"
           >
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="text-white"
-            >
-              <title>뒤로가기</title>
-              <path
-                d="M15 18L9 12L15 6"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+            <ArrowIcon type="left" />
           </button>
           <div className="flex-1 flex justify-center items-center">
             <span className="text-h3">기본 정보</span>
@@ -183,6 +152,8 @@ export default function OnboardingProfilePage() {
     );
   }
 
+  console.log(birthYear);
+
   return (
     <div className="min-h-screen text-white bg-gray-900">
       {/* Header */}
@@ -192,23 +163,8 @@ export default function OnboardingProfilePage() {
           onClick={handleOnboardingExit}
           className="w-6 h-6 absolute left-4 top-1/2 -translate-y-1/2 z-10"
         >
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="text-white"
-          >
-            <title>뒤로가기</title>
-            <path
-              d="M15 18L9 12L15 6"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+          {' '}
+          <ArrowIcon type="left" />
         </button>
         <div className="flex-1 flex justify-center items-center">
           <span className="text-h3">기본 정보</span>
@@ -219,7 +175,7 @@ export default function OnboardingProfilePage() {
       <div className="px-4 pt-20">
         {/* Title */}
         <div className="mb-[30px]">
-          <h2 className="text-2xl font-bold mb-2">
+          <h2 className="text-h3 font-bold mb-2">
             출생 연도와 성별을 <br />
             알려주세요
           </h2>
@@ -230,36 +186,34 @@ export default function OnboardingProfilePage() {
 
         {/* Birth Year Section */}
         <div className="mb-8">
-          <div className="block text-sm font-medium text-gray-300 mb-3">
-            출생 연도
-          </div>
+          <div className="block text-body3-m text-white mb-3">출생 연도</div>
           <div className="relative">
             <button
               type="button"
               onClick={handleOpenBirthYearBottomSheet}
-              className={`w-full px-4 py-4 bg-gray-800 rounded-lg text-left text-white focus:outline-none focus:ring-2 focus:ring-primary-600 ${
-                birthYear ? 'text-white' : 'text-gray-600'
+              className={`w-full px-4 py-4 bg-gray-800 rounded-lg text-left text-body2-r focus:outline-none focus:ring-2 focus:ring-primary-600 ${
+                birthYear !== '' ? 'text-white' : 'text-gray-600'
               }`}
             >
-              {birthYear ? `${birthYear}년` : '생년원일'}
+              {birthYear !== '' ? `${birthYear}` : '2025'}
             </button>
-            <Calendar className="absolute right-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
+            <div className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none">
+              <Image src={CalendarIcon} alt="calendar" width={20} height={20} />
+            </div>
           </div>
         </div>
 
         {/* Gender Section */}
         <div className="mb-12">
-          <div className="block text-sm font-medium text-gray-300 mb-3">
-            성별
-          </div>
+          <div className="block text-body3-m text-white mb-3">성별</div>
           <div className="flex space-x-3">
             <button
               type="button"
               onClick={() => setGender('female')}
-              className={`flex-1 py-4 px-6 rounded-lg font-medium transition-colors ${
+              className={`flex-1 py-4 px-6 rounded-lg text-button-3 transition-colors ${
                 gender === 'female'
                   ? 'bg-primary-600 text-white'
-                  : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+                  : 'bg-gray-800 text-white hover:bg-gray-700'
               }`}
             >
               여성
@@ -267,10 +221,10 @@ export default function OnboardingProfilePage() {
             <button
               type="button"
               onClick={() => setGender('male')}
-              className={`flex-1 py-4 px-6 rounded-lg font-medium transition-colors ${
+              className={`flex-1 py-4 px-6 rounded-lg text-button-3 transition-colors ${
                 gender === 'male'
                   ? 'bg-primary-600 text-white'
-                  : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+                  : 'bg-gray-800 text-white hover:bg-gray-700'
               }`}
             >
               남성
@@ -285,10 +239,10 @@ export default function OnboardingProfilePage() {
           type="button"
           onClick={handleComplete}
           disabled={!isComplete || isUpdating}
-          className={`w-full py-4 rounded-lg font-medium transition-colors ${
+          className={`w-full py-[19px] rounded-[10px] text-button-2 transition-colors ${
             isComplete && !isUpdating
               ? 'bg-primary-600 text-white'
-              : 'bg-gray-600 text-gray-400 cursor-not-allowed'
+              : 'bg-[#523E98] text-[#FFFFFF66] cursor-not-allowed'
           }`}
         >
           {isUpdating ? '저장 중...' : '가입 완료'}
