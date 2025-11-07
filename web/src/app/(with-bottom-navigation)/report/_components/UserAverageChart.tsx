@@ -25,14 +25,13 @@ export function UserAverageChart({ userAverage }: UserAverageChartProps) {
   );
 
   return (
-    <section className="flex flex-col gap-7 bg-gradient-to-b from-[#252441] to-[#1B1D20] rounded-[20px] px-6 py-7">
+    <section className="w-full flex flex-col gap-7 bg-gradient-to-b from-[#252441] to-[#1B1D20] rounded-[20px] px-6 py-7">
       <div>
         <div className="text-gray-600 text-body3-m mb-2">사용자 평균</div>
         <div className="text-h4 text-left">
           이번 주 배변 점수는 <br />
           꾸룩 사용자 중
           <span className="text-primary-600">
-            {' '}
             상위{userAverage.topPercent}%
           </span>
           예요
