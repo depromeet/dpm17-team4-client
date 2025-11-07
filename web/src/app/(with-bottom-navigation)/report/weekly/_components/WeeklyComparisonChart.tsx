@@ -17,7 +17,7 @@ export function WeeklyComparisonChart({
   const chartLabels = Object.keys(defecationScore);
 
   const scoreDiff = defecationScore.thisWeek - defecationScore.lastWeek;
-  const absDiff = Math.abs(scoreDiff)
+  const absDiff = Math.abs(scoreDiff);
 
   const renderScoreMessage = () => {
     if (scoreDiff === 0) {
@@ -65,9 +65,7 @@ export function WeeklyComparisonChart({
             </div>
           </div>
         </div>
-        <div className="text-body1-m">
-          {renderScoreMessage()}
-        </div>
+        <div className="text-body1-m">{renderScoreMessage()}</div>
       </div>
     </section>
   );
