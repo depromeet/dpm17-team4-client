@@ -62,7 +62,6 @@ export function StressAnalysisChart({
   const options: ApexOptions = {
     colors: ['#796AFF'],
     chart: {
-      height: 350,
       type: 'line',
       zoom: {
         enabled: false,
@@ -134,6 +133,9 @@ export function StressAnalysisChart({
     },
     grid: {
       borderColor: '#707885',
+      padding: {
+        left: 10,
+      },
       xaxis: {
         lines: {
           show: false,
@@ -199,14 +201,13 @@ export function StressAnalysisChart({
     },
   };
   return (
-    <section className="px-6 py-7 flex flex-col gap-4 bg-gray-800 rounded-[20px]">
+    <section className=" py-7 flex flex-col gap-4 bg-gray-800 rounded-[20px]">
       <div className="flex flex-col">
-        <div className="text-body3-m text-gray-600 mb-2">
+        <div className="text-body3-m text-gray-600 mb-2  px-6">
           스트레스 분석 결과
         </div>
-        <div className="flex justify-center gap-12">
+        <div className="flex justify-center gap-12  px-6">
           <div className="text-h4">{stressAnalysis.message}</div>
-          {/* NOTE: props로 받은 'image' URL로 교체 필요. */}
           <Image
             src={streching}
             alt="스트레스 분석 결과 이미지"
@@ -215,7 +216,15 @@ export function StressAnalysisChart({
           />
         </div>
         {/* 꺾은선 그래프 영역 */}
-        <ApexChart options={options} series={series} type="line" height={350} />
+        <div className="w-full">
+          <ApexChart
+            options={options}
+            series={series}
+            type="line"
+            width="100%"
+            height={232}
+          />
+        </div>
       </div>
     </section>
   );

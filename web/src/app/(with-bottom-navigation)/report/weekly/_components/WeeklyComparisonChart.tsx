@@ -1,16 +1,55 @@
 import { WeeklyMockData } from '../mockData';
 import RadialBarChart from './RadialBarChart';
 
-export function WeeklyComparisonChart() {
-  const chartSeries = [
-    WeeklyMockData.defecationScore.lastWeek,
-    WeeklyMockData.defecationScore.thisWeek,
-  ];
-  const chartLabels = Object.keys(WeeklyMockData.defecationScore);
+export type DefecationScore = {
+  lastWeek: number;
+  thisWeek: number;
+  dailyScore: number[];
+};
+interface WeeklyComparisonChartProps {
+  defecationScore: DefecationScore;
+}
+
+export function WeeklyComparisonChart({
+  defecationScore,
+}: WeeklyComparisonChartProps) {
+  const chartSeries = [defecationScore.lastWeek, defecationScore.thisWeek];
+  const chartLabels = Object.keys(defecationScore);
+
+  const scoreDiff = defecationScore.thisWeek - defecationScore.lastWeek;
+  const absDiff = Math.abs(scoreDiff);
+
+  const renderScoreMessage = () => {
+    if (scoreDiff === 0) {
+      return (
+        <>
+          이번 주 평균 점수가
+          <br />
+          저번 주 점수와 일치해요.
+        </>
+      );
+    }
+
+    const statusText = scoreDiff > 0 ? '상승했어요' : '하락했어요';
+
+    return (
+      <>
+        이번 주 평균 점수가
+        <br />
+        저번 주보다 {absDiff}점
+        <br />
+        {statusText}
+      </>
+    );
+  };
 
   return (
-    <section className="flex justify-between items-center mb-2 ">
-      <RadialBarChart chartSeries={chartSeries} chartLabels={chartLabels} />
+    <section className="flex gap-6 items-center mb-2 ">
+      <RadialBarChart
+        chartSeries={chartSeries}
+        chartLabels={chartLabels}
+        defecationDailyScore={defecationScore.dailyScore}
+      />
       <div className="flex flex-col gap-3">
         <div className="flex gap-2.5">
           <div className="flex items-center gap-1">
@@ -26,13 +65,7 @@ export function WeeklyComparisonChart() {
             </div>
           </div>
         </div>
-        <div className="text-body1-m">
-          이번 주 평균 점수가
-          <br />
-          저번 주보다 -20점
-          <br />
-          하락했어요.
-        </div>
+        <div className="text-body1-m">{renderScoreMessage()}</div>
       </div>
     </section>
   );

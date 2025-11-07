@@ -6,20 +6,16 @@ import React from 'react';
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
-const TotalText = () => (
-  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none z-10 scale-90">
-    <div className="text-body4-r text-gray-500">배변점수</div>
-    <div className="text-h4 text-white">99점</div>
-  </div>
-);
-
 export default function RadialBarChart({
   chartSeries,
   chartLabels,
+  defecationDailyScore,
 }: {
   chartSeries: number[];
   chartLabels: string[];
+  defecationDailyScore: number[];
 }) {
+  const dailyScore = defecationDailyScore.reduce((acc, cur) => acc + cur, 0);
   const chartOptions: ApexOptions = {
     chart: {
       type: 'radialBar',
@@ -74,7 +70,11 @@ export default function RadialBarChart({
 
   return (
     <div className="relative w-[140px] h-[140px]">
-      <TotalText />
+      {/* 배변점수 텍스트 영역 */}
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none z-10 scale-90">
+        <div className="text-body4-r text-gray-500">배변점수</div>
+        <div className="text-h4 text-white">{dailyScore}점</div>
+      </div>
       <Chart
         options={chartOptions}
         series={chartSeries}

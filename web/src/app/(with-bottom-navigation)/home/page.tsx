@@ -90,7 +90,7 @@ function HomeContent() {
           }
         }
         // 사용자 정보가 있고 accessToken이 없을 때만 refresh 요청
-        if (savedUserInfo && !currentAccessToken) {
+        if (!currentAccessToken) {
           console.log('🔄 Home에서 Refresh 요청 시작...');
           const { accessToken } = await requestAccessToken();
           if (accessToken) {
@@ -100,11 +100,7 @@ function HomeContent() {
             console.log('❌ Home에서 AccessToken 발급 실패');
           }
         } else {
-          console.log('⏭️ Home에서 Refresh 요청 건너뜀:', {
-            reason: !savedUserInfo
-              ? '사용자 정보 없음'
-              : '이미 accessToken 있음',
-          });
+          console.log('⏭️ Home에서 Refresh 요청 건너뜀:');
         }
 
         // 사용자 정보가 있으면 항상 저장하고 URL 정리
