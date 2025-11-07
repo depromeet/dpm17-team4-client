@@ -1,8 +1,8 @@
 import StressImage from '@/assets/report/emoji_anger.png';
-import type { UserAverage } from '../_components/UserAverageChart';
+// import type { UserAverage } from '../_components/UserAverageChart';
 import type { Suggestion } from '../daily/types';
 import type { ColorAnalysisItem } from './_components/ColorAnalysis';
-import type { MontlyRecordCounts } from './_components/MontlyRecord';
+// import type { MontlyRecordCounts } from './_components/MontlyRecord';
 import type { PainData } from './_components/PainAnalysis';
 import type { AnalysisItem } from './_components/ShapeAnalysis';
 import type { TimeDistribution } from './_components/TimeAnalysis';
@@ -24,9 +24,9 @@ export interface MonthlyReportMockData {
   };
   timeOfDay: TimeOfDayItem[];
   colorMessage: string;
-  montlyRecordCounts: MontlyRecordCounts;
+  // montlyRecordCounts: MontlyRecordCounts;
   monthlyScores: number[];
-  userAverage: UserAverage;
+  // userAverage: UserAverage;
   pain: PainData;
   food: WeeklyMonthlyFoodReport;
   water: WeeklyMonthlyWater;
@@ -48,11 +48,11 @@ export const mockMonthlyReportData: MonthlyReportMockData = {
     },
   },
   //배변 분석 기록 결과 -모양
-  montlyRecordCounts: {
-    totalRecordCounts: 37,
-    defecationRecordCounts: 21,
-    lifestyleRecordCounts: 16,
-  },
+  // montlyRecordCounts: {
+  //   totalRecordCounts: 37,
+  //   defecationRecordCounts: 21,
+  //   lifestyleRecordCounts: 16,
+  // },
   shape: [
     {
       shape: 'RABBIT',
@@ -108,11 +108,11 @@ export const mockMonthlyReportData: MonthlyReportMockData = {
       count: 5,
     },
   },
-  userAverage: {
-    me: 20,
-    average: 100,
-    topPercent: 50,
-  },
+  // userAverage: {
+  //   me: 20,
+  //   average: 100,
+  //   topPercent: 50,
+  // },
   timeOfDay: [
     {
       period: 'MORNING',
