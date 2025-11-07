@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import type { Suggestion } from '../types';
+import type { Suggestion } from '../daily/types';
 
 interface SuggestionsProps {
   suggestion: Suggestion;
