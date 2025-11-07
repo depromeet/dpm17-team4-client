@@ -4,7 +4,7 @@ import type { ApexOptions } from 'apexcharts';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import streching from '@/assets/report/stretching.png';
-import { WeeklyMonthlyStress } from '../monthly/types';
+import type { WeeklyMonthlyStress } from '../monthly/types';
 
 const ApexChart = dynamic(() => import('react-apexcharts'), { ssr: false });
 

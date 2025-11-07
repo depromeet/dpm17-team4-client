@@ -1,8 +1,8 @@
 'use client';
 
+import type { ApexOptions } from 'apexcharts';
 import dynamic from 'next/dynamic';
 import React from 'react';
-import type { ApexOptions } from 'apexcharts'; 
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
@@ -13,13 +13,18 @@ const TotalText = () => (
   </div>
 );
 
-export default function RadialBarChart({ chartSeries, chartLabels }: { chartSeries: number[], chartLabels: string[] }) {
-  
+export default function RadialBarChart({
+  chartSeries,
+  chartLabels,
+}: {
+  chartSeries: number[];
+  chartLabels: string[];
+}) {
   const chartOptions: ApexOptions = {
     chart: {
       type: 'radialBar',
-      offsetX: 0, 
-      offsetY: 0, 
+      offsetX: 0,
+      offsetY: 0,
       parentHeightOffset: 0,
     },
     colors: ['#7850FB', '#4E5560'],
@@ -57,10 +62,10 @@ export default function RadialBarChart({ chartSeries, chartLabels }: { chartSeri
         track: {
           background: '#333333',
           strokeWidth: '97%',
-          margin: 5, 
+          margin: 5,
         },
         hollow: {
-          size: '45%', 
+          size: '45%',
         },
       },
     },
