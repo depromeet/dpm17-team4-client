@@ -16,8 +16,8 @@ import { ProfileAvatar } from './ProfileAvatar';
 
 interface ProfileState {
   name: string;
-  birthYear: string;
-  gender: string;
+  birthYear?: string;
+  gender?: string;
   email: string;
   profileImage: string | null;
   type: 'KAKAO' | 'APPLE';
@@ -36,8 +36,8 @@ export default function ProfilePageContent() {
   const updateUserMutation = useUserUpdateMutation();
   const [profileState, setProfileState] = useState<ProfileState>({
     name: '',
-    birthYear: '2000',
-    gender: 'male',
+    birthYear: '',
+    gender: '',
     email: '',
     profileImage: null,
     type: 'KAKAO',
@@ -56,13 +56,13 @@ export default function ProfilePageContent() {
       setProfileState((prev) => ({
         ...prev,
         name: userMeData.nickname,
-        birthYear: userMeData.birthYear?.toString() ?? '2000', // 미 선택 시 2000 으로 임시 고정
+        birthYear: userMeData.birthYear ? userMeData.birthYear.toString() : '',
         gender:
           userMeData.gender === 'M'
             ? 'male'
             : userMeData.gender === 'F'
               ? 'female'
-              : 'male', // 개발 중 - 선택안함 옵션 제거, 기본값으로 남성 설정
+              : 'none',
         email: userMeData.email,
         profileImage: userMeData.profileImage,
         type: userMeData.provider?.type,
@@ -147,10 +147,9 @@ export default function ProfilePageContent() {
         return '남성';
       case 'female':
         return '여성';
-      // case 'none':
-      //   return '선택 안 함'; // 개발 중 - 선택안함 옵션 제거
+      case 'none':
       default:
-        return '남성';
+        return '선택 안 함';
     }
   };
 
@@ -228,8 +227,12 @@ export default function ProfilePageContent() {
               <div className="flex items-center space-x-2">
                 {profileState.type === 'KAKAO' ? (
                   <Image src={KakaoIcon} alt="kakao" className="w-6 h-6" />
-                ) : (
+                ) : profileState.type === 'APPLE' ? (
                   <Image src={AppleIcon} alt="apple" className="w-6 h-6" />
+                ) : (
+                  <span className="text-body2-r text-gray-400">
+                    연결되지 않음
+                  </span>
                 )}
                 <span className="text-body2-r text-white">
                   {profileState.email}
@@ -263,7 +266,7 @@ export default function ProfilePageContent() {
               <span className="text-body2-sb">성별</span>
               <div className="flex items-center space-x-2">
                 <span className="text-body2-r text-white">
-                  {getGenderLabel(profileState.gender)}
+                  {getGenderLabel(profileState.gender ?? '')}
                 </span>
                 <Image
                   src={ChevronRight}
@@ -317,7 +320,7 @@ export default function ProfilePageContent() {
         onClose={() =>
           setBottomSheetState((prev) => ({ ...prev, isGenderOpen: false }))
         }
-        currentGender={profileState.gender}
+        currentGender={profileState.gender ?? ''}
         onGenderSelect={handleGenderSelect}
       />
 
@@ -327,7 +330,7 @@ export default function ProfilePageContent() {
         onClose={() =>
           setBottomSheetState((prev) => ({ ...prev, isBirthYearOpen: false }))
         }
-        currentYear={profileState.birthYear}
+        currentYear={profileState.birthYear ?? ''}
         onYearSelect={handleBirthYearSelect}
       />
 
