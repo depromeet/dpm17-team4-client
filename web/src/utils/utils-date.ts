@@ -165,3 +165,17 @@ export const formatToDayWithWeekday = (dateString: string): string => {
   const dayName = getDayName(date);
   return `${day}일 (${dayName})`;
 };
+
+/**
+ * 한국 시간대(Asia/Seoul)의 현재 날짜를 반환합니다.
+ * @returns 한국 시간대의 Date 객체
+ * @example
+ * getKoreanDate() // 한국 시간 기준의 현재 날짜
+ */
+export const getKoreanDate = (): Date => {
+  const now = new Date();
+  const koreanTime = new Date(
+    now.toLocaleString('en-US', { timeZone: 'Asia/Seoul' })
+  );
+  return koreanTime;
+};
