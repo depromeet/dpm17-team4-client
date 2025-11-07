@@ -86,10 +86,11 @@ function AuthContent() {
     try {
       console.log('🧹 로그인 성공 - 오래된 쿠키 정리 시작');
       console.log('🍪 정리 전 쿠키:', document.cookie);
-      
+
       // .kkruk.com 도메인 쿠키 삭제
-      document.cookie = 'refreshToken=; domain=.kkruk.com; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; Secure; SameSite=None';
-      
+      document.cookie =
+        'refreshToken=; domain=.kkruk.com; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; Secure; SameSite=None';
+
       // 짧은 딜레이 후 확인
       setTimeout(() => {
         console.log('🍪 정리 후 쿠키:', document.cookie);
