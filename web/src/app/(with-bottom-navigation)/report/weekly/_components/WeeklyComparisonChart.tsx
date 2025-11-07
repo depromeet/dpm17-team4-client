@@ -16,6 +16,33 @@ export function WeeklyComparisonChart({
   const chartSeries = [defecationScore.lastWeek, defecationScore.thisWeek];
   const chartLabels = Object.keys(defecationScore);
 
+  const scoreDiff = defecationScore.thisWeek - defecationScore.lastWeek;
+  const absDiff = Math.abs(scoreDiff)
+
+  const renderScoreMessage = () => {
+    if (scoreDiff === 0) {
+      return (
+        <>
+          이번 주 평균 점수가
+          <br />
+          저번 주 점수와 일치해요.
+        </>
+      );
+    }
+
+    const statusText = scoreDiff > 0 ? '상승했어요' : '하락했어요';
+
+    return (
+      <>
+        이번 주 평균 점수가
+        <br />
+        저번 주보다 {absDiff}점
+        <br />
+        {statusText}
+      </>
+    );
+  };
+
   return (
     <section className="flex gap-6 items-center mb-2 ">
       <RadialBarChart
@@ -39,11 +66,7 @@ export function WeeklyComparisonChart({
           </div>
         </div>
         <div className="text-body1-m">
-          이번 주 평균 점수가
-          <br />
-          저번 주보다 {defecationScore.lastWeek - defecationScore.thisWeek}점
-          <br />
-          하락했어요.
+          {renderScoreMessage()}
         </div>
       </div>
     </section>
