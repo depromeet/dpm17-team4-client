@@ -7,15 +7,15 @@ export type MonthlyRecordCounts = {
   lifestyleRecordCounts: number;
 };
 
-interface MontlyRecordProps {
+interface MonthlyRecordProps {
   recordCounts: MonthlyRecordCounts;
   currentMonth: number;
 }
 
-export function MontlhyRecord({
+export function MonthlyRecord({
   recordCounts,
   currentMonth,
-}: MontlyRecordProps) {
+}: MonthlyRecordProps) {
   return (
     <section className="w-full">
       <div className="flex justify-between">
