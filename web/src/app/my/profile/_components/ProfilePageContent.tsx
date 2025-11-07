@@ -56,9 +56,7 @@ export default function ProfilePageContent() {
       setProfileState((prev) => ({
         ...prev,
         name: userMeData.nickname,
-        birthYear: userMeData.birthYear
-          ? userMeData.birthYear.toString()
-          : '',
+        birthYear: userMeData.birthYear ? userMeData.birthYear.toString() : '',
         gender:
           userMeData.gender === 'M'
             ? 'male'
@@ -232,7 +230,9 @@ export default function ProfilePageContent() {
                 ) : profileState.type === 'APPLE' ? (
                   <Image src={AppleIcon} alt="apple" className="w-6 h-6" />
                 ) : (
-                  <span className="text-body2-r text-gray-400">연결되지 않음</span>
+                  <span className="text-body2-r text-gray-400">
+                    연결되지 않음
+                  </span>
                 )}
                 <span className="text-body2-r text-white">
                   {profileState.email}
