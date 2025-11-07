@@ -6,7 +6,7 @@ type ScoreProgressBarProps = {
 
 export const DefecationScore = ({ score }: ScoreProgressBarProps) => {
   return (
-    <div className="bg-[#272B31] rounded-[14px] py-5 px-6 w-full mt-9">
+    <div className="bg-[#1B1D20] rounded-[14px] py-5 px-6 w-full mt-9">
       <div className="flex justify-between items-center mb-3 text-body2-sb">
         <p>배변 점수</p>
         <p>{Math.round(score)}점</p>
@@ -26,7 +26,7 @@ export const DefecationScore = ({ score }: ScoreProgressBarProps) => {
               }}
             />
           </div>
-          <div className="flex justify-between mt-">
+          <div className="flex justify-between mt-2">
             {labels.map((label) => (
               <span key={label} className="text-[#707885] text-body4-m">
                 {label}

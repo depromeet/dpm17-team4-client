@@ -91,7 +91,7 @@ export default function MonthlyReportPage() {
         displayLabels={weekLabels}
       />
       <MonthlyFoodReport />
-      <NWaterReport />
+      <WaterReport waterData={mockMonthlyReportData.water} type="monthly" />
       <StressReport stressData={mockMonthlyReportData.stress} type="monthly" />
       <Suggestions suggestion={mockMonthlyReportData.suggestion} />
     </div>

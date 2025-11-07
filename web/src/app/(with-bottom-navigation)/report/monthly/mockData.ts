@@ -1,6 +1,5 @@
 import StressImage from '@/assets/report/emoji_anger.png';
-import type { UserAverage } from '../_components/UserAverageChart';
-import type { Suggestion } from '../daily/types';
+import type { Suggestion, Water } from '../daily/types';
 import type { ColorAnalysisItem } from './_components/ColorAnalysis';
 import type { MonthlyRecordCounts } from './_components/MonthlyRecord';
 import type { PainData } from './_components/PainAnalysis';
@@ -8,10 +7,9 @@ import type { AnalysisItem } from './_components/ShapeAnalysis';
 import type { TimeDistribution } from './_components/TimeAnalysis';
 import type { TimeOfDayItem } from './_components/TimeOfDayAnalysis';
 import type {
+  MonthlyFoodReport,
   MonthlyScore,
-  WeeklyMonthlyFoodReport,
   WeeklyMonthlyStress,
-  WeeklyMonthlyWater,
 } from './types';
 
 export interface MonthlyReportMockData {
@@ -35,8 +33,8 @@ export interface MonthlyReportMockData {
   monthlyScores: number[];
   userAverage: UserAverage;
   pain: PainData;
-  food: WeeklyMonthlyFoodReport;
-  water: WeeklyMonthlyWater;
+  food: MonthlyFoodReport;
+  water: Water;
   stress: WeeklyMonthlyStress;
   suggestion: Suggestion;
 }
@@ -265,22 +263,32 @@ export const mockMonthlyReportData: MonthlyReportMockData = {
       {
         name: '1주차',
         value: 2000.0,
+        color: '#D9D9D9',
+        level: 'NONE',
       },
       {
         name: '2주차',
         value: 500.0,
+        color: '#D9D9D9',
+        level: 'NONE',
       },
       {
         name: '3주차',
         value: 1800.0,
+        color: '#D9D9D9',
+        level: 'NONE',
       },
       {
         name: '4주차',
         value: 300.0,
+        color: '#D9D9D9',
+        level: 'NONE',
       },
       {
         name: '5주차',
         value: 2500.0,
+        color: '#D9D9D9',
+        level: 'NONE',
       },
     ],
   },
