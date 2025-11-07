@@ -43,8 +43,13 @@ export const WaterReport = ({
                 <button
                   type="button"
                   className="relative rounded-[6px] bg-[#7850FB] w-5"
-                  onMouseEnter={() => setIsTooltipVisible(waterItem.name)}
-                  onMouseLeave={() => setIsTooltipVisible(null)}
+                  onClick={() => {
+                    if (isTooltipVisible === waterItem.name) {
+                      setIsTooltipVisible(null);
+                    } else {
+                      setIsTooltipVisible(waterItem.name);
+                    }
+                  }}
                   style={{
                     height: `${(waterItem.value / WATER_MAX_VALUE) * WATER_HEIGHT}px`,
                     backgroundColor:
