@@ -1,6 +1,6 @@
-import type { StressLevel } from '@/app/(record)/lifestyle/types/entitites';
 import StressImage from '@/assets/report/emoji_anger.png';
 import type { UserAverage } from '../_components/UserAverageChart';
+import type { WeeklyStress } from './types';
 
 export interface WeeklyReportMockData {
   defecationScore: {
@@ -9,14 +9,7 @@ export interface WeeklyReportMockData {
     dailyScore: number[];
   };
   userAverage: UserAverage;
-  stress: {
-    message: string;
-    image: string;
-    items: {
-      day: string;
-      stress: StressLevel | null;
-    }[];
-  };
+  stress: WeeklyStress;
 }
 
 // NOTE: 주간 리포트 Mock 데이터

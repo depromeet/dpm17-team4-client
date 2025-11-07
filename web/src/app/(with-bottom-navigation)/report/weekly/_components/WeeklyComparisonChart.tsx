@@ -1,16 +1,26 @@
 import { WeeklyMockData } from '../mockData';
 import RadialBarChart from './RadialBarChart';
 
-export function WeeklyComparisonChart() {
+
+export type DefecationScore ={
+    lastWeek: number;
+    thisWeek: number;
+    dailyScore: number[];
+}
+interface WeeklyComparisonChartProps{
+  defecationScore:DefecationScore
+}
+
+export function WeeklyComparisonChart({defecationScore}:WeeklyComparisonChartProps) {
   const chartSeries = [
-    WeeklyMockData.defecationScore.lastWeek,
-    WeeklyMockData.defecationScore.thisWeek,
+    defecationScore.lastWeek,
+    defecationScore.thisWeek,
   ];
-  const chartLabels = Object.keys(WeeklyMockData.defecationScore);
+  const chartLabels = Object.keys(defecationScore);
 
   return (
-    <section className="flex justify-between items-center mb-2 ">
-      <RadialBarChart chartSeries={chartSeries} chartLabels={chartLabels} />
+    <section className="flex gap-6 items-center mb-2 ">
+      <RadialBarChart chartSeries={chartSeries} chartLabels={chartLabels} defecationDailyScore={defecationScore.dailyScore}/>
       <div className="flex flex-col gap-3">
         <div className="flex gap-2.5">
           <div className="flex items-center gap-1">
@@ -29,7 +39,7 @@ export function WeeklyComparisonChart() {
         <div className="text-body1-m">
           이번 주 평균 점수가
           <br />
-          저번 주보다 -20점
+          저번 주보다 {defecationScore.lastWeek - defecationScore.thisWeek}점
           <br />
           하락했어요.
         </div>

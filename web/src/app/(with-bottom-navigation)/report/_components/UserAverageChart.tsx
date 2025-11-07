@@ -79,7 +79,7 @@ export function UserAverageChart({ userAverage }: UserAverageChartProps) {
         ></div>
         <div className="text-primary-600 text-body4-m">{userAverage.me}점</div>
       </div>
-      <div className="flex gap-2.5 justify-center items-center">
+      <div className="flex gap-2.5 items-center">
         <div className="text-body4-m text-gray-500 whitespace-nowrap w-[21px]">
           평균
         </div>
