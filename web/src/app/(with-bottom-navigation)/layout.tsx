@@ -5,6 +5,7 @@ import {
   useNavigationContext,
 } from '@/contexts/NavigationContext';
 import { BottomNavigation } from './home/_components/ui';
+import '@ncdai/react-wheel-picker/style.css';
 
 function LayoutContent({ children }: { children: React.ReactNode }) {
   const { navRef } = useNavigationContext();

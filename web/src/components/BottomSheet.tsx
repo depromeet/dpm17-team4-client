@@ -58,9 +58,9 @@ export const BottomSheet = ({
           transform: isOpen ? 'translateY(0)' : 'translateY(100%)',
         }}
       >
-        {/* Handle */}
+        {/* NOTE(seieun): handle 을 통해 바텀싯 제어를 할 수 없기 때문에 우선 주석 처리*/}
         <div className="flex justify-center pt-[0.75rem] pb-[0.5rem]">
-          <div className="w-[2.5rem] h-[0.25rem] bg-gray-300 rounded-full" />
+          {/* <div className="w-[2.5rem] h-[0.25rem] bg-gray-300 rounded-full" /> */}
         </div>
 
         {/* Content */}
