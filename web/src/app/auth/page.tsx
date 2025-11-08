@@ -20,6 +20,7 @@ import {
   getAccessToken,
   requestAccessToken,
   setAccessToken,
+  setRefreshToken,
   setUserInfo,
   type UserInfo,
 } from './_components/AuthSessionProvider';
@@ -98,7 +99,6 @@ export function AuthContent() {
             headers: {
               'Content-Type': 'application/json',
             },
-            credentials: 'include',
             body: JSON.stringify({
               code,
             }),
@@ -140,9 +140,12 @@ export function AuthContent() {
           }
         }
 
-        // accessToken이 있으면 저장
+        // accessToken과 refreshToken 저장
         if (data.accessToken) {
           setAccessToken(data.accessToken);
+        }
+        if (data.refreshToken) {
+          await setRefreshToken(data.refreshToken);
         }
       } catch (error) {
         console.error('Token 요청 에러:', error);
@@ -157,22 +160,6 @@ export function AuthContent() {
     const userInfo = extractUserInfo();
     if (!userInfo) return;
 
-    // 🧹 로그인 성공 직후: 오래된 .kkruk.com 쿠키 정리
-    try {
-      console.log('🧹 로그인 성공 - 오래된 쿠키 정리 시작');
-      console.log('🍪 정리 전 쿠키:', document.cookie);
-
-      // .kkruk.com 도메인 쿠키 삭제
-      document.cookie =
-        'refreshToken=; domain=.kkruk.com; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; Secure; SameSite=None';
-
-      // 짧은 딜레이 후 확인
-      setTimeout(() => {
-        console.log('🍪 정리 후 쿠키:', document.cookie);
-      }, 100);
-    } catch (error) {
-      console.error('⚠️ 쿠키 정리 실패:', error);
-    }
 
     setUserInfo(userInfo);
 

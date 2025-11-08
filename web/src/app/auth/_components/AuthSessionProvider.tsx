@@ -1,6 +1,7 @@
 'use client';
 
 import { API_ENDPOINTS } from '@/constants';
+import { isWebViewAvailable, postMessageToWebView, setupWebViewMessageListener } from '@/services/webViewService';
 export interface UserInfo {
   id: string;
   nickname: string;
@@ -11,12 +12,13 @@ export interface UserInfo {
 
 let accessToken: string | null = null;
 
+// Access Token: sessionStorage 사용 (탭 닫으면 자동 삭제, 더 안전)
 export const getAccessToken = () => {
   if (accessToken) {
     return accessToken;
   }
   try {
-    const storedToken = localStorage.getItem('accessToken');
+    const storedToken = sessionStorage.getItem('accessToken');
     if (storedToken) {
       accessToken = storedToken;
       return storedToken;
@@ -66,34 +68,145 @@ export const clearUserInfo = () => {
 
 export const clearAccessToken = () => {
   accessToken = null;
-  localStorage.removeItem('accessToken');
+  try {
+    sessionStorage.removeItem('accessToken');
+  } catch (_error) {}
 };
 
 export function setAccessToken(token: string | null) {
   accessToken = token;
-  if (token) {
-    localStorage.setItem('accessToken', token);
-  } else {
-    localStorage.removeItem('accessToken');
+  try {
+    if (token) {
+      sessionStorage.setItem('accessToken', token);
+    } else {
+      sessionStorage.removeItem('accessToken');
+    }
+  } catch (error) {
+    console.error('sessionStorage 저장 실패:', error);
   }
 }
 
+// Refresh Token: 앱의 보안 저장소 사용 (WebView 환경) 또는 localStorage (웹 환경)
+let refreshTokenPromiseResolvers: Map<string, { resolve: (value: string | null) => void; reject: (error: Error) => void }> = new Map();
+
+// WebView 메시지 리스너 초기화 (한 번만)
+let isMessageListenerSetup = false;
+if (typeof window !== 'undefined' && !isMessageListenerSetup) {
+  isMessageListenerSetup = true;
+  setupWebViewMessageListener((message) => {
+    if (message.type === 'GET_REFRESH_TOKEN_RESPONSE' || message.type === 'SAVE_REFRESH_TOKEN_RESPONSE') {
+      const requestId = message.requestId as string;
+      const resolver = refreshTokenPromiseResolvers.get(requestId);
+      if (resolver) {
+        if (message.success) {
+          resolver.resolve((message.token as string) || null);
+        } else {
+          resolver.reject(new Error(message.error as string || 'Failed'));
+        }
+        refreshTokenPromiseResolvers.delete(requestId);
+      }
+    }
+  });
+}
+
+export const getRefreshToken = async (): Promise<string | null> => {
+  // WebView 환경이면 앱의 보안 저장소에서 가져오기
+  if (isWebViewAvailable()) {
+    return new Promise((resolve, reject) => {
+      const requestId = `get_${Date.now()}_${Math.random()}`;
+      refreshTokenPromiseResolvers.set(requestId, { resolve, reject });
+      
+      postMessageToWebView({
+        type: 'GET_REFRESH_TOKEN',
+        requestId,
+      });
+      
+      // 타임아웃 설정 (5초)
+      setTimeout(() => {
+        if (refreshTokenPromiseResolvers.has(requestId)) {
+          refreshTokenPromiseResolvers.delete(requestId);
+          reject(new Error('Timeout: Failed to get refresh token from app'));
+        }
+      }, 5000);
+    });
+  }
+  
+  // 웹 환경이면 localStorage 사용 (fallback)
+  try {
+    return localStorage.getItem('refreshToken');
+  } catch (_error) {
+    return null;
+  }
+};
+
+export const setRefreshToken = async (token: string | null): Promise<void> => {
+  // WebView 환경이면 앱의 보안 저장소에 저장
+  if (isWebViewAvailable() && token) {
+    return new Promise((resolve, reject) => {
+      const requestId = `save_${Date.now()}_${Math.random()}`;
+      refreshTokenPromiseResolvers.set(requestId, {
+        resolve: () => resolve(),
+        reject,
+      });
+      
+      postMessageToWebView({
+        type: 'SAVE_REFRESH_TOKEN',
+        token,
+        requestId,
+      });
+      
+      // 타임아웃 설정 (5초)
+      setTimeout(() => {
+        if (refreshTokenPromiseResolvers.has(requestId)) {
+          refreshTokenPromiseResolvers.delete(requestId);
+          reject(new Error('Timeout: Failed to save refresh token to app'));
+        }
+      }, 5000);
+    });
+  }
+  
+  // 웹 환경이면 localStorage 사용 (fallback)
+  try {
+    if (token) {
+      localStorage.setItem('refreshToken', token);
+    } else {
+      localStorage.removeItem('refreshToken');
+    }
+  } catch (error) {
+    console.error('localStorage 저장 실패:', error);
+  }
+};
+
+export const clearRefreshToken = async (): Promise<void> => {
+  // WebView 환경이면 앱의 보안 저장소에서 삭제
+  if (isWebViewAvailable()) {
+    return setRefreshToken(null);
+  }
+  
+  // 웹 환경이면 localStorage에서 삭제
+  try {
+    localStorage.removeItem('refreshToken');
+  } catch (_error) {}
+};
+
 export async function requestAccessToken() {
-  console.log('🍪 현재 쿠키 정보:', document.cookie);
+  const refreshToken = await getRefreshToken();
+  
+  if (!refreshToken) {
+    throw new Error('Refresh token이 없습니다. 다시 로그인해주세요.');
+  }
 
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL || 'https://kkruk.com'}${API_ENDPOINTS.AUTH.REFRESH}`,
     {
       method: 'POST',
-      credentials: 'include', // ★ 쿠키 자동 동반 (HttpOnly 쿠키 포함)
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
+        Authorization: `Bearer ${refreshToken}`,
       },
     }
   );
-
-  console.log('📥 응답 상태:', res.status, res.statusText);
 
   if (!res.ok) {
     const errText = await res.text().catch(() => '');
@@ -106,7 +219,14 @@ export async function requestAccessToken() {
     return { accessToken: token };
   } else {
     const data = await res.json();
-    return typeof data === 'string' ? { accessToken: data } : data;
+    const result = typeof data === 'string' ? { accessToken: data } : data;
+    
+    // 새로운 refresh token이 있으면 업데이트
+    if (result.refreshToken) {
+      await setRefreshToken(result.refreshToken);
+    }
+    
+    return result;
   }
 }
 
@@ -117,7 +237,6 @@ export async function logout() {
       `${process.env.NEXT_PUBLIC_API_URL || 'https://kkruk.com'}${API_ENDPOINTS.AUTH.LOGOUT}`,
       {
         method: 'POST',
-        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json',
@@ -137,6 +256,7 @@ export async function logout() {
   } finally {
     // 로컬 저장소 및 메모리에서 토큰과 사용자 정보 제거
     clearAccessToken();
+    await clearRefreshToken();
     clearUserInfo();
 
     // 세션 캐시도 정리

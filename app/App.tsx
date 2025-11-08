@@ -159,7 +159,7 @@ export default function App() {
       <SafeAreaView style={styles.container} edges={['top', 'left', 'right', 'bottom']}>
         <WebView
           ref={webViewRef}
-          source={{ uri: 'https://kkruk.com/auth' }}
+          source={{ uri: 'https://cushionlike-shallowly-nancie.ngrok-free.dev' }}
           style={styles.webview}
           javaScriptEnabled={true}
           domStorageEnabled={true}
@@ -167,7 +167,7 @@ export default function App() {
           scalesPageToFit={true}
           allowsInlineMediaPlayback={true}
           mediaPlaybackRequiresUserAction={false}
-          onMessage={(event) => handleWebViewMessage(event, handleShowLockSettings)}
+          onMessage={(event) => handleWebViewMessage(event, webViewRef, handleShowLockSettings)}
           onShouldStartLoadWithRequest={(request) => {
             console.log('🔗 WebView 로드 요청:', request.url);
             
