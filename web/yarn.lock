@@ -614,6 +614,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@ncdai/react-wheel-picker@npm:^1.0.19":
+  version: 1.0.19
+  resolution: "@ncdai/react-wheel-picker@npm:1.0.19"
+  peerDependencies:
+    react: ^16.8 || ^17.0 || ^18.0 || ^19.0.0 || ^19.0.0-rc
+  checksum: 10c0/381465ba2a81953227038b20486da77488819687f8a8a964c69582f17fda2a11c43654f339a5e291b1cfb779313da1e667b77d12686ce55efb6c2d97956116a8
+  languageName: node
+  linkType: hard
+
 "@next/env@npm:15.5.2":
   version: 15.5.2
   resolution: "@next/env@npm:15.5.2"
@@ -3139,6 +3148,7 @@ __metadata:
   dependencies:
     "@biomejs/biome": "npm:2.2.4"
     "@hookform/resolvers": "npm:^5.2.1"
+    "@ncdai/react-wheel-picker": "npm:^1.0.19"
     "@tailwindcss/postcss": "npm:^4"
     "@tanstack/react-query": "npm:5.87.1"
     "@tanstack/react-query-devtools": "npm:5.87.1"
