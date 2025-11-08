@@ -21,6 +21,7 @@ const AppleLoginButton = () => {
           },
           body: JSON.stringify({
             redirectUri: `${origin}/home`,
+            responseType: 'code',
           }),
         }
       );
