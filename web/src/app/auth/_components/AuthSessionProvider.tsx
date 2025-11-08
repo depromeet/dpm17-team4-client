@@ -1,7 +1,10 @@
 'use client';
 
 import { API_ENDPOINTS } from '@/constants';
-import { isWebViewAvailable, postMessageToWebView, setupWebViewMessageListener } from '@/services/webViewService';
+import { isWebViewAvailable as checkWebViewAvailable, postMessageToWebView, setupWebViewMessageListener } from '@/services/webViewService';
+
+// isWebViewAvailable을 export하여 다른 곳에서도 사용 가능하도록
+export const isWebViewAvailable = checkWebViewAvailable;
 export interface UserInfo {
   id: string;
   nickname: string;
@@ -131,12 +134,8 @@ export const getRefreshToken = async (): Promise<string | null> => {
     });
   }
   
-  // 웹 환경이면 localStorage 사용 (fallback)
-  try {
-    return localStorage.getItem('refreshToken');
-  } catch (_error) {
-    return null;
-  }
+  // 웹 환경이면 refresh token 저장하지 않음 (보안상 이유)
+  return null;
 };
 
 export const setRefreshToken = async (token: string | null): Promise<void> => {
@@ -165,16 +164,8 @@ export const setRefreshToken = async (token: string | null): Promise<void> => {
     });
   }
   
-  // 웹 환경이면 localStorage 사용 (fallback)
-  try {
-    if (token) {
-      localStorage.setItem('refreshToken', token);
-    } else {
-      localStorage.removeItem('refreshToken');
-    }
-  } catch (error) {
-    console.error('localStorage 저장 실패:', error);
-  }
+  // 웹 환경이면 refresh token 저장하지 않음 (보안상 이유)
+  // 401 에러 발생 시 로그아웃 후 재로그인 유도
 };
 
 export const clearRefreshToken = async (): Promise<void> => {
@@ -183,10 +174,7 @@ export const clearRefreshToken = async (): Promise<void> => {
     return setRefreshToken(null);
   }
   
-  // 웹 환경이면 localStorage에서 삭제
-  try {
-    localStorage.removeItem('refreshToken');
-  } catch (_error) {}
+  // 웹 환경이면 refresh token을 저장하지 않으므로 아무것도 하지 않음
 };
 
 export async function requestAccessToken() {
