@@ -1,8 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import type { WheelPickerOption } from '@ncdai/react-wheel-picker';
+import { useMemo, useState } from 'react';
 import { PlayIcon } from '@/components';
-import { getKoreanDate } from '@/utils/utils-date';
+import { formatToISOString, getKoreanDate } from '@/utils/utils-date';
+import { WeekPickerBottomSheet } from './WeekPickerBottomSheet';
 
 /**
  * 주어진 날짜의 해당 주 월요일을 반환합니다.
@@ -35,34 +37,126 @@ const formatDateWithDay = (date: Date): string => {
   return `${month}월 ${day}일`;
 };
 
-export function SelectDate() {
+export function SelectDate({
+  onWeekChange,
+}: {
+  onWeekChange?: (start: Date, end: Date) => void;
+}) {
   const today = getKoreanDate();
-  const [weekStartDate, _setWeekStartDate] = useState<Date>(getMonday(today));
+  const [weekStartDate, setWeekStartDate] = useState<Date>(getMonday(today));
+  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
 
   const weekEndDate = getSunday(weekStartDate);
 
-  const nextWeekMonday = new Date(weekStartDate);
-  nextWeekMonday.setDate(nextWeekMonday.getDate() + 7);
+  const handleWeekChange = (delta: number) => {
+    const newStart = new Date(weekStartDate);
+    newStart.setDate(newStart.getDate() + delta * 7);
+    if (delta > 0) {
+      const nextMonday = new Date(weekStartDate);
+      nextMonday.setDate(nextMonday.getDate() + 7);
+      if (nextMonday > today) {
+        return;
+      }
+    }
+    const newEnd = getSunday(newStart);
 
-  const isNextDisabled = nextWeekMonday > today;
+    setWeekStartDate(newStart);
+    onWeekChange?.(newStart, newEnd);
+  };
+
+  const isNextDisabled = (() => {
+    const nextMonday = new Date(weekStartDate);
+    nextMonday.setDate(nextMonday.getDate() + 7);
+    return nextMonday > today;
+  })();
+
+  const weeks = useMemo(() => {
+    const currentMonday = getMonday(today);
+    return Array.from({ length: 12 }, (_, index) => {
+      const start = new Date(currentMonday);
+      start.setDate(start.getDate() - index * 7);
+      const end = getSunday(start);
+      return {
+        label: `${formatDateWithDay(start)} - ${formatDateWithDay(end)}`,
+        start,
+        end,
+      };
+    });
+  }, [today]);
+
+  const weekOptions = useMemo<WheelPickerOption[]>(() => {
+    return weeks.map((week) => ({
+      label: week.label,
+      value: formatToISOString(week.start),
+    }));
+  }, [weeks]);
+
+  const currentWeekValue = useMemo(
+    () => formatToISOString(weekStartDate),
+    [weekStartDate]
+  );
+
+  const handleWeekSelect = (start: Date, end: Date) => {
+    setWeekStartDate(start);
+    onWeekChange?.(start, end);
+    setIsBottomSheetOpen(false);
+  };
+
+  const handleApply = (selectedValue: string) => {
+    if (!selectedValue) {
+      setIsBottomSheetOpen(false);
+      return;
+    }
+
+    //NOTE(seieun): wheel picker 에서 선택한 value(ex. 2025-11-07) 와 week.start(ex. 2025-11-03) 를 비교하여 선택한 주를 찾습니다.
+    const selected = weeks.find(
+      (week) => formatToISOString(week.start) === selectedValue
+    );
+    if (selected) {
+      handleWeekSelect(selected.start, selected.end);
+    } else {
+      setIsBottomSheetOpen(false);
+    }
+  };
 
   return (
-    <div className="flex justify-center items-center gap-4 py-4 mt-3">
-      <button type="button" className="p-2">
-        <PlayIcon type="left" size="16" />
-      </button>
-      <span className="font-medium">
-        {formatDateWithDay(weekStartDate)} - {formatDateWithDay(weekEndDate)}
-      </span>
-      <button
-        type="button"
-        disabled={isNextDisabled}
-        className={`p-2 ${
-          isNextDisabled ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer'
-        }`}
-      >
-        <PlayIcon type="right" size="16" />
-      </button>
-    </div>
+    <>
+      <div className="flex justify-center items-center gap-4 py-4 mt-3">
+        <button
+          type="button"
+          className="p-2"
+          onClick={() => handleWeekChange(-1)}
+        >
+          <PlayIcon type="left" size="16" />
+        </button>
+        <button
+          type="button"
+          onClick={() => setIsBottomSheetOpen(true)}
+          className="font-medium text-white text-center px-3 py-1 rounded-lg bg-gray-700/30"
+        >
+          {formatDateWithDay(weekStartDate)} - {formatDateWithDay(weekEndDate)}
+        </button>
+        <button
+          type="button"
+          className={`p-2 ${
+            isNextDisabled ? 'cursor-not-allowed opacity-40' : ''
+          }`}
+          onClick={() => handleWeekChange(1)}
+          disabled={isNextDisabled}
+        >
+          <PlayIcon type="right" size="16" />
+        </button>
+      </div>
+
+      <WeekPickerBottomSheet
+        isOpen={isBottomSheetOpen}
+        title="주 선택"
+        options={weekOptions}
+        initialValue={currentWeekValue ?? weekOptions[0]?.value ?? ''}
+        onApply={handleApply}
+        onClose={() => setIsBottomSheetOpen(false)}
+        applyLabel="적용"
+      />
+    </>
   );
 }

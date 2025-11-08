@@ -179,3 +179,14 @@ export const getKoreanDate = (): Date => {
   );
   return koreanTime;
 };
+
+/**
+ * 날짜 문자열을 "YYYY-MM-DD" 형식으로 변환합니다.
+ * @param date - Date 객체 (예: new Date(2025, 9, 1))
+ * @returns "YYYY-MM-DD" 형식의 문자열 (예: "2025-10-01")
+ * @example
+ * formatToISOString(new Date(2025, 9, 1)) // "2025-10-01"
+ */
+export const formatToISOString = (date: Date): string => {
+  return date.toISOString().split('T')[0];
+};
