@@ -1,11 +1,15 @@
 import { API_ENDPOINTS } from '@/constants';
 import apiClient from '@/lib/api-client';
-import type { ReportDataResponseDto } from '@/types/dto/report.dto';
+import type {
+  MonthlyReportResponseDto,
+  ReportDataResponseDto,
+} from '@/types/dto/report.dto';
 
 interface ApiResponse<T> {
   status: number;
   message: string;
   data: T;
+  externalLink?: string;
 }
 
 export const reportApi = {
@@ -18,6 +22,20 @@ export const reportApi = {
 
     return apiClient.get<ApiResponse<ReportDataResponseDto>>(
       API_ENDPOINTS.REPORT.BASE
+    );
+  },
+  reportMonthlyData: (params?: { year?: number; month?: number }) => {
+    const payload: { year?: number; month?: number } = {};
+    if (typeof params?.year === 'number') {
+      payload.year = params.year;
+    }
+    if (typeof params?.month === 'number') {
+      payload.month = params.month;
+    }
+
+    return apiClient.post<ApiResponse<MonthlyReportResponseDto>>(
+      API_ENDPOINTS.REPORT.MONTHLY,
+      payload
     );
   },
 };

@@ -15,6 +15,7 @@ export const API_ENDPOINTS = {
 
   REPORT: {
     BASE: '/api/v1/reports/daily',
+    MONTHLY: '/api/v1/reports/monthly',
   },
 
   ACTIVITY_RECORDS: {
