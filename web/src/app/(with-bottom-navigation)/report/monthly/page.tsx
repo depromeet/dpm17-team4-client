@@ -25,9 +25,35 @@ export default function MonthlyReportPage() {
   const [month, setMonth] = useState(currentMonth);
   const [year, setYear] = useState(currentYear);
 
-  const { data } = useMonthlyReportQuery({ year, month });
+  const { data, isLoading, isError } = useMonthlyReportQuery({ year, month });
   const reportData = data;
   const isNextDisabled = year === currentYear && month === currentMonth;
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4" />
+          <p className="text-gray-400">데이터를 불러오는 중...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+        <div className="text-center px-6">
+          <p className="text-white text-body1-sb mb-2">
+            월간 리포트를 불러오는 중 오류가 발생했어요.
+          </p>
+          <p className="text-gray-400 text-body3-m">
+            잠시 후 다시 시도하거나, 네트워크 연결을 확인해 주세요.
+          </p>
+        </div>
+      </div>
+    );
+  }
   const hasMonthlyData =
     reportData?.recordCount.totalRecordCounts &&
     reportData?.recordCount.totalRecordCounts > 0;
@@ -97,8 +123,8 @@ export default function MonthlyReportPage() {
           displayLabels={weekLabels}
         />
       )}
-      <MonthlyFoodReport />
-      <NWaterReport />
+      <MonthlyFoodReport food={reportData.food} />
+      <NWaterReport water={reportData.water} />
       {reportData.stress && (
         <StressReport stressData={reportData.stress} type="monthly" />
       )}

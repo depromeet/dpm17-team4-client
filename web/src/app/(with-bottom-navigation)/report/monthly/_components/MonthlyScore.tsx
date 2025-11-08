@@ -1,10 +1,14 @@
 import Image from 'next/image';
 import { getDateFromDateString, getDayName } from '@/utils/utils-date';
-import type { MonthlyScore } from '../types';
+import type { MonthlyScore as MonthlyScoreType } from '../types';
 import BestImage from './assets/Best.png';
 import WorstImage from './assets/Worst.png';
 
-export function MonthlyScore({ monthlyScore }: { monthlyScore: MonthlyScore }) {
+export function MonthlyScore({
+  monthlyScore,
+}: {
+  monthlyScore: MonthlyScoreType;
+}) {
   return (
     <div className="bg-[#1B1D20] rounded-[14px] py-7 px-6 w-full">
       <p className="text-[#4E5560] text-body3-m mb-2">월간 기록 분석 결과</p>
