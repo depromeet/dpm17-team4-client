@@ -142,7 +142,7 @@ export function TimeAnalysis({
         ))}
       </div>
       {/* 경고 메시지 */}
-      <div className="mt-6 bg-red-100 rounded-lg px-4 py-3">
+      <div className="mt-6 bg-red-100 rounded-lg px-[13.5px] py-[8px]">
         <p className="text-white text-body4-m">
           소요 시간이 10분이 넘으면 변비·치질 위험도가 올라가요
         </p>
