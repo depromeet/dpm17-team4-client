@@ -1,6 +1,8 @@
 'use client';
 import Image from 'next/image';
+import { useMemo, useState } from 'react';
 import EmptyMemoIcon from '@/assets/report/monthly_memo.png';
+import { getKoreanDate } from '@/utils/utils-date';
 import { DefecationScoreChart } from '../_components/DefecationScoreChart';
 import { UserAverageChart } from '../_components/UserAverageChart';
 import { SelectDate } from './_components/SelectWeekDate';
@@ -20,7 +22,34 @@ const allDays: DayOfWeek[] = [
   'SUNDAY',
 ];
 
+const getMonday = (date: Date): Date => {
+  const d = new Date(date);
+  const day = d.getDay();
+  const diff = day === 0 ? -6 : 1 - day;
+  d.setDate(d.getDate() + diff);
+  return d;
+};
+
+const getSunday = (date: Date): Date => {
+  const d = new Date(date);
+  const day = d.getDay();
+  const diff = day === 0 ? 0 : 7 - day;
+  d.setDate(d.getDate() + diff);
+  return d;
+};
+
 export default function WeeklyReportPage() {
+  const today = useMemo(() => getKoreanDate(), []);
+  const initialWeekStart = useMemo(() => getMonday(today), [today]);
+  const [weekStartDate, setWeekStartDate] = useState<Date>(initialWeekStart);
+  const [selectedWeekRange, setSelectedWeekRange] = useState<{
+    start: Date;
+    end: Date;
+  }>({
+    start: initialWeekStart,
+    end: getSunday(initialWeekStart),
+  });
+
   const hasWeeklyData =
     WeeklyMockData.defecationScore?.dailyScore?.length &&
     WeeklyMockData.defecationScore.dailyScore.length > 0;
@@ -29,7 +58,14 @@ export default function WeeklyReportPage() {
     return (
       <div className="bg-report-empty h-[calc(100vh-180px)] w-full flex flex-col">
         <div className="px-4 pt-6 flex justify-center">
-          <SelectDate />
+          <SelectDate
+            today={today}
+            weekStartDate={weekStartDate}
+            onWeekChange={(start, end) => {
+              setWeekStartDate(start);
+              setSelectedWeekRange({ start, end });
+            }}
+          />
         </div>
         <div className="flex flex-1 flex-col items-center justify-center text-center px-6">
           <Image
@@ -55,7 +91,14 @@ export default function WeeklyReportPage() {
 
   return (
     <div className="px-4 flex flex-col gap-5">
-      <SelectDate />
+      <SelectDate
+        today={today}
+        weekStartDate={weekStartDate}
+        onWeekChange={(start, end) => {
+          setWeekStartDate(start);
+          setSelectedWeekRange({ start, end });
+        }}
+      />
       <WeeklyComparisonChart defecationScore={WeeklyMockData.defecationScore} />
       <DefecationScoreChart
         scores={WeeklyMockData.defecationScore.dailyScore}

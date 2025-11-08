@@ -3,8 +3,8 @@
 import type { WheelPickerOption } from '@ncdai/react-wheel-picker';
 import { useMemo, useState } from 'react';
 import { PlayIcon } from '@/components';
-import { formatToISOString, getKoreanDate } from '@/utils/utils-date';
-import { WeekPickerBottomSheet } from './WeekPickerBottomSheet';
+import { formatToISOString } from '@/utils/utils-date';
+import { WheelPickerBottomSheet } from '../../_components/WheelPickerBottomsheet';
 
 /**
  * 주어진 날짜의 해당 주 월요일을 반환합니다.
@@ -38,12 +38,14 @@ const formatDateWithDay = (date: Date): string => {
 };
 
 export function SelectDate({
+  today,
+  weekStartDate,
   onWeekChange,
 }: {
+  today: Date;
+  weekStartDate: Date;
   onWeekChange?: (start: Date, end: Date) => void;
 }) {
-  const today = getKoreanDate();
-  const [weekStartDate, setWeekStartDate] = useState<Date>(getMonday(today));
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
 
   const weekEndDate = getSunday(weekStartDate);
@@ -60,7 +62,6 @@ export function SelectDate({
     }
     const newEnd = getSunday(newStart);
 
-    setWeekStartDate(newStart);
     onWeekChange?.(newStart, newEnd);
   };
 
@@ -81,7 +82,7 @@ export function SelectDate({
         start,
         end,
       };
-    });
+    }).reverse();
   }, [today]);
 
   const weekOptions = useMemo<WheelPickerOption[]>(() => {
@@ -91,13 +92,13 @@ export function SelectDate({
     }));
   }, [weeks]);
 
+  console.log(weekOptions, weeks);
   const currentWeekValue = useMemo(
     () => formatToISOString(weekStartDate),
     [weekStartDate]
   );
 
   const handleWeekSelect = (start: Date, end: Date) => {
-    setWeekStartDate(start);
     onWeekChange?.(start, end);
     setIsBottomSheetOpen(false);
   };
@@ -114,6 +115,7 @@ export function SelectDate({
     );
     if (selected) {
       handleWeekSelect(selected.start, selected.end);
+      onWeekChange?.(selected.start, selected.end);
     } else {
       setIsBottomSheetOpen(false);
     }
@@ -148,7 +150,7 @@ export function SelectDate({
         </button>
       </div>
 
-      <WeekPickerBottomSheet
+      <WheelPickerBottomSheet
         isOpen={isBottomSheetOpen}
         title="주 선택"
         options={weekOptions}
