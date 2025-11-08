@@ -73,7 +73,7 @@ export const WaterForm = memo(({ waterCups, setWaterCups }: WaterFormProps) => {
         </div>
 
         {/* Progress Bar Container */}
-        <div className="relative w-full max-w-[20rem] mx-auto">
+        <div className="relative w-full">
           {/* Slider Input */}
           <input
             type="range"
@@ -86,9 +86,9 @@ export const WaterForm = memo(({ waterCups, setWaterCups }: WaterFormProps) => {
         </div>
 
         {/* Range Labels */}
-        <div className="flex justify-between w-full max-w-[20rem] mx-auto mt-[1rem]">
-          <span className="text-body2 text-[#95E6FF]">0잔</span>
-          <span className="text-body2 text-blue-400">10잔 이상</span>
+        <div className="flex justify-between w-full">
+          <span className="text-body2-sb text-[#95E6FF]">0잔</span>
+          <span className="text-body2-sb text-blue-400">10잔 이상</span>
         </div>
       </div>
     </div>
