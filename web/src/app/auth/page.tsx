@@ -77,6 +77,82 @@ export function AuthContent() {
     if (error) setError(decodeURIComponent(error));
   }, [searchParams]);
 
+  // code 파라미터가 있으면 token 엔드포인트로 요청
+  useEffect(() => {
+    const code = searchParams.get('code');
+    const provider = searchParams.get('provider') || 'kakao'; // 기본값은 kakao
+
+    if (!code) return;
+
+    const handleTokenRequest = async () => {
+      try {
+        const tokenEndpoint =
+          provider === 'apple'
+            ? API_ENDPOINTS.AUTH.APPLE_TOKEN
+            : API_ENDPOINTS.AUTH.KAKAO_TOKEN;
+
+        const response = await fetch(
+          `${API_BASE}${tokenEndpoint}`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+            body: JSON.stringify({
+              code,
+            }),
+          }
+        );
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error('❌ Token 요청 실패:', errorText);
+          setError('토큰 요청에 실패했습니다.');
+          return;
+        }
+
+        const data = await response.json();
+        console.log('✅ Token 요청 성공:', data);
+
+        // URL에서 code와 provider 파라미터 제거
+        const url = new URL(window.location.href);
+        url.searchParams.delete('code');
+        url.searchParams.delete('provider');
+        window.history.replaceState({}, '', url.toString());
+
+        // 응답에서 사용자 정보가 오면 처리
+        if (data.id || data.user) {
+          const userInfo = data.user || {
+            id: data.id,
+            nickname: data.nickname,
+            profileImage: data.profileImage,
+            isNew: data.isNew,
+            providerType: data.providerType || provider.toUpperCase(),
+          };
+          setUserInfo(userInfo);
+
+          // 신규 사용자일 때만 약관 동의 바텀시트 표시
+          if (userInfo.isNew) {
+            router.push(`${PAGE_ROUTES.AUTH}/terms-bottomsheet`);
+          } else {
+            router.push('/home');
+          }
+        }
+
+        // accessToken이 있으면 저장
+        if (data.accessToken) {
+          setAccessToken(data.accessToken);
+        }
+      } catch (error) {
+        console.error('Token 요청 에러:', error);
+        setError('토큰 요청 중 오류가 발생했습니다.');
+      }
+    };
+
+    handleTokenRequest();
+  }, [searchParams, router]);
+
   useLayoutEffect(() => {
     const userInfo = extractUserInfo();
     if (!userInfo) return;
