@@ -29,6 +29,7 @@ import KakaoLoginButton from './_components/KakaoLoginButton';
 
 const API_BASE = process.env.NEXT_PUBLIC_API || 'https://kkruk.com';
 const KAKAO_LOGIN_INITIATE_URL = `${API_BASE}${API_ENDPOINTS.AUTH.KAKAO_LOGIN}`;
+const APPLE_LOGIN_INITIATE_URL = `${API_BASE}${API_ENDPOINTS.AUTH.APPLE_LOGIN}`;
 
 export function AuthContent() {
   const router = useRouter();
@@ -81,7 +82,9 @@ export function AuthContent() {
   // code 파라미터가 있으면 token 엔드포인트로 요청
   useEffect(() => {
     const code = searchParams.get('code');
-    const provider = searchParams.get('provider') || 'kakao'; // 기본값은 kakao
+    // provider 또는 providerType 파라미터 확인 (백엔드 서버가 providerType으로 보낼 수 있음)
+    const providerParam = searchParams.get('provider') || searchParams.get('providerType');
+    const provider = providerParam ? providerParam.toLowerCase() : 'kakao'; // 기본값은 kakao
 
     if (!code) return;
 
@@ -92,8 +95,16 @@ export function AuthContent() {
             ? API_ENDPOINTS.AUTH.APPLE_TOKEN
             : API_ENDPOINTS.AUTH.KAKAO_TOKEN;
 
+        const tokenUrl = `${API_BASE}${tokenEndpoint}`;
+        console.log('🔐 Token 요청 시작:', {
+          provider,
+          tokenUrl,
+          hasCode: !!code,
+          code: code.substring(0, 20) + '...',
+        });
+
         const response = await fetch(
-          `${API_BASE}${tokenEndpoint}`,
+          tokenUrl,
           {
             method: 'POST',
             headers: {
@@ -105,7 +116,14 @@ export function AuthContent() {
           }
         );
 
-        if (!response.ok) {
+        console.log('📡 Token 응답:', {
+          status: response.status,
+          ok: response.ok,
+          url: response.url,
+        });
+
+        // 302 리디렉션도 성공으로 처리 (리디렉션은 fetch가 자동으로 따라감)
+        if (!response.ok && response.status !== 302) {
           const errorText = await response.text();
           console.error('❌ Token 요청 실패:', errorText);
           setError('토큰 요청에 실패했습니다.');
@@ -259,7 +277,13 @@ export function AuthContent() {
             <input type="hidden" name="responseType" value="code" />
             <KakaoLoginButton />
           </form>
-          {showAppleLogin && <AppleLoginButton />}
+          {showAppleLogin && (
+            <form method="POST" action={APPLE_LOGIN_INITIATE_URL}>
+              <input type="hidden" name="redirectUri" value={redirectUri} />
+              <input type="hidden" name="responseType" value="code" />
+              <AppleLoginButton />
+            </form>
+          )}
         </div>
       </div>
       {/* 하단 여백 */}
