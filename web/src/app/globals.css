@@ -41,6 +41,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.bg-report-empty {
+  background: linear-gradient(180deg, #07060f 40%, #3a3860 100%);
+}
+
 /* 웹뷰에서 스크롤바 숨기기 */
 ::-webkit-scrollbar {
   display: none;
