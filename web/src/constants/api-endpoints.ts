@@ -3,8 +3,10 @@ export const API_ENDPOINTS = {
   AUTH: {
     KAKAO_LOGIN: `/api/v1/auth/kakao/login`,
     KAKAO_CALLBACK: `/api/v1/auth/kakao/callback`,
+    KAKAO_TOKEN: `/api/v1/auth/kakao/token`,
     APPLE_LOGIN: `/api/v1/auth/apple/login`,
     APPLE_CALLBACK: `/api/v1/auth/apple/callback`,
+    APPLE_TOKEN: `/api/v1/auth/apple/token`,
     REFRESH: '/api/v1/auth/refresh',
     LOGOUT: '/api/v1/auth/logout',
   },

@@ -147,7 +147,6 @@ export default function ProfilePageContent() {
         return '남성';
       case 'female':
         return '여성';
-      case 'none':
       default:
         return '선택 안 함';
     }

@@ -73,7 +73,7 @@ export function StressAnalysisChart({
       y: {
         title: { formatter: () => '' },
       },
-      custom: ({ series, seriesIndex, dataPointIndex, w }) => {
+      custom: ({ series, seriesIndex, dataPointIndex }) => {
         const value = series[seriesIndex][dataPointIndex];
         if (value === null) {
           return '';
