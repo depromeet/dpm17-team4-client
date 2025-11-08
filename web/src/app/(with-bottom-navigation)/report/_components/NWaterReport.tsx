@@ -1,20 +1,28 @@
 'use client';
 
 import { useState } from 'react';
-import { mockMonthlyReportData } from '../monthly/mockData';
+import type { WeeklyMonthlyWater } from '../monthly/types';
 import { Tooltip } from './Tooltip';
 
 const WATER_MAX_VALUE = 2000;
 const WATER_HEIGHT = 164;
 
-export const NWaterReport = () => {
+type NWaterReportProps = {
+  water?: WeeklyMonthlyWater;
+};
+
+export const NWaterReport = ({ water }: NWaterReportProps) => {
   const [isTooltipVisible, setIsTooltipVisible] = useState<string | null>(null);
+
+  if (!water) {
+    return null;
+  }
 
   return (
     <div className="bg-[#1B1D20] rounded-[14px] py-7 px-6 w-full">
       <p className="text-[#4E5560] text-body3-m mb-2">물 섭취량 분석 결과</p>
       <p className="text-white text-[18px] font-semibold mb-6 whitespace-pre-line">
-        {mockMonthlyReportData.water.message}
+        {water.message}
       </p>
       <div className="flex flex-col items-center justify-center gap-10 w-full relative pb-[73px]">
         {['충분', '보통', '부족'].map((item) => (
@@ -30,7 +38,7 @@ export const NWaterReport = () => {
         ))}
 
         <div className="flex items-center gap-7 absolute top-[9px] right-[6px] left-[61px]">
-          {mockMonthlyReportData.water.items.map((waterItem) => (
+          {water.items.map((waterItem) => (
             <div key={waterItem.name} className="w-5 h-[194px]">
               <div className="h-full w-full flex flex-col gap-3 items-center justify-end">
                 <button
