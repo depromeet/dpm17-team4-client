@@ -51,6 +51,9 @@ export function SelectDate({
     return months.map(({ label, value }) => ({ label, value }));
   }, [months]);
 
+  const earliestMonth = months[0];
+  const latestMonth = months.length > 0 ? months[months.length - 1] : undefined;
+
   const currentValue = useMemo(
     () => formatYearMonthKey(currentYear, currentMonth),
     [currentMonth, currentYear]
@@ -76,20 +79,56 @@ export function SelectDate({
   };
 
   const handlePrevMonth = () => {
+    if (!earliestMonth) return;
     const prev = new Date(currentYear, currentMonth - 2, 1);
-    handleMonthSelect(prev.getFullYear(), prev.getMonth() + 1);
+    const prevYear = prev.getFullYear();
+    const prevMonth = prev.getMonth() + 1;
+    if (
+      prevYear < earliestMonth.year ||
+      (prevYear === earliestMonth.year && prevMonth < earliestMonth.month)
+    ) {
+      return;
+    }
+    handleMonthSelect(prevYear, prevMonth);
   };
 
   const handleNextMonth = () => {
-    if (isNextDisabled) return;
+    if (!latestMonth) return;
     const next = new Date(currentYear, currentMonth, 1);
-    handleMonthSelect(next.getFullYear(), next.getMonth() + 1);
+    const nextYear = next.getFullYear();
+    const nextMonth = next.getMonth() + 1;
+    if (
+      nextYear > latestMonth.year ||
+      (nextYear === latestMonth.year && nextMonth > latestMonth.month)
+    ) {
+      return;
+    }
+    if (isNextDisabled) return;
+    handleMonthSelect(nextYear, nextMonth);
   };
+
+  const isPrevDisabled = useMemo(() => {
+    if (!earliestMonth) return false;
+    const prev = new Date(currentYear, currentMonth - 2, 1);
+    const prevYear = prev.getFullYear();
+    const prevMonth = prev.getMonth() + 1;
+    return (
+      prevYear < earliestMonth.year ||
+      (prevYear === earliestMonth.year && prevMonth < earliestMonth.month)
+    );
+  }, [currentMonth, currentYear, earliestMonth]);
 
   return (
     <>
       <div className="flex justify-center items-center gap-4 py-4">
-        <button type="button" className="p-2" onClick={handlePrevMonth}>
+        <button
+          type="button"
+          className={`p-2 ${
+            isPrevDisabled ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer'
+          }`}
+          onClick={handlePrevMonth}
+          disabled={isPrevDisabled}
+        >
           <PlayIcon type="left" size="16" />
         </button>
         <button
