@@ -47,12 +47,31 @@ export function SelectDate({
   onWeekChange?: (start: Date, end: Date) => void;
 }) {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+  const weeks = useMemo(() => {
+    const currentMonday = getMonday(today);
+    return Array.from({ length: 24 }, (_, index) => {
+      const start = new Date(currentMonday);
+      start.setDate(start.getDate() - index * 7);
+      const end = getSunday(start);
+      return {
+        label: `${formatDateWithDay(start)} - ${formatDateWithDay(end)}`,
+        start,
+        end,
+      };
+    }).reverse();
+  }, [today]);
 
   const weekEndDate = getSunday(weekStartDate);
 
   const handleWeekChange = (delta: number) => {
     const newStart = new Date(weekStartDate);
     newStart.setDate(newStart.getDate() + delta * 7);
+    const earliestWeek = weeks[0];
+    if (delta < 0 && earliestWeek) {
+      if (newStart.getTime() < earliestWeek.start.getTime()) {
+        return;
+      }
+    }
     if (delta > 0) {
       const nextMonday = new Date(weekStartDate);
       nextMonday.setDate(nextMonday.getDate() + 7);
@@ -71,19 +90,11 @@ export function SelectDate({
     return nextMonday > today;
   })();
 
-  const weeks = useMemo(() => {
-    const currentMonday = getMonday(today);
-    return Array.from({ length: 12 }, (_, index) => {
-      const start = new Date(currentMonday);
-      start.setDate(start.getDate() - index * 7);
-      const end = getSunday(start);
-      return {
-        label: `${formatDateWithDay(start)} - ${formatDateWithDay(end)}`,
-        start,
-        end,
-      };
-    }).reverse();
-  }, [today]);
+  const isPrevDisabled = useMemo(() => {
+    const earliestWeek = weeks[0];
+    if (!earliestWeek) return false;
+    return weekStartDate.getTime() <= earliestWeek.start.getTime();
+  }, [weekStartDate, weeks]);
 
   const weekOptions = useMemo<WheelPickerOption[]>(() => {
     return weeks.map((week) => ({
@@ -114,7 +125,6 @@ export function SelectDate({
     );
     if (selected) {
       handleWeekSelect(selected.start, selected.end);
-      onWeekChange?.(selected.start, selected.end);
     } else {
       setIsBottomSheetOpen(false);
     }
@@ -125,7 +135,10 @@ export function SelectDate({
       <div className="flex justify-center items-center gap-4 py-4 mt-3">
         <button
           type="button"
-          className="p-2"
+          className={`p-2 ${
+            isPrevDisabled ? 'cursor-not-allowed opacity-40' : ''
+          }`}
+          disabled={isPrevDisabled}
           onClick={() => handleWeekChange(-1)}
         >
           <PlayIcon type="left" size="16" />
