@@ -9,6 +9,7 @@ export type UserAverage = {
   me: number;
   average: number;
   topPercent: number;
+  titleMessage?: string;
 };
 
 interface UserAverageChartProps {

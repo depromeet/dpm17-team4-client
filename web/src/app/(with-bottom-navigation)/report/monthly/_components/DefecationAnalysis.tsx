@@ -1,9 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { DEFECATION_COLOR } from '@/app/(record)/defecation/_components/constants';
+import { useState } from 'react';
 import { cn } from '@/utils/utils-cn';
-import { getShapeLabel } from '../../daily/utils';
 import { mockMonthlyReportData } from '../mockData';
 import { ColorAnalysis } from './ColorAnalysis';
 import { PainAnalysis } from './PainAnalysis';
@@ -23,104 +21,17 @@ const filterTabs: FilterType[] = [
 
 export function DefecationAnalysis() {
   const [selectedFilter, setSelectedFilter] = useState<FilterType>('모양');
-  const [displayMessage, setDisplayMessage] = useState<string>(
-    '배변 기록 분석 결과'
-  );
 
-  // 필터 변경 시 메시지 업데이트
-  useEffect(() => {
-    switch (selectedFilter) {
-      case '모양': {
-        const shapeItems = mockMonthlyReportData.shape;
-        if (shapeItems && shapeItems.length > 0) {
-          const mostFrequentShape = shapeItems.reduce((prev, current) =>
-            prev.count > current.count ? prev : current
-          );
-          const shapeLabel = getShapeLabel(mostFrequentShape.shape);
-          setDisplayMessage(
-            `가장 많이 확인한 모양은 \n${shapeLabel} 모양이에요`
-          );
-        } else {
-          setDisplayMessage('배변 기록 분석 결과');
-        }
-        break;
-      }
-      case '소요 시간': {
-        const distribution = mockMonthlyReportData.timeDistribution;
-        const total =
-          distribution.within5min +
-          distribution.over5min +
-          distribution.over10min;
-        if (total > 0) {
-          const over10minPercent = (distribution.over10min / total) * 100;
-          const over5minPercent = (distribution.over5min / total) * 100;
+  const filterMessages: Record<FilterType, string | undefined> = {
+    모양: mockMonthlyReportData.shape.titleMessage,
+    '소요 시간': mockMonthlyReportData.timeDistribution.titleMessage,
+    색상: mockMonthlyReportData.color.titleMessage,
+    복통: mockMonthlyReportData.pain.titleMessage,
+    '배변 시각': mockMonthlyReportData.timeOfDay.titleMessage,
+  };
 
-          if (over10minPercent > 50) {
-            setDisplayMessage('배변 소요 시간은 주로 \n10분 이상이었어요');
-          } else if (over5minPercent > 50) {
-            setDisplayMessage('배변 소요 시간은 주로 \n5분 이상이었어요');
-          } else {
-            setDisplayMessage('배변 소요 시간은 주로 \n5분 이내였어요');
-          }
-        } else {
-          setDisplayMessage('배변 기록 분석 결과');
-        }
-        break;
-      }
-      case '색상': {
-        const colorItems = mockMonthlyReportData.color.items;
-        if (colorItems && colorItems.length > 0) {
-          const mostFrequentColor = colorItems.reduce((prev, current) =>
-            prev.count > current.count ? prev : current
-          );
-          const colorKey =
-            mostFrequentColor.color as keyof typeof DEFECATION_COLOR;
-          const colorLabel = DEFECATION_COLOR[colorKey]?.[0] || '';
-          setDisplayMessage(`가장 많이 확인한 색상은 \n${colorLabel}이에요`);
-        } else {
-          setDisplayMessage('배변 기록 분석 결과');
-        }
-        break;
-      }
-      case '배변 시각': {
-        const timeOfDayItems = mockMonthlyReportData.timeOfDay;
-        if (timeOfDayItems && timeOfDayItems.length > 0) {
-          const mostFrequentPeriod = timeOfDayItems.reduce((prev, current) =>
-            prev.count > current.count ? prev : current
-          );
-          const periodLabel =
-            mostFrequentPeriod.period === 'MORNING'
-              ? '오전'
-              : mostFrequentPeriod.period === 'AFTERNOON'
-                ? '오후'
-                : '저녁';
-          setDisplayMessage(`이번 달은 주로 \n${periodLabel}에 성공했어요`);
-        } else {
-          setDisplayMessage('배변 기록 분석 결과');
-        }
-        break;
-      }
-      case '복통': {
-        const painData = mockMonthlyReportData.pain;
-        const total =
-          painData.veryLow +
-          painData.low +
-          painData.medium +
-          painData.high +
-          painData.veryHigh;
-        if (total > 0) {
-          setDisplayMessage(
-            `이번 달은 배를 부여잡은 날들이\n${painData.veryHigh + painData.high}회 있었어요`
-          );
-        } else {
-          setDisplayMessage('배변 기록 분석 결과');
-        }
-        break;
-      }
-      default:
-        setDisplayMessage('배변 기록 분석 결과');
-    }
-  }, [selectedFilter]);
+  const displayMessage =
+    filterMessages[selectedFilter] ?? '배변 기록 분석 결과';
 
   return (
     <div className="bg-gray-800 rounded-[14px] py-7 px-6 w-full">
@@ -155,7 +66,7 @@ export function DefecationAnalysis() {
 
       {/* 필터별 UI 렌더링 */}
       {selectedFilter === '모양' && (
-        <ShapeAnalysis items={mockMonthlyReportData.shape} />
+        <ShapeAnalysis items={mockMonthlyReportData.shape.items} />
       )}
 
       {selectedFilter === '소요 시간' && (
@@ -174,7 +85,7 @@ export function DefecationAnalysis() {
       )}
 
       {selectedFilter === '배변 시각' && (
-        <TimeOfDayAnalysis items={mockMonthlyReportData.timeOfDay} />
+        <TimeOfDayAnalysis items={mockMonthlyReportData.timeOfDay.items} />
       )}
     </div>
   );

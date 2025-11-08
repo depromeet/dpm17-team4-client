@@ -10,6 +10,7 @@ export type TimeOfDayItem = {
 
 interface TimeOfDayAnalysisProps {
   items?: TimeOfDayItem[];
+  titleMessage?: string;
 }
 
 const timeOfDayData = {
