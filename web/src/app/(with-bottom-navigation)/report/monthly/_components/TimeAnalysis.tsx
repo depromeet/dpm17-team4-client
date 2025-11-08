@@ -122,6 +122,19 @@ export function TimeAnalysis({
     );
   }
 
+  const total =
+    displayDistribution.within5min +
+    displayDistribution.over5min +
+    displayDistribution.over10min;
+
+  if (total === 0) {
+    return (
+      <div className="flex items-center justify-center py-8">
+        <p className="text-gray-400 text-sm">배변 기록이 없습니다</p>
+      </div>
+    );
+  }
+
   const legendItems = [
     { label: '5분 이내', color: 'bg-gray-400' },
     { label: '5분 이상', color: 'bg-gray-600' },

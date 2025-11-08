@@ -133,11 +133,7 @@ export function PainAnalysis({ data }: PainAnalysisProps) {
       levelPosition = veryLowStart + veryLowPercent / 2;
     }
     // Low 영역
-    else if (
-      clampedPercent >= lowStart &&
-      clampedPercent < lowEnd &&
-      low > 0
-    ) {
+    else if (clampedPercent >= lowStart && clampedPercent < lowEnd && low > 0) {
       clickedLevel = 'low';
       clickedCount = low;
       levelPosition = lowStart + lowPercent / 2;
