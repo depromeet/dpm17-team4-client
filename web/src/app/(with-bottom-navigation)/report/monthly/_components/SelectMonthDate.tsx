@@ -40,10 +40,7 @@ export function SelectDate({
 
       return {
         label: `${date.getFullYear()}년 ${date.getMonth() + 1}월`,
-        value: formatYearMonthKey(
-          date.getFullYear(),
-          date.getMonth() + 1
-        ),
+        value: formatYearMonthKey(date.getFullYear(), date.getMonth() + 1),
         year: date.getFullYear(),
         month: date.getMonth() + 1,
       };

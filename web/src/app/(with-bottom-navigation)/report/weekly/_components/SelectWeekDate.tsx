@@ -92,7 +92,6 @@ export function SelectDate({
     }));
   }, [weeks]);
 
-  console.log(weekOptions, weeks);
   const currentWeekValue = useMemo(
     () => formatToISOString(weekStartDate),
     [weekStartDate]

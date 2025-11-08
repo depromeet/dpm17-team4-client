@@ -30,25 +30,10 @@ const getMonday = (date: Date): Date => {
   return d;
 };
 
-const getSunday = (date: Date): Date => {
-  const d = new Date(date);
-  const day = d.getDay();
-  const diff = day === 0 ? 0 : 7 - day;
-  d.setDate(d.getDate() + diff);
-  return d;
-};
-
 export default function WeeklyReportPage() {
   const today = useMemo(() => getKoreanDate(), []);
   const initialWeekStart = useMemo(() => getMonday(today), [today]);
   const [weekStartDate, setWeekStartDate] = useState<Date>(initialWeekStart);
-  const [selectedWeekRange, setSelectedWeekRange] = useState<{
-    start: Date;
-    end: Date;
-  }>({
-    start: initialWeekStart,
-    end: getSunday(initialWeekStart),
-  });
 
   const hasWeeklyData =
     WeeklyMockData.defecationScore?.dailyScore?.length &&
@@ -61,9 +46,8 @@ export default function WeeklyReportPage() {
           <SelectDate
             today={today}
             weekStartDate={weekStartDate}
-            onWeekChange={(start, end) => {
+            onWeekChange={(start) => {
               setWeekStartDate(start);
-              setSelectedWeekRange({ start, end });
             }}
           />
         </div>
@@ -94,9 +78,8 @@ export default function WeeklyReportPage() {
       <SelectDate
         today={today}
         weekStartDate={weekStartDate}
-        onWeekChange={(start, end) => {
+        onWeekChange={(start) => {
           setWeekStartDate(start);
-          setSelectedWeekRange({ start, end });
         }}
       />
       <WeeklyComparisonChart defecationScore={WeeklyMockData.defecationScore} />

@@ -1,11 +1,11 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import {
   WheelPicker,
-  WheelPickerWrapper,
   type WheelPickerOption,
+  WheelPickerWrapper,
 } from '@ncdai/react-wheel-picker';
+import { useEffect, useState } from 'react';
 import { BottomSheet } from '@/components/BottomSheet';
 
 type WheelProps = {
@@ -68,4 +68,3 @@ export function WheelPickerBottomSheet({
     </BottomSheet>
   );
 }
-
