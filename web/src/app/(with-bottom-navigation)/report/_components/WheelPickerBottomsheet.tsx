@@ -1,14 +1,14 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import {
   WheelPicker,
-  type WheelPickerOption,
   WheelPickerWrapper,
+  type WheelPickerOption,
 } from '@ncdai/react-wheel-picker';
-import { useEffect, useState } from 'react';
 import { BottomSheet } from '@/components/BottomSheet';
 
-type WeekPickerBottomSheetProps = {
+type WheelProps = {
   isOpen: boolean;
   title: string;
   options: WheelPickerOption[];
@@ -18,7 +18,7 @@ type WeekPickerBottomSheetProps = {
   applyLabel?: string;
 };
 
-export function WeekPickerBottomSheet({
+export function WheelPickerBottomSheet({
   isOpen,
   title,
   options,
@@ -26,7 +26,7 @@ export function WeekPickerBottomSheet({
   onApply,
   onClose,
   applyLabel = '확인',
-}: WeekPickerBottomSheetProps) {
+}: WheelProps) {
   const fallbackValue = initialValue || options[0]?.value || '';
   const [value, setValue] = useState<string>(fallbackValue);
 
@@ -43,15 +43,16 @@ export function WeekPickerBottomSheet({
           {title}
         </h3>
         <div className="relative max-h-[240px] overflow-hidden">
-          <WheelPickerWrapper className="w-full text-body1-m [&>.wheel-picker]:py-12">
+          <WheelPickerWrapper className="w-full !text-body1-m [&_[data-rwp-highlight-wrapper]]:!text-body1-m">
             <WheelPicker
               options={options}
               value={value}
               onValueChange={(val: string | number) => setValue(String(val))}
+              optionItemHeight={34}
               classNames={{
-                optionItem: 'text-gray-500 text-body1-m',
+                optionItem: 'text-gray-500 !text-body1-m',
                 highlightWrapper:
-                  'bg-[#292D32] text-body1-m h-[34px] leading-[34px]',
+                  'bg-[#292D32] !text-body1-m h-[34px] leading-[34px] rounded-[4px]',
               }}
             />
           </WheelPickerWrapper>
@@ -67,3 +68,4 @@ export function WeekPickerBottomSheet({
     </BottomSheet>
   );
 }
+
