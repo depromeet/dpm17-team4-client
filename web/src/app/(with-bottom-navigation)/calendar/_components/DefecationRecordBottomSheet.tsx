@@ -45,14 +45,14 @@ export const DefecationRecordBottomSheet = ({
     <BottomSheet isOpen={isOpen} onClose={onClose}>
       <div className="min-h-[508px] bg-gray-800 flex flex-col">
         {/* Header */}
-        <div className="flex items-center justify-between px-[1.5rem] py-[1rem]">
+        <div className="flex items-center justify-between px-[1rem] py-[1rem]">
           <h2 className=" text-white text-body1-m">
             {getDateDisplayTextFromDate(date)}
           </h2>
           <button
             type="button"
             onClick={handleAddRecord}
-            className="flex items-center gap-[0.5rem] text-primary-600 text-body3-m hover:text-primary-500"
+            className="flex items-center gap-[0.5rem] text-primary-500 text-body3-m hover:text-primary-500"
           >
             <Plus className="w-[1rem] h-[1rem]" />
             기록 추가
@@ -60,7 +60,7 @@ export const DefecationRecordBottomSheet = ({
         </div>
 
         {/* Content */}
-        <div className="flex-1 px-[1.5rem] py-[1rem] overflow-hidden flex flex-col items-center">
+        <div className="flex-1 px-[1rem] py-[1rem] overflow-hidden flex flex-col items-center">
           {!hasRecords ? (
             <div className="flex h-full flex-1 flex-col items-center justify-center py-[3rem]">
               <div className="text-[4rem] mb-[14px]">
