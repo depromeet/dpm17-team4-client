@@ -2,6 +2,7 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import EmptyMemoIcon from '@/assets/report/monthly_memo.png';
+import { useMonthlyReportQuery } from '@/hooks/queries/useMonthlyReportQuery';
 import { getKoreanDate } from '@/utils/utils-date';
 import { DefecationScoreChart } from '../_components/DefecationScoreChart';
 import { NWaterReport } from '../_components/NWaterReport';
@@ -14,7 +15,6 @@ import { MonthlyFoodReport } from './_components/MonthlyFoodReport';
 import { MonthlyRecord } from './_components/MonthlyRecord';
 import { MonthlyScore } from './_components/MonthlyScore';
 import { SelectDate } from './_components/SelectMonthDate';
-import { mockMonthlyReportData } from './mockData';
 
 const weekLabels = ['1주차', '2주차', '3주차', '4주차', '5주차'];
 export default function MonthlyReportPage() {
@@ -25,11 +25,14 @@ export default function MonthlyReportPage() {
   const [month, setMonth] = useState(currentMonth);
   const [year, setYear] = useState(currentYear);
 
+  const { data } = useMonthlyReportQuery({ year, month });
+  const reportData = data;
   const isNextDisabled = year === currentYear && month === currentMonth;
   const hasMonthlyData =
-    mockMonthlyReportData.monthlyRecordCounts.defecationRecordCounts > 0;
+    reportData?.recordCount.totalRecordCounts &&
+    reportData?.recordCount.totalRecordCounts > 0;
 
-  if (!hasMonthlyData) {
+  if (!hasMonthlyData || !reportData) {
     return (
       <div className="bg-report-empty h-[calc(100vh-180px)] w-full flex flex-col">
         <div className="px-4 pt-6 flex justify-center">
@@ -75,25 +78,33 @@ export default function MonthlyReportPage() {
         }}
       />
       <MonthlyRecord
-        recordCounts={mockMonthlyReportData.monthlyRecordCounts}
+        recordCounts={reportData.recordCount}
         currentMonth={month}
       />
       <DefecationScoreChart
-        scores={mockMonthlyReportData.monthlyScores}
+        scores={reportData.monthlyScores}
         labels={weekLabels}
       />
-      <UserAverageChart userAverage={mockMonthlyReportData.userAverage} />
-      <MonthlyScore />
-      <DefecationAnalysis />
-      <StressAnalysisChart
-        stressAnalysis={mockMonthlyReportData.stress}
-        xLabels={weekLabels}
-        displayLabels={weekLabels}
-      />
+      {reportData.userAverage && (
+        <UserAverageChart userAverage={reportData.userAverage} />
+      )}
+      <MonthlyScore monthlyScore={reportData.monthlyScore} />
+      {reportData && <DefecationAnalysis data={reportData} />}
+      {reportData.stress && (
+        <StressAnalysisChart
+          stressAnalysis={reportData.stress}
+          xLabels={weekLabels}
+          displayLabels={weekLabels}
+        />
+      )}
       <MonthlyFoodReport />
       <NWaterReport />
-      <StressReport stressData={mockMonthlyReportData.stress} type="monthly" />
-      <Suggestions suggestion={mockMonthlyReportData.suggestion} />
+      {reportData.stress && (
+        <StressReport stressData={reportData.stress} type="monthly" />
+      )}
+      {reportData.suggestion && (
+        <Suggestions suggestion={reportData.suggestion} />
+      )}
     </div>
   );
 }
