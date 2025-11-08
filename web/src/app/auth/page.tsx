@@ -125,7 +125,7 @@ export function AuthContent() {
         console.error('⚠️ AccessToken 갱신 실패(무시하고 진행):', e);
       }
     })();
-  }, [extractUserInfo, router]);
+  }, [searchParams, extractUserInfo, router]);
 
   if (hasAuthParams) return null;
 
