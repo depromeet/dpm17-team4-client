@@ -14,7 +14,7 @@ import bgGradient2 from '@/assets/auth/bg-gradient2.png';
 import bgGradient3 from '@/assets/auth/bg-gradient3.png';
 import loginCharacter from '@/assets/auth/login-character.png';
 import { API_ENDPOINTS, PAGE_ROUTES } from '@/constants';
-import { isIOS } from '@/utils/utils-platform';
+import { isAndroid } from '@/utils/utils-platform';
 import AppleLoginButton from './_components/AppleLoginButton';
 import {
   getAccessToken,
@@ -40,8 +40,8 @@ export function AuthContent() {
     return `${window.location.origin}/auth`;
   }, []);
 
-  // iOS 기기에서만 Apple 로그인 버튼 표시
-  const showAppleLogin = useMemo(() => isIOS(), []);
+  // 안드로이드가 아닐 때만 Apple 로그인 버튼 표시 (iOS, 웹)
+  const showAppleLogin = useMemo(() => !isAndroid(), []);
 
   // ✅ 인증 콜백 파라미터 존재 여부 (있으면 렌더 스킵)
   const hasAuthParams = useMemo(() => {
