@@ -132,7 +132,7 @@ function LifestylePageContent() {
         >
           <RecordDate />
         </Suspense>
-        <div className="h-[0.5rem] bg-gray-700" />
+        <div className="h-[0.5rem] bg-[#292D32] opacity-20" />
         <div className="h-[1.25rem]" />
         <FoodListContainer foods={foods} setFoods={setFoods} />
         <div className="h-[1rem]" />

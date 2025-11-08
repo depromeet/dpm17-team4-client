@@ -162,12 +162,16 @@ export const LifeStyleSubmit = ({
   ]);
 
   const isPending = isCreatePending || isUpdatePending;
+  const isEmpty =
+    !foods.some((food) => food.name && food.mealTime !== '') &&
+    water === 0 &&
+    stress === '';
   const buttonText = existingRecordId ? '수정' : '등록';
 
   return (
     <BottomBtnBar
       onSubmit={handleSubmit}
-      disabled={isPending || isLoading}
+      disabled={isPending || isLoading || isEmpty}
       text={buttonText}
     />
   );

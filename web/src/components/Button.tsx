@@ -38,7 +38,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const sizeClasses = {
-      '56': 'py-4 px-6 text-button-2 rounded-[0.625rem] gap-1',
+      '56': 'py-[19px] px-6 text-button-2 rounded-[0.625rem] gap-1',
       '48': 'py-[0.9375rem] px-5 text-button-2 rounded-[0.625rem] gap-1',
       '40': 'py-[0.6875rem] px-4 text-button-2 rounded-[0.5rem] gap-1',
       '32': 'py-2 px-3 text-button-4 rounded-[0.4375rem] gap-0.5',
