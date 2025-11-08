@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import type { MonthlyReportResponseDto } from '@/types/dto/report.dto';
 import { cn } from '@/utils/utils-cn';
-import { mockMonthlyReportData } from '../mockData';
 import { ColorAnalysis } from './ColorAnalysis';
 import { PainAnalysis } from './PainAnalysis';
 import { ShapeAnalysis } from './ShapeAnalysis';
