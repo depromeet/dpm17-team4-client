@@ -1,7 +1,11 @@
 'use client';
 
 import { API_ENDPOINTS } from '@/constants';
-import { isWebViewAvailable as checkWebViewAvailable, postMessageToWebView, setupWebViewMessageListener } from '@/services/webViewService';
+import {
+  isWebViewAvailable as checkWebViewAvailable,
+  postMessageToWebView,
+  setupWebViewMessageListener,
+} from '@/services/webViewService';
 
 // isWebViewAvailable을 export하여 다른 곳에서도 사용 가능하도록
 export const isWebViewAvailable = checkWebViewAvailable;
@@ -90,21 +94,27 @@ export function setAccessToken(token: string | null) {
 }
 
 // Refresh Token: 앱의 보안 저장소 사용 (WebView 환경) 또는 localStorage (웹 환경)
-let refreshTokenPromiseResolvers: Map<string, { resolve: (value: string | null) => void; reject: (error: Error) => void }> = new Map();
+const refreshTokenPromiseResolvers: Map<
+  string,
+  { resolve: (value: string | null) => void; reject: (error: Error) => void }
+> = new Map();
 
 // WebView 메시지 리스너 초기화 (한 번만)
 let isMessageListenerSetup = false;
 if (typeof window !== 'undefined' && !isMessageListenerSetup) {
   isMessageListenerSetup = true;
   setupWebViewMessageListener((message) => {
-    if (message.type === 'GET_REFRESH_TOKEN_RESPONSE' || message.type === 'SAVE_REFRESH_TOKEN_RESPONSE') {
+    if (
+      message.type === 'GET_REFRESH_TOKEN_RESPONSE' ||
+      message.type === 'SAVE_REFRESH_TOKEN_RESPONSE'
+    ) {
       const requestId = message.requestId as string;
       const resolver = refreshTokenPromiseResolvers.get(requestId);
       if (resolver) {
         if (message.success) {
           resolver.resolve((message.token as string) || null);
         } else {
-          resolver.reject(new Error(message.error as string || 'Failed'));
+          resolver.reject(new Error((message.error as string) || 'Failed'));
         }
         refreshTokenPromiseResolvers.delete(requestId);
       }
@@ -118,12 +128,12 @@ export const getRefreshToken = async (): Promise<string | null> => {
     return new Promise((resolve, reject) => {
       const requestId = `get_${Date.now()}_${Math.random()}`;
       refreshTokenPromiseResolvers.set(requestId, { resolve, reject });
-      
+
       postMessageToWebView({
         type: 'GET_REFRESH_TOKEN',
         requestId,
       });
-      
+
       // 타임아웃 설정 (5초)
       setTimeout(() => {
         if (refreshTokenPromiseResolvers.has(requestId)) {
@@ -133,7 +143,7 @@ export const getRefreshToken = async (): Promise<string | null> => {
       }, 5000);
     });
   }
-  
+
   // 웹 환경이면 refresh token 저장하지 않음 (보안상 이유)
   return null;
 };
@@ -147,13 +157,13 @@ export const setRefreshToken = async (token: string | null): Promise<void> => {
         resolve: () => resolve(),
         reject,
       });
-      
+
       postMessageToWebView({
         type: 'SAVE_REFRESH_TOKEN',
         token,
         requestId,
       });
-      
+
       // 타임아웃 설정 (5초)
       setTimeout(() => {
         if (refreshTokenPromiseResolvers.has(requestId)) {
@@ -163,7 +173,7 @@ export const setRefreshToken = async (token: string | null): Promise<void> => {
       }, 5000);
     });
   }
-  
+
   // 웹 환경이면 refresh token 저장하지 않음 (보안상 이유)
   // 401 에러 발생 시 로그아웃 후 재로그인 유도
 };
@@ -173,13 +183,13 @@ export const clearRefreshToken = async (): Promise<void> => {
   if (isWebViewAvailable()) {
     return setRefreshToken(null);
   }
-  
+
   // 웹 환경이면 refresh token을 저장하지 않으므로 아무것도 하지 않음
 };
 
 export async function requestAccessToken() {
   const refreshToken = await getRefreshToken();
-  
+
   if (!refreshToken) {
     throw new Error('Refresh token이 없습니다. 다시 로그인해주세요.');
   }
@@ -208,12 +218,12 @@ export async function requestAccessToken() {
   } else {
     const data = await res.json();
     const result = typeof data === 'string' ? { accessToken: data } : data;
-    
+
     // 새로운 refresh token이 있으면 업데이트
     if (result.refreshToken) {
       await setRefreshToken(result.refreshToken);
     }
-    
+
     return result;
   }
 }

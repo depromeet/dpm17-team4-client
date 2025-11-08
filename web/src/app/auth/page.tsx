@@ -24,7 +24,6 @@ import {
   setUserInfo,
   type UserInfo,
 } from './_components/AuthSessionProvider';
-import BottomSheetContainer from './_components/BottomSheetContainer';
 import KakaoLoginButton from './_components/KakaoLoginButton';
 
 const API_BASE = process.env.NEXT_PUBLIC_API || 'https://kkruk.com';
@@ -83,7 +82,8 @@ export function AuthContent() {
   useEffect(() => {
     const code = searchParams.get('code');
     // provider 또는 providerType 파라미터 확인 (백엔드 서버가 providerType으로 보낼 수 있음)
-    const providerParam = searchParams.get('provider') || searchParams.get('providerType');
+    const providerParam =
+      searchParams.get('provider') || searchParams.get('providerType');
     const provider = providerParam ? providerParam.toLowerCase() : 'kakao'; // 기본값은 kakao
 
     if (!code) return;
@@ -100,21 +100,18 @@ export function AuthContent() {
           provider,
           tokenUrl,
           hasCode: !!code,
-          code: code.substring(0, 20) + '...',
+          code: `${code.substring(0, 20)}...`,
         });
 
-        const response = await fetch(
-          tokenUrl,
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              code,
-            }),
-          }
-        );
+        const response = await fetch(tokenUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            code,
+          }),
+        });
 
         console.log('📡 Token 응답:', {
           status: response.status,
@@ -177,7 +174,6 @@ export function AuthContent() {
   useLayoutEffect(() => {
     const userInfo = extractUserInfo();
     if (!userInfo) return;
-
 
     setUserInfo(userInfo);
 

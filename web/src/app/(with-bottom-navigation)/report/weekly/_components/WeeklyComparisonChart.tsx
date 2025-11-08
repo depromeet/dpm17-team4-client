@@ -1,4 +1,3 @@
-import { WeeklyMockData } from '../mockData';
 import RadialBarChart from './RadialBarChart';
 
 export type DefecationScore = {

@@ -1,6 +1,9 @@
 import axios from 'axios';
-import { getAccessToken, isWebViewAvailable } from '@/app/auth/_components/AuthSessionProvider';
-import { logout } from '@/app/auth/_components/AuthSessionProvider';
+import {
+  getAccessToken,
+  isWebViewAvailable,
+  logout,
+} from '@/app/auth/_components/AuthSessionProvider';
 
 const apiClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL || 'https://kkruk.com', // TODO(seonghyun): env vercel 세팅,
@@ -55,7 +58,9 @@ apiClient.interceptors.response.use(
             originalRequest.headers.Authorization = `Bearer ${accessToken}`;
             return apiClient(originalRequest);
           } else {
-            console.log('❌ 토큰 갱신 실패 - refresh token도 만료된 것 같습니다');
+            console.log(
+              '❌ 토큰 갱신 실패 - refresh token도 만료된 것 같습니다'
+            );
             // 로그아웃 후 재로그인
             await logout();
             if (typeof window !== 'undefined') {

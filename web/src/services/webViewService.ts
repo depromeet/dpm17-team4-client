@@ -37,7 +37,7 @@ export const setupWebViewMessageListener = (
   const handleMessage = (event: MessageEvent) => {
     try {
       let message: WebViewMessage;
-      
+
       // event.data가 이미 객체인지 문자열인지 확인
       if (typeof event.data === 'string') {
         message = JSON.parse(event.data);
@@ -48,10 +48,15 @@ export const setupWebViewMessageListener = (
         console.error('WebView 메시지 형식 오류:', event.data);
         return;
       }
-      
+
       callback(message);
     } catch (error) {
-      console.error('WebView 메시지 파싱 오류:', error, '원본 데이터:', event.data);
+      console.error(
+        'WebView 메시지 파싱 오류:',
+        error,
+        '원본 데이터:',
+        event.data
+      );
     }
   };
 

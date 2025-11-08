@@ -3,7 +3,6 @@ import type { Stress } from '../types';
 
 export const StressReport = ({
   stressData,
-  type,
 }: {
   stressData: Stress;
   type: 'daily' | 'weekly' | 'monthly';
