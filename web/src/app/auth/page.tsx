@@ -193,6 +193,7 @@ export function AuthContent() {
         <div className="space-y-4">
           <form method="POST" action={KAKAO_LOGIN_INITIATE_URL}>
             <input type="hidden" name="redirectUri" value={redirectUri} />
+            <input type="hidden" name="responseType" value="code" />
             <KakaoLoginButton />
           </form>
           {showAppleLogin && <AppleLoginButton />}
