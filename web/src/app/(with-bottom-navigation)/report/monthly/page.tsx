@@ -22,8 +22,8 @@ export default function MonthlyReportPage() {
   const currentMonth = date.getMonth() + 1;
   const currentYear = date.getFullYear();
 
-  const [month, _setMonth] = useState(currentMonth);
-  const [year, _setYear] = useState(currentYear);
+  const [month, setMonth] = useState(currentMonth);
+  const [year, setYear] = useState(currentYear);
 
   const isNextDisabled = year === currentYear && month === currentMonth;
   const hasMonthlyData =
@@ -37,6 +37,10 @@ export default function MonthlyReportPage() {
             currentMonth={month}
             currentYear={year}
             isNextDisabled={isNextDisabled}
+            onMonthChange={(newYear, newMonth) => {
+              setYear(newYear);
+              setMonth(newMonth);
+            }}
           />
         </div>
         <div className="flex flex-1 flex-col items-center justify-center text-center px-6">
@@ -65,6 +69,10 @@ export default function MonthlyReportPage() {
         currentMonth={month}
         currentYear={year}
         isNextDisabled={isNextDisabled}
+        onMonthChange={(newYear, newMonth) => {
+          setYear(newYear);
+          setMonth(newMonth);
+        }}
       />
       <MonthlyRecord
         recordCounts={mockMonthlyReportData.monthlyRecordCounts}
