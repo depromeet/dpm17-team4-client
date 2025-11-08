@@ -4,6 +4,7 @@ export type TimeDistribution = {
   within5min: number; // 5분 이내
   over5min: number; // 5분 이상
   over10min: number; // 10분 이상
+  titleMessage?: string;
 };
 
 interface TimeAnalysisProps {

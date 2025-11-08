@@ -16,13 +16,20 @@ import type {
 
 export interface MonthlyReportMockData {
   monthlyScore: MonthlyScore;
-  shape: AnalysisItem[];
+  shape: {
+    titleMessage: string;
+    items: AnalysisItem[];
+  };
   timeDistribution: TimeDistribution;
   color: {
     items: ColorAnalysisItem[];
     colorMessage: string;
+    titleMessage?: string;
   };
-  timeOfDay: TimeOfDayItem[];
+  timeOfDay: {
+    titleMessage: string;
+    items: TimeOfDayItem[];
+  };
   colorMessage: string;
   monthlyRecordCounts: MonthlyRecordCounts;
   monthlyScores: number[];
@@ -53,27 +60,31 @@ export const mockMonthlyReportData: MonthlyReportMockData = {
     defecationRecordCounts: 21,
     lifestyleRecordCounts: 16,
   },
-  shape: [
-    {
-      shape: 'RABBIT',
-      count: 8,
-      warning: '변비 주의',
-    },
-    {
-      shape: 'BANANA',
-      count: 4,
-    },
-    {
-      shape: 'PORRIDGE',
-      count: 2,
-      warning: '설사 의심',
-    },
-  ],
+  shape: {
+    titleMessage: '가장 많이 확인한 모양은\n토끼 모양이에요',
+    items: [
+      {
+        shape: 'RABBIT',
+        count: 8,
+        warning: '변비 주의',
+      },
+      {
+        shape: 'BANANA',
+        count: 4,
+      },
+      {
+        shape: 'PORRIDGE',
+        count: 2,
+        warning: '설사 의심',
+      },
+    ],
+  },
   //배변 분석 기록 결과 -소요 시간
   timeDistribution: {
     within5min: 2, // 5분 이내
     over5min: 4, // 5분 이상
     over10min: 10, // 10분 이상
+    titleMessage: '배변 소요 시간은\n주로 10분 이상이었어요',
   },
   //배변 분석 기록 결과 -색상
   color: {
@@ -94,10 +105,12 @@ export const mockMonthlyReportData: MonthlyReportMockData = {
     ],
     colorMessage:
       '혈변은 건강의 적신호예요. 대장염, 대장암, 치질 등의 문제일 수 있어요. 빠른 병원 방문을 권장해요.',
+    titleMessage: '가장 많이 확인한 색상은\n갈색이에요',
   },
   //배변 분석 기록 결과 -복통
   //NOTE: 복통 데이터 (한 달(30일) 동안 복통 게이지별로 몇 회 나왔는지)
   pain: {
+    titleMessage: '이번 달은 배를 부여잡은 날들이\n13회 있었어요',
     veryLow: 10, //0-10%
     low: 0, //11-30%
     medium: 5, //31-50%
@@ -112,21 +125,25 @@ export const mockMonthlyReportData: MonthlyReportMockData = {
     me: 30,
     average: 100,
     topPercent: 50,
+    titleMessage: '이번 달은 배를 부여잡은 날들이\n13회 있었어요',
   },
-  timeOfDay: [
-    {
-      period: 'MORNING',
-      count: 18,
-    },
-    {
-      period: 'AFTERNOON',
-      count: 3,
-    },
-    {
-      period: 'EVENING',
-      count: 8,
-    },
-  ],
+  timeOfDay: {
+    titleMessage: '이번 달은 주로\n오전에 성공했어요',
+    items: [
+      {
+        period: 'MORNING',
+        count: 18,
+      },
+      {
+        period: 'AFTERNOON',
+        count: 3,
+      },
+      {
+        period: 'EVENING',
+        count: 8,
+      },
+    ],
+  },
   food: {
     message: '자극적인 음식을 10회 이상 섭취했어요\n식단 관리가 필요해요!', // or 건강한 식단을\n열심히 유지하고 계시네요! or 자극적인 음식을 10회 미만으로\n 섭취했어요. 지속적으로 줄여나가요! or 자극적인 음식을 5회 미만으로\n섭취했어요. 아주 좋아요!
     monthlyComparison: {

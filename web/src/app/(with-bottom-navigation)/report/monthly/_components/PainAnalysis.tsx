@@ -8,6 +8,7 @@ export interface PainData {
   medium: number; // 31-50%
   high: number; // 51-70%
   veryHigh: number; // 71-100%
+  titleMessage?: string;
   comparison: {
     direction: 'increased' | 'decreased' | 'same';
     count: number;
@@ -187,9 +188,7 @@ export function PainAnalysis({ data }: PainAnalysisProps) {
         `}
       >
         <p className="text-white text-body4-m flex justify-center">
-          {isSame ? (
-            '지난달과 동일해요'
-          ) : (
+          {!isSame && (
             <>
               지난달보다 복통이{' '}
               <span
