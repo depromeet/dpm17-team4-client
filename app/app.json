@@ -20,7 +20,7 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true,
+      "supportsTablet": false,
       "bundleIdentifier": "com.leeseonghyun316.app",
       "appleTeamId": "8R4YV3AUWK",
       "infoPlist": {
