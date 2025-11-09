@@ -25,7 +25,11 @@ export default function MonthlyReportPage() {
   const [month, setMonth] = useState(currentMonth);
   const [year, setYear] = useState(currentYear);
 
-  const { data, isLoading, isError } = useMonthlyReportQuery({ year, month });
+  const yearMonth = `${year}-${String(month).padStart(2, '0')}`;
+
+  const { data, isLoading, isError } = useMonthlyReportQuery({
+    yearMonth,
+  });
   const reportData = data;
   const isNextDisabled = year === currentYear && month === currentMonth;
 
@@ -55,8 +59,8 @@ export default function MonthlyReportPage() {
     );
   }
   const hasMonthlyData =
-    reportData?.recordCount.totalRecordCounts &&
-    reportData?.recordCount.totalRecordCounts > 0;
+    reportData?.monthlyRecordCounts.totalRecordCounts &&
+    reportData?.monthlyRecordCounts.totalRecordCounts > 0;
 
   if (!hasMonthlyData || !reportData) {
     return (
@@ -104,11 +108,11 @@ export default function MonthlyReportPage() {
         }}
       />
       <MonthlyRecord
-        recordCounts={reportData.recordCount}
+        recordCounts={reportData.monthlyRecordCounts}
         currentMonth={month}
       />
       <DefecationScoreChart
-        scores={reportData.monthlyScores}
+        scores={reportData.monthlyDefecationScore}
         labels={weekLabels}
       />
       {reportData.userAverage && (
