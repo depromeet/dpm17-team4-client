@@ -47,7 +47,7 @@ ios/.xcode.env
 ios/Podfile.properties.json
 ios/app/GoogleService-Info.plist
 ios/app/Images.xcassets/
-ios/app/Supporting/
+# ios/app/Supporting/ - Expo.plist는 빌드에 필요하므로 포함
 
 # Android build artifacts
 android/build/

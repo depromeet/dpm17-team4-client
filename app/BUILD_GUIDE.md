@@ -42,7 +42,8 @@ eas login
 eas build --platform android --profile production
 
 # iOS IPA 빌드 (App Store 업로드용)
-eas build --platform ios --profile production
+# WebView에서 Apple 로그인을 사용하므로 capability 자동 동기화 비활성화
+EXPO_NO_CAPABILITY_SYNC=1 eas build --platform ios --profile production
 
 # 빌드 상태 확인
 eas build:list
@@ -177,6 +178,39 @@ pod install
 ### Keystore 분실 시
 - EAS Build: 안전하게 저장됨, 문제 없음
 - 로컬 빌드: 새 keystore 생성 → 기존 앱에 업데이트 불가능 (새 앱 등록 필요)
+
+### iOS 빌드 시 Capability 동기화 에러
+에러 메시지: `Failed to sync capabilities` 또는 `APPLE_ID_AUTH` 관련 에러
+
+**원인**: 
+- WebView에서 Apple 로그인을 사용하므로 `APPLE_ID_AUTH` capability가 필요함
+- EAS가 자동으로 capability를 변경하려고 하지만, Apple Developer Console에 연결된 앱이 있어서 실패
+
+**해결 방법**:
+```bash
+# Capability 자동 동기화 비활성화 (권장)
+EXPO_NO_CAPABILITY_SYNC=1 eas build --platform ios --profile production
+```
+
+또는 Apple Developer Console에서 수동으로 `APPLE_ID_AUTH` capability를 ON으로 유지:
+https://developer.apple.com/account/resources/identifiers/bundleId/edit/6FTM2T7Y8M
+
+### iOS 빌드 시 Expo.plist 파일 누락 에러
+에러 메시지: `Build input file cannot be found: '/Users/expo/workingdir/build/app/ios/app/Supporting/Expo.plist'`
+
+**원인**: 
+- `Expo.plist` 파일이 `.gitignore`에 포함되어 Git에 커밋되지 않음
+- EAS Build는 Git 저장소를 클론하므로 파일이 없어서 빌드 실패
+
+**해결 방법**:
+```bash
+# 1. .gitignore에서 ios/app/Supporting/ 제거 (이미 완료)
+# 2. 파일을 Git에 추가
+git add ios/app/Supporting/Expo.plist
+git commit -m "Add Expo.plist for iOS build"
+# 3. 다시 빌드
+EXPO_NO_CAPABILITY_SYNC=1 eas build --platform ios --profile production
+```
 
 ---
 
