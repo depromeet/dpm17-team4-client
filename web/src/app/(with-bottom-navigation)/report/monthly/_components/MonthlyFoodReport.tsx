@@ -6,11 +6,11 @@ import { ChevronThinIcon } from '@/components';
 import { cn } from '@/utils/utils-cn';
 import { formatToDayWithWeekday, formatToMonthDay } from '@/utils/utils-date';
 import { getMealTimeLabel } from '../../daily/utils';
-import type { WeeklyMonthlyFoodReport } from '../types';
+import type { MonthlyFoodReport as MonthlyFoodReportType } from '../types';
 import GreatFoodReportImage from './assets/GreatFoodReport.png';
 
 type MonthlyFoodReportProps = {
-  food?: WeeklyMonthlyFoodReport;
+  food?: MonthlyFoodReportType;
 };
 
 export function MonthlyFoodReport({ food }: MonthlyFoodReportProps) {

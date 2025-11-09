@@ -9,12 +9,12 @@ import { StressAnalysisChart } from '../_components/StressAnalysisChart';
 import { Suggestions } from '../_components/Suggestions';
 import { UserAverageChart } from '../_components/UserAverageChart';
 import { WaterReport } from '../_components/WaterReport';
+import type { Week } from '../weekly/types';
 import { DefecationAnalysis } from './_components/DefecationAnalysis';
 import { MonthlyFoodReport } from './_components/MonthlyFoodReport';
 import { MonthlyRecord } from './_components/MonthlyRecord';
 import { MonthlyScore } from './_components/MonthlyScore';
 import { SelectDate } from './_components/SelectMonthDate';
-import type { Week } from '../weekly/types';
 
 const weekLabels = ['1주차', '2주차', '3주차', '4주차', '5주차'];
 export default function MonthlyReportPage() {
