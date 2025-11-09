@@ -2,12 +2,13 @@
 
 import { useEffect, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
+import { Toggle } from '@/components';
 import { cn } from '@/utils/utils-cn';
 import { DEFECATION_SHAPE } from '../../constants';
 import type { DefecationFormValues } from '../../schemas';
 import type { DefecationTryShapeKey } from '../../types';
 import { getEmojiShapeIcon, getRealShapeIcon } from '../../utils';
-import { SelectButton, Switch } from '../common';
+import { SelectButton } from '../common';
 
 export default function Shape({
   shape,
@@ -29,9 +30,9 @@ export default function Shape({
     <>
       <div className="flex items-center justify-start gap-3 mb-4">
         <p className="text-body3-r opacity-80">실제 모양 보기</p>
-        <Switch
-          checked={showType === 'REAL'}
-          onCheckedChange={(checked) => setShowType(checked ? 'REAL' : 'EMOJI')}
+        <Toggle
+          isOn={showType === 'REAL'}
+          onSwitch={() => setShowType(showType === 'REAL' ? 'EMOJI' : 'REAL')}
         />
       </div>
       <div className="grid grid-cols-2 gap-[11px]">

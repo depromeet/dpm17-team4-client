@@ -30,13 +30,13 @@ export function CollapsibleToggle({
   const selectedTry = watch('selectedTry');
 
   const handleToggle = () => {
-    if (selectedTry === DEFECATION_TRY.DID_POO) {
-      onToggle();
-    } else {
-      if (id !== 'COLOR' && id !== 'SHAPE') {
-        onToggle();
-      }
+    if (
+      selectedTry === DEFECATION_TRY.DID_NOT_POO &&
+      (id === 'COLOR' || id === 'SHAPE')
+    ) {
+      return;
     }
+    onToggle();
   };
 
   const isDisabled =

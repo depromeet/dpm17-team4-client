@@ -4,11 +4,10 @@ import { useState } from 'react';
 import EmptyMemoIcon from '@/assets/report/monthly_memo.png';
 import { getKoreanDate } from '@/utils/utils-date';
 import { DefecationScoreChart } from '../_components/DefecationScoreChart';
-import { NWaterReport } from '../_components/NWaterReport';
 import { StressAnalysisChart } from '../_components/StressAnalysisChart';
+import { Suggestions } from '../_components/Suggestions';
 import { UserAverageChart } from '../_components/UserAverageChart';
-import { StressReport } from '../daily/_components/StressReport';
-import { Suggestions } from '../daily/_components/Suggestions';
+import { WaterReport } from '../_components/WaterReport';
 import { DefecationAnalysis } from './_components/DefecationAnalysis';
 import { MonthlyFoodReport } from './_components/MonthlyFoodReport';
 import { MonthlyRecord } from './_components/MonthlyRecord';
@@ -64,35 +63,36 @@ export default function MonthlyReportPage() {
   }
 
   return (
-    <div className="mt-3 py-0 px-4 flex flex-col items-center gap-5">
-      <SelectDate
-        currentMonth={month}
-        currentYear={year}
-        isNextDisabled={isNextDisabled}
-        onMonthChange={(newYear, newMonth) => {
-          setYear(newYear);
-          setMonth(newMonth);
-        }}
-      />
-      <MonthlyRecord
-        recordCounts={mockMonthlyReportData.monthlyRecordCounts}
-        currentMonth={month}
-      />
-      <DefecationScoreChart
-        scores={mockMonthlyReportData.monthlyScores}
-        labels={weekLabels}
-      />
-      <UserAverageChart userAverage={mockMonthlyReportData.userAverage} />
-      <MonthlyScore />
-      <DefecationAnalysis />
-      <StressAnalysisChart
-        stressAnalysis={mockMonthlyReportData.stress}
-        xLabels={weekLabels}
-        displayLabels={weekLabels}
-      />
-      <MonthlyFoodReport />
-      <NWaterReport />
-      <StressReport stressData={mockMonthlyReportData.stress} type="monthly" />
+    <div>
+      <div className="mt-3 py-0 px-4 flex flex-col items-center gap-5 mb-[50px]">
+        <SelectDate
+          currentMonth={month}
+          currentYear={year}
+          isNextDisabled={isNextDisabled}
+          onMonthChange={(newYear, newMonth) => {
+            setYear(newYear);
+            setMonth(newMonth);
+          }}
+        />
+        <MonthlyRecord
+          recordCounts={mockMonthlyReportData.monthlyRecordCounts}
+          currentMonth={month}
+        />
+        <DefecationScoreChart
+          scores={mockMonthlyReportData.monthlyScores}
+          labels={weekLabels}
+        />
+        <UserAverageChart userAverage={mockMonthlyReportData.userAverage} />
+        <MonthlyScore />
+        <DefecationAnalysis />
+        <MonthlyFoodReport />
+        <WaterReport waterData={mockMonthlyReportData.water} type="monthly" />
+        <StressAnalysisChart
+          stressAnalysis={mockMonthlyReportData.stress}
+          xLabels={weekLabels}
+          displayLabels={weekLabels}
+        />
+      </div>
       <Suggestions suggestion={mockMonthlyReportData.suggestion} />
     </div>
   );

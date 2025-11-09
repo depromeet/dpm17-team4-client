@@ -4,6 +4,7 @@ export * from './Chevron';
 export * from './ChevronThin';
 export * from './Delete';
 export * from './Home';
+export * from './Info';
 export * from './Play';
 export * from './Report';
 export * from './SpeechBubble';

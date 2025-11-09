@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import type { Stress } from '../types';
+import type { Stress } from '../daily/types';
 
 export const StressReport = ({
   stressData,

@@ -9,14 +9,15 @@ import emojiOpenMouse from '@/assets/report/emoji_open_mouse.png';
 import newsPaper from '@/assets/report/newspaper.png';
 import { useNavigationContext } from '@/contexts/NavigationContext';
 import { useReportQuery } from '@/hooks/queries/useReportQuery';
+import { StressReport } from '../_components/StressReport';
+import { WaterReport } from '../_components/WaterReport';
 import { DefecationScore } from './_components/DefecationScore';
 import { FoodReport } from './_components/FoodReport';
 import { NullReport } from './_components/NullReport';
-import { StressReport } from './_components/StressReport';
-// import { Suggestions } from './_components/Suggestions';
-import { WaterReport } from './_components/WaterReport';
 import type { Card } from './types';
 import { formatDate, getColorLabel, getShapeLabel } from './utils';
+
+// import { Suggestions } from './_components/Suggestions';
 
 function DailyReportContent() {
   const [cardIndex, setCardIndex] = useState(0);
@@ -362,7 +363,9 @@ function DailyReportContent() {
           {reportData.food.items.length > 0 ? (
             <div className="flex flex-col space-y-5 mt-5">
               <FoodReport foodData={reportData.food} />
-              {reportData.water && <WaterReport waterData={reportData.water} />}
+              {reportData.water && (
+                <WaterReport waterData={reportData.water} type="daily" />
+              )}
               {reportData.stress && (
                 <StressReport stressData={reportData.stress} type="daily" />
               )}

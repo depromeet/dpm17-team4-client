@@ -1,18 +1,14 @@
 import StressImage from '@/assets/report/emoji_anger.png';
 import type { UserAverage } from '../_components/UserAverageChart';
-import type { Suggestion } from '../daily/types';
+import type { Suggestion, Water } from '../daily/types';
+import type { WeeklyStress } from '../weekly/types';
 import type { ColorAnalysisItem } from './_components/ColorAnalysis';
 import type { MonthlyRecordCounts } from './_components/MonthlyRecord';
 import type { PainData } from './_components/PainAnalysis';
 import type { AnalysisItem } from './_components/ShapeAnalysis';
 import type { TimeDistribution } from './_components/TimeAnalysis';
 import type { TimeOfDayItem } from './_components/TimeOfDayAnalysis';
-import type {
-  MonthlyScore,
-  WeeklyMonthlyFoodReport,
-  WeeklyMonthlyStress,
-  WeeklyMonthlyWater,
-} from './types';
+import type { MonthlyFoodReport, MonthlyScore } from './types';
 
 export interface MonthlyReportMockData {
   monthlyScore: MonthlyScore;
@@ -35,9 +31,9 @@ export interface MonthlyReportMockData {
   monthlyScores: number[];
   userAverage: UserAverage;
   pain: PainData;
-  food: WeeklyMonthlyFoodReport;
-  water: WeeklyMonthlyWater;
-  stress: WeeklyMonthlyStress;
+  food: MonthlyFoodReport;
+  water: Water;
+  stress: WeeklyStress;
   suggestion: Suggestion;
 }
 
@@ -265,49 +261,44 @@ export const mockMonthlyReportData: MonthlyReportMockData = {
       {
         name: '1주차',
         value: 2000.0,
+        color: '#D9D9D9',
+        level: 'NONE',
       },
       {
         name: '2주차',
         value: 500.0,
+        color: '#D9D9D9',
+        level: 'NONE',
       },
       {
         name: '3주차',
         value: 1800.0,
+        color: '#D9D9D9',
+        level: 'NONE',
       },
       {
         name: '4주차',
         value: 300.0,
+        color: '#D9D9D9',
+        level: 'NONE',
       },
       {
         name: '5주차',
         value: 2500.0,
+        color: '#D9D9D9',
+        level: 'NONE',
       },
     ],
   },
   stress: {
     message: '긍정적인 당신! 그 마인드\n 오래도록 유지해봐요',
-    image: StressImage,
+    image: StressImage.src,
     items: [
-      {
-        day: '1주차',
-        stress: 'VERY_LOW',
-      },
-      {
-        day: '2주차',
-        stress: 'LOW',
-      },
-      {
-        day: '3주차',
-        stress: 'MEDIUM',
-      },
-      {
-        day: '4주차',
-        stress: 'HIGH',
-      },
-      {
-        day: '5주차',
-        stress: 'VERY_HIGH',
-      },
+      { day: '1주차', stress: 'LOW' },
+      { day: '2주차', stress: 'VERY_LOW' },
+      { day: '3주차', stress: 'MEDIUM' },
+      { day: '4주차', stress: 'LOW' },
+      { day: '5주차', stress: 'HIGH' },
     ],
   },
   suggestion: {

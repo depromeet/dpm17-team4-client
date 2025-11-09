@@ -14,7 +14,7 @@ export type MonthlyScore = {
 };
 
 // NOTE(taehyeon): 월간 식단 분석 결과 타입
-export type WeeklyMonthlyFoodReport = {
+export type MonthlyFoodReport = {
   message: string;
   monthlyComparison: {
     lastMonth: number;
@@ -32,22 +32,10 @@ export type WeeklyMonthlyFoodReport = {
   }[];
 };
 
-// NOTE(taehyeon): 월간 물 섭취량 이름 타입
-export type Weekly = '1주차' | '2주차' | '3주차' | '4주차' | '5주차';
-
-// NOTE(taehyeon): 월간 물 섭취량 분석 결과 타입
-export type WeeklyMonthlyWater = {
-  message: string;
-  items: {
-    name: Weekly;
-    value: number;
-  }[];
-};
-
 // NOTE(taehyeon): 월간 스트레스 분석 결과 타입
 export type WeeklyMonthlyStress = Stress & {
   items: {
-    day: Weekly;
+    day: string;
     stress: StressLevel;
   }[];
 };

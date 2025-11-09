@@ -4,10 +4,13 @@ import { useMemo, useState } from 'react';
 import EmptyMemoIcon from '@/assets/report/monthly_memo.png';
 import { getKoreanDate } from '@/utils/utils-date';
 import { DefecationScoreChart } from '../_components/DefecationScoreChart';
+import { Suggestions } from '../_components/Suggestions';
 import { UserAverageChart } from '../_components/UserAverageChart';
+import { WaterReport } from '../_components/WaterReport';
 import { SelectDate } from './_components/SelectWeekDate';
 import { StressAnalysisChart } from './_components/StressAnalysisChart';
 import { WeeklyComparisonChart } from './_components/WeeklyComparisonChart';
+import { WeeklyFoodReport } from './_components/WeeklyFoodReport';
 import { WeeklyMockData } from './mockData';
 import type { DayOfWeek } from './types';
 
@@ -74,25 +77,32 @@ export default function WeeklyReportPage() {
   }
 
   return (
-    <div className="px-4 flex flex-col gap-5">
-      <SelectDate
-        today={today}
-        weekStartDate={weekStartDate}
-        onWeekChange={(start) => {
-          setWeekStartDate(start);
-        }}
-      />
-      <WeeklyComparisonChart defecationScore={WeeklyMockData.defecationScore} />
-      <DefecationScoreChart
-        scores={WeeklyMockData.defecationScore.dailyScore}
-        labels={weekLabels}
-      />
-      <UserAverageChart userAverage={WeeklyMockData.userAverage} />
-      <StressAnalysisChart
-        stressAnalysis={WeeklyMockData.stress}
-        xLabels={allDays}
-        displayLabels={weekLabels}
-      />
+    <div>
+      <div className="px-4 flex flex-col gap-5 mb-[50px]">
+        <SelectDate
+          today={today}
+          weekStartDate={weekStartDate}
+          onWeekChange={(start) => {
+            setWeekStartDate(start);
+          }}
+        />
+        <WeeklyComparisonChart
+          defecationScore={WeeklyMockData.defecationScore}
+        />
+        <DefecationScoreChart
+          scores={WeeklyMockData.defecationScore.dailyScore}
+          labels={weekLabels}
+        />
+        <UserAverageChart userAverage={WeeklyMockData.userAverage} />
+        <WeeklyFoodReport />
+        <WaterReport waterData={WeeklyMockData.water} type="weekly" />
+        <StressAnalysisChart
+          stressAnalysis={WeeklyMockData.stress}
+          xLabels={allDays}
+          displayLabels={weekLabels}
+        />
+      </div>
+      <Suggestions suggestion={WeeklyMockData.suggestion} />
     </div>
   );
 }
