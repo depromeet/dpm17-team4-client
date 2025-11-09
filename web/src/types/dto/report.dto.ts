@@ -19,6 +19,9 @@ import type {
 export interface ReportDataResponseDto extends ReportData {}
 
 export interface MonthlyReportResponseDto {
+  monthlyRecordCounts: MonthlyRecordCounts;
+  monthlyDefecationScore: number[];
+  userAverage: UserAverage;
   monthlyScore: MonthlyScore;
   shape: {
     titleMessage: string;
@@ -28,16 +31,13 @@ export interface MonthlyReportResponseDto {
   color: {
     items: ColorAnalysisItem[];
     colorMessage: string;
-    titleMessage?: string;
+    titleMessage: string;
   };
+  pain: PainData;
   timeOfDay: {
     titleMessage: string;
     items: TimeOfDayItem[];
   };
-  recordCount: MonthlyRecordCounts;
-  monthlyScores: number[];
-  userAverage: UserAverage;
-  pain: PainData;
   food: WeeklyMonthlyFoodReport;
   water: WeeklyMonthlyWater;
   stress: WeeklyMonthlyStress;
