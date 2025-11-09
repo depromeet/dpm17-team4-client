@@ -188,20 +188,18 @@ export function PainAnalysis({ data }: PainAnalysisProps) {
         `}
         >
           <p className="text-white text-body4-m flex justify-center">
-            <>
-              지난달보다 복통이{' '}
-              <span
-                className={
-                  isIncreased
-                    ? 'text-red-600 font-semibold'
-                    : 'text-blue-600 font-semibold'
-                }
-              >
-                {' '}
-                {comparison.count}회{' '}
-              </span>{' '}
-              {isIncreased ? '늘었어요' : '줄었어요'}
-            </>
+            지난달보다 복통이{' '}
+            <span
+              className={
+                isIncreased
+                  ? 'text-red-600 font-semibold'
+                  : 'text-blue-600 font-semibold'
+              }
+            >
+              {' '}
+              {comparison.count}회{' '}
+            </span>{' '}
+            {isIncreased ? '늘었어요' : '줄었어요'}
           </p>
         </div>
       )}
