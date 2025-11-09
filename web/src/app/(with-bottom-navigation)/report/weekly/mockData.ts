@@ -1,8 +1,7 @@
 import StressImage from '@/assets/report/emoji_anger.png';
 import type { UserAverage } from '../_components/UserAverageChart';
 import type { Suggestion, Water } from '../daily/types';
-// import type { WeeklyMonthlyStress } from '../monthly/types';
-import type { WeeklyFoodReport } from './types';
+import type { WeeklyFoodReport, WeeklyStress } from './types';
 
 export interface WeeklyReportMockData {
   defecationScore: {
@@ -11,17 +10,9 @@ export interface WeeklyReportMockData {
     dailyScore: number[];
   };
   userAverage: UserAverage;
-  stress: {
-    message: string;
-    image: string;
-    items: {
-      day: string;
-      stress: StressLevel | null;
-    }[];
-  };
   food: WeeklyFoodReport;
   water: Water;
-  // stress: WeeklyMonthlyStress;
+  stress: WeeklyStress;
   suggestion: Suggestion;
 }
 

@@ -1,17 +1,14 @@
 import StressImage from '@/assets/report/emoji_anger.png';
 import type { UserAverage } from '../_components/UserAverageChart';
 import type { Suggestion, Water } from '../daily/types';
+import type { WeeklyStress } from '../weekly/types';
 import type { ColorAnalysisItem } from './_components/ColorAnalysis';
 import type { MonthlyRecordCounts } from './_components/MonthlyRecord';
 import type { PainData } from './_components/PainAnalysis';
 import type { AnalysisItem } from './_components/ShapeAnalysis';
 import type { TimeDistribution } from './_components/TimeAnalysis';
 import type { TimeOfDayItem } from './_components/TimeOfDayAnalysis';
-import type {
-  MonthlyFoodReport,
-  MonthlyScore,
-  WeeklyMonthlyStress,
-} from './types';
+import type { MonthlyFoodReport, MonthlyScore } from './types';
 
 export interface MonthlyReportMockData {
   monthlyScore: MonthlyScore;
@@ -36,7 +33,7 @@ export interface MonthlyReportMockData {
   pain: PainData;
   food: MonthlyFoodReport;
   water: Water;
-  stress: WeeklyMonthlyStress;
+  stress: WeeklyStress;
   suggestion: Suggestion;
 }
 
@@ -295,28 +292,13 @@ export const mockMonthlyReportData: MonthlyReportMockData = {
   },
   stress: {
     message: '긍정적인 당신! 그 마인드\n 오래도록 유지해봐요',
-    image: StressImage,
+    image: StressImage.src,
     items: [
-      {
-        day: '1주차',
-        stress: 'VERY_LOW',
-      },
-      {
-        day: '2주차',
-        stress: 'LOW',
-      },
-      {
-        day: '3주차',
-        stress: 'MEDIUM',
-      },
-      {
-        day: '4주차',
-        stress: 'HIGH',
-      },
-      {
-        day: '5주차',
-        stress: 'VERY_HIGH',
-      },
+      { day: '1주차', stress: 'LOW' },
+      { day: '2주차', stress: 'VERY_LOW' },
+      { day: '3주차', stress: 'MEDIUM' },
+      { day: '4주차', stress: 'LOW' },
+      { day: '5주차', stress: 'HIGH' },
     ],
   },
   suggestion: {

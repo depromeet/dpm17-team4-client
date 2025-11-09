@@ -65,7 +65,7 @@ export function WeeklyFoodReport() {
             {showFoodItems.map((item) => (
               <div
                 key={`${item.mealTime}_${item.occurredAt}`}
-                className="flex items-center justify-between gap-2.5 py-2 px-4 bg-[#292D32] h-[53px] rounded-[6px]"
+                className="flex items-center justify-between gap-2.5 py-2 px-4 bg-[#292D32] h-[53px] rounded-[6px] w-full"
               >
                 <div className="flex items-center justify-between">
                   <div className="w-[40px] flex flex-col text-center">
