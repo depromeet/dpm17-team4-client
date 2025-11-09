@@ -130,7 +130,7 @@ export default function MonthlyReportPage() {
           <UserAverageChart userAverage={reportData.userAverage} />
         )}
         <MonthlyScore monthlyScore={reportData.monthlyScore} />
-        {reportData && <DefecationAnalysis data={reportData} />}
+        <DefecationAnalysis data={reportData} />
         <MonthlyFoodReport food={reportData.food} />
         <WaterReport waterData={reportData.water} type="monthly" />
         {stressChartData && (
