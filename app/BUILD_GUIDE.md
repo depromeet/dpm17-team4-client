@@ -50,6 +50,9 @@ eas build:list
 
 # 빌드 완료 후 다운로드
 eas build:download [BUILD_ID]
+
+# 빌드 완료 후 App Store Connect에 자동 업로드 (권장)
+eas submit --platform ios --latest
 ```
 
 ### 빌드 시간
@@ -135,9 +138,35 @@ Xcode에서:
 - EAS Build 사용 시 `autoIncrement: true`로 자동 처리됨
 
 ### 필수 아이콘 확인
-- [x] `app/assets/icon.png` (1024x1024)
+- [x] `app/assets/icon.png` (1024x1024) - Expo 기본 아이콘
 - [x] `app/assets/adaptive-icon.png` (Android)
 - [x] `app/assets/splash-icon.png`
+- [x] `ios/app/Images.xcassets/AppIcon.appiconset/App-Icon-1024x1024@1x.png` (1024x1024) - iOS 앱 아이콘
+
+### iOS 앱 아이콘 변경 방법
+1. **1024x1024 PNG 이미지 준비**
+   - 정사각형 (1024x1024 픽셀)
+   - 투명도 없음 (불투명 배경 필수)
+   - PNG 형식
+
+2. **파일 교체**
+   ```bash
+   # 기존 파일 교체
+   # ios/app/Images.xcassets/AppIcon.appiconset/App-Icon-1024x1024@1x.png
+   ```
+
+3. **Git에 커밋**
+   ```bash
+   git add ios/app/Images.xcassets/AppIcon.appiconset/App-Icon-1024x1024@1x.png
+   git commit -m "Update iOS app icon"
+   ```
+
+4. **빌드 재실행**
+   ```bash
+   EXPO_NO_CAPABILITY_SYNC=1 eas build --platform ios --profile production
+   ```
+
+**참고**: iOS 11 이상에서는 1024x1024 단일 이미지만으로도 충분합니다. Xcode가 자동으로 다른 크기를 생성합니다.
 
 ---
 
@@ -153,11 +182,38 @@ Xcode에서:
 7. 검토 제출
 
 ### App Store 배포
-1. 빌드 (IPA 파일 생성)
-2. App Store Connect 로그인
-3. 앱 정보 입력
-4. Archive 업로드
-5. 심사 제출
+
+#### 방법 1: EAS Submit 사용 (권장) ⭐
+가장 간편한 방법입니다. 빌드 완료 후 자동으로 App Store Connect에 업로드합니다.
+
+```bash
+# 빌드와 함께 자동 업로드
+EXPO_NO_CAPABILITY_SYNC=1 eas build --platform ios --profile production --auto-submit
+
+# 또는 빌드 완료 후 별도로 업로드
+eas submit --platform ios --latest
+```
+
+**필요한 것:**
+- App Store Connect API Key (App Store Connect → Users and Access → Keys)
+- 또는 Apple ID 로그인 정보
+
+#### 방법 2: 수동 업로드
+1. 빌드 완료 후 IPA 파일 다운로드
+   ```bash
+   eas build:download [BUILD_ID]
+   ```
+2. [App Store Connect](https://appstoreconnect.apple.com) 로그인
+3. 내 앱 → 앱 선택 (또는 새 앱 생성)
+4. TestFlight 탭 또는 App Store 탭
+5. "+ 버전" 또는 "+ 빌드" 클릭
+6. IPA 파일 업로드
+   - 방법 A: Transporter 앱 사용 (Mac App Store에서 다운로드)
+   - 방법 B: 웹에서 직접 업로드 (드래그 앤 드롭)
+7. 빌드 처리 완료 대기 (보통 10-30분)
+8. 빌드 선택 후 "심사 제출" 클릭
+9. 앱 정보 입력 (스크린샷, 설명 등)
+10. 심사 제출
 
 ---
 
