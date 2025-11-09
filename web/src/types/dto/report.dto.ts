@@ -1,8 +1,8 @@
 import type { UserAverage } from '@/app/(with-bottom-navigation)/report/_components/UserAverageChart';
 import type {
   ReportData,
-  Water,
   Suggestion,
+  Water,
 } from '@/app/(with-bottom-navigation)/report/daily/types';
 import type { ColorAnalysisItem } from '@/app/(with-bottom-navigation)/report/monthly/_components/ColorAnalysis';
 import type { MonthlyRecordCounts } from '@/app/(with-bottom-navigation)/report/monthly/_components/MonthlyRecord';
