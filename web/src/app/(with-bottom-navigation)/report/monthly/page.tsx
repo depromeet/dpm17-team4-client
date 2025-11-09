@@ -107,41 +107,43 @@ export default function MonthlyReportPage() {
   }
 
   return (
-    <div className="mt-3 py-0 px-4 flex flex-col items-center gap-5">
-      <SelectDate
-        currentMonth={month}
-        currentYear={year}
-        isNextDisabled={isNextDisabled}
-        onMonthChange={(newYear, newMonth) => {
-          setYear(newYear);
-          setMonth(newMonth);
-        }}
-      />
-      <MonthlyRecord
-        recordCounts={reportData.monthlyRecordCounts}
-        currentMonth={month}
-      />
-      <DefecationScoreChart
-        scores={reportData.monthlyDefecationScore}
-        labels={weekLabels}
-      />
-      {reportData.userAverage && (
-        <UserAverageChart userAverage={reportData.userAverage} />
-      )}
-      <MonthlyScore monthlyScore={reportData.monthlyScore} />
-      {reportData && <DefecationAnalysis data={reportData} />}
-      <MonthlyFoodReport food={reportData.food} />
-      <WaterReport waterData={reportData.water} type="monthly" />
-      {stressChartData && (
-        <StressAnalysisChart
-          stressAnalysis={stressChartData}
-          xLabels={weekLabels}
-          displayLabels={weekLabels}
+    <>
+      <div className="mt-3 py-0 px-4 flex flex-col items-center gap-5 mb-[50px]">
+        <SelectDate
+          currentMonth={month}
+          currentYear={year}
+          isNextDisabled={isNextDisabled}
+          onMonthChange={(newYear, newMonth) => {
+            setYear(newYear);
+            setMonth(newMonth);
+          }}
         />
-      )}
+        <MonthlyRecord
+          recordCounts={reportData.monthlyRecordCounts}
+          currentMonth={month}
+        />
+        <DefecationScoreChart
+          scores={reportData.monthlyDefecationScore}
+          labels={weekLabels}
+        />
+        {reportData.userAverage && (
+          <UserAverageChart userAverage={reportData.userAverage} />
+        )}
+        <MonthlyScore monthlyScore={reportData.monthlyScore} />
+        {reportData && <DefecationAnalysis data={reportData} />}
+        <MonthlyFoodReport food={reportData.food} />
+        <WaterReport waterData={reportData.water} type="monthly" />
+        {stressChartData && (
+          <StressAnalysisChart
+            stressAnalysis={stressChartData}
+            xLabels={weekLabels}
+            displayLabels={weekLabels}
+          />
+        )}
+      </div>
       {reportData.suggestion && (
         <Suggestions suggestion={reportData.suggestion} />
       )}
-    </div>
+    </>
   );
 }
