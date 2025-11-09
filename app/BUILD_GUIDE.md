@@ -212,6 +212,23 @@ git commit -m "Add Expo.plist for iOS build"
 EXPO_NO_CAPABILITY_SYNC=1 eas build --platform ios --profile production
 ```
 
+### iOS 빌드 시 AppIcon 이미지셋 누락 에러
+에러 메시지: `None of the input catalogs contained a matching stickers icon set or app icon set named "AppIcon"`
+
+**원인**: 
+- `ios/app/Images.xcassets/AppIcon.appiconset/` 디렉토리가 `.gitignore`에 포함되어 Git에 커밋되지 않음
+- EAS Build는 Git 저장소를 클론하므로 AppIcon 이미지셋이 없어서 빌드 실패
+
+**해결 방법**:
+```bash
+# 1. .gitignore에서 ios/app/Images.xcassets/ 제거 (이미 완료)
+# 2. AppIcon 이미지셋을 Git에 추가
+git add ios/app/Images.xcassets/AppIcon.appiconset/
+git commit -m "Add AppIcon imageset for iOS build"
+# 3. 다시 빌드
+EXPO_NO_CAPABILITY_SYNC=1 eas build --platform ios --profile production
+```
+
 ---
 
 ## 추천
