@@ -57,14 +57,7 @@ export function PainAnalysis({ data }: PainAnalysisProps) {
     );
   }
 
-  const {
-    veryLow = 0,
-    low = 0,
-    medium = 0,
-    high = 0,
-    veryHigh = 0,
-    comparison = { direction: 'same', count: 0 },
-  } = data;
+  const { veryLow, low, medium, high, veryHigh, comparison } = data;
 
   const total = veryLow + low + medium + high + veryHigh;
 
@@ -179,8 +172,11 @@ export function PainAnalysis({ data }: PainAnalysisProps) {
   return (
     <div className="mt-6">
       {/* 상단 메시지 박스 */}
-      <div
-        className={`
+      {isSame ? (
+        <div className="h-[32px]" />
+      ) : (
+        <div
+          className={`
           rounded-lg px-4 py-3 mb-[69px]
           ${
             isIncreased
@@ -190,9 +186,8 @@ export function PainAnalysis({ data }: PainAnalysisProps) {
                 : 'bg-gray-700'
           }
         `}
-      >
-        <p className="text-white text-body4-m flex justify-center">
-          {!isSame && (
+        >
+          <p className="text-white text-body4-m flex justify-center">
             <>
               지난달보다 복통이{' '}
               <span
@@ -207,9 +202,9 @@ export function PainAnalysis({ data }: PainAnalysisProps) {
               </span>{' '}
               {isIncreased ? '늘었어요' : '줄었어요'}
             </>
-          )}
-        </p>
-      </div>
+          </p>
+        </div>
+      )}
 
       {/* 프로그래스바 영역 */}
       <div className="relative mb-[4px]">
