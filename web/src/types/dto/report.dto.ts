@@ -1,6 +1,7 @@
 import type { UserAverage } from '@/app/(with-bottom-navigation)/report/_components/UserAverageChart';
 import type {
   ReportData,
+  Water,
   Suggestion,
 } from '@/app/(with-bottom-navigation)/report/daily/types';
 import type { ColorAnalysisItem } from '@/app/(with-bottom-navigation)/report/monthly/_components/ColorAnalysis';
@@ -10,10 +11,9 @@ import type { AnalysisItem } from '@/app/(with-bottom-navigation)/report/monthly
 import type { TimeDistribution } from '@/app/(with-bottom-navigation)/report/monthly/_components/TimeAnalysis';
 import type { TimeOfDayItem } from '@/app/(with-bottom-navigation)/report/monthly/_components/TimeOfDayAnalysis';
 import type {
+  MonthlyFoodReport,
   MonthlyScore,
-  WeeklyMonthlyFoodReport,
   WeeklyMonthlyStress,
-  WeeklyMonthlyWater,
 } from '@/app/(with-bottom-navigation)/report/monthly/types';
 
 export interface ReportDataResponseDto extends ReportData {}
@@ -38,8 +38,8 @@ export interface MonthlyReportResponseDto {
     titleMessage: string;
     items: TimeOfDayItem[];
   };
-  food: WeeklyMonthlyFoodReport;
-  water: WeeklyMonthlyWater;
+  food: MonthlyFoodReport;
+  water: Water;
   stress: WeeklyMonthlyStress;
   suggestion: Suggestion;
 }
