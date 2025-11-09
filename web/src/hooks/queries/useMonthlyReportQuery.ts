@@ -4,15 +4,13 @@ import { QUERY_KEYS } from '@/constants';
 import type { MonthlyReportResponseDto } from '@/types/dto/report.dto';
 
 export interface UseMonthlyReportQueryParams {
-  year?: number;
-  month?: number;
+  yearMonth?: string;
 }
 
 export const useMonthlyReportQuery = (params?: UseMonthlyReportQueryParams) => {
   const queryKey = [
     ...QUERY_KEYS.REPORT_MONTHLY,
-    params?.year ?? 'current',
-    params?.month ?? 'current',
+    params?.yearMonth ?? 'current',
   ];
 
   return useQuery<MonthlyReportResponseDto>({

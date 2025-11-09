@@ -30,8 +30,7 @@ export interface MonthlyReportMockData {
     titleMessage: string;
     items: TimeOfDayItem[];
   };
-  colorMessage: string;
-  monthlyRecordCounts: MonthlyRecordCounts;
+  recordCounts: MonthlyRecordCounts;
   monthlyScores: number[];
   userAverage: UserAverage;
   pain: PainData;
@@ -55,7 +54,7 @@ export const mockMonthlyReportData: MonthlyReportMockData = {
     },
   },
   //배변 분석 기록 결과 -모양
-  monthlyRecordCounts: {
+  recordCounts: {
     totalRecordCounts: 37,
     defecationRecordCounts: 21,
     lifestyleRecordCounts: 16,
@@ -81,9 +80,9 @@ export const mockMonthlyReportData: MonthlyReportMockData = {
   },
   //배변 분석 기록 결과 -소요 시간
   timeDistribution: {
-    within5min: 2, // 5분 이내
-    over5min: 4, // 5분 이상
-    over10min: 10, // 10분 이상
+    within5min: 0, // 5분 이내
+    over5min: 2, // 5분 이상
+    over10min: 1, // 10분 이상
     titleMessage: '배변 소요 시간은\n주로 10분 이상이었어요',
   },
   //배변 분석 기록 결과 -색상
@@ -131,15 +130,15 @@ export const mockMonthlyReportData: MonthlyReportMockData = {
     titleMessage: '이번 달은 주로\n오전에 성공했어요',
     items: [
       {
-        period: 'MORNING',
+        period: '오전',
         count: 18,
       },
       {
-        period: 'AFTERNOON',
+        period: '오후',
         count: 3,
       },
       {
-        period: 'EVENING',
+        period: '저녁',
         count: 8,
       },
     ],
@@ -330,7 +329,5 @@ export const mockMonthlyReportData: MonthlyReportMockData = {
       },
     ],
   },
-  colorMessage:
-    '혈변은 건강의 적신호예요. 대장염, 대장암, 치질 등의 문제일 수 있어요. 빠른 병원 방문을 권장해요.',
   monthlyScores: [75, 82, 78, 85, 80],
 };

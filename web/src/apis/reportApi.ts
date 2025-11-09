@@ -24,18 +24,15 @@ export const reportApi = {
       API_ENDPOINTS.REPORT.BASE
     );
   },
-  reportMonthlyData: (params?: { year?: number; month?: number }) => {
-    const payload: { year?: number; month?: number } = {};
-    if (typeof params?.year === 'number') {
-      payload.year = params.year;
+  reportMonthlyData: (params?: { yearMonth?: string }) => {
+    const searchParams = new URLSearchParams();
+    if (params?.yearMonth) {
+      searchParams.append('yearMonth', params.yearMonth);
     }
-    if (typeof params?.month === 'number') {
-      payload.month = params.month;
-    }
+    const endpoint = searchParams.toString()
+      ? `${API_ENDPOINTS.REPORT.MONTHLY}?${searchParams.toString()}`
+      : API_ENDPOINTS.REPORT.MONTHLY;
 
-    return apiClient.post<ApiResponse<MonthlyReportResponseDto>>(
-      API_ENDPOINTS.REPORT.MONTHLY,
-      payload
-    );
+    return apiClient.post<ApiResponse<MonthlyReportResponseDto>>(endpoint);
   },
 };
