@@ -5,16 +5,16 @@ import EmptyMemoIcon from '@/assets/report/monthly_memo.png';
 import { useMonthlyReportQuery } from '@/hooks/queries/useMonthlyReportQuery';
 import { getKoreanDate } from '@/utils/utils-date';
 import { DefecationScoreChart } from '../_components/DefecationScoreChart';
-import { NWaterReport } from '../_components/NWaterReport';
 import { StressAnalysisChart } from '../_components/StressAnalysisChart';
+import { Suggestions } from '../_components/Suggestions';
 import { UserAverageChart } from '../_components/UserAverageChart';
-import { StressReport } from '../daily/_components/StressReport';
-import { Suggestions } from '../daily/_components/Suggestions';
+import { WaterReport } from '../_components/WaterReport';
 import { DefecationAnalysis } from './_components/DefecationAnalysis';
 import { MonthlyFoodReport } from './_components/MonthlyFoodReport';
 import { MonthlyRecord } from './_components/MonthlyRecord';
 import { MonthlyScore } from './_components/MonthlyScore';
 import { SelectDate } from './_components/SelectMonthDate';
+import type { Week } from '../weekly/types';
 
 const weekLabels = ['1주차', '2주차', '3주차', '4주차', '5주차'];
 export default function MonthlyReportPage() {
@@ -32,6 +32,16 @@ export default function MonthlyReportPage() {
   });
   const reportData = data;
   const isNextDisabled = year === currentYear && month === currentMonth;
+
+  const stressChartData = reportData?.stress
+    ? {
+        ...reportData.stress,
+        items: weekLabels.map((label, index) => ({
+          day: label as Week,
+          stress: reportData.stress?.items[index]?.stress ?? null,
+        })),
+      }
+    : null;
 
   if (isLoading) {
     return (
@@ -120,17 +130,14 @@ export default function MonthlyReportPage() {
       )}
       <MonthlyScore monthlyScore={reportData.monthlyScore} />
       {reportData && <DefecationAnalysis data={reportData} />}
-      {reportData.stress && (
+      <MonthlyFoodReport food={reportData.food} />
+      <WaterReport waterData={reportData.water} type="monthly" />
+      {stressChartData && (
         <StressAnalysisChart
-          stressAnalysis={reportData.stress}
+          stressAnalysis={stressChartData}
           xLabels={weekLabels}
           displayLabels={weekLabels}
         />
-      )}
-      <MonthlyFoodReport food={reportData.food} />
-      <NWaterReport water={reportData.water} />
-      {reportData.stress && (
-        <StressReport stressData={reportData.stress} type="monthly" />
       )}
       {reportData.suggestion && (
         <Suggestions suggestion={reportData.suggestion} />

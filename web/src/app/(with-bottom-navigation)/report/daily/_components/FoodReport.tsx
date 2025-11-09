@@ -1,7 +1,8 @@
+import Image from 'next/image';
 import { useRef, useState } from 'react';
 import { ChevronIcon } from '@/components';
 import type { Food } from '../types';
-import { formatDate, getMealTimeLabel } from '../utils';
+import { formatDate, getMealTimeIcon, getMealTimeLabel } from '../utils';
 
 const GAP_WIDTH = 48;
 const ANIMATION_DURATION = 300;
@@ -53,8 +54,8 @@ export const FoodReport = ({ foodData }: { foodData: Food }) => {
   };
 
   return (
-    <div className="bg-[#272B31] rounded-[14px] py-7 px-6 w-full">
-      <p className="text-[#707885] text-body3-m mb-2">식단 분석 결과</p>
+    <div className="bg-[#1B1D20] rounded-[14px] py-7 px-6 w-full">
+      <p className="text-[#4E5560] text-body3-m mb-2">식단 분석 결과</p>
       <div
         ref={scrollRef}
         className="flex overflow-x-auto gap-0"
@@ -88,14 +89,13 @@ export const FoodReport = ({ foodData }: { foodData: Food }) => {
                     key={meal.mealTime}
                     className="flex items-center justify-between"
                   >
-                    <div className="flex items-center gap-1 bg-[#3C4149] rounded-[4px] py-1 px-2">
-                      {/* TODO 서버에서 이미지 내려오지 않음 */}
-                      {/*<Image*/}
-                      {/*  src={meal.image}*/}
-                      {/*  alt={getMealTimeLabel(meal.mealTime)}*/}
-                      {/*  width={16}*/}
-                      {/*  height={16}*/}
-                      {/*/>*/}
+                    <div className="flex items-center gap-1 bg-[#292D32] rounded-[4px] py-1 px-2">
+                      <Image
+                        src={getMealTimeIcon(meal.mealTime)}
+                        alt={getMealTimeLabel(meal.mealTime)}
+                        width={16}
+                        height={16}
+                      />
                       <p className="text-white text-body3-m text-center">
                         {getMealTimeLabel(meal.mealTime)}
                       </p>
@@ -104,8 +104,8 @@ export const FoodReport = ({ foodData }: { foodData: Food }) => {
                     {meal.foods.length > 0 ? (
                       <div className="flex items-center gap-2">
                         {meal.dangerous && (
-                          <div className="w-[34px] h-5 flex items-center justify-center rounded-[4px] bg-red-100 py-1 px-[7px]">
-                            <p className="text-[11px] font-semibold text-red-600">
+                          <div className="w-[34px] h-5 flex items-center justify-center rounded-[4px] bg-red-600 py-1 px-[7px]">
+                            <p className="text-[11px] font-semibold text-white">
                               주의
                             </p>
                           </div>

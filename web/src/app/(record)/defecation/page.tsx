@@ -44,14 +44,20 @@ export default function DefecationPage() {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white px-4 pt-17 pb-[156px] select-none">
-      <div className="text-start space-y-6">
-        <DefecationTime data={data} />
-        <DefecationAttempt
-          data={data}
-          colorRef={colorRef}
-          onOpenColorSection={handleOpenColorSection}
-          onCloseColorSection={handleCloseColorSection}
-        />
+      <div className="flex flex-col gap-3 text-start">
+        <div className="mb-3">
+          <DefecationTime data={data} />
+        </div>
+
+        <div className="mb-3">
+          <DefecationAttempt
+            data={data}
+            colorRef={colorRef}
+            onOpenColorSection={handleOpenColorSection}
+            onCloseColorSection={handleCloseColorSection}
+          />
+        </div>
+
         <DefecationDetail
           ref={defecationDetailRef}
           colorRef={(el) => {

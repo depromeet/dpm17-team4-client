@@ -66,10 +66,10 @@ export type WaterName = 'STANDARD' | 'YESTERDAY' | 'TODAY';
 export type WaterLevel = 'HIGH' | 'MEDIUM' | 'LOW';
 
 export type WaterItem = {
-  name: WaterName;
+  name: WaterName | string;
   value: number;
   color: string;
-  level: WaterLevel;
+  level: WaterLevel | string;
 };
 
 export type Water = {

@@ -60,7 +60,7 @@ export const DefecationScoreChart = ({
         title: { formatter: () => '' },
         formatter: (value) => value.toFixed(0),
       },
-      custom: ({ series, seriesIndex, dataPointIndex, w }) => {
+      custom: ({ series, seriesIndex, dataPointIndex }) => {
         const value = series[seriesIndex][dataPointIndex];
 
         return `<div class="custom-tooltip-container">

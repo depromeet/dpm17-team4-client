@@ -167,7 +167,7 @@ export default function App() {
           scalesPageToFit={true}
           allowsInlineMediaPlayback={true}
           mediaPlaybackRequiresUserAction={false}
-          onMessage={(event) => handleWebViewMessage(event, handleShowLockSettings)}
+          onMessage={(event) => handleWebViewMessage(event, webViewRef, handleShowLockSettings)}
           onShouldStartLoadWithRequest={(request) => {
             console.log('🔗 WebView 로드 요청:', request.url);
             

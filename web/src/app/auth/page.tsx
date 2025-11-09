@@ -14,20 +14,21 @@ import bgGradient2 from '@/assets/auth/bg-gradient2.png';
 import bgGradient3 from '@/assets/auth/bg-gradient3.png';
 import loginCharacter from '@/assets/auth/login-character.png';
 import { API_ENDPOINTS, PAGE_ROUTES } from '@/constants';
-import { isIOS } from '@/utils/utils-platform';
+import { isAndroid } from '@/utils/utils-platform';
 import AppleLoginButton from './_components/AppleLoginButton';
 import {
   getAccessToken,
   requestAccessToken,
   setAccessToken,
+  setRefreshToken,
   setUserInfo,
   type UserInfo,
 } from './_components/AuthSessionProvider';
-import BottomSheetContainer from './_components/BottomSheetContainer';
 import KakaoLoginButton from './_components/KakaoLoginButton';
 
 const API_BASE = process.env.NEXT_PUBLIC_API || 'https://kkruk.com';
 const KAKAO_LOGIN_INITIATE_URL = `${API_BASE}${API_ENDPOINTS.AUTH.KAKAO_LOGIN}`;
+const APPLE_LOGIN_INITIATE_URL = `${API_BASE}${API_ENDPOINTS.AUTH.APPLE_LOGIN}`;
 
 export function AuthContent() {
   const router = useRouter();
@@ -39,8 +40,8 @@ export function AuthContent() {
     return `${window.location.origin}/auth`;
   }, []);
 
-  // iOS 기기에서만 Apple 로그인 버튼 표시
-  const showAppleLogin = useMemo(() => isIOS(), []);
+  // 안드로이드가 아닐 때만 Apple 로그인 버튼 표시 (iOS, 웹)
+  const showAppleLogin = useMemo(() => !isAndroid(), []);
 
   // ✅ 인증 콜백 파라미터 존재 여부 (있으면 렌더 스킵)
   const hasAuthParams = useMemo(() => {
@@ -77,26 +78,102 @@ export function AuthContent() {
     if (error) setError(decodeURIComponent(error));
   }, [searchParams]);
 
+  // code 파라미터가 있으면 token 엔드포인트로 요청
+  useEffect(() => {
+    const code = searchParams.get('code');
+    // provider 또는 providerType 파라미터 확인 (백엔드 서버가 providerType으로 보낼 수 있음)
+    const providerParam =
+      searchParams.get('provider') || searchParams.get('providerType');
+    const provider = providerParam ? providerParam.toLowerCase() : 'kakao'; // 기본값은 kakao
+
+    if (!code) return;
+
+    const handleTokenRequest = async () => {
+      try {
+        const tokenEndpoint =
+          provider === 'apple'
+            ? API_ENDPOINTS.AUTH.APPLE_TOKEN
+            : API_ENDPOINTS.AUTH.KAKAO_TOKEN;
+
+        const tokenUrl = `${API_BASE}${tokenEndpoint}`;
+        console.log('🔐 Token 요청 시작:', {
+          provider,
+          tokenUrl,
+          hasCode: !!code,
+          code: `${code.substring(0, 20)}...`,
+        });
+
+        const response = await fetch(tokenUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            code,
+          }),
+        });
+
+        console.log('📡 Token 응답:', {
+          status: response.status,
+          ok: response.ok,
+          url: response.url,
+        });
+
+        // 302 리디렉션도 성공으로 처리 (리디렉션은 fetch가 자동으로 따라감)
+        if (!response.ok && response.status !== 302) {
+          const errorText = await response.text();
+          console.error('❌ Token 요청 실패:', errorText);
+          setError('토큰 요청에 실패했습니다.');
+          return;
+        }
+
+        const data = await response.json();
+        console.log('✅ Token 요청 성공:', data);
+
+        // URL에서 code와 provider 파라미터 제거
+        const url = new URL(window.location.href);
+        url.searchParams.delete('code');
+        url.searchParams.delete('provider');
+        window.history.replaceState({}, '', url.toString());
+
+        // 응답에서 사용자 정보가 오면 처리
+        if (data.id || data.user) {
+          const userInfo = data.user || {
+            id: data.id,
+            nickname: data.nickname,
+            profileImage: data.profileImage,
+            isNew: data.isNew,
+            providerType: data.providerType || provider.toUpperCase(),
+          };
+          setUserInfo(userInfo);
+
+          // 신규 사용자일 때만 약관 동의 바텀시트 표시
+          if (userInfo.isNew) {
+            router.push(`${PAGE_ROUTES.AUTH}/terms-bottomsheet`);
+          } else {
+            router.push('/home');
+          }
+        }
+
+        // accessToken과 refreshToken 저장
+        if (data.accessToken) {
+          setAccessToken(data.accessToken);
+        }
+        if (data.refreshToken) {
+          await setRefreshToken(data.refreshToken);
+        }
+      } catch (error) {
+        console.error('Token 요청 에러:', error);
+        setError('토큰 요청 중 오류가 발생했습니다.');
+      }
+    };
+
+    handleTokenRequest();
+  }, [searchParams, router]);
+
   useLayoutEffect(() => {
     const userInfo = extractUserInfo();
     if (!userInfo) return;
-
-    // 🧹 로그인 성공 직후: 오래된 .kkruk.com 쿠키 정리
-    try {
-      console.log('🧹 로그인 성공 - 오래된 쿠키 정리 시작');
-      console.log('🍪 정리 전 쿠키:', document.cookie);
-
-      // .kkruk.com 도메인 쿠키 삭제
-      document.cookie =
-        'refreshToken=; domain=.kkruk.com; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; Secure; SameSite=None';
-
-      // 짧은 딜레이 후 확인
-      setTimeout(() => {
-        console.log('🍪 정리 후 쿠키:', document.cookie);
-      }, 100);
-    } catch (error) {
-      console.error('⚠️ 쿠키 정리 실패:', error);
-    }
 
     setUserInfo(userInfo);
 
@@ -193,9 +270,16 @@ export function AuthContent() {
         <div className="space-y-4">
           <form method="POST" action={KAKAO_LOGIN_INITIATE_URL}>
             <input type="hidden" name="redirectUri" value={redirectUri} />
+            <input type="hidden" name="responseType" value="code" />
             <KakaoLoginButton />
           </form>
-          {showAppleLogin && <AppleLoginButton />}
+          {showAppleLogin && (
+            <form method="POST" action={APPLE_LOGIN_INITIATE_URL}>
+              <input type="hidden" name="redirectUri" value={redirectUri} />
+              <input type="hidden" name="responseType" value="code" />
+              <AppleLoginButton />
+            </form>
+          )}
         </div>
       </div>
       {/* 하단 여백 */}

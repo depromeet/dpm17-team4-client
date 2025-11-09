@@ -2,7 +2,6 @@
 
 import type { ApexOptions } from 'apexcharts';
 import dynamic from 'next/dynamic';
-import React from 'react';
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
