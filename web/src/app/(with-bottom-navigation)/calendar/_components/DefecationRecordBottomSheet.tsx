@@ -62,7 +62,7 @@ export const DefecationRecordBottomSheet = ({
         {/* Content */}
         <div className="flex-1 px-[1rem] py-[1rem] overflow-hidden flex flex-col items-center">
           {!hasRecords ? (
-            <div className="flex h-full flex-1 flex-col items-center justify-center py-[3rem]">
+            <div className="flex h-full flex-1 flex-col items-center justify-center pb-[3rem]">
               <div className="text-[4rem] mb-[14px]">
                 <Image
                   src={EmptyEmoji}
