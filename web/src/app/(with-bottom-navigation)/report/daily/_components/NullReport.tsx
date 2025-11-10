@@ -1,7 +1,7 @@
 import Image, { type StaticImageData } from 'next/image';
 import { useRouter } from 'next/navigation';
-import speechBubble from '@/assets/report/speechBubble.png';
 import { Button } from '@/components';
+import { cn } from '@/utils/utils-cn';
 import { getTodayDate } from '@/utils/utils-date';
 
 interface NullReportProps {
@@ -48,7 +48,12 @@ export const NullReport = ({
   const buttonContent = getButtonText(mode, title);
 
   return (
-    <div className="bg-transparent pt-16 pb-16 w-full">
+    <div
+      className={cn(
+        'pt-16 pb-16 w-full',
+        mode === 'all' && `bg-gradient-to-b from-black to-[#3A3860] flex-1`
+      )}
+    >
       <div className="flex flex-col items-center justify-center">
         <div className="relative w-[15.125rem] h-[6.3125rem]">
           <Image
@@ -58,17 +63,10 @@ export const NullReport = ({
             height={58}
             className="absolute top-[2rem] right-[5.75rem]"
           />
-          <Image
-            src={speechBubble}
-            alt="말풍선"
-            width={36}
-            height={36}
-            className="absolute top-[0.63rem] right-[3.9rem]"
-          />
         </div>
         <div className="mt-3">
           <h2 className="text-h3 text-center">{title} 기록이 없어요!</h2>
-          <p className="text-body3-m text-gray-400 text-center">
+          <p className="text-body3-m text-gray-500 text-center mt-2">
             {description}
           </p>
         </div>
@@ -88,6 +86,7 @@ export const NullReport = ({
             </>
           ) : (
             <Button
+              className="py-[11px] px-[16px]"
               onClick={() =>
                 handleGoReport(
                   buttonContent.target as 'defecation' | 'lifestyle'
