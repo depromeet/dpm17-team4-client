@@ -255,7 +255,7 @@ export const DefecationScoreChart = ({
           options={options}
           series={seriesData}
           type="line"
-          height={296}
+          height={232}
         />
       </div>
     </>
