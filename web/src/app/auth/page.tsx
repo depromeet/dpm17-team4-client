@@ -209,7 +209,7 @@ export function AuthContent() {
   return (
     <div
       className="
-    min-h-screen relative overflow-hidden [background-color:var(--Background-Background-Primary,#1D1E20)]
+    h-dvh relative overflow-hidden [background-color:var(--Background-Background-Primary,#1D1E20)]
     bg-[radial-gradient(54.67%_121.62%_at_12.93%_70.32%,_rgba(9,4,27,0.20)_0%,_rgba(73,179,169,0.20)_100%)]
     bg-no-repeat
      [background-size:100%_100%]
@@ -267,7 +267,7 @@ export function AuthContent() {
           </div>
         )}
 
-        <div className="space-y-4">
+        <div className="flex flex-col gap-3">
           <form method="POST" action={KAKAO_LOGIN_INITIATE_URL}>
             <input type="hidden" name="redirectUri" value={redirectUri} />
             <input type="hidden" name="responseType" value="code" />
