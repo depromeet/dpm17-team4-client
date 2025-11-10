@@ -71,7 +71,7 @@ export const DefecationRecordBottomSheet = ({
                   height={40}
                 />
               </div>
-              <p className="text-body2-m text-gray-400 text-center">
+              <p className="text-body3-m text-gray-400 text-center">
                 작성한 기록이 없어요.
               </p>
             </div>
