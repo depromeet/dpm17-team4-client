@@ -4,9 +4,9 @@ import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
-import poop from '@/assets/report/poop.png';
 import emojiOpenMouse from '@/assets/report/emoji_open_mouse.png';
 import newsPaper from '@/assets/report/newspaper.png';
+import poop from '@/assets/report/poop.png';
 import { useNavigationContext } from '@/contexts/NavigationContext';
 import { useReportQuery } from '@/hooks/queries/useReportQuery';
 import { StressReport } from '../_components/StressReport';
@@ -142,7 +142,7 @@ function DailyReportContent() {
     setTouchStart(null);
   };
 
-  if(reportData === undefined ) return;
+  if (reportData === undefined) return;
 
   const hasPooData = reportData?.poo !== null;
   const hasFoodData = reportData?.food?.items?.length > 0;
@@ -195,13 +195,11 @@ function DailyReportContent() {
       )}
 
       {/* 모든 데이터 없을 떄 */}
-       {hasNoDataAtAll && (
-        <NullReport mode="all" nullIcon={newsPaper} />
-      )}
+      {hasNoDataAtAll && <NullReport mode="all" nullIcon={newsPaper} />}
       {/* 메인 콘텐츠 */}
-        {!hasNoDataAtAll && <main className="px-4 pb-20">
-
-          {hasPooData ? 
+      {!hasNoDataAtAll && (
+        <main className="px-4 pb-20">
+          {hasPooData ? (
             <>
               {/* 캐러셀 컨테이너 */}
               <div className="relative overflow-hidden w-full max-w-[400px] mx-auto">
@@ -361,15 +359,14 @@ function DailyReportContent() {
                 <DefecationScore score={reportData.poo.score} />
               )}
             </>
-            : (
+          ) : (
             <NullReport
               mode="defecation"
               nullIcon={poop}
               title="배변"
               description="배변 점수는 배변 기록이 있어야 확인할 수 있어요."
             />
-          )
-        }
+          )}
           {hasLifestyleData ? (
             <div className="flex flex-col space-y-5 mt-5">
               <FoodReport foodData={reportData.food} />
@@ -392,7 +389,8 @@ function DailyReportContent() {
               description="생활을 기록하면 더 자세한 분석을 얻을 수 있어요"
             />
           )}
-        </main>}
+        </main>
+      )}
     </>
   );
 }

@@ -81,7 +81,7 @@ export const NullReport = ({
             </>
           ) : (
             <Button
-            className='py-[11px] px-[16px]'
+              className="py-[11px] px-[16px]"
               onClick={() =>
                 handleGoReport(
                   buttonContent.target as 'defecation' | 'lifestyle'
