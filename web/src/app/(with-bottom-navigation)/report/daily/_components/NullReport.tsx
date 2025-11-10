@@ -1,6 +1,5 @@
 import Image, { type StaticImageData } from 'next/image';
 import { useRouter } from 'next/navigation';
-import speechBubble from '@/assets/report/speechBubble.png';
 import { Button } from '@/components';
 import { cn } from '@/utils/utils-cn';
 import { getTodayDate } from '@/utils/utils-date';
@@ -52,7 +51,7 @@ export const NullReport = ({
     <div
       className={cn(
         'pt-16 pb-16 w-full',
-        mode == 'all' && `bg-gradient-to-b from-black to-[#3A3860] flex-1`
+        mode === 'all' && `bg-gradient-to-b from-black to-[#3A3860] flex-1`
       )}
     >
       <div className="flex flex-col items-center justify-center">
