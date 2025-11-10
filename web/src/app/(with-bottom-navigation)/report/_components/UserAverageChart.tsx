@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useParams, usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { useMemo } from 'react';
 import triangleDark from '@/assets/report/triangle_dark.png';
 import triangleLight from '@/assets/report/triangle_light.png';

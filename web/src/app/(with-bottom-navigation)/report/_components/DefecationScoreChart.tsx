@@ -47,26 +47,6 @@ export const DefecationScoreChart = ({
       toolbar: {
         show: false,
       },
-      events: {
-        mouseMove: (event, chartContext, config) => {
-          // if (config.seriesIndex === -1 || config.dataPointIndex === -1) {
-          //   return;
-          // }
-          // const tooltip = chartContext.el.querySelector('.apexcharts-tooltip');
-          // tooltip.style.setProperty('top', '30px', 'important');
-          // tooltip.style.setProperty('left', '20px', 'important');
-          // // console.log('ttew', tooltip);
-          // const pointsArray = config.globals.pointsArray;
-          // // console.log('config:', config); // index 값, pointsArray 확인
-          // if (
-          //   pointsArray[config.seriesIndex] &&
-          //   pointsArray[config.seriesIndex][config.dataPointIndex]
-          // ) {
-          //   const position =
-          //     pointsArray[config.seriesIndex][config.dataPointIndex];
-          // }
-        },
-      },
     },
     tooltip: {
       enabled: true,
