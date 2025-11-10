@@ -52,7 +52,7 @@ export const getColorLabel = (color: string): string => {
     DARK_BROWN: '갈색',
     RED: '빨간색',
     GREEN: '초록색',
-    GRAY: '회색',
+    GRAY: '흰색',
   };
   return mapping[color] || color;
 };
@@ -64,7 +64,7 @@ export const getShapeLabel = (shape: string): string => {
     CORN: '옥수수',
     BANANA: '바나나',
     CREAM: '크림',
-    PORRIDGE: '물',
+    PORRIDGE: '죽',
   };
   return mapping[shape] || shape;
 };

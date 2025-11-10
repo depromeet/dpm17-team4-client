@@ -56,7 +56,7 @@ export function ColorAnalysis({ items, message }: ColorAnalysisProps) {
               {/* 경고 버튼 */}
               {item.warning && (
                 <div className="flex-shrink-0">
-                  <div className="bg-red-600 text-white px-3 py-1.5 rounded-[4px] text-body4-sb whitespace-nowrap">
+                  <div className="bg-red-600 text-white px-[8px] py-[4px] rounded-[4px] text-body4-sb whitespace-nowrap">
                     {item.warning}
                   </div>
                 </div>
@@ -67,7 +67,7 @@ export function ColorAnalysis({ items, message }: ColorAnalysisProps) {
       </div>
 
       {/* 경고 메시지 */}
-      <div className="mt-6 bg-gray-700 rounded-lg px-4 py-3">
+      <div className="mt-6 bg-gray-700 rounded-[4px] px-[12px] py-[8px]">
         <p className="text-white text-body4-m whitespace-pre-line">{message}</p>
       </div>
     </>

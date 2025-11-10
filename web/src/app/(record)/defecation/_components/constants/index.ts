@@ -12,12 +12,12 @@ export const DEFECATION_DETAIL = {
 } as const satisfies Record<string, string>;
 
 export const DEFECATION_COLOR = {
-  DEFAULT: ['기본', '#B56A28'],
+  DEFAULT: ['갈색', '#B56A28'],
   GOLD: ['황금색', '#FCC82B'],
-  DARK_BROWN: ['흑갈색', '#682E0B'],
-  RED: ['선혈', '#F15151'],
+  RED: ['적색', '#F15151'],
   GREEN: ['녹색', '#5E632D'],
-  GRAY: ['흑색', '#8B7F78'],
+  GRAY: ['흰색', '#DED7D4'],
+  DARK_BROWN: ['흑색', '#200D02'],
 } as const satisfies Record<string, [string, string]>;
 
 export const DEFECATION_SHAPE = {

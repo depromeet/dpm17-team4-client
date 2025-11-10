@@ -165,6 +165,7 @@ export function SelectDate({
       <WheelPickerBottomSheet
         isOpen={isBottomSheetOpen}
         title="주 선택"
+        description={`기간 ${weekStartDate.getFullYear()}.${weekStartDate.getMonth() + 1}.${weekStartDate.getDate()} - ${weekEndDate.getFullYear()}.${weekEndDate.getMonth() + 1}.${weekEndDate.getDate()}`}
         options={weekOptions}
         initialValue={currentWeekValue ?? weekOptions[0]?.value ?? ''}
         onApply={handleApply}

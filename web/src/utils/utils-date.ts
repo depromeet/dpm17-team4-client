@@ -193,3 +193,13 @@ export const formatToISOString = (date: Date): string => {
   const day = String(date.getDate()).padStart(2, '0');
   return `${year}-${month}-${day}`;
 };
+
+/**
+ * 해당 월의 마지막 날짜를 반환합니다.
+ * @param year - 년도
+ * @param month - 월
+ * @returns 해당 월의 마지막 날짜
+ */
+export const getLastDayOfMonth = (year: number, month: number) => {
+  return new Date(year, month, 0).getDate();
+};
