@@ -143,7 +143,7 @@ function DailyReportContent() {
   };
 
   return (
-    <div className="flex flex-col flex-1 h-dvh">
+    <div className="flex flex-col flex-1">
       {/* 날짜 네비게이션 */}
       <div className="flex items-center justify-center gap-4 px-4 py-4 mt-4 mb-2">
         {/* TODO(seonghyun): 다른 날짜 이동 */}
