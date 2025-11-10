@@ -142,8 +142,6 @@ function DailyReportContent() {
     setTouchStart(null);
   };
 
-  if (reportData === undefined) return;
-
   return (
     <div className="flex flex-col flex-1 h-dvh">
       {/* 날짜 네비게이션 */}
