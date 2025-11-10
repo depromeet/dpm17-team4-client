@@ -132,7 +132,7 @@ export function StressAnalysisChart({
       },
     },
     grid: {
-      borderColor: '#707885',
+      borderColor: '#292D32',
       padding: {
         left: 10,
       },
@@ -201,7 +201,7 @@ export function StressAnalysisChart({
     },
   };
   return (
-    <section className=" py-7 flex flex-col gap-4 bg-gray-800 rounded-[20px]">
+    <section className=" pt-7 pb-4 flex flex-col gap-4 bg-gray-800 rounded-[20px]">
       <div className="flex flex-col">
         <div className="text-body3-m text-gray-600 mb-2  px-6">
           스트레스 분석 결과

@@ -124,7 +124,7 @@ export function StressAnalysisChart({
       },
     },
     grid: {
-      borderColor: '#707885',
+      borderColor: '#292D32',
       xaxis: {
         lines: {
           show: false,
@@ -190,13 +190,13 @@ export function StressAnalysisChart({
     },
   };
   return (
-    <section className="py-7 flex flex-col gap-4 bg-gray-800 rounded-[20px]">
+    <section className="pt-7 pb-4 flex flex-col gap-4 bg-gray-800 rounded-[20px]">
       <div className="flex flex-col">
         <div className="text-body3-m text-gray-600 mb-2 px-6 ">
           스트레스 분석 결과
         </div>
-        <div className="flex justify-center gap-12 px-6 ">
-          <div className="text-h4">{stressAnalysis.message}</div>
+        <div className="flex justify-between gap-2 px-6 ">
+          <div className="text-h4 w-2/3">{stressAnalysis.message}</div>
           <Image
             src={streching}
             alt="스트레스 분석 결과 이미지"
