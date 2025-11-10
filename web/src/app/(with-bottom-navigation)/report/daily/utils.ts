@@ -64,7 +64,7 @@ export const getShapeLabel = (shape: string): string => {
     CORN: '옥수수',
     BANANA: '바나나',
     CREAM: '크림',
-    PORRIDGE: '물',
+    PORRIDGE: '죽',
   };
   return mapping[shape] || shape;
 };
