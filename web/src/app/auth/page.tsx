@@ -267,7 +267,7 @@ export function AuthContent() {
           </div>
         )}
 
-        <div className="space-y-4">
+        <div className="flex flex-col gap-3">
           <form method="POST" action={KAKAO_LOGIN_INITIATE_URL}>
             <input type="hidden" name="redirectUri" value={redirectUri} />
             <input type="hidden" name="responseType" value="code" />
