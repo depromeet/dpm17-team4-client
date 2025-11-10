@@ -4,6 +4,7 @@ import { type ChangeEvent, memo } from 'react';
 import MinusIcon from '../assets/water-minus.png';
 import MinusDisabledIcon from '../assets/water-minus-disabled.png';
 import PlusIcon from '../assets/water-plus.png';
+import PlusDisabledIcon from '../assets/water-plus-disabled.png';
 
 const TOTAL_STEPS = 10;
 
@@ -59,7 +60,12 @@ export const WaterForm = memo(({ waterCups, setWaterCups }: WaterFormProps) => {
             onClick={handleIncrease}
             disabled={isMaxDisabled}
           >
-            <Image src={PlusIcon} alt="plus" width={24} height={24} />
+            <Image
+              src={isMaxDisabled ? PlusDisabledIcon : PlusIcon}
+              alt="plus"
+              width={24}
+              height={24}
+            />
           </button>
         </div>
 
