@@ -38,7 +38,7 @@ export function ShapeAnalysis({ items: propItems }: ShapeAnalysisProps) {
       <div className="h-[1.25rem]" />
       {/* 토글 스위치 */}
       <div className="flex items-center justify-start gap-[0.75rem] mb-6">
-        <span className="text-white text-sm">실제 모양 보기</span>
+        <span className="text-white text-sm opacity-80">실제 모양 보기</span>
         <Toggle
           isOn={showRealShape}
           onSwitch={() => setShowRealShape(!showRealShape)}
@@ -76,7 +76,7 @@ export function ShapeAnalysis({ items: propItems }: ShapeAnalysisProps) {
               {/* 경고 버튼 */}
               {item.warning && (
                 <div className="flex-shrink-0">
-                  <div className="bg-primary-600 text-white px-3 py-1.5 rounded-lg text-body4-sb whitespace-nowrap">
+                  <div className="bg-primary-600 text-white px-[8px] py-[4px] rounded-[4px] text-body4-sb whitespace-nowrap">
                     {item.warning}
                   </div>
                 </div>
