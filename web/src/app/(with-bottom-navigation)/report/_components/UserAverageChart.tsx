@@ -31,7 +31,7 @@ export function UserAverageChart({ userAverage }: UserAverageChartProps) {
         <div className="text-gray-600 text-body3-m mb-2">사용자 평균</div>
         <div className="text-h4 text-left">
           이번 주 배변 점수는 <br />
-          꾸룩 사용자 중
+          꾸룩 사용자 중&nbsp;
           <span className="text-primary-600">
             상위{userAverage.topPercent}%
           </span>
@@ -55,7 +55,7 @@ export function UserAverageChart({ userAverage }: UserAverageChartProps) {
           priority
         />
         <div
-          className={`absolute left-0 w-full h-[2px] border-t-2 border-dashed border-[#7850FB] z-30`}
+          className={`absolute left-0 w-full h-[2px] border-t-1 border-dashed border-[#7850FB] z-30`}
           style={{ top: `${userAverage.topPercent}%` }}
         ></div>
         <div
