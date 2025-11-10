@@ -9,7 +9,7 @@ interface UseReportQueryParams {
 
 export const useReportQuery = (params?: UseReportQueryParams) => {
   return useQuery<ReportDataResponseDto>({
-    queryKey: QUERY_KEYS.REPORT,
+    queryKey: [...QUERY_KEYS.REPORT, params?.dateTime],
     queryFn: async () => {
       const response = await reportApi.reportDailyData(params?.dateTime);
       return response.data.data;

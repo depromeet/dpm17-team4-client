@@ -25,7 +25,7 @@ export const DefecationScore = ({ score }: ScoreProgressBarProps) => {
           <p>{Math.round(score)}점</p>
           <InfoIcon />
 
-          <div className="z-50 absolute -top-[39px] -right-[29px] pointer-events-none">
+          <div className="z-50 absolute -top-[39px] -right-[25px] pointer-events-none">
             {isTooltipVisible && (
               <DefecationScoreTooltip
                 text={

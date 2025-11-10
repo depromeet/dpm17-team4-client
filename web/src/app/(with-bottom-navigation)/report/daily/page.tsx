@@ -1,19 +1,21 @@
 'use client';
 
 import Image from 'next/image';
-import { useSearchParams } from 'next/navigation';
-import { Suspense, useEffect, useRef, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import emojiOpenMouse from '@/assets/report/emoji_open_mouse.png';
 import newsPaper from '@/assets/report/newspaper.png';
 import poop from '@/assets/report/poop.png';
 import { useNavigationContext } from '@/contexts/NavigationContext';
 import { useReportQuery } from '@/hooks/queries/useReportQuery';
+import { formatToISOString, getKoreanDate } from '@/utils/utils-date';
 import { StressReport } from '../_components/StressReport';
 import { WaterReport } from '../_components/WaterReport';
 import { DefecationScore } from './_components/DefecationScore';
 import { FoodReport } from './_components/FoodReport';
 import { NullReport } from './_components/NullReport';
+import { SelectDate } from './_components/SelectDate';
 import type { Card } from './types';
 import { formatDate, getColorLabel, getShapeLabel } from './utils';
 
@@ -23,15 +25,33 @@ function DailyReportContent() {
   const [cardIndex, setCardIndex] = useState(0);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const searchParams = useSearchParams();
+  const router = useRouter();
   const toastShownRef = useRef(false);
   const { handleTabClick } = useNavigationContext();
 
   const dateParam = searchParams.get('date');
 
-  console.log('dateParam', dateParam);
+  // 현재 날짜 상태 관리
+  const currentDate = useMemo(() => {
+    if (dateParam) {
+      const parsedDate = new Date(dateParam);
+      if (!isNaN(parsedDate.getTime())) {
+        return parsedDate;
+      }
+    }
+    return getKoreanDate();
+  }, [dateParam]);
+
+  console.log('dateParam', dateParam + 'T00:00:00');
   useEffect(() => {
     handleTabClick('report');
   }, [handleTabClick]);
+
+  // 날짜 변경 핸들러
+  const handleDateChange = (newDate: Date) => {
+    const dateString = formatToISOString(newDate);
+    router.push(`/report/daily?date=${dateString}`);
+  };
 
   const {
     data: reportData,
@@ -145,18 +165,7 @@ function DailyReportContent() {
   return (
     <div className="flex flex-col flex-1">
       {/* 날짜 네비게이션 */}
-      <div className="flex items-center justify-center gap-4 px-4 py-4 mt-4 mb-2">
-        {/* TODO(seonghyun): 다른 날짜 이동 */}
-        {/*<button className="p-2">*/}
-        {/* <ChevronLeft className="w-5 h-5" />*/}
-        {/*</button>*/}
-        <span className="text-body2-m">
-          {formatDate(new Date(String(reportData?.updatedAt)))}
-        </span>
-        {/*<button className="p-2">*/}
-        {/* <ChevronRight className="w-5 h-5" />*/}
-        {/*</button>*/}
-      </div>
+      <SelectDate currentDate={currentDate} onDateChange={handleDateChange} />
       {isLoading && (
         // 로딩 상태 처리
         <div className="flex items-center justify-center h-40">
