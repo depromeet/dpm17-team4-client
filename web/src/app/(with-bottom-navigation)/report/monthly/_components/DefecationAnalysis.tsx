@@ -44,7 +44,7 @@ export function DefecationAnalysis() {
       </p>
 
       {/* 필터 탭 */}
-      <div className="flex gap-[8px] justify-between">
+      <div className="flex gap-[8px]">
         {filterTabs.map((filter) => (
           <button
             key={filter}
