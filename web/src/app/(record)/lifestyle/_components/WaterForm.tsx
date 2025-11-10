@@ -1,6 +1,9 @@
 import { Minus, Plus } from 'lucide-react';
+import Image from 'next/image';
 import { type ChangeEvent, memo } from 'react';
-
+import PlusIcon from '../assets/water-plus.png';
+import MinusIcon from '../assets/water-minus.png';
+import MinusDisabledIcon from '../assets/water-minus-disabled.png';
 const TOTAL_STEPS = 10;
 
 interface WaterFormProps {
@@ -41,34 +44,18 @@ export const WaterForm = memo(({ waterCups, setWaterCups }: WaterFormProps) => {
             type="button"
             onClick={handleDecrease}
             disabled={isMinDisabled}
-            className={`rounded-full w-[1.5rem] h-[1.5rem] flex items-center justify-center transition-colors ${
-              isMinDisabled
-                ? 'bg-gray-600 cursor-not-allowed'
-                : 'bg-gray-600 hover:bg-gray-500'
-            }`}
+ 
           >
-            <Minus
-              className={`w-[1.19rem] h-[1.19rem] ${
-                isMinDisabled ? 'text-gray-400' : 'text-white'
-              }`}
-            />
+           <Image src={isMinDisabled ? MinusDisabledIcon : MinusIcon} alt="minus" width={24} height={24} />
           </button>
           <div className="text-body2-sb text-white">{waterCups}잔</div>
           <button
             type="button"
             onClick={handleIncrease}
             disabled={isMaxDisabled}
-            className={`rounded-full w-[1.5rem] h-[1.5rem] flex items-center justify-center transition-colors ${
-              isMaxDisabled
-                ? 'bg-gray-600 cursor-not-allowed'
-                : 'bg-gray-600 hover:bg-gray-500'
-            }`}
+            
           >
-            <Plus
-              className={`w-[1.19rem] h-[1.19rem] ${
-                isMaxDisabled ? 'text-gray-400' : 'text-white'
-              }`}
-            />
+            <Image src={PlusIcon} alt="plus" width={24} height={24} />
           </button>
         </div>
 
@@ -87,8 +74,8 @@ export const WaterForm = memo(({ waterCups, setWaterCups }: WaterFormProps) => {
 
         {/* Range Labels */}
         <div className="flex justify-between w-full">
-          <span className="text-body2-sb text-[#95E6FF]">0잔</span>
-          <span className="text-body2-sb text-blue-400">10잔 이상</span>
+          <span className="text-body3-sb text-[#95E6FF]">0잔</span>
+          <span className="text-body3-sb text-blue-400">10잔 이상</span>
         </div>
       </div>
     </div>
