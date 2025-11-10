@@ -1,9 +1,10 @@
 import { Minus, Plus } from 'lucide-react';
 import Image from 'next/image';
 import { type ChangeEvent, memo } from 'react';
-import PlusIcon from '../assets/water-plus.png';
 import MinusIcon from '../assets/water-minus.png';
 import MinusDisabledIcon from '../assets/water-minus-disabled.png';
+import PlusIcon from '../assets/water-plus.png';
+
 const TOTAL_STEPS = 10;
 
 interface WaterFormProps {
@@ -44,16 +45,19 @@ export const WaterForm = memo(({ waterCups, setWaterCups }: WaterFormProps) => {
             type="button"
             onClick={handleDecrease}
             disabled={isMinDisabled}
- 
           >
-           <Image src={isMinDisabled ? MinusDisabledIcon : MinusIcon} alt="minus" width={24} height={24} />
+            <Image
+              src={isMinDisabled ? MinusDisabledIcon : MinusIcon}
+              alt="minus"
+              width={24}
+              height={24}
+            />
           </button>
           <div className="text-body2-sb text-white">{waterCups}잔</div>
           <button
             type="button"
             onClick={handleIncrease}
             disabled={isMaxDisabled}
-            
           >
             <Image src={PlusIcon} alt="plus" width={24} height={24} />
           </button>
