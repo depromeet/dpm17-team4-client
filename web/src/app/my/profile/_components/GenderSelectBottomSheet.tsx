@@ -1,6 +1,7 @@
 'use client';
 
-import { Check } from 'lucide-react';
+import Image from 'next/image';
+import Check from '@/assets/my/check-primary.png';
 import { BottomSheet } from '@/components/BottomSheet';
 
 interface GenderSelectBottomSheetProps {
@@ -40,7 +41,7 @@ export const GenderSelectBottomSheet = ({
               key={option.value}
               type="button"
               onClick={() => handleGenderSelect(option.value)}
-              className="w-full flex items-center justify-between py-4 rounded-lg hover:bg-gray-700 transition-colors"
+              className="w-full flex items-center justify-between py-[4px] rounded-lg hover:bg-gray-700 transition-colors"
             >
               <span
                 className={`text-base ${
@@ -52,7 +53,7 @@ export const GenderSelectBottomSheet = ({
                 {option.label}
               </span>
               {currentGender === option.value && (
-                <Check className="w-5 h-5 text-primary-600" />
+                <Image src={Check} alt="check" className="w-[18px]" />
               )}
             </button>
           ))}

@@ -1,7 +1,8 @@
 'use client';
 
-import { XIcon } from 'lucide-react';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import XIcon from '@/assets/my/x.png';
 import { BottomSheet } from '@/components/BottomSheet';
 
 interface NameEditBottomSheetProps {
@@ -72,22 +73,22 @@ export const NameEditBottomSheet = ({
               onChange={handleNameChange}
               onKeyPress={handleKeyPress}
               placeholder="이름을 입력하세요"
-              className="w-full px-4 py-3 border-b border-gray-600  text-white placeholder-gray-400"
+              className="w-full  py-3 border-b border-gray-200  text-white placeholder-gray-400"
             />
             {name && (
               <button
                 type="button"
                 onClick={handleClear}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition-colors flex items-center justify-center bg-gray-600 rounded-full w-6 h-6"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 "
               >
-                <XIcon className="w-4 h-4 text-gray-200" />
+                <Image src={XIcon} alt="x" className="w-[24px]" />
               </button>
             )}
           </div>
 
           {/* Character Count */}
           <div className="text-right">
-            <span className="text-sm text-gray-400">
+            <span className="text-body4-m text-[#4E5560]">
               {name.length}/{MAX_NAME_LENGTH}
             </span>
           </div>

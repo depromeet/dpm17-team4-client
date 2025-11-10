@@ -3,6 +3,8 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useState } from 'react';
 import { Modal, ModalContent } from '@/components';
+import { Button } from '@/components/Button';
+import { PAGE_ROUTES } from '@/constants';
 import { useActivityRecordDeleteMutation } from '@/hooks';
 import { useActivityRecordQuery } from '@/hooks/queries';
 import { FoodListContainer } from './_components/FoodListContainer';
@@ -50,12 +52,28 @@ function LifestylePageContent() {
   };
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isSkipModalOpen, setIsSkipModalOpen] = useState<boolean>(false);
 
   const openModal = () => {
     setIsModalOpen(true);
   };
   const closeModal = () => {
     setIsModalOpen(false);
+  };
+
+  const openSkipModal = () => {
+    setIsSkipModalOpen(true);
+  };
+  const closeSkipModal = () => {
+    setIsSkipModalOpen(false);
+  };
+
+  const handleSkipNavigate = () => {
+    if (from === 'defecation') {
+      router.push(`${PAGE_ROUTES.REPORT_DAILY}?toast-defecation=true`);
+    } else {
+      router.push(PAGE_ROUTES.HOME);
+    }
   };
   // 날짜 파라미터로부터 ISO 문자열 생성
   const getDateString = () => {
@@ -121,6 +139,7 @@ function LifestylePageContent() {
           existingRecordId={existingRecordId}
           onOpen={openModal}
           isDeleting={deleteMutation.isPending}
+          onSkip={openSkipModal}
         />
         <div className="h-[56px]" />
         <Suspense
@@ -158,6 +177,32 @@ function LifestylePageContent() {
       </div>
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <ModalContent onClose={closeModal} onDelete={handleDelete} />
+      </Modal>
+      <Modal isOpen={isSkipModalOpen} onClose={closeSkipModal}>
+        <div className="flex flex-col">
+          <div className="mb-6 flex flex-col items-center text-center">
+            <h1 className="text-body1-m text-white mb-2">
+              생활 기록을 건너뛰시겠어요?
+            </h1>
+            <p className="text-body4-r text-gray-400 whitespace-pre-line">
+              생활 기록을 건너뛰면{'\n'}자세한 리포트를 받아볼 수 없어요.
+            </p>
+          </div>
+          <div className="flex gap-2">
+            <Button className="!bg-gray-700 flex-1" onClick={closeSkipModal}>
+              취소
+            </Button>
+            <Button
+              className="flex-1"
+              onClick={() => {
+                closeSkipModal();
+                handleSkipNavigate();
+              }}
+            >
+              건너뛰기
+            </Button>
+          </div>
+        </div>
       </Modal>
     </>
   );

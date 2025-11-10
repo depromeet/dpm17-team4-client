@@ -202,7 +202,7 @@ export default function ProfilePageContent() {
           <div className="space-y-4">
             <button
               type="button"
-              className="flex items-center justify-between py-3 cursor-pointer w-full"
+              className="flex items-center justify-between py-[4px] cursor-pointer w-full"
               onClick={handleNameClick}
               disabled={isUpdating}
             >
@@ -277,16 +277,13 @@ export default function ProfilePageContent() {
           </div>
         </div>
 
-        {/* Account Actions Section 
-        TODO: 회원 탈퇴 기능 추가
-        TODO: 로그아웃 기능 추가
-        */}
+        <div className="bg-[#292D32] h-[8px] opacity-20" />
         <div className="px-4 py-4">
-          <div className="border-t border-gray-700 pt-4">
+          <div className=" pt-4">
             <div className="space-y-4">
               <button
                 type="button"
-                className="flex items-center justify-between py-3 cursor-pointer w-full"
+                className="flex items-center justify-between py-[4px] cursor-pointer w-full"
                 onClick={handleLogoutClick}
               >
                 <span className="text-body2-sb">로그아웃</span>

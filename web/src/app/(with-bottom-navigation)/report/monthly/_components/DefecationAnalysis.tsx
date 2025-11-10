@@ -36,25 +36,25 @@ export function DefecationAnalysis() {
   return (
     <div className="bg-gray-800 rounded-[14px] py-7 px-6 w-full">
       {/* 타이틀 */}
-      <p className="text-[#707885] text-body3-m mb-2">배변 기록 분석 결과</p>
+      <p className="text-[#4E5560] text-body3-m mb-2">배변 기록 분석 결과</p>
 
       {/* 메인 메시지 */}
-      <p className="text-white text-[18px] font-semibold mb-6 whitespace-pre-line">
+      <p className="text-white text-h4 mb-6 whitespace-pre-line">
         {displayMessage}
       </p>
 
       {/* 필터 탭 */}
-      <div className="flex gap-[8px] justify-between">
+      <div className="flex gap-[8px]">
         {filterTabs.map((filter) => (
           <button
             key={filter}
             type="button"
             onClick={() => setSelectedFilter(filter)}
             className={cn(
-              'w-full py-[4px] rounded-lg transition-colors font-semibold text-[13px] leading-[20px] tracking-[-0.2px] whitespace-nowrap',
+              'px-[10px] py-[4px] rounded-lg transition-colors font-semibold text-[13px] leading-[20px] tracking-[-0.2px] whitespace-nowrap',
               {
                 'bg-gray-600 text-white': selectedFilter === filter,
-                'bg-gray-700 text-gray-400 hover:text-white':
+                'bg-gray-700 text-[#4E5560] hover:text-white':
                   selectedFilter !== filter,
               }
             )}

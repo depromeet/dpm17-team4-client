@@ -7,12 +7,14 @@ interface LifeStyleNavigatorProps {
   existingRecordId: number | null;
   onOpen: () => void;
   isDeleting: boolean;
+  onSkip?: () => void;
 }
 
 export const LifeStyleNavigator = ({
   existingRecordId,
   onOpen,
   isDeleting,
+  onSkip,
 }: LifeStyleNavigatorProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -20,15 +22,6 @@ export const LifeStyleNavigator = ({
   const year = searchParams.get('year');
   const month = searchParams.get('month');
   const day = searchParams.get('day');
-
-  const handleSkip = () => {
-    if (from === 'defecation') {
-      // 배변 기록에서 온 경우, 배변 기록 완료 토스트와 함께 리포트로 이동
-      router.push(`${PAGE_ROUTES.REPORT_DAILY}?toast-defecation=true`);
-    } else {
-      router.push(PAGE_ROUTES.HOME);
-    }
-  };
 
   const handleBack = () => {
     if (from === 'defecation' && year && month && day) {
@@ -80,7 +73,7 @@ export const LifeStyleNavigator = ({
             {from === 'defecation' ? (
               <button
                 type="button"
-                onClick={handleSkip}
+                onClick={onSkip}
                 className="text-body2-m text-primary-600새 hover:text-primary-600"
               >
                 건너뛰기
@@ -148,7 +141,7 @@ export const LifeStyleNavigator = ({
             <div className="absolute right-4 top-1/2 -translate-y-1/2">
               <button
                 type="button"
-                onClick={handleSkip}
+                onClick={onSkip}
                 className="text-body2-m text-primary-600 hover:text-primary-600"
               >
                 건너뛰기

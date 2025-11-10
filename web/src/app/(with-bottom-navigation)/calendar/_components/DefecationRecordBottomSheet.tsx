@@ -62,7 +62,7 @@ export const DefecationRecordBottomSheet = ({
         {/* Content */}
         <div className="flex-1 px-[1rem] py-[1rem] overflow-hidden flex flex-col items-center">
           {!hasRecords ? (
-            <div className="flex h-full flex-1 flex-col items-center justify-center py-[3rem]">
+            <div className="flex h-full flex-1 flex-col items-center justify-center pb-[3rem]">
               <div className="text-[4rem] mb-[14px]">
                 <Image
                   src={EmptyEmoji}
@@ -71,13 +71,13 @@ export const DefecationRecordBottomSheet = ({
                   height={40}
                 />
               </div>
-              <p className="text-body2-m text-gray-400 text-center">
+              <p className="text-body3-m text-gray-400 text-center">
                 작성한 기록이 없어요.
               </p>
             </div>
           ) : (
             // Records List
-            <div className="flex h-full flex-col">
+            <div className="flex h-full flex-col w-full">
               <div className="flex-1 space-y-[0.75rem] overflow-y-auto">
                 {records?.map((record) => (
                   <button
