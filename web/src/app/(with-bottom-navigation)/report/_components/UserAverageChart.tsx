@@ -69,27 +69,29 @@ export function UserAverageChart({ userAverage }: UserAverageChartProps) {
         >
           상위 {userAverage.topPercent}%
         </div>
-
-        <div></div>
       </div>
-      <div className="flex gap-2.5 items-center">
-        <div className="text-body4-m text-gray-500 w-[21px]">나</div>
-        <div
-          className="bg-primary-600 h-5 rounded-[6px]"
-          style={{ width: `${userAverage.me}%` }}
-        ></div>
-        <div className="text-primary-600 text-body4-m">{userAverage.me}점</div>
-      </div>
-      <div className="flex gap-2.5 items-center">
-        <div className="text-body4-m text-gray-500 whitespace-nowrap w-[21px]">
-          평균
+      <div className="flex flex-col gap-2.5">
+        <div className="flex gap-2.5 items-center">
+          <div className="text-body4-m text-gray-500 w-[21px]">나</div>
+          <div
+            className="bg-primary-600 h-5 rounded-[6px]"
+            style={{ width: `${userAverage.me}%` }}
+          ></div>
+          <div className="text-primary-600 text-body4-m">
+            {userAverage.me}점
+          </div>
         </div>
-        <div
-          className="bg-primary-600 opacity-20 h-5 rounded-[6px]"
-          style={{ width: `${userAverage.average}%` }}
-        ></div>
-        <div className="text-gray-500 text-body4-m whitespace-nowrap">
-          {userAverage.average}점
+        <div className="flex gap-2.5 items-center">
+          <div className="text-body4-m text-gray-500 whitespace-nowrap w-[21px]">
+            평균
+          </div>
+          <div
+            className="bg-primary-600 opacity-20 h-5 rounded-[6px]"
+            style={{ width: `${userAverage.average}%` }}
+          ></div>
+          <div className="text-gray-500 text-body4-m whitespace-nowrap">
+            {userAverage.average}점
+          </div>
         </div>
       </div>
     </section>
