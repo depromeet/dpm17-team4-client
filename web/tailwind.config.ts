@@ -79,6 +79,11 @@ module.exports = {
       boxShadow: {
         tooltip: '0 4px 8px 0 rgba(0, 0, 0, 0.25)',
       },
+      backGroundImage:{
+        home:{
+          base:'url(./src/assets/home/bg_base.png)'
+        }
+      }
     },
   },
   plugins: [],
