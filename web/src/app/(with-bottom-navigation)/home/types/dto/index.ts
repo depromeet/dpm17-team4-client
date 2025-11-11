@@ -1,12 +1,12 @@
 export interface HomeResponseDto {
   status: number;
   message: string;
-  data:HomeResponseData
+  data: HomeResponseData;
   externalLink: string;
 }
-export interface HomeResponseData{
-    toiletRecordCount: number;
-    hasActivityRecord: boolean;
-    heroImage: string;
-    heroBackgroundColors: string[];
+export interface HomeResponseData {
+  toiletRecordCount: number;
+  hasActivityRecord: boolean;
+  heroImage: string;
+  heroBackgroundColors: string[];
 }
