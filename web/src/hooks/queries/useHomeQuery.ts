@@ -8,7 +8,7 @@ import { QUERY_KEYS } from '@/constants';
 
 export const useGetHomeQuery = (date: string) => {
   return useQuery<HomeResponseData>({
-    queryKey: QUERY_KEYS.HOME,
+    queryKey: [...QUERY_KEYS.HOME, date],
     queryFn: async () => {
       const response = await homeDataApi.getHomeData(date);
       return response.data;
