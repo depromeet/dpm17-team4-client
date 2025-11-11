@@ -33,7 +33,7 @@ export function WeeklyComparisonChart({
 
     return (
       <>
-        이번 주 평균 점수가
+        <span>이번 주 평균 점수가</span>
         <br />
         저번 주보다 {absDiff}점
         <br />
@@ -43,7 +43,7 @@ export function WeeklyComparisonChart({
   };
 
   return (
-    <section className="flex gap-6 items-center mb-2 ">
+    <section className="flex items-center mb-2 ">
       <RadialBarChart
         chartSeries={chartSeries}
         chartLabels={chartLabels}
