@@ -12,11 +12,11 @@ interface WeeklyComparisonChartProps {
 export function WeeklyComparisonChart({
   defecationScore,
 }: WeeklyComparisonChartProps) {
-  const chartSeries = [defecationScore.lastWeek, defecationScore.thisWeek];
+  const chartSeries = [defecationScore.thisWeek, defecationScore.lastWeek];
   const chartLabels = Object.keys(defecationScore);
 
   const scoreDiff = defecationScore.thisWeek - defecationScore.lastWeek;
-  const absDiff = Math.abs(scoreDiff);
+  const absDiff = Math.abs(Math.round(scoreDiff));
 
   const renderScoreMessage = () => {
     if (scoreDiff === 0) {

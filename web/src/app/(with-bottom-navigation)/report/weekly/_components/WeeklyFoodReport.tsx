@@ -6,31 +6,31 @@ import { ChevronIcon } from '@/components';
 import { getDateFromDateString, getDayName } from '@/utils/utils-date';
 import { getMealTimeLabel } from '../../daily/utils';
 import GreatFoodReportImage from '../../monthly/_components/assets/GreatFoodReport.png';
-import { WeeklyMockData } from '../mockData';
+import type { WeeklyFoodReportType } from '../types';
 
-export function WeeklyFoodReport() {
+interface WeeklyFoodReportProps {
+  foodData: WeeklyFoodReportType;
+}
+
+export function WeeklyFoodReport({ foodData }: WeeklyFoodReportProps) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const isIncreased =
-    WeeklyMockData.food.weeklyComparison.lastWeek <
-    WeeklyMockData.food.weeklyComparison.thisWeek;
+    foodData.weeklyComparison.lastWeek < foodData.weeklyComparison.thisWeek;
   const difference = Math.abs(
-    WeeklyMockData.food.weeklyComparison.lastWeek -
-      WeeklyMockData.food.weeklyComparison.thisWeek
+    foodData.weeklyComparison.lastWeek - foodData.weeklyComparison.thisWeek
   );
 
-  const filteredFoodItems = WeeklyMockData.food.items.slice(0, 3);
-  const showFoodItems = isExpanded
-    ? WeeklyMockData.food.items
-    : filteredFoodItems;
+  const filteredFoodItems = foodData.items.slice(0, 3);
+  const showFoodItems = isExpanded ? foodData.items : filteredFoodItems;
 
   return (
     <div className="bg-[#1B1D20] rounded-[14px] py-7 px-6 w-full">
       <p className="text-[#4E5560] text-body3-m mb-2">식단 분석 결과</p>
-      {WeeklyMockData.food.weeklyComparison.thisWeek === 0 ? (
+      {foodData.weeklyComparison.thisWeek === 0 ? (
         <div className="flex items-start justify-between gap-2">
           <p className="text-white text-[18px] font-semibold whitespace-pre-line">
-            {WeeklyMockData.food.message}
+            {foodData.message}
           </p>
           <div className="mt-2 flex justify-end">
             <Image
@@ -43,10 +43,10 @@ export function WeeklyFoodReport() {
         </div>
       ) : (
         <p className="text-white text-[18px] font-semibold mb-6 whitespace-pre-line">
-          {WeeklyMockData.food.message}
+          {foodData.message}
         </p>
       )}
-      {WeeklyMockData.food.weeklyComparison.thisWeek !== 0 && (
+      {foodData.weeklyComparison.thisWeek !== 0 && (
         <>
           <div
             className={`flex items-center justify-center text-center py-2 px-3 w-full rounded-[6px] mb-5 ${isIncreased ? 'bg-red-100' : 'bg-blue-100'}`}
@@ -86,13 +86,15 @@ export function WeeklyFoodReport() {
                   </div>
                 </div>
                 <div className="w-[34px] h-5 flex items-center justify-center rounded-[4px] bg-red-600 py-1 px-[7px]">
-                  <p className="text-[11px] font-semibold text-white">주의</p>
+                  <p className="text-[11px] font-semibold text-white whitespace-nowrap">
+                    주의
+                  </p>
                 </div>
               </div>
             ))}
           </div>
 
-          {WeeklyMockData.food.items.length > 3 && (
+          {foodData.items.length > 3 && (
             <button
               type="button"
               className="w-full flex items-center justify-center gap-1 mt-6"
