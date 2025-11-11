@@ -2,7 +2,12 @@ import Image from 'next/image';
 import { useRef, useState } from 'react';
 import { ChevronIcon } from '@/components';
 import type { Food } from '../types';
-import { formatDate, getMealTimeIcon, getMealTimeLabel } from '../utils';
+import {
+  fillMissingMealTimes,
+  formatDate,
+  getMealTimeIcon,
+  getMealTimeLabel,
+} from '../utils';
 
 const GAP_WIDTH = 48;
 const ANIMATION_DURATION = 300;
@@ -12,18 +17,16 @@ export const FoodReport = ({ foodData }: { foodData: Food }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const isProgrammaticScroll = useRef(false);
 
-  const filteredItems = foodData.items
-    .filter((item, index) => {
-      if (index === 0 && item.meals.length === 0) {
-        return false;
+  const filteredItems = foodData.items.reduce(
+    (acc, item) => {
+      // NOTE(taehyeon): 서버 논의 후 오늘 날짜 비교 형식으로 변경 필요 (오늘 -> 어제 순으로 정렬)
+      if (item.occurredAt > acc[0].occurredAt) {
+        acc.unshift(item);
       }
-      return true;
-    })
-    .sort((a, b) => {
-      return (
-        new Date(a.occurredAt).getTime() - new Date(b.occurredAt).getTime()
-      );
-    });
+      return acc;
+    },
+    [foodData.items[0]]
+  );
 
   const handleScroll = () => {
     if (scrollRef.current && !isProgrammaticScroll.current) {
@@ -84,7 +87,7 @@ export const FoodReport = ({ foodData }: { foodData: Food }) => {
                 </p>
               </div>
               <div className="flex flex-col gap-3">
-                {item.meals.map((meal) => (
+                {fillMissingMealTimes(item.meals).map((meal) => (
                   <div
                     key={meal.mealTime}
                     className="flex items-center justify-between"

@@ -39,7 +39,7 @@ export function UserAverageChart({ userAverage }: UserAverageChartProps) {
           {isWeeklyReport && '주'} 배변 점수는 <br />
           꾸룩 사용자 중&nbsp;
           <span className="text-primary-600">
-            상위{userAverage.topPercent}%
+            상위{userAverage.topPercent}%{' '}
           </span>
           예요
         </div>
@@ -84,7 +84,7 @@ export function UserAverageChart({ userAverage }: UserAverageChartProps) {
             style={{ width: `${userAverage.me}%` }}
           ></div>
           <div className="text-primary-600 text-body4-m">
-            {userAverage.me}점
+            {Math.round(userAverage.me)}점
           </div>
         </div>
         <div className="flex gap-2.5 items-center">
@@ -96,7 +96,7 @@ export function UserAverageChart({ userAverage }: UserAverageChartProps) {
             style={{ width: `${userAverage.average}%` }}
           ></div>
           <div className="text-gray-500 text-body4-m whitespace-nowrap">
-            {userAverage.average}점
+            {Math.round(userAverage.average)}점
           </div>
         </div>
       </div>

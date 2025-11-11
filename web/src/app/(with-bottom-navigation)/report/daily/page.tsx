@@ -17,7 +17,7 @@ import { FoodReport } from './_components/FoodReport';
 import { NullReport } from './_components/NullReport';
 import { SelectDate } from './_components/SelectDate';
 import type { Card } from './types';
-import { formatDate, getColorLabel, getShapeLabel } from './utils';
+import { getColorLabel, getShapeLabel } from './utils';
 
 // import { Suggestions } from './_components/Suggestions';
 
@@ -42,7 +42,7 @@ function DailyReportContent() {
     return getKoreanDate();
   }, [dateParam]);
 
-  console.log('dateParam', dateParam + 'T00:00:00');
+  console.log('dateParam', dateParam);
   useEffect(() => {
     handleTabClick('report');
   }, [handleTabClick]);

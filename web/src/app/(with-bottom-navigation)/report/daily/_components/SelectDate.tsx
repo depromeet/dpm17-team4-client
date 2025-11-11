@@ -106,7 +106,7 @@ export function SelectDate({
 
   return (
     <>
-      <div className="flex justify-center items-center gap-2 py-4">
+      <div className="flex justify-center items-center gap-2 py-3">
         <button
           type="button"
           className={`p-2 ${
@@ -120,7 +120,7 @@ export function SelectDate({
         <button
           type="button"
           onClick={() => setIsBottomSheetOpen(true)}
-          className="font-medium text-white text-center py-1 rounded-lg bg-gray-700/30"
+          className="font-medium text-white text-center py-1 rounded-lg"
         >
           {formatDateLabel(currentDate)}
         </button>

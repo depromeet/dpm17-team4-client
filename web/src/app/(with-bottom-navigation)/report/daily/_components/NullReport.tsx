@@ -9,6 +9,7 @@ interface NullReportProps {
   title?: string;
   description?: string;
   mode: 'all' | 'defecation' | 'lifestyle';
+  type?: 'daily' | 'weekly' | 'monthly';
 }
 
 export const NullReport = ({
@@ -16,6 +17,7 @@ export const NullReport = ({
   title = '',
   description = '리포트는 기록이 있어야 확인할 수 있어요.',
   mode = 'all',
+  type = 'daily',
 }: NullReportProps) => {
   const router = useRouter();
 
@@ -48,13 +50,8 @@ export const NullReport = ({
   const buttonContent = getButtonText(mode, title);
 
   return (
-    <div
-      className={cn(
-        'pt-16 pb-16 w-full',
-        mode === 'all' && `bg-gradient-to-b from-black to-[#3A3860] flex-1`
-      )}
-    >
-      <div className="flex flex-col items-center justify-center">
+    <>
+      <div className="flex flex-col items-center justify-center pt-[58px] pb-[72px] z-10">
         <div className="relative w-[15.125rem] h-[6.3125rem]">
           <Image
             src={nullIcon}
@@ -71,33 +68,41 @@ export const NullReport = ({
           </p>
         </div>
 
-        <div className="mt-8 flex justify-center gap-2">
-          {mode === 'all' ? (
-            <>
-              <Button onClick={() => handleGoReport('defecation')}>
-                {buttonContent.defecation}
-              </Button>
+        {type === 'daily' && (
+          <div className="mt-8 flex justify-center gap-2">
+            {mode === 'all' ? (
+              <>
+                <Button onClick={() => handleGoReport('defecation')}>
+                  {buttonContent.defecation}
+                </Button>
+                <Button
+                  color="secondary"
+                  onClick={() => handleGoReport('lifestyle')}
+                >
+                  {buttonContent.lifestyle}
+                </Button>
+              </>
+            ) : (
               <Button
-                color="secondary"
-                onClick={() => handleGoReport('lifestyle')}
+                className="py-[11px] px-[16px]"
+                onClick={() =>
+                  handleGoReport(
+                    buttonContent.target as 'defecation' | 'lifestyle'
+                  )
+                }
               >
-                {buttonContent.lifestyle}
+                {buttonContent.single}
               </Button>
-            </>
-          ) : (
-            <Button
-              className="py-[11px] px-[16px]"
-              onClick={() =>
-                handleGoReport(
-                  buttonContent.target as 'defecation' | 'lifestyle'
-                )
-              }
-            >
-              {buttonContent.single}
-            </Button>
-          )}
-        </div>
+            )}
+          </div>
+        )}
       </div>
-    </div>
+      <div
+        className={cn(
+          'absolute w-full h-3/4 bottom-0 left-0 right-0 pointer-events-none',
+          mode === 'all' && `bg-gradient-to-b from-black to-[#3A3860] flex-1`
+        )}
+      />
+    </>
   );
 };

@@ -21,7 +21,7 @@ export type WeeklyStress = Stress & {
   }[];
 };
 
-export type WeeklyFoodReport = {
+export type WeeklyFoodReportType = {
   message: string;
   weeklyComparison: {
     lastWeek: number;

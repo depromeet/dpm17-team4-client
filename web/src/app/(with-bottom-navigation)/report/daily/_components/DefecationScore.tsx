@@ -19,7 +19,10 @@ export const DefecationScore = ({ score }: ScoreProgressBarProps) => {
         <p>배변 점수</p>
         <button
           type="button"
-          onClick={() => setIsTooltipVisible((prev) => !prev)}
+          onClick={() => {
+            console.log('🔍 DefecationScore - onClick');
+            setIsTooltipVisible((prev) => !prev);
+          }}
           className="flex items-center gap-1 relative"
         >
           <p>{Math.round(score)}점</p>

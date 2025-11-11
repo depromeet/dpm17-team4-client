@@ -75,7 +75,7 @@ export default function MonthlyReportPage() {
   if (!hasMonthlyData || !reportData) {
     return (
       <div className="bg-report-empty h-[calc(100vh-180px)] w-full flex flex-col">
-        <div className="px-4 pt-6 flex justify-center">
+        <div className="px-4 flex justify-center">
           <SelectDate
             currentMonth={month}
             currentYear={year}
@@ -108,7 +108,7 @@ export default function MonthlyReportPage() {
 
   return (
     <>
-      <div className="mt-3 py-0 px-4 flex flex-col items-center gap-5 mb-[50px]">
+      <div className="py-0 px-4 flex flex-col items-center gap-5 mb-[50px]">
         <SelectDate
           currentMonth={month}
           currentYear={year}
