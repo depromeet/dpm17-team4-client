@@ -20,7 +20,7 @@ export function MonthlyRecord({
     <section className="w-full">
       <div className="flex justify-between">
         <div className="text-body1-m">
-          {currentMonth}월 동안 <br /> 총 &nbsp;
+          {currentMonth}월 동안 <br /> 총&nbsp;
           <span className="text-primary-600">
             {recordCounts.totalRecordCounts}
           </span>
@@ -33,7 +33,7 @@ export function MonthlyRecord({
         <div className="py-3 px-4 bg-gray-800 rounded-[10px] flex-1">
           <div className="flex gap-1 items-center ">
             <div className="w-1.5 h-1.5 rounded-full bg-yellow-600" />
-            <div className="text-body4-m">배변 기록</div>
+            <div className="text-body4-m text-gray-500">배변 기록</div>
           </div>
           <div className="text-body2-sb">
             {recordCounts.defecationRecordCounts}회
@@ -42,7 +42,7 @@ export function MonthlyRecord({
         <div className="py-3 px-4 bg-gray-800 rounded-[10px] flex-1">
           <div className="flex gap-1 items-center">
             <div className="w-1.5 h-1.5 rounded-full bg-green-600" />
-            <div className="text-body4-m">생활 기록</div>
+            <div className="text-body4-m text-gray-500">생활 기록</div>
           </div>
           <div className="text-body2-sb">
             {recordCounts.lifestyleRecordCounts}회

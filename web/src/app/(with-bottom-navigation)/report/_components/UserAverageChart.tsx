@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import { useMemo } from 'react';
 import triangleDark from '@/assets/report/triangle_dark.png';
 import triangleLight from '@/assets/report/triangle_light.png';
@@ -17,6 +18,10 @@ interface UserAverageChartProps {
 }
 
 export function UserAverageChart({ userAverage }: UserAverageChartProps) {
+  const pathSegments = usePathname();
+  const isMonthlyReport = pathSegments.split('/')[2] === 'monthly';
+  const isWeeklyReport = pathSegments.split('/')[2] === 'weekly';
+
   const clipFromBottom = 100 - userAverage.topPercent;
   const clipPathStyle = useMemo(
     () => ({
@@ -29,9 +34,10 @@ export function UserAverageChart({ userAverage }: UserAverageChartProps) {
     <section className="w-full flex flex-col gap-7 bg-gradient-to-b from-[#252441] to-[#1B1D20] rounded-[20px] px-6 py-7">
       <div>
         <div className="text-gray-600 text-body3-m mb-2">사용자 평균</div>
-        <div className="text-h4 text-left">
-          이번 주 배변 점수는 <br />
-          꾸룩 사용자 중
+        <div className="text-h3 text-left">
+          이번 {isMonthlyReport && '달'}
+          {isWeeklyReport && '주'} 배변 점수는 <br />
+          꾸룩 사용자 중&nbsp;
           <span className="text-primary-600">
             상위{userAverage.topPercent}%
           </span>
@@ -55,7 +61,7 @@ export function UserAverageChart({ userAverage }: UserAverageChartProps) {
           priority
         />
         <div
-          className={`absolute left-0 w-full h-[2px] border-t-2 border-dashed border-[#7850FB] z-30`}
+          className={`absolute left-0 w-full h-[2px] border-t-1 border-dashed border-[#7850FB] z-30`}
           style={{ top: `${userAverage.topPercent}%` }}
         ></div>
         <div
@@ -69,27 +75,29 @@ export function UserAverageChart({ userAverage }: UserAverageChartProps) {
         >
           상위 {userAverage.topPercent}%
         </div>
-
-        <div></div>
       </div>
-      <div className="flex gap-2.5 items-center">
-        <div className="text-body4-m text-gray-500 w-[21px]">나</div>
-        <div
-          className="bg-primary-600 h-5 rounded-[6px]"
-          style={{ width: `${userAverage.me}%` }}
-        ></div>
-        <div className="text-primary-600 text-body4-m">{userAverage.me}점</div>
-      </div>
-      <div className="flex gap-2.5 items-center">
-        <div className="text-body4-m text-gray-500 whitespace-nowrap w-[21px]">
-          평균
+      <div className="flex flex-col gap-2.5">
+        <div className="flex gap-2.5 items-center">
+          <div className="text-body4-m text-gray-500 w-[21px]">나</div>
+          <div
+            className="bg-primary-600 h-5 rounded-[6px]"
+            style={{ width: `${userAverage.me}%` }}
+          ></div>
+          <div className="text-primary-600 text-body4-m">
+            {userAverage.me}점
+          </div>
         </div>
-        <div
-          className="bg-primary-600 opacity-20 h-5 rounded-[6px]"
-          style={{ width: `${userAverage.average}%` }}
-        ></div>
-        <div className="text-gray-500 text-body4-m whitespace-nowrap">
-          {userAverage.average}점
+        <div className="flex gap-2.5 items-center">
+          <div className="text-body4-m text-gray-500 whitespace-nowrap w-[21px]">
+            평균
+          </div>
+          <div
+            className="bg-primary-600 opacity-20 h-5 rounded-[6px]"
+            style={{ width: `${userAverage.average}%` }}
+          ></div>
+          <div className="text-gray-500 text-body4-m whitespace-nowrap">
+            {userAverage.average}점
+          </div>
         </div>
       </div>
     </section>
