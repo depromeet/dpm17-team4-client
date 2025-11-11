@@ -73,11 +73,11 @@ export const homeBackGround = {
 
 interface HomeContentProps {
   data: HomeResponseData;
-  currentDate:Date;
-  onChangeDate:(direction:'prev'|'next')=>void
+  currentDate: Date;
+  onChangeDate: (direction: 'prev' | 'next') => void;
 }
 
-function HomeContent({ data,currentDate,onChangeDate }: HomeContentProps) {
+function HomeContent({ data, currentDate, onChangeDate }: HomeContentProps) {
   const { navHeight, handleTabClick } = useNavigationContext();
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -233,7 +233,7 @@ function HomeContent({ data,currentDate,onChangeDate }: HomeContentProps) {
             <h1>
               {!data.hasActivityRecord && data.toiletRecordCount < 1 && (
                 <>
-                {savedUserInfo?.nickname || savedUserInfo?.id || '테스터'}님,
+                  {savedUserInfo?.nickname || savedUserInfo?.id || '테스터'}님,
                   반가워요!
                   <br />
                   오늘의 기록을 시작할까요?
@@ -254,8 +254,11 @@ function HomeContent({ data,currentDate,onChangeDate }: HomeContentProps) {
                   함께 기록해볼까요?
                 </>
               )}
-              {data.toiletRecordCount >0 && data.hasActivityRecord &&(
-                <>업데이트 된<br/>리포트를 확인해보세요!</>
+              {data.toiletRecordCount > 0 && data.hasActivityRecord && (
+                <>
+                  업데이트 된<br />
+                  리포트를 확인해보세요!
+                </>
               )}
             </h1>
             <div className="flex mt-3">
@@ -288,7 +291,11 @@ function HomeContent({ data,currentDate,onChangeDate }: HomeContentProps) {
             alt="홈 화면 중앙 아이콘"
           />
         </div>
-        <RecordSection navHeight={navHeight} currentDate={currentDate} onChangeDate={onChangeDate} />
+        <RecordSection
+          navHeight={navHeight}
+          currentDate={currentDate}
+          onChangeDate={onChangeDate}
+        />
       </main>
       {/* 기록하기 영역 */}
     </>
@@ -298,10 +305,10 @@ function HomeContent({ data,currentDate,onChangeDate }: HomeContentProps) {
 export default function Home() {
   const date = new Date();
   const [selectedDate, setSelectedDate] = useState(date);
-  
+
   const formattedDate = formatToISOString(selectedDate);
   const { data: homeData } = useGetHomeQuery(formattedDate);
-  
+
   const handleDateChange = (direction: 'prev' | 'next') => {
     const newDate = new Date(selectedDate);
 
@@ -312,12 +319,16 @@ export default function Home() {
     }
     setSelectedDate(newDate);
   };
-  
+
   if (!homeData) return;
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <HomeContent data={homeData} currentDate={selectedDate} onChangeDate={handleDateChange} />
+      <HomeContent
+        data={homeData}
+        currentDate={selectedDate}
+        onChangeDate={handleDateChange}
+      />
     </Suspense>
   );
 }

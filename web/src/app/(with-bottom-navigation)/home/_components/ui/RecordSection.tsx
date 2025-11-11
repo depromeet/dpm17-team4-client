@@ -1,25 +1,29 @@
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import forkIcon from '@/assets/home/fork.svg';
 import ChevronLeft from '@/assets/home/IC_Chevron_Left.png';
 import ChevronRight from '@/assets/home/IC_Chevron_Right.png';
 import poopIcon from '@/assets/home/poop.svg';
 import { cn } from '@/utils/utils-cn';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import { formatDate, isNextDisabled, isPrevDisabled } from '../utils/util-date';
 import { getRecordPath } from '../utils/util-route';
 import RecordButton from './RecordButton';
 
 interface RecordSectionProps {
   navHeight: number;
-  currentDate:Date;
-  onChangeDate:(direction:'prev'|'next')=>void
+  currentDate: Date;
+  onChangeDate: (direction: 'prev' | 'next') => void;
 }
 
-const RecordSection = ({ navHeight,currentDate,onChangeDate }: RecordSectionProps) => {
+const RecordSection = ({
+  navHeight,
+  currentDate,
+  onChangeDate,
+}: RecordSectionProps) => {
   const router = useRouter();
-  
+
   const handleRecordClick = (type: 'defecation' | 'lifestyle') => {
-    console.log(currentDate,'das')
+    console.log(currentDate, 'das');
     const path = getRecordPath(type, currentDate);
     router.push(path);
   };
