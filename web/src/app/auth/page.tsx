@@ -219,12 +219,8 @@ export function AuthContent() {
  
   "
     >
-      <div className="w-full z-20">
-        <Image
-          src={loginCharacter}
-          alt="로그인 캐릭터 이미지"
-          className="w-full"
-        />
+      <div className="z-20">
+        <Image src={loginCharacter} alt="로그인 캐릭터 이미지" width={375} />
       </div>
       <div
         className="
