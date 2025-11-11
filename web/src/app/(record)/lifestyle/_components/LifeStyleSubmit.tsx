@@ -2,8 +2,7 @@
 
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useCallback, useMemo } from 'react';
-import toast from 'react-hot-toast';
+import { useCallback } from 'react';
 import { BottomBtnBar } from '@/components';
 import { PAGE_ROUTES, QUERY_KEYS } from '@/constants';
 import {
@@ -84,7 +83,7 @@ export const LifeStyleSubmit = ({
 
     const data = {
       water,
-      stress: stress === '' ? null : (stress as StressLevel),
+      stress: stress === '' ? null : stress,
       foods: validFoods.map((food) => ({
         id: food.foodId,
         mealTime: food.mealTime,
