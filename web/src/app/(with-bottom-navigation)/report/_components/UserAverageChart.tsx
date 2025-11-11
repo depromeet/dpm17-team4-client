@@ -18,9 +18,9 @@ interface UserAverageChartProps {
 }
 
 export function UserAverageChart({ userAverage }: UserAverageChartProps) {
-  const data = usePathname();
-  const isMontlyReport = data.split('/')[2] === 'monthly';
-  const isWeeklyReport = data.split('/')[2] === 'weekly';
+  const pathSegments = usePathname();
+  const isMonthlyReport = pathSegments.split('/')[2] === 'monthly';
+  const isWeeklyReport = pathSegments.split('/')[2] === 'weekly';
 
   const clipFromBottom = 100 - userAverage.topPercent;
   const clipPathStyle = useMemo(
@@ -35,7 +35,7 @@ export function UserAverageChart({ userAverage }: UserAverageChartProps) {
       <div>
         <div className="text-gray-600 text-body3-m mb-2">사용자 평균</div>
         <div className="text-h3 text-left">
-          이번 {isMontlyReport && '달'}
+          이번 {isMonthlyReport && '달'}
           {isWeeklyReport && '주'} 배변 점수는 <br />
           꾸룩 사용자 중&nbsp;
           <span className="text-primary-600">
