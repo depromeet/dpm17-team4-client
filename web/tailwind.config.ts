@@ -104,10 +104,20 @@ module.exports = {
 
           '100%': { opacity: '1' },
         },
+        'bg-fade': {
+          '0%, 30%': { opacity: '0.4' },
+
+          '50%': { opacity: '1' },
+
+          '80%': { opacity: '1' },
+
+          '100%': { opacity: '0.4' },
+        },
       },
       animation: {
         'scale-pulse': 'scale-up-down 2s ease-out infinite',
         'text-blink': 'fade-blink 2s ease-in-out infinite',
+        'bg-fade-pulse': 'bg-fade 2s linear infinite',
       },
     },
   },
