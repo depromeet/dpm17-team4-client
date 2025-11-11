@@ -220,7 +220,12 @@ export function AuthContent() {
   "
     >
       <div className="z-20">
-        <Image src={loginCharacter} alt="로그인 캐릭터 이미지" width={375} height={500}/>
+        <Image
+          src={loginCharacter}
+          alt="로그인 캐릭터 이미지"
+          width={375}
+          height={500}
+        />
       </div>
       <div
         className="
