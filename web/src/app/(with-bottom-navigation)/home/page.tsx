@@ -307,7 +307,7 @@ export default function Home() {
   const [selectedDate, setSelectedDate] = useState(date);
 
   const formattedDate = formatToISOString(selectedDate);
-  const { data: homeData } = useGetHomeQuery(formattedDate);
+  const { data: homeData, isLoading, error } = useGetHomeQuery(formattedDate);
 
   const handleDateChange = (direction: 'prev' | 'next') => {
     const newDate = new Date(selectedDate);
@@ -319,8 +319,20 @@ export default function Home() {
     }
     setSelectedDate(newDate);
   };
-
-  if (!homeData) return;
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div>로딩 중...</div>
+      </div>
+    );
+  }
+  if (error || !homeData) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div>데이터를 불러올 수 없습니다.</div>
+      </div>
+    );
+  }
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
