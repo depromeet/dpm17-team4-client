@@ -23,7 +23,6 @@ const RecordSection = ({
   const router = useRouter();
 
   const handleRecordClick = (type: 'defecation' | 'lifestyle') => {
-    console.log(currentDate, 'das');
     const path = getRecordPath(type, currentDate);
     router.push(path);
   };
