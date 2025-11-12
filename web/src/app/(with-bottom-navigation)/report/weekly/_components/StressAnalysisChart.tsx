@@ -190,7 +190,7 @@ export function StressAnalysisChart({
     },
   };
   return (
-    <section className="pt-7 pb-4 flex flex-col gap-4 bg-gray-800 rounded-[20px]">
+    <section className="pt-7 pb-4 flex flex-col gap-4 bg-gray-800 rounded-[20px] w-[calc(100%-40px)] mx-auto z-10">
       <div className="flex flex-col">
         <div className="text-body3-m text-gray-600 mb-2 px-6 ">
           스트레스 분석 결과

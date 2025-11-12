@@ -18,6 +18,7 @@ import { StressAnalysisChart } from './_components/StressAnalysisChart';
 import { WeeklyComparisonChart } from './_components/WeeklyComparisonChart';
 import { WeeklyFoodReport } from './_components/WeeklyFoodReport';
 import type { DayOfWeek } from './types';
+import ReportNotice from '../_components/ReportNotice';
 
 const weekLabels = ['월', '화', '수', '목', '금', '토', '일'];
 const allDays: DayOfWeek[] = [
@@ -95,9 +96,9 @@ function WeeklyReportContent() {
 
   return (
     <div>
-      <div className="fixed top-[134px] left-[130px] pointer-events-none w-[426px] h-[426px] bg-radial from-[#2994FF] to-[#1D1E20] opacity-10" />
-      <div className="fixed top-[428px] right-[191px] pointer-events-none w-[426px] h-[426px] bg-radial from-[#2994FF] to-[#1D1E20] opacity-10" />
-      <div className="px-4 flex flex-col gap-5 mb-[50px]">
+      <div className="absolute top-[134px] left-[130px] pointer-events-none w-[426px] h-[426px] bg-radial from-[#2994FF] to-[#121213] opacity-10" />
+      <div className="absolute top-[428px] right-[191px] pointer-events-none w-[426px] h-[426px] bg-radial from-[#2994FF] to-[#121213] opacity-10" />
+      <div className="flex flex-col gap-5 mb-[50px]">
         <SelectDate
           today={today}
           weekStartDate={weekStartDate}
@@ -130,12 +131,11 @@ function WeeklyReportContent() {
               xLabels={allDays}
               displayLabels={weekLabels}
             />
+            <Suggestions suggestion={weeklyData?.suggestion} />
           </>
         )}
+        <ReportNotice/>
       </div>
-      {noLifeStyleData ? null : (
-        <Suggestions suggestion={weeklyData?.suggestion} />
-      )}
     </div>
   );
 }

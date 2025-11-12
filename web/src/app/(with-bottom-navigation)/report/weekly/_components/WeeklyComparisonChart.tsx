@@ -26,9 +26,9 @@ export function WeeklyComparisonChart({
   const chartLabels = Object.keys(defecationScore);
 
   const scoreDiff = defecationScore.thisWeek - defecationScore.lastWeek;
-  
-  const positiveDiff   = Math.abs(Math.round(scoreDiff));
-  const negativeDiff = Math.abs(Math.round(scoreDiff)) * (-1);
+
+  const positiveDiff = Math.abs(Math.round(scoreDiff));
+  const negativeDiff = Math.abs(Math.round(scoreDiff)) * -1;
 
   const absDiff = scoreDiff > 0 ? positiveDiff : negativeDiff;
 
@@ -57,7 +57,7 @@ export function WeeklyComparisonChart({
   };
 
   return (
-    <section className="flex items-center mb-2 ">
+    <section className="flex items-center mb-2 w-[calc(100%-40px)] mx-auto">
       <DynamicRadialBarChart
         chartSeries={chartSeries}
         chartLabels={chartLabels}
