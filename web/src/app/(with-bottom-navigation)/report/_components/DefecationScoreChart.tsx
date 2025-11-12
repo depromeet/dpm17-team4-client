@@ -237,7 +237,7 @@ export function DefecationScoreChart({
 }
 
 `}</style>
-      <div className="bg-gray-800 rounded-[20px] w-full pt-7 px-3 z-10">
+      <div className="bg-gray-800 rounded-[20px] w-[calc(100%-40px)] mx-auto pt-7 px-3 z-10">
         <div className="text-body3-m text-gray-600 px-3">배변 점수</div>
         <ApexChart
           options={options}
