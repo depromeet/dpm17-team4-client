@@ -10,6 +10,7 @@ import poop from '@/assets/report/poop.png';
 import { useNavigationContext } from '@/contexts/NavigationContext';
 import { useReportQuery } from '@/hooks/queries/useReportQuery';
 import { formatToISOString, getKoreanDate } from '@/utils/utils-date';
+import ReportNotice from '../_components/ReportNotice';
 import { StressReport } from '../_components/StressReport';
 import { WaterReport } from '../_components/WaterReport';
 import { DefecationScore } from './_components/DefecationScore';
@@ -208,7 +209,7 @@ function DailyReportContent() {
               {hasNoDataAtAll && <NullReport mode="all" nullIcon={newsPaper} />}
               {/* 메인 콘텐츠 */}
               {!hasNoDataAtAll && (
-                <main className="px-4 pb-20">
+                <main className="pb-20">
                   {hasPooData ? (
                     <>
                       {/* 캐러셀 컨테이너 */}
@@ -400,15 +401,8 @@ function DailyReportContent() {
                         />
                       )}
                       {reportData.stress && (
-                        <StressReport
-                          stressData={reportData.stress}
-                          type="daily"
-                        />
+                        <StressReport stressData={reportData.stress} />
                       )}
-                      {/* //NOTE(taehyeon): 일간 리포트에는 추천 습관 영역 제거 (만약 대비 주석 처리) */}
-                      {/* {reportData.suggestion && (
-                <Suggestions suggestion={reportData.suggestion} />
-              )} */}
                     </div>
                   ) : (
                     <NullReport
@@ -418,6 +412,7 @@ function DailyReportContent() {
                       description="생활을 기록하면 더 자세한 분석을 얻을 수 있어요"
                     />
                   )}
+                  {hasNoDataAtAll ? null : <ReportNotice />}
                 </main>
               )}
             </>
