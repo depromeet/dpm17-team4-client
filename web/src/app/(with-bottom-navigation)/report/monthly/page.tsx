@@ -108,7 +108,7 @@ export default function MonthlyReportPage() {
 
   return (
     <>
-      <div className="py-0 px-4 flex flex-col items-center gap-5 mb-[50px]">
+      <div className="py-0 flex flex-col items-center gap-5 mb-[50px]">
         <SelectDate
           currentMonth={month}
           currentYear={year}

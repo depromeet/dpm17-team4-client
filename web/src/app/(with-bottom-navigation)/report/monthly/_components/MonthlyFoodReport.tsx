@@ -27,7 +27,7 @@ export function MonthlyFoodReport({ food }: MonthlyFoodReportProps) {
   );
 
   return (
-    <div className="bg-[#1B1D20] rounded-[14px] py-7 px-6 w-full">
+    <div className="bg-[#1B1D20] rounded-[14px] py-7 px-6 w-[calc(100%-40px)] mx-auto z-10">
       <p className="text-[#4E5560] text-body3-m mb-2">식단 분석 결과</p>
       {food.monthlyComparison.thisMonth === 0 ? (
         <div className="flex items-start justify-between gap-2">

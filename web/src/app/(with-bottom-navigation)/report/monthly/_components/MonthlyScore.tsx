@@ -10,7 +10,7 @@ export function MonthlyScore({
   monthlyScore: MonthlyScoreType;
 }) {
   return (
-    <div className="bg-[#1B1D20] rounded-[14px] py-7 px-6 w-full">
+    <div className="bg-[#1B1D20] rounded-[14px] py-7 px-6 w-[calc(100%-40px)] mx-auto z-10">
       <p className="text-[#4E5560] text-body3-m mb-2">월간 기록 분석 결과</p>
       <p className="text-white text-[18px] font-semibold mb-6">
         배변 점수가 가장 높았던 날과

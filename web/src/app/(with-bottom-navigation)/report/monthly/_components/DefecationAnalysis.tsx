@@ -55,7 +55,7 @@ export function DefecationAnalysis({ data }: DefecationAnalysisProps) {
     filterMessages[selectedFilter] ?? '배변 기록 분석 결과';
 
   return (
-    <div className="bg-gray-800 rounded-[14px] py-7 px-6 w-full">
+    <div className="bg-gray-800 rounded-[14px] py-7 px-6 w-[calc(100%-40px)] mx-auto z-10">
       {/* 타이틀 */}
       <p className="text-[#4E5560] text-body3-m mb-2">배변 기록 분석 결과</p>
 
