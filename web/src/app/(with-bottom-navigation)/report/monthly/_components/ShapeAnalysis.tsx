@@ -16,9 +16,7 @@ export type AnalysisItem = {
 };
 
 interface ShapeAnalysisProps {
-  // TODO: 실제 API 연동 시 데이터 fetch 처리
   items?: AnalysisItem[];
-  titleMessage?: string;
 }
 
 export function ShapeAnalysis({ items: propItems }: ShapeAnalysisProps) {

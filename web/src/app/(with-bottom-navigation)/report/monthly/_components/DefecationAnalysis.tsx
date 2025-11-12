@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import type { MonthlyReportResponseDto } from '@/types/dto/report.dto';
 import { cn } from '@/utils/utils-cn';
-import { mockMonthlyReportData } from '../mockData';
 import { ColorAnalysis } from './ColorAnalysis';
 import { PainAnalysis } from './PainAnalysis';
 import { ShapeAnalysis } from './ShapeAnalysis';
@@ -19,15 +19,36 @@ const filterTabs: FilterType[] = [
   '배변 시각',
 ];
 
-export function DefecationAnalysis() {
+type DefecationAnalysisProps = {
+  data?: Pick<
+    MonthlyReportResponseDto,
+    'shape' | 'timeDistribution' | 'color' | 'pain' | 'timeOfDay'
+  >;
+};
+
+export function DefecationAnalysis({ data }: DefecationAnalysisProps) {
   const [selectedFilter, setSelectedFilter] = useState<FilterType>('모양');
 
+  const shapeData = data?.shape;
+  const timeDistributionData = data?.timeDistribution;
+  const colorData = data?.color;
+  const painData = data?.pain;
+  const timeOfDayData = data?.timeOfDay;
+  if (
+    !shapeData ||
+    !timeDistributionData ||
+    !colorData ||
+    !painData ||
+    !timeOfDayData
+  ) {
+    return null;
+  }
   const filterMessages: Record<FilterType, string | undefined> = {
-    모양: mockMonthlyReportData.shape.titleMessage,
-    '소요 시간': mockMonthlyReportData.timeDistribution.titleMessage,
-    색상: mockMonthlyReportData.color.titleMessage,
-    복통: mockMonthlyReportData.pain.titleMessage,
-    '배변 시각': mockMonthlyReportData.timeOfDay.titleMessage,
+    모양: shapeData.titleMessage,
+    '소요 시간': timeDistributionData.titleMessage,
+    색상: colorData.titleMessage,
+    복통: painData.titleMessage,
+    '배변 시각': timeOfDayData.titleMessage,
   };
 
   const displayMessage =
@@ -65,27 +86,23 @@ export function DefecationAnalysis() {
       </div>
 
       {/* 필터별 UI 렌더링 */}
-      {selectedFilter === '모양' && (
-        <ShapeAnalysis items={mockMonthlyReportData.shape.items} />
-      )}
+      {selectedFilter === '모양' && <ShapeAnalysis items={shapeData.items} />}
 
       {selectedFilter === '소요 시간' && (
-        <TimeAnalysis distribution={mockMonthlyReportData.timeDistribution} />
+        <TimeAnalysis distribution={timeDistributionData} />
       )}
 
       {selectedFilter === '색상' && (
         <ColorAnalysis
-          items={mockMonthlyReportData.color.items}
-          message={mockMonthlyReportData.color.colorMessage}
+          items={colorData.items}
+          message={colorData.colorMessage}
         />
       )}
 
-      {selectedFilter === '복통' && (
-        <PainAnalysis data={mockMonthlyReportData.pain} />
-      )}
+      {selectedFilter === '복통' && <PainAnalysis data={painData} />}
 
       {selectedFilter === '배변 시각' && (
-        <TimeOfDayAnalysis items={mockMonthlyReportData.timeOfDay.items} />
+        <TimeOfDayAnalysis items={timeOfDayData.items} />
       )}
     </div>
   );

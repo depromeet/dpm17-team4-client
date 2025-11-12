@@ -6,27 +6,33 @@ import { ChevronThinIcon } from '@/components';
 import { cn } from '@/utils/utils-cn';
 import { formatToDayWithWeekday, formatToMonthDay } from '@/utils/utils-date';
 import { getMealTimeLabel } from '../../daily/utils';
-import { mockMonthlyReportData } from '../mockData';
+import type { MonthlyFoodReport as MonthlyFoodReportType } from '../types';
 import GreatFoodReportImage from './assets/GreatFoodReport.png';
 
-export function MonthlyFoodReport() {
+type MonthlyFoodReportProps = {
+  food?: MonthlyFoodReportType;
+};
+
+export function MonthlyFoodReport({ food }: MonthlyFoodReportProps) {
   const [openWeekLabel, setOpenWeekLabel] = useState<string | null>(null);
 
+  if (!food) {
+    return null;
+  }
+
   const isIncreased =
-    mockMonthlyReportData.food.monthlyComparison.lastMonth <
-    mockMonthlyReportData.food.monthlyComparison.thisMonth;
+    food.monthlyComparison.lastMonth < food.monthlyComparison.thisMonth;
   const difference = Math.abs(
-    mockMonthlyReportData.food.monthlyComparison.lastMonth -
-      mockMonthlyReportData.food.monthlyComparison.thisMonth
+    food.monthlyComparison.lastMonth - food.monthlyComparison.thisMonth
   );
 
   return (
     <div className="bg-[#1B1D20] rounded-[14px] py-7 px-6 w-full">
       <p className="text-[#4E5560] text-body3-m mb-2">식단 분석 결과</p>
-      {mockMonthlyReportData.food.monthlyComparison.thisMonth === 0 ? (
+      {food.monthlyComparison.thisMonth === 0 ? (
         <div className="flex items-start justify-between gap-2">
           <p className="text-white text-[18px] font-semibold whitespace-pre-line">
-            {mockMonthlyReportData.food.message}
+            {food.message}
           </p>
           <div className="mt-2 flex justify-end">
             <Image
@@ -39,10 +45,10 @@ export function MonthlyFoodReport() {
         </div>
       ) : (
         <p className="text-white text-[18px] font-semibold mb-6 whitespace-pre-line">
-          {mockMonthlyReportData.food.message}
+          {food.message}
         </p>
       )}
-      {mockMonthlyReportData.food.monthlyComparison.thisMonth !== 0 && (
+      {food.monthlyComparison.thisMonth !== 0 && (
         <>
           <div
             className={`flex items-center justify-center text-center py-2 px-3 w-full rounded-[6px] mb-5 ${isIncreased ? 'bg-red-100' : 'bg-blue-100'}`}
@@ -58,7 +64,7 @@ export function MonthlyFoodReport() {
             </p>
           </div>
           <div className="flex flex-col gap-2.5 items-center justify-center">
-            {mockMonthlyReportData.food.weeklyGroups.map((week) => (
+            {food.weeklyGroups.map((week) => (
               <div
                 key={week.weekLabel}
                 className="bg-[#292D32] rounded-[6px] py-3 px-4 w-full"
