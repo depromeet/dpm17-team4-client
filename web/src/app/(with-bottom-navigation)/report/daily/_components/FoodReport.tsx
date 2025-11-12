@@ -17,17 +17,6 @@ export const FoodReport = ({ foodData }: { foodData: Food }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const isProgrammaticScroll = useRef(false);
 
-  const filteredItems = foodData.items.reduce(
-    (acc, item) => {
-      // NOTE(taehyeon): 서버 논의 후 오늘 날짜 비교 형식으로 변경 필요 (오늘 -> 어제 순으로 정렬)
-      if (item.occurredAt > acc[0].occurredAt) {
-        acc.unshift(item);
-      }
-      return acc;
-    },
-    [foodData.items[0]]
-  );
-
   const handleScroll = () => {
     if (scrollRef.current && !isProgrammaticScroll.current) {
       const scrollLeft = scrollRef.current.scrollLeft;
@@ -70,7 +59,7 @@ export const FoodReport = ({ foodData }: { foodData: Food }) => {
         }}
         onScroll={handleScroll}
       >
-        {filteredItems.map((item, index) => {
+        {foodData.items.map((item, index) => {
           return (
             <div
               key={item.occurredAt}
@@ -142,7 +131,7 @@ export const FoodReport = ({ foodData }: { foodData: Food }) => {
         })}
       </div>
 
-      {filteredItems.length > 1 && (
+      {foodData.items.length > 1 && (
         <div className="flex justify-center items-center gap-1 mt-4">
           <button
             type="button"
@@ -155,16 +144,16 @@ export const FoodReport = ({ foodData }: { foodData: Food }) => {
             />
           </button>
           <p className="text-white text-base font-medium">
-            {currentIndex + 1} / {filteredItems.length}
+            {currentIndex + 1} / {foodData.items.length}
           </p>
           <button
             type="button"
             onClick={() => scrollToIndex(currentIndex + 1)}
-            disabled={currentIndex === filteredItems.length - 1}
+            disabled={currentIndex === foodData.items.length - 1}
           >
             <ChevronIcon
               type="right"
-              className={`w-4 h-4 ${currentIndex === filteredItems.length - 1 ? 'text-gray-500' : 'text-white'}`}
+              className={`w-4 h-4 ${currentIndex === foodData.items.length - 1 ? 'text-gray-500' : 'text-white'}`}
             />
           </button>
         </div>

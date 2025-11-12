@@ -139,6 +139,7 @@ export function SelectDate({
       <WheelPickerBottomSheet
         isOpen={isBottomSheetOpen}
         title="날짜 선택"
+        description={`기간 ${currentDate.getFullYear()}.${currentDate.getMonth() + 1}.${currentDate.getDate()} - ${today.getFullYear()}.${today.getMonth() + 1}.${today.getDate()}`}
         options={dateOptions}
         initialValue={currentValue ?? dateOptions[0]?.value ?? ''}
         onApply={handleApply}
