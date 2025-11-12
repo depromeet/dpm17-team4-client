@@ -1,19 +1,27 @@
 'use client';
 
 import type { ApexOptions } from 'apexcharts';
+import { Loader2Icon } from 'lucide-react';
 import dynamic from 'next/dynamic';
 
-const ApexChart = dynamic(() => import('react-apexcharts'), { ssr: false });
+const ApexChart = dynamic(() => import('react-apexcharts'), {
+  ssr: false,
+  loading: () => (
+    <div className="flex items-center justify-center w-full h-[232px]">
+      <Loader2Icon className="w-10 h-10 text-gray-500 animate-spin" />
+    </div>
+  ),
+});
 
 interface DefecationScoreChartProps {
   scores: number[];
   labels: string[];
 }
 
-export const DefecationScoreChart = ({
+export function DefecationScoreChart({
   scores,
   labels,
-}: DefecationScoreChartProps) => {
+}: DefecationScoreChartProps) {
   if (!scores || !labels || labels.length === 0) {
     return null;
   }
@@ -229,7 +237,7 @@ export const DefecationScoreChart = ({
 }
 
 `}</style>
-      <div className="bg-gray-800 rounded-[20px] w-full pt-7 px-3">
+      <div className="bg-gray-800 rounded-[20px] w-full pt-7 px-3 z-10">
         <div className="text-body3-m text-gray-600 px-3">배변 점수</div>
         <ApexChart
           options={options}
@@ -240,4 +248,4 @@ export const DefecationScoreChart = ({
       </div>
     </>
   );
-};
+}

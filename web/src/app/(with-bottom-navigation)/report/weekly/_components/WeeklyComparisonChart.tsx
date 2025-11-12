@@ -1,4 +1,5 @@
-import RadialBarChart from './RadialBarChart';
+import { Loader2Icon } from 'lucide-react';
+import dynamic from 'next/dynamic';
 
 export type DefecationScore = {
   lastWeek: number;
@@ -9,6 +10,15 @@ interface WeeklyComparisonChartProps {
   defecationScore: DefecationScore;
 }
 
+const DynamicRadialBarChart = dynamic(() => import('./RadialBarChart'), {
+  ssr: false,
+  loading: () => (
+    <div className="flex items-center justify-center w-[200px] h-[200px]">
+      <Loader2Icon className="w-10 h-10 text-gray-500 animate-spin" />
+    </div>
+  ),
+});
+
 export function WeeklyComparisonChart({
   defecationScore,
 }: WeeklyComparisonChartProps) {
@@ -16,7 +26,11 @@ export function WeeklyComparisonChart({
   const chartLabels = Object.keys(defecationScore);
 
   const scoreDiff = defecationScore.thisWeek - defecationScore.lastWeek;
-  const absDiff = Math.abs(Math.round(scoreDiff));
+  
+  const positiveDiff   = Math.abs(Math.round(scoreDiff));
+  const negativeDiff = Math.abs(Math.round(scoreDiff)) * (-1);
+
+  const absDiff = scoreDiff > 0 ? positiveDiff : negativeDiff;
 
   const renderScoreMessage = () => {
     if (scoreDiff === 0) {
@@ -44,11 +58,12 @@ export function WeeklyComparisonChart({
 
   return (
     <section className="flex items-center mb-2 ">
-      <RadialBarChart
+      <DynamicRadialBarChart
         chartSeries={chartSeries}
         chartLabels={chartLabels}
         defecationDailyScore={defecationScore.dailyScore}
       />
+
       <div className="flex flex-col gap-3">
         <div className="flex gap-2.5">
           <div className="flex items-center gap-1">
