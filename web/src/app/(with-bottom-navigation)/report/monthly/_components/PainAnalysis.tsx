@@ -57,8 +57,9 @@ export function PainAnalysis({ data }: PainAnalysisProps) {
     );
   }
 
-  const total =
-    data.veryLow + data.low + data.medium + data.high + data.veryHigh;
+  const { veryLow, low, medium, high, veryHigh, comparison } = data;
+
+  const total = veryLow + low + medium + high + veryHigh;
 
   if (total === 0) {
     return (
@@ -69,15 +70,15 @@ export function PainAnalysis({ data }: PainAnalysisProps) {
   }
 
   // 각 레벨의 비율 계산
-  const veryLowPercent = (data.veryLow / total) * 100;
-  const lowPercent = (data.low / total) * 100;
-  const mediumPercent = (data.medium / total) * 100;
-  const highPercent = (data.high / total) * 100;
-  const veryHighPercent = (data.veryHigh / total) * 100;
+  const veryLowPercent = (veryLow / total) * 100;
+  const lowPercent = (low / total) * 100;
+  const mediumPercent = (medium / total) * 100;
+  const highPercent = (high / total) * 100;
+  const veryHighPercent = (veryHigh / total) * 100;
 
-  const isIncreased = data.comparison.direction === 'increased';
-  const isDecreased = data.comparison.direction === 'decreased';
-  const isSame = data.comparison.direction === 'same';
+  const isIncreased = comparison.direction === 'increased';
+  const isDecreased = comparison.direction === 'decreased';
+  const isSame = comparison.direction === 'same';
 
   // 프로그래스바 클릭 핸들러
   const handleProgressBarClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -118,50 +119,46 @@ export function PainAnalysis({ data }: PainAnalysisProps) {
     if (
       clampedPercent >= veryLowStart &&
       clampedPercent < veryLowEnd &&
-      data.veryLow > 0
+      veryLow > 0
     ) {
       clickedLevel = 'veryLow';
-      clickedCount = data.veryLow;
+      clickedCount = veryLow;
       levelPosition = veryLowStart + veryLowPercent / 2;
     }
     // Low 영역
-    else if (
-      clampedPercent >= lowStart &&
-      clampedPercent < lowEnd &&
-      data.low > 0
-    ) {
+    else if (clampedPercent >= lowStart && clampedPercent < lowEnd && low > 0) {
       clickedLevel = 'low';
-      clickedCount = data.low;
+      clickedCount = low;
       levelPosition = lowStart + lowPercent / 2;
     }
     // Medium 영역
     else if (
       clampedPercent >= mediumStart &&
       clampedPercent < mediumEnd &&
-      data.medium > 0
+      medium > 0
     ) {
       clickedLevel = 'medium';
-      clickedCount = data.medium;
+      clickedCount = medium;
       levelPosition = mediumStart + mediumPercent / 2;
     }
     // High 영역
     else if (
       clampedPercent >= highStart &&
       clampedPercent < highEnd &&
-      data.high > 0
+      high > 0
     ) {
       clickedLevel = 'high';
-      clickedCount = data.high;
+      clickedCount = high;
       levelPosition = highStart + highPercent / 2;
     }
     // Very High 영역
     else if (
       clampedPercent >= veryHighStart &&
       clampedPercent <= veryHighEnd &&
-      data.veryHigh > 0
+      veryHigh > 0
     ) {
       clickedLevel = 'veryHigh';
-      clickedCount = data.veryHigh;
+      clickedCount = veryHigh;
       levelPosition = veryHighStart + veryHighPercent / 2;
     }
 
@@ -175,8 +172,11 @@ export function PainAnalysis({ data }: PainAnalysisProps) {
   return (
     <div className="mt-6">
       {/* 상단 메시지 박스 */}
-      <div
-        className={`
+      {isSame ? (
+        <div className="h-[32px]" />
+      ) : (
+        <div
+          className={`
           rounded-lg px-4 py-3 mb-[69px]
           ${
             isIncreased
@@ -186,26 +186,23 @@ export function PainAnalysis({ data }: PainAnalysisProps) {
                 : 'bg-gray-700'
           }
         `}
-      >
-        <p className="text-white text-body4-m flex justify-center">
-          {!isSame && (
-            <>
-              지난달보다 복통이{' '}
-              <span
-                className={
-                  isIncreased
-                    ? 'text-red-600 font-semibold'
-                    : 'text-blue-600 font-semibold'
-                }
-              >
-                {' '}
-                {data.comparison.count}회{' '}
-              </span>{' '}
-              {isIncreased ? '늘었어요' : '줄었어요'}
-            </>
-          )}
-        </p>
-      </div>
+        >
+          <p className="text-white text-body4-m flex justify-center">
+            지난달보다 복통이{' '}
+            <span
+              className={
+                isIncreased
+                  ? 'text-red-600 font-semibold'
+                  : 'text-blue-600 font-semibold'
+              }
+            >
+              {' '}
+              {comparison.count}회{' '}
+            </span>{' '}
+            {isIncreased ? '늘었어요' : '줄었어요'}
+          </p>
+        </div>
+      )}
 
       {/* 프로그래스바 영역 */}
       <div className="relative mb-[4px]">

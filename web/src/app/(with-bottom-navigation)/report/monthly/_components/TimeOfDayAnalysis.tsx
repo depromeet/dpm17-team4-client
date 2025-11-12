@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { MEAL_TIMES } from '@/app/(record)/lifestyle/constants';
 
 export type TimeOfDayItem = {
-  period: 'MORNING' | 'AFTERNOON' | 'EVENING';
+  period: '오전' | '오후' | '저녁';
   count: number;
 };
 
@@ -14,15 +14,15 @@ interface TimeOfDayAnalysisProps {
 }
 
 const timeOfDayData = {
-  MORNING: {
+  오전: {
     label: '오전',
     imageUrl: MEAL_TIMES.find((meal) => meal.id === 'BREAKFAST')?.imageUrl,
   },
-  AFTERNOON: {
+  오후: {
     label: '오후',
     imageUrl: MEAL_TIMES.find((meal) => meal.id === 'LUNCH')?.imageUrl,
   },
-  EVENING: {
+  저녁: {
     label: '저녁',
     imageUrl: MEAL_TIMES.find((meal) => meal.id === 'DINNER')?.imageUrl,
   },
