@@ -3,7 +3,10 @@ import Image from 'next/image';
 import { Suspense, useMemo, useState } from 'react';
 import emojiOpenMouse from '@/assets/report/emoji_open_mouse.png';
 import EmptyMemoIcon from '@/assets/report/monthly_memo.png';
-import { useWeeklyReportQuery } from '@/hooks/queries/useWeeklyReportQuery';
+import {
+  INSUFFICIENT_DATA,
+  useWeeklyReportQuery,
+} from '@/hooks/queries/useWeeklyReportQuery';
 import { formatToISOString, getKoreanDate } from '@/utils/utils-date';
 import { DefecationScoreChart } from '../_components/DefecationScoreChart';
 import { Suggestions } from '../_components/Suggestions';
@@ -44,24 +47,8 @@ function WeeklyReportContent() {
     dateTime: formatToISOString(weekStartDate),
   });
 
-  // NOTE(taehyeon): 데이터 없는 경우 early return
-  if (!weeklyData) {
-    return null;
-  }
-
-  // NOTE(taehyeon): 데일리 스코어를 통해 배변 기록 2회 이상 있으면 주간 리포트 렌더링
-  const hasWeeklyData =
-    weeklyData?.defecationScore?.dailyScore?.filter((score) => score > 0)
-      .length >= 2;
-
-  // NOTE(taehyeon): 생활 기록 없는 케이스 조건 분기
-  const noLifeStyleData =
-    weeklyData?.food?.items?.length === 0 &&
-    weeklyData?.water?.items?.length === 0 &&
-    weeklyData?.stress?.items?.length === 0;
-
-  // NOTE(taehyeon): 배변 기록 2회 이상 없으면 빈 리포트 렌더링
-  if (!hasWeeklyData) {
+  // NOTE(taehyeon): 데이터 부족 에러인 경우 빈 리포트 렌더링
+  if (weeklyData === INSUFFICIENT_DATA) {
     return (
       <div className="bg-report-empty h-[calc(100vh-180px)] w-full flex flex-col">
         <div className="px-4 flex justify-center">
@@ -95,8 +82,21 @@ function WeeklyReportContent() {
     );
   }
 
+  // NOTE(taehyeon): 데이터 없는 경우 early return
+  if (!weeklyData) {
+    return null;
+  }
+
+  // NOTE(taehyeon): 생활 기록 없는 케이스 조건 분기
+  const noLifeStyleData =
+    weeklyData?.food?.items?.length === 0 &&
+    weeklyData?.water?.items?.length === 0 &&
+    weeklyData?.stress?.items?.length === 0;
+
   return (
     <div>
+      <div className="fixed top-[134px] left-[130px] pointer-events-none w-[426px] h-[426px] bg-radial from-[#2994FF] to-[#1D1E20] opacity-10" />
+      <div className="fixed top-[428px] right-[191px] pointer-events-none w-[426px] h-[426px] bg-radial from-[#2994FF] to-[#1D1E20] opacity-10" />
       <div className="px-4 flex flex-col gap-5 mb-[50px]">
         <SelectDate
           today={today}
