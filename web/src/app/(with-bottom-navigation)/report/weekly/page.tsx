@@ -9,6 +9,7 @@ import {
 } from '@/hooks/queries/useWeeklyReportQuery';
 import { formatToISOString, getKoreanDate } from '@/utils/utils-date';
 import { DefecationScoreChart } from '../_components/DefecationScoreChart';
+import ReportNotice from '../_components/ReportNotice';
 import { Suggestions } from '../_components/Suggestions';
 import { UserAverageChart } from '../_components/UserAverageChart';
 import { WaterReport } from '../_components/WaterReport';
@@ -18,7 +19,6 @@ import { StressAnalysisChart } from './_components/StressAnalysisChart';
 import { WeeklyComparisonChart } from './_components/WeeklyComparisonChart';
 import { WeeklyFoodReport } from './_components/WeeklyFoodReport';
 import type { DayOfWeek } from './types';
-import ReportNotice from '../_components/ReportNotice';
 
 const weekLabels = ['월', '화', '수', '목', '금', '토', '일'];
 const allDays: DayOfWeek[] = [
@@ -134,7 +134,7 @@ function WeeklyReportContent() {
             <Suggestions suggestion={weeklyData?.suggestion} />
           </>
         )}
-        <ReportNotice/>
+        <ReportNotice />
       </div>
     </div>
   );
