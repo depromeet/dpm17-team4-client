@@ -31,7 +31,7 @@ import { useGetHomeQuery } from '@/hooks/queries/useHomeQuery';
 import { formatToISOString } from '@/utils/utils-date';
 import { RecordSection, Tutorial } from './_components/ui';
 import { RecordBadge } from './_components/ui/RecordBadge';
-import { type HomeResponseData, HomeResponseDto } from './types/dto';
+import { type HomeResponseData } from './types/dto';
 
 // import { BottomSheet } from '@/components/BottomSheet';
 // import { NotifcationSet } from './_components/ui';
@@ -183,7 +183,7 @@ function HomeContent({ data, currentDate, onChangeDate }: HomeContentProps) {
   }, [router, savedUserInfo]);
 
   const hasAnyRecord = data.toiletRecordCount > 0 || data.hasActivityRecord;
-  const currentBg = hasAnyRecord 
+  const currentBg = hasAnyRecord
     ? (homeBackGround[bgStatus] ?? homeBackGround.base)
     : homeBackGround.base;
 
@@ -213,7 +213,6 @@ function HomeContent({ data, currentDate, onChangeDate }: HomeContentProps) {
   };
 
   const message = getMessage();
-
 
   return (
     <>
