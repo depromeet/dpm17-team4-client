@@ -72,7 +72,7 @@ function LifestylePageContent() {
     if (from === 'defecation') {
       router.push(`${PAGE_ROUTES.REPORT_DAILY}?toast-defecation=true`);
     } else {
-      router.push(PAGE_ROUTES.HOME);
+      router.push('/report/loading');
     }
   };
   // 날짜 파라미터로부터 ISO 문자열 생성

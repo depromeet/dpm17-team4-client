@@ -8,8 +8,8 @@ import { ChevronIcon } from '@/components';
 import { DAYS_OF_WEEK } from '@/constants';
 import { DailyRecord } from './_components/DailyRecord';
 import { DefecationRecordBottomSheet } from './_components/DefecationRecordBottomSheet';
-import { LifestyleRecordBottomSheet } from './_components/LifestyleRecordBottomSheet';
 import { useCalendar } from './_components/hooks/useCalendar';
+import { LifestyleRecordBottomSheet } from './_components/LifestyleRecordBottomSheet';
 import { Tag } from './_components/Tag';
 
 export default function CalendarPage() {
