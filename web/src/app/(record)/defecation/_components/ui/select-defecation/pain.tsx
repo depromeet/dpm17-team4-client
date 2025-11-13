@@ -38,6 +38,10 @@ export default function Pain({
           )}
         />
       </div>
+      <div className='flex justify-between mt-1'>
+        <div className='text-[#96D89B] font-semibold text-sm'>고통이 뭐죠</div>
+        <div className='text-[#FD5656] font-semibold text-sm'>똥꼬 찢</div>
+      </div>
     </div>
   );
 }
