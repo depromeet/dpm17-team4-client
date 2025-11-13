@@ -24,6 +24,23 @@ export const getWaterNameLabel = (name: string): string => {
   return mapping[name] || name;
 };
 
+export const getWeeklyWaterNameLabel = (name: string): string => {
+  const mapping: Record<string, string> = {
+    MONDAY: '월',
+    TUESDAY: '화',
+    WEDNESDAY: '수',
+    THURSDAY: '목',
+    FRIDAY: '금',
+    SATURDAY: '토',
+    SUNDAY: '일',
+  };
+  return mapping[name] || name;
+};
+
+export const getMonthlyWaterNameLabel = (name: string): string => {
+  return name; // '1주차', '2주차' 등은 그대로 표시
+};
+
 export const getWaterLevelLabel = (level: string): string => {
   const mapping: Record<string, string> = {
     HIGH: '충분',
@@ -128,4 +145,31 @@ export const getMealTimeIcon = (mealTime: string): string | StaticImageData => {
     default:
       return '';
   }
+};
+
+// NOTE(taehyeon): 사용자가 채우지 않은 MealTime 을 기본 값으로 채우기 위한 함수
+export const fillMissingMealTimes = (
+  meals: Array<{ mealTime: string; dangerous: boolean; foods: string[] }>
+) => {
+  const allMealTimes = ['BREAKFAST', 'LUNCH', 'DINNER', 'SNACK'] as const;
+  const existingMealTimes = new Set(meals.map((meal) => meal.mealTime));
+
+  const filledMeals = [...meals];
+
+  for (const mealTime of allMealTimes) {
+    if (!existingMealTimes.has(mealTime)) {
+      filledMeals.push({
+        mealTime,
+        dangerous: false,
+        foods: [],
+      });
+    }
+  }
+
+  return filledMeals.sort((a, b) => {
+    return (
+      allMealTimes.indexOf(a.mealTime as (typeof allMealTimes)[number]) -
+      allMealTimes.indexOf(b.mealTime as (typeof allMealTimes)[number])
+    );
+  });
 };

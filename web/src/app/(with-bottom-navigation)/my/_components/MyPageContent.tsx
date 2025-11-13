@@ -2,20 +2,13 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect } from 'react';
 import ChevronRight from '@/assets/home/IC_Chevron_Right.png';
 import defaultProfileImage from '@/assets/my/profile-image-1.png';
 import { PAGE_ROUTES } from '@/constants';
-import { useNavigationContext } from '@/contexts/NavigationContext';
 import { useUserMeQuery } from '@/hooks';
 
 export default function MyPageContent() {
   const { data: userMeData } = useUserMeQuery();
-  const { handleTabClick } = useNavigationContext();
-
-  useEffect(() => {
-    handleTabClick('my');
-  }, [handleTabClick]);
 
   return (
     <div className="min-h-screen bg-gray-900 text-white">

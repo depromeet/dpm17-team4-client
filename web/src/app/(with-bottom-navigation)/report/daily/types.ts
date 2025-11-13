@@ -63,10 +63,20 @@ export type Food = {
 
 // 물 섭취량 관련 타입
 export type WaterName = 'STANDARD' | 'YESTERDAY' | 'TODAY';
+export type DailyWaterName =
+  | 'MONDAY'
+  | 'TUESDAY'
+  | 'WEDNESDAY'
+  | 'THURSDAY'
+  | 'FRIDAY'
+  | 'SATURDAY'
+  | 'SUNDAY';
+export type WeeklyWaterName = '1주차' | '2주차' | '3주차' | '4주차' | '5주차';
+
 export type WaterLevel = 'HIGH' | 'MEDIUM' | 'LOW';
 
 export type WaterItem = {
-  name: WaterName | string;
+  name: WaterName | DailyWaterName | WeeklyWaterName | string;
   value: number;
   color: string;
   level: WaterLevel | string;

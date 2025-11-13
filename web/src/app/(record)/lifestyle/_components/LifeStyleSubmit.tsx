@@ -100,6 +100,16 @@ export const LifeStyleSubmit = ({
         },
         {
           onSuccess: () => {
+            // 리포트 관련 쿼리 무효화
+            queryClient.invalidateQueries({
+              queryKey: QUERY_KEYS.REPORT_DAILY,
+            });
+            queryClient.invalidateQueries({
+              queryKey: QUERY_KEYS.REPORT_WEEKLY,
+            });
+            queryClient.invalidateQueries({
+              queryKey: QUERY_KEYS.REPORT_MONTHLY,
+            });
             // 캘린더 관련 쿼리 무효화
             queryClient.invalidateQueries({
               queryKey: [QUERY_KEYS.CALENDAR],
@@ -125,7 +135,11 @@ export const LifeStyleSubmit = ({
       createMutation({
         ...data,
         onSuccess: () => {
-          queryClient.invalidateQueries({ queryKey: QUERY_KEYS.REPORT });
+          queryClient.invalidateQueries({ queryKey: QUERY_KEYS.REPORT_DAILY });
+          queryClient.invalidateQueries({ queryKey: QUERY_KEYS.REPORT_WEEKLY });
+          queryClient.invalidateQueries({
+            queryKey: QUERY_KEYS.REPORT_MONTHLY,
+          });
           // 캘린더 관련 쿼리 무효화
           queryClient.invalidateQueries({
             queryKey: [QUERY_KEYS.CALENDAR],

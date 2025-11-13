@@ -17,6 +17,7 @@ export const API_ENDPOINTS = {
 
   REPORT: {
     BASE: '/api/v1/reports/daily',
+    WEEKLY: '/api/v1/reports/weekly',
     MONTHLY: '/api/v1/reports/monthly',
   },
 

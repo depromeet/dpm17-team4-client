@@ -1,14 +1,14 @@
 import { NextResponse } from 'next/server';
 
 /**API 에러 응답 타입*/
-interface ApiError {
+export interface ApiError {
   errorMessage: string;
   code?: string;
   details?: unknown;
 }
 
 /**API 성공 응답 타입*/
-interface ApiSuccess<T = unknown> {
+export interface ApiSuccess<T = unknown> {
   data?: T;
   message?: string;
   success: boolean;

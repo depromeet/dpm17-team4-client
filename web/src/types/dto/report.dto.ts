@@ -15,8 +15,11 @@ import type {
   MonthlyScore,
   WeeklyMonthlyStress,
 } from '@/app/(with-bottom-navigation)/report/monthly/types';
+import type { WeeklyReportMockData } from '@/app/(with-bottom-navigation)/report/weekly/mockData';
 
 export interface ReportDataResponseDto extends ReportData {}
+
+export interface WeeklyReportResponseDto extends WeeklyReportMockData {}
 
 export interface MonthlyReportResponseDto {
   monthlyRecordCounts: MonthlyRecordCounts;

@@ -1,6 +1,7 @@
 export const QUERY_KEYS = {
-  REPORT: ['report'],
-  REPORT_MONTHLY: ['report', 'monthly'],
+  REPORT_DAILY: ['report/daily'],
+  REPORT_WEEKLY: ['report/weekly'],
+  REPORT_MONTHLY: ['report/monthly'],
 
   RECORD: ['record'],
 
