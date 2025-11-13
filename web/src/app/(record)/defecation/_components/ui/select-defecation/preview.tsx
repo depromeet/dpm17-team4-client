@@ -53,26 +53,20 @@ export default function Preview({ currentKey }: { currentKey: string }) {
         const painKey = values.selectedPain;
         if (painKey === undefined || painKey === -1) return null;
 
-        const calculatedPainCode = () => {
-          if (painKey >= 0 && painKey < 10) return '10';
-          else if (painKey >= 10 && painKey < 30) return '30';
-          else if (painKey >= 30 && painKey <= 50) return '50';
-          else if (painKey >= 50 && painKey <= 70) return '70';
-          else if (painKey >= 70 && painKey <= 100) return '100';
-          else return '0';
+        const getColorClass = () => {
+          if (painKey >= 0 && painKey <= 10) return 'bg-[#74CE7E]';
+          if (painKey > 10 && painKey <= 30) return 'bg-[#8BB35F]';
+          if (painKey > 30 && painKey <= 50) return 'bg-[#D6AC6A]';
+          if (painKey > 50 && painKey <= 70) return 'bg-[#E98259]';
+          if (painKey > 70 && painKey <= 100) return 'bg-[#FB5A58]';
+          return 'bg-[#454551]';
         };
 
         return (
           <div
-            className={cn('text-[13px] font-semibold rounded-[6px] py-1 px-2', {
-              'bg-[#74CE7E]': calculatedPainCode() === '10',
-              'bg-[#8BB35F]': calculatedPainCode() === '30',
-              'bg-[#D6AC6A]': calculatedPainCode() === '50',
-              'bg-[#E98259]': calculatedPainCode() === '70',
-              'bg-[#FB5A58]': calculatedPainCode() === '100',
-            })}
+            className={cn('text-[13px] font-semibold rounded-[6px] py-1 px-2', getColorClass())}
           >
-            {calculatedPainCode()}%
+            {painKey}%
           </div>
         );
       }
