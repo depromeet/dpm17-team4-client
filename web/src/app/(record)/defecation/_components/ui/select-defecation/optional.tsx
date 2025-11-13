@@ -38,6 +38,15 @@ export default function Optional({
     }
   }, [note, setValue]);
 
+  const handleNoMemo = () => {
+    if (inputRef.current) {
+      inputRef.current.value = '';
+    }
+    setValue('selectedOptional', '', { shouldValidate: true });
+    setShowDelete(false);
+    onOptionalSelect?.();
+  };
+
   return (
     <div>
       <p className="text-body3-r text-white opacity-80 mb-5">
@@ -83,6 +92,15 @@ export default function Optional({
             <DeleteIcon className="text-gray-700" />
           </button>
         )}
+      </div>
+      <div className="text-right text-body4-m text-gray-500 flex justify-end">
+        <button
+          type="button"
+          className="w-fit border-b-1 py-0 leading-[0.9] mt-3 cursor-pointer hover:text-gray-400 transition-colors"
+          onClick={handleNoMemo}
+        >
+          해당없음
+        </button>
       </div>
     </div>
   );
