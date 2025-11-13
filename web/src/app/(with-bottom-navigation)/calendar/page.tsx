@@ -3,10 +3,9 @@
 import { format, isAfter, isSameDay, isSameMonth, startOfDay } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { ChevronIcon } from '@/components';
 import { DAYS_OF_WEEK } from '@/constants';
-import { useNavigationContext } from '@/contexts/NavigationContext';
 import { DailyRecord } from './_components/DailyRecord';
 import { DefecationRecordBottomSheet } from './_components/DefecationRecordBottomSheet';
 import { useCalendar } from './_components/hooks/useCalendar';
@@ -14,11 +13,6 @@ import { Tag } from './_components/Tag';
 
 export default function CalendarPage() {
   const router = useRouter();
-  const { handleTabClick } = useNavigationContext();
-
-  useEffect(() => {
-    handleTabClick('calendar');
-  }, [handleTabClick]);
   const {
     data,
     calendarByDateData,

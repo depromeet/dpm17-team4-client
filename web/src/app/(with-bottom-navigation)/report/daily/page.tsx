@@ -20,33 +20,30 @@ import { SelectDate } from './_components/SelectDate';
 import type { Card } from './types';
 import { getColorLabel, getShapeLabel } from './utils';
 
-// import { Suggestions } from './_components/Suggestions';
-
 function DailyReportContent() {
   const [cardIndex, setCardIndex] = useState(0);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const searchParams = useSearchParams();
   const router = useRouter();
   const toastShownRef = useRef(false);
-  const { handleTabClick } = useNavigationContext();
+  const { handleOnNotification: onAlert } = useNavigationContext();
 
   const dateParam = searchParams.get('date');
 
   // 현재 날짜 상태 관리
   const currentDate = useMemo(() => {
     if (dateParam) {
-      const parsedDate = new Date(dateParam);
-      if (!isNaN(parsedDate.getTime())) {
-        return parsedDate;
+      const [year, month, day] = dateParam.split('-').map(Number);
+      if (Number.isInteger(year) && Number.isInteger(month) && Number.isInteger(day)) {
+        const parsedDate = new Date(year, month - 1, day);
+        if (!isNaN(parsedDate.getTime())) {
+          return parsedDate;
+        }
       }
     }
+
     return getKoreanDate();
   }, [dateParam]);
-
-  console.log('dateParam', dateParam);
-  useEffect(() => {
-    handleTabClick('report');
-  }, [handleTabClick]);
 
   // 날짜 변경 핸들러
   const handleDateChange = (newDate: Date) => {
@@ -59,7 +56,6 @@ function DailyReportContent() {
     isLoading,
     error,
   } = useReportQuery(dateParam ? { dateTime: dateParam } : undefined);
-  const { handleOnNotification: onAlert } = useNavigationContext();
 
   // Toast 표시를 위한 별도 useEffect
   useEffect(() => {
@@ -80,20 +76,6 @@ function DailyReportContent() {
       toastShownRef.current = true;
     }
   }, [searchParams, onAlert]);
-
-  // NOTE(seonghyun): 임시 - Suggestion 아이템의 이미지를 동적으로 생성
-  // const getSuggestionIcon = (index: number) => {
-  //     switch (index) {
-  //       case 0:
-  //         return <Droplets className="w-6 h-6 text-blue-400" />;
-  //       case 1:
-  //         return <Banana className="w-6 h-6 text-yellow-400" />;
-  //       case 2:
-  //         return <FileText className="w-6 h-6 text-white" />;
-  //       default:
-  //         return null;
-  //     }
-  //   };
 
   // TODO(seonghyun): 카드 데이터 - API 응답에서 생성
   const cards: Card[] =
