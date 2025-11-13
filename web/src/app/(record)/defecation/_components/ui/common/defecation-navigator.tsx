@@ -3,7 +3,7 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
-import { Modal, Navigator } from '@/components';
+import { ArrowIcon, Modal, Navigator } from '@/components';
 import { ModalContent } from '@/components/Modal';
 import { QUERY_KEYS } from '@/constants';
 import { useDefecationDeleteMutation } from '@/hooks';
@@ -86,23 +86,9 @@ export const DefecationNavigator = () => {
           onClick={handleBack}
           className="w-6 h-6 absolute left-4 top-1/2 -translate-y-1/2 z-10"
         >
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="text-white"
-          >
+       <ArrowIcon type='left'/>
             <title>뒤로가기</title>
-            <path
-              d="M15 18L9 12L15 6"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+          
         </button>
         <div className="flex-1 flex justify-center items-center">
           <Navigator.Center>배변 기록</Navigator.Center>
