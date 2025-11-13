@@ -77,7 +77,7 @@ export const DefecationRecordBottomSheet = ({
             </div>
           ) : (
             // Records List
-            <div className="flex h-full flex-col w-full">
+            <div className="flex h-full w-full flex-col">
               <div className="flex-1 space-y-[0.75rem] overflow-y-auto">
                 {records?.map((record) => (
                   <button

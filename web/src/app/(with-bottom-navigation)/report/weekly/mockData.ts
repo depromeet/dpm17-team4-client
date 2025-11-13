@@ -1,16 +1,17 @@
 import StressImage from '@/assets/report/emoji_anger.png';
 import type { UserAverage } from '../_components/UserAverageChart';
 import type { Suggestion, Water } from '../daily/types';
-import type { WeeklyFoodReport, WeeklyStress } from './types';
+import type { WeeklyFoodReportType, WeeklyStress } from './types';
 
 export interface WeeklyReportMockData {
+  updatedAt: string;
   defecationScore: {
     lastWeek: number;
     thisWeek: number;
     dailyScore: number[];
   };
   userAverage: UserAverage;
-  food: WeeklyFoodReport;
+  food: WeeklyFoodReportType;
   water: Water;
   stress: WeeklyStress;
   suggestion: Suggestion;
@@ -18,6 +19,7 @@ export interface WeeklyReportMockData {
 
 // NOTE: 주간 리포트 Mock 데이터
 export const WeeklyMockData: WeeklyReportMockData = {
+  updatedAt: '2025-10-17T00:00:00',
   defecationScore: {
     lastWeek: 75,
     thisWeek: 55,

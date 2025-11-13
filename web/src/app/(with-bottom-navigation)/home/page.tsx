@@ -22,13 +22,9 @@ import { RecordSection, Tutorial } from './_components/ui';
 // import { NotifcationSet } from './_components/ui';
 
 function HomeContent() {
-  const { navHeight, handleTabClick } = useNavigationContext();
+  const { navHeight } = useNavigationContext();
   const searchParams = useSearchParams();
   const router = useRouter();
-
-  useEffect(() => {
-    handleTabClick('home');
-  }, [handleTabClick]);
 
   const { userInfo: savedUserInfo } = useUserInfo();
   // const [isNotificationSheetOpen, setIsNotificationSheetOpen] = useState(false);

@@ -38,7 +38,11 @@ export const DefecationNavigator = () => {
           queryClient.invalidateQueries({
             queryKey: [QUERY_KEYS.DEFECATION],
           });
-          queryClient.invalidateQueries({ queryKey: QUERY_KEYS.REPORT });
+          queryClient.invalidateQueries({ queryKey: QUERY_KEYS.REPORT_DAILY });
+          queryClient.invalidateQueries({ queryKey: QUERY_KEYS.REPORT_WEEKLY });
+          queryClient.invalidateQueries({
+            queryKey: QUERY_KEYS.REPORT_MONTHLY,
+          });
           queryClient.invalidateQueries({
             queryKey: [QUERY_KEYS.DEFECATION_RECORD_LIST],
           });

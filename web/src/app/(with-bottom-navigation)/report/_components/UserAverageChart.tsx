@@ -31,7 +31,7 @@ export function UserAverageChart({ userAverage }: UserAverageChartProps) {
   );
 
   return (
-    <section className="w-full flex flex-col gap-7 bg-gradient-to-b from-[#252441] to-[#1B1D20] rounded-[20px] px-6 py-7">
+    <section className="w-[calc(100%-40px)] mx-auto flex flex-col gap-7 bg-gradient-to-b from-[#252441] to-[#1B1D20] rounded-[20px] px-6 py-7 z-10">
       <div>
         <div className="text-gray-600 text-body3-m mb-2">사용자 평균</div>
         <div className="text-h3 text-left">
@@ -39,7 +39,7 @@ export function UserAverageChart({ userAverage }: UserAverageChartProps) {
           {isWeeklyReport && '주'} 배변 점수는 <br />
           꾸룩 사용자 중&nbsp;
           <span className="text-primary-600">
-            상위{userAverage.topPercent}%
+            상위{userAverage.topPercent}%{' '}
           </span>
           예요
         </div>
@@ -84,7 +84,7 @@ export function UserAverageChart({ userAverage }: UserAverageChartProps) {
             style={{ width: `${userAverage.me}%` }}
           ></div>
           <div className="text-primary-600 text-body4-m">
-            {userAverage.me}점
+            {Math.round(userAverage.me)}점
           </div>
         </div>
         <div className="flex gap-2.5 items-center">
@@ -96,7 +96,7 @@ export function UserAverageChart({ userAverage }: UserAverageChartProps) {
             style={{ width: `${userAverage.average}%` }}
           ></div>
           <div className="text-gray-500 text-body4-m whitespace-nowrap">
-            {userAverage.average}점
+            {Math.round(userAverage.average)}점
           </div>
         </div>
       </div>

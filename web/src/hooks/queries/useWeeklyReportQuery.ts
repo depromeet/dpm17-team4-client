@@ -2,28 +2,24 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { reportApi } from '@/apis/reportApi';
 import { QUERY_KEYS } from '@/constants';
-import type { MonthlyReportResponseDto } from '@/types/dto/report.dto';
+import type { WeeklyReportResponseDto } from '@/types/dto/report.dto';
 
-export interface UseMonthlyReportQueryParams {
-  yearMonth?: string;
+interface UseReportQueryParams {
+  dateTime?: string;
 }
 
 export const INSUFFICIENT_DATA = Symbol('INSUFFICIENT_DATA');
 export type InsufficientDataMarker = typeof INSUFFICIENT_DATA;
 
-export const useMonthlyReportQuery = (params?: UseMonthlyReportQueryParams) => {
-  const queryKey = [
-    ...QUERY_KEYS.REPORT_MONTHLY,
-    params?.yearMonth ?? 'current',
-  ];
-
-  return useQuery<MonthlyReportResponseDto | InsufficientDataMarker | null>({
-    queryKey,
+export const useWeeklyReportQuery = (params?: UseReportQueryParams) => {
+  return useQuery<WeeklyReportResponseDto | InsufficientDataMarker | null>({
+    queryKey: [...QUERY_KEYS.REPORT_WEEKLY, params?.dateTime],
     queryFn: async () => {
       try {
-        const response = await reportApi.reportMonthlyData(params);
+        const response = await reportApi.reportWeeklyData(params?.dateTime);
         return response.data.data;
       } catch (error) {
+        // NOTE(taehyeon): 데이터 부족 에러인 경우 데이터 부족 상태 반환
         if (axios.isAxiosError(error) && error.response?.status === 400) {
           if (
             error.response?.data.message ===
@@ -32,6 +28,7 @@ export const useMonthlyReportQuery = (params?: UseMonthlyReportQueryParams) => {
             return INSUFFICIENT_DATA;
           }
         }
+        // NOTE(taehyeon): 기타 에러인 경우 null 반환
         throw error;
       }
     },

@@ -15,6 +15,7 @@ export default function RadialBarChart({
   defecationDailyScore: number[];
 }) {
   const dailyScore = defecationDailyScore.reduce((acc, cur) => acc + cur, 0);
+  const averageScore = Math.round(dailyScore / defecationDailyScore.length);
   const chartOptions: ApexOptions = {
     chart: {
       type: 'radialBar',
@@ -72,7 +73,7 @@ export default function RadialBarChart({
       {/* 배변점수 텍스트 영역 */}
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none z-10 scale-90">
         <div className="text-body4-r text-gray-500">배변점수</div>
-        <div className="text-h4 text-white">{dailyScore}점</div>
+        <div className="text-h4 text-white">{averageScore}점</div>
       </div>
       <Chart
         options={chartOptions}
