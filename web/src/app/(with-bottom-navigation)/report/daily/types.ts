@@ -9,10 +9,10 @@ export type PooColor =
   | 'DARK_BROWN'
   | 'RED'
   | 'GREEN'
-  | 'GRAY';
+  | 'WHITE';
 export type PooShape =
   | 'RABBIT'
-  | 'ROCK'
+  | 'WATER'
   | 'CORN'
   | 'BANANA'
   | 'CREAM'
