@@ -21,7 +21,8 @@ export const DefecationSubmit = () => {
   const isEdit = searchParams.get('toiletRecordId') !== null;
   const from = searchParams.get('from');
 
-  const { handleSubmit } = useFormContext<DefecationFormValues>();
+  const { handleSubmit, watch } = useFormContext<DefecationFormValues>();
+  const selectedTry = watch('selectedTry');
 
   const { mutate: createDefecation } = useDefecationMutation();
   const { mutate: updateDefecation } = useDefecationUpdateMutation();
@@ -211,6 +212,7 @@ export const DefecationSubmit = () => {
     <BottomBtnBar
       text={isEdit ? '수정' : '다음'}
       onSubmit={handleSubmit(onSubmit, onError)}
+      disabled={!selectedTry}
     />
   );
 };

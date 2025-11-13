@@ -57,6 +57,19 @@ export const DefecationTime = ({
           field.onChange(newDate);
         };
 
+        const handleClose = (shouldClose: boolean, isRegister?: boolean) => {
+          if (!shouldClose && !isRegister) {
+            const now = new Date();
+            const resetDate = new Date(currentDate);
+            resetDate.setHours(now.getHours());
+            resetDate.setMinutes(0);
+            resetDate.setSeconds(0);
+            resetDate.setMilliseconds(0);
+            field.onChange(resetDate);
+          }
+          setIsOpen(shouldClose);
+        };
+
         return (
           <div className="flex flex-col items-start justify-center gap-2">
             <p className="text-h4">배변 시각</p>
@@ -79,7 +92,7 @@ export const DefecationTime = ({
               isOpen={isOpen}
               selectedHour={field.value.getHours().toString().padStart(2, '0')}
               selectedDate={currentDate}
-              onClose={setIsOpen}
+              onClose={handleClose}
               handleDateChange={handleDateChange}
               handleHourChange={handleHourChange}
             />
