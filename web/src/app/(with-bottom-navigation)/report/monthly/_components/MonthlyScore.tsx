@@ -1,12 +1,16 @@
 import Image from 'next/image';
 import { getDateFromDateString, getDayName } from '@/utils/utils-date';
-import { mockMonthlyReportData } from '../mockData';
+import type { MonthlyScore as MonthlyScoreType } from '../types';
 import BestImage from './assets/Best.png';
 import WorstImage from './assets/Worst.png';
 
-export function MonthlyScore() {
+export function MonthlyScore({
+  monthlyScore,
+}: {
+  monthlyScore: MonthlyScoreType;
+}) {
   return (
-    <div className="bg-[#1B1D20] rounded-[14px] py-7 px-6 w-full">
+    <div className="bg-[#1B1D20] rounded-[14px] py-7 px-6 w-[calc(100%-40px)] mx-auto z-10">
       <p className="text-[#4E5560] text-body3-m mb-2">월간 기록 분석 결과</p>
       <p className="text-white text-[18px] font-semibold mb-6">
         배변 점수가 가장 높았던 날과
@@ -22,22 +26,17 @@ export function MonthlyScore() {
           <div className="flex items-center justify-between py-2 px-3 rounded-[6px] bg-[#292D32] h-[53px]">
             <div className="w-[40px] flex flex-col text-center">
               <p className="text-[11px] font-normal text-[#707885]">
-                {getDayName(
-                  new Date(mockMonthlyReportData.monthlyScore.best.occurredAt)
-                )}
+                {getDayName(new Date(monthlyScore.best.occurredAt))}
                 요일
               </p>
               <p className="text-body3-sb text-white">
-                {getDateFromDateString(
-                  mockMonthlyReportData.monthlyScore.best.occurredAt
-                )}
-                일
+                {getDateFromDateString(monthlyScore.best.occurredAt)}일
               </p>
             </div>
             <span className="w-[1px] h-full bg-[#3C4149] mx-3" />
             <div className="w-[54px] text-center">
               <p className="text-body3-m text-white">
-                {mockMonthlyReportData.monthlyScore.best.score}점
+                {monthlyScore.best.score}점
               </p>
             </div>
           </div>
@@ -50,22 +49,17 @@ export function MonthlyScore() {
           <div className="flex items-center justify-between py-2 px-3 rounded-[6px] bg-[#292D32] h-[53px]">
             <div className="w-[40px] flex flex-col text-center">
               <p className="text-[11px] font-normal text-[#707885]">
-                {getDayName(
-                  new Date(mockMonthlyReportData.monthlyScore.worst.occurredAt)
-                )}
+                {getDayName(new Date(monthlyScore.worst.occurredAt))}
                 요일
               </p>
               <p className="text-body3-sb text-white">
-                {getDateFromDateString(
-                  mockMonthlyReportData.monthlyScore.worst.occurredAt
-                )}
-                일
+                {getDateFromDateString(monthlyScore.worst.occurredAt)}일
               </p>
             </div>
             <span className="w-[1px] h-full bg-[#3C4149] mx-3" />
             <div className="w-[54px] text-center">
               <p className="text-body3-m text-white">
-                {mockMonthlyReportData.monthlyScore.worst.score}점
+                {monthlyScore.worst.score}점
               </p>
             </div>
           </div>

@@ -1,5 +1,7 @@
 export const QUERY_KEYS = {
-  REPORT: ['report'],
+  REPORT_DAILY: ['report/daily'],
+  REPORT_WEEKLY: ['report/weekly'],
+  REPORT_MONTHLY: ['report/monthly'],
 
   RECORD: ['record'],
 
@@ -17,6 +19,7 @@ export const QUERY_KEYS = {
   FOODS: {
     SEARCH: (query: string, count: number) => ['foods', 'search', query, count],
   },
+  HOME: ['home'],
 
   // NOTE(seieun): create key factory
   // RECORD_DETAILS: (id: string) => ['records', id],

@@ -2,18 +2,23 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import EmptyMemoIcon from '@/assets/report/monthly_memo.png';
+import {
+  INSUFFICIENT_DATA,
+  useMonthlyReportQuery,
+} from '@/hooks/queries/useMonthlyReportQuery';
 import { getKoreanDate } from '@/utils/utils-date';
 import { DefecationScoreChart } from '../_components/DefecationScoreChart';
+import ReportNotice from '../_components/ReportNotice';
 import { StressAnalysisChart } from '../_components/StressAnalysisChart';
 import { Suggestions } from '../_components/Suggestions';
 import { UserAverageChart } from '../_components/UserAverageChart';
 import { WaterReport } from '../_components/WaterReport';
+import type { Week } from '../weekly/types';
 import { DefecationAnalysis } from './_components/DefecationAnalysis';
 import { MonthlyFoodReport } from './_components/MonthlyFoodReport';
 import { MonthlyRecord } from './_components/MonthlyRecord';
 import { MonthlyScore } from './_components/MonthlyScore';
 import { SelectDate } from './_components/SelectMonthDate';
-import { mockMonthlyReportData } from './mockData';
 
 const weekLabels = ['1주차', '2주차', '3주차', '4주차', '5주차'];
 export default function MonthlyReportPage() {
@@ -24,14 +29,19 @@ export default function MonthlyReportPage() {
   const [month, setMonth] = useState(currentMonth);
   const [year, setYear] = useState(currentYear);
 
-  const isNextDisabled = year === currentYear && month === currentMonth;
-  const hasMonthlyData =
-    mockMonthlyReportData.monthlyRecordCounts.defecationRecordCounts > 0;
+  const yearMonth = `${year}-${String(month).padStart(2, '0')}`;
 
-  if (!hasMonthlyData) {
+  const { data, isLoading, isError } = useMonthlyReportQuery({
+    yearMonth,
+  });
+  const reportData = data;
+  const isNextDisabled = year === currentYear && month === currentMonth;
+
+  // NOTE(taehyeon): 데이터 부족 에러인 경우 빈 리포트 렌더링
+  if (reportData === INSUFFICIENT_DATA) {
     return (
       <div className="bg-report-empty h-[calc(100vh-180px)] w-full flex flex-col">
-        <div className="px-4 pt-6 flex justify-center">
+        <div className="px-4 flex justify-center">
           <SelectDate
             currentMonth={month}
             currentYear={year}
@@ -42,20 +52,62 @@ export default function MonthlyReportPage() {
             }}
           />
         </div>
-        <div className="flex flex-1 flex-col items-center justify-center text-center px-6">
+        <div className="flex flex-1 flex-col items-center justify-center text-center px-6 pb-[205px]">
           <Image
             src={EmptyMemoIcon}
             alt="empty report"
-            width={32}
-            height={32}
+            width={50}
+            height={50}
             className="mb-5"
             priority
           />
           <p className="text-white text-body1-sb">
-            아직 리포트가 생성되지 않았어요.
+            리포트가 생성되지 않았어요.
           </p>
-          <p className="text-gray-400 text-body3-m mt-2 whitespace-pre-line">
-            주간 기록이 2개 이상 등록되면{'\n'}월간 리포트를 확인할 수 있어요!
+          <p className="text-[#4E5560] text-body3-m mt-2 whitespace-pre-line">
+            아직 데이터가 부족해요!
+            <br />
+            리포트 생성을 위해 2주의 기록을 쌓아보세요
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!reportData) {
+    return null;
+  }
+
+  const stressChartData = reportData?.stress
+    ? {
+        ...reportData.stress,
+        items: weekLabels.map((label, index) => ({
+          day: label as Week,
+          stress: reportData.stress?.items[index]?.stress ?? null,
+        })),
+      }
+    : null;
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4" />
+          <p className="text-gray-400">데이터를 불러오는 중...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+        <div className="text-center px-6">
+          <p className="text-white text-body1-sb mb-2">
+            월간 리포트를 불러오는 중 오류가 발생했어요.
+          </p>
+          <p className="text-gray-400 text-body3-m">
+            잠시 후 다시 시도하거나, 네트워크 연결을 확인해 주세요.
           </p>
         </div>
       </div>
@@ -63,8 +115,8 @@ export default function MonthlyReportPage() {
   }
 
   return (
-    <div>
-      <div className="mt-3 py-0 px-4 flex flex-col items-center gap-5 mb-[50px]">
+    <>
+      <div className="py-0 flex flex-col items-center gap-5 mb-[50px]">
         <SelectDate
           currentMonth={month}
           currentYear={year}
@@ -75,25 +127,32 @@ export default function MonthlyReportPage() {
           }}
         />
         <MonthlyRecord
-          recordCounts={mockMonthlyReportData.monthlyRecordCounts}
+          recordCounts={reportData.monthlyRecordCounts}
           currentMonth={month}
         />
         <DefecationScoreChart
-          scores={mockMonthlyReportData.monthlyScores}
+          scores={reportData.monthlyDefecationScore}
           labels={weekLabels}
         />
-        <UserAverageChart userAverage={mockMonthlyReportData.userAverage} />
-        <MonthlyScore />
-        <DefecationAnalysis />
-        <MonthlyFoodReport />
-        <WaterReport waterData={mockMonthlyReportData.water} type="monthly" />
-        <StressAnalysisChart
-          stressAnalysis={mockMonthlyReportData.stress}
-          xLabels={weekLabels}
-          displayLabels={weekLabels}
-        />
+        {reportData.userAverage && (
+          <UserAverageChart userAverage={reportData.userAverage} />
+        )}
+        <MonthlyScore monthlyScore={reportData.monthlyScore} />
+        <DefecationAnalysis data={reportData} />
+        <MonthlyFoodReport food={reportData.food} />
+        <WaterReport waterData={reportData.water} type="monthly" />
+        {stressChartData && (
+          <StressAnalysisChart
+            stressAnalysis={stressChartData}
+            xLabels={weekLabels}
+            displayLabels={weekLabels}
+          />
+        )}
       </div>
-      <Suggestions suggestion={mockMonthlyReportData.suggestion} />
-    </div>
+      {reportData.suggestion && (
+        <Suggestions suggestion={reportData.suggestion} />
+      )}
+      <ReportNotice />
+    </>
   );
 }

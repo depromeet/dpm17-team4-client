@@ -61,7 +61,7 @@ function TimeDistributionChart({
   return (
     <div className="flex flex-col items-center">
       {/* 스톱워치 아이콘 */}
-      <div className="relative mb-6">
+      <div className="relative">
         <svg
           width="200"
           height="200"
@@ -71,20 +71,59 @@ function TimeDistributionChart({
         >
           <title>배변 소요 시간 분포 차트</title>
           {/* 5분 이내 - 밝은 회색 */}
-          {within5minPercent > 0 && (
-            <path
-              d={createArc(within5minStart, within5minEnd)}
-              fill="#99A1B1"
-            />
-          )}
+          {within5minPercent > 0 &&
+            (within5minPercent >= 100 ? (
+              <>
+                <path
+                  d={createArc(within5minStart, within5minStart + 180)}
+                  fill="#99A1B1"
+                />
+                <path
+                  d={createArc(within5minStart + 180, within5minStart + 360)}
+                  fill="#99A1B1"
+                />
+              </>
+            ) : (
+              <path
+                d={createArc(within5minStart, within5minEnd)}
+                fill="#99A1B1"
+              />
+            ))}
           {/* 5분 이상 - 어두운 회색 */}
-          {over5minPercent > 0 && (
-            <path d={createArc(over5minStart, over5minEnd)} fill="#4E5560" />
-          )}
+          {over5minPercent > 0 &&
+            (over5minPercent >= 100 ? (
+              <>
+                <path
+                  d={createArc(over5minStart, over5minStart + 180)}
+                  fill="#4E5560"
+                />
+                <path
+                  d={createArc(over5minStart + 180, over5minStart + 360)}
+                  fill="#4E5560"
+                />
+              </>
+            ) : (
+              <path d={createArc(over5minStart, over5minEnd)} fill="#4E5560" />
+            ))}
           {/* 10분 이상 - 빨간색 */}
-          {over10minPercent > 0 && (
-            <path d={createArc(over10minStart, over10minEnd)} fill="#F13A49" />
-          )}
+          {over10minPercent > 0 &&
+            (over10minPercent >= 100 ? (
+              <>
+                <path
+                  d={createArc(over10minStart, over10minStart + 180)}
+                  fill="#F13A49"
+                />
+                <path
+                  d={createArc(over10minStart + 180, over10minStart + 360)}
+                  fill="#F13A49"
+                />
+              </>
+            ) : (
+              <path
+                d={createArc(over10minStart, over10minEnd)}
+                fill="#F13A49"
+              />
+            ))}
           {/* 상단 정보 박스 */}
           <rect
             x={centerX - 17.5}
@@ -122,6 +161,19 @@ export function TimeAnalysis({
     );
   }
 
+  const total =
+    displayDistribution.within5min +
+    displayDistribution.over5min +
+    displayDistribution.over10min;
+
+  if (total === 0) {
+    return (
+      <div className="flex items-center justify-center py-8">
+        <p className="text-gray-400 text-sm">배변 기록이 없습니다</p>
+      </div>
+    );
+  }
+
   const legendItems = [
     { label: '5분 이내', color: 'bg-gray-400' },
     { label: '5분 이상', color: 'bg-gray-600' },
@@ -143,7 +195,7 @@ export function TimeAnalysis({
         ))}
       </div>
       {/* 경고 메시지 */}
-      <div className="mt-6 bg-red-100 rounded-lg px-[13.5px] py-[8px]">
+      <div className="mt-6 bg-red-100 rounded-[6px] px-[13.5px] py-[8px]">
         <p className="text-white text-body4-m">
           소요 시간이 10분이 넘으면 변비·치질 위험도가 올라가요
         </p>

@@ -14,18 +14,20 @@ export const DefecationScore = ({ score }: ScoreProgressBarProps) => {
   const [isTooltipVisible, setIsTooltipVisible] = useState<boolean>(false);
 
   return (
-    <div className="bg-[#1B1D20] rounded-[14px] py-5 px-6 w-full mt-9">
+    <div className="bg-[#1B1D20] rounded-[14px] py-5 px-6 w-[calc(100%-40px)] mx-auto mt-9 z-10">
       <div className="flex justify-between items-center mb-3 text-body2-sb">
         <p>배변 점수</p>
         <button
           type="button"
-          onClick={() => setIsTooltipVisible((prev) => !prev)}
+          onClick={() => {
+            setIsTooltipVisible((prev) => !prev);
+          }}
           className="flex items-center gap-1 relative"
         >
           <p>{Math.round(score)}점</p>
           <InfoIcon />
 
-          <div className="z-50 absolute -top-[39px] -right-[29px] pointer-events-none">
+          <div className="z-50 absolute -top-[39px] -right-[25px] pointer-events-none">
             {isTooltipVisible && (
               <DefecationScoreTooltip
                 text={

@@ -34,6 +34,10 @@ export function StressAnalysisChart({
     ])
   );
 
+  const hasNoStressData = stressAnalysis.items.every(
+    (item) => item.stress === 'NONE'
+  );
+
   const chartData = xLabels
     .map((day, index) => {
       const value = data.get(day);
@@ -124,7 +128,7 @@ export function StressAnalysisChart({
       },
     },
     grid: {
-      borderColor: '#707885',
+      borderColor: '#292D32',
       xaxis: {
         lines: {
           show: false,
@@ -190,30 +194,42 @@ export function StressAnalysisChart({
     },
   };
   return (
-    <section className="py-7 flex flex-col gap-4 bg-gray-800 rounded-[20px]">
+    <section className="pt-7 pb-4 flex flex-col gap-4 bg-gray-800 rounded-[20px] w-[calc(100%-40px)] mx-auto z-10">
       <div className="flex flex-col">
         <div className="text-body3-m text-gray-600 mb-2 px-6 ">
           스트레스 분석 결과
         </div>
-        <div className="flex justify-center gap-12 px-6 ">
-          <div className="text-h4">{stressAnalysis.message}</div>
-          <Image
-            src={streching}
-            alt="스트레스 분석 결과 이미지"
-            width={80}
-            height={80}
-          />
-        </div>
-        {/* 꺾은선 그래프 영역 */}
-        <div className="pr-6">
-          <ApexChart
-            options={options}
-            series={series}
-            type="line"
-            width="100%"
-            height={232}
-          />
-        </div>
+        {hasNoStressData ? (
+          <div className="flex justify-start text-start px-6 items-center mb-3">
+            <p className="text-white text-[18px] font-semibold leading-[1.35]">
+              스트레스 기록이 비어있어요
+              <br />
+              기록을 채워보세요
+            </p>
+          </div>
+        ) : (
+          <>
+            <div className="flex justify-between gap-2 px-6">
+              <div className="text-h4 w-2/3">{stressAnalysis.message}</div>
+              <Image
+                src={streching}
+                alt="스트레스 분석 결과 이미지"
+                width={80}
+                height={80}
+              />
+            </div>
+            {/* 꺾은선 그래프 영역 */}
+            <div className="pr-6">
+              <ApexChart
+                options={options}
+                series={series}
+                type="line"
+                width="100%"
+                height={232}
+              />
+            </div>
+          </>
+        )}
       </div>
     </section>
   );

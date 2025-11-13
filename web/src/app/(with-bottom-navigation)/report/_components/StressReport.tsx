@@ -1,16 +1,9 @@
 import Image from 'next/image';
 import type { Stress } from '../daily/types';
 
-export const StressReport = ({
-  stressData,
-}: {
-  stressData: Stress;
-  type: 'daily' | 'weekly' | 'monthly';
-}) => {
-  // const isShowGraph = type === 'weekly' || type === 'monthly';
-
+export const StressReport = ({ stressData }: { stressData: Stress }) => {
   return (
-    <div className="flex flex-col space-y-5 w-full">
+    <div className="flex flex-col space-y-5 w-[calc(100%-40px)] mx-auto z-10">
       <div className="bg-[#1B1D20] rounded-[14px] py-7 px-6">
         <p className="text-[#4E5560] text-body3-m mb-2">스트레스 분석 결과</p>
         <div className="flex items-start justify-between gap-2 mb-4">
@@ -26,9 +19,6 @@ export const StressReport = ({
             />
           </div>
         </div>
-        {/* {isShowGraph && (
-        NOTE(taehyeon):  TO.유빈 그래프 컴포넌트 영역입니다!
-        )} */}
       </div>
     </div>
   );

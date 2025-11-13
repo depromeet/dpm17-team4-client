@@ -11,6 +11,7 @@ import { BottomSheet } from '@/components/BottomSheet';
 type WheelProps = {
   isOpen: boolean;
   title: string;
+  description: string;
   options: WheelPickerOption[];
   initialValue: string;
   onApply: (value: string) => void;
@@ -21,6 +22,7 @@ type WheelProps = {
 export function WheelPickerBottomSheet({
   isOpen,
   title,
+  description,
   options,
   initialValue,
   onApply,
@@ -42,6 +44,9 @@ export function WheelPickerBottomSheet({
         <h3 className="text-body2-sb text-white text-left mb-[20px]">
           {title}
         </h3>
+        <div className="text-body3-m text-gray-400 text-left mb-[20px]">
+          {description}
+        </div>
         <div className="relative max-h-[240px] overflow-hidden">
           <WheelPickerWrapper className="w-full !text-body1-m [&_[data-rwp-highlight-wrapper]]:!text-body1-m">
             <WheelPicker
@@ -52,7 +57,7 @@ export function WheelPickerBottomSheet({
               classNames={{
                 optionItem: 'text-gray-500 !text-body1-m',
                 highlightWrapper:
-                  'bg-[#292D32] !text-body1-m h-[34px] leading-[34px] rounded-[4px]',
+                  'bg-[#292D32] !text-body1-m h-[34px] leading-[34px] rounded-[4px] text-white',
               }}
             />
           </WheelPickerWrapper>
@@ -60,7 +65,7 @@ export function WheelPickerBottomSheet({
         <button
           type="button"
           onClick={() => onApply(value)}
-          className="w-full mt-6 py-[14px] rounded-[10px] bg-primary-600 text-white text-button-2"
+          className="w-full mt-6 py-[19px] rounded-[10px] bg-primary-600 text-white text-button-2"
         >
           {applyLabel}
         </button>

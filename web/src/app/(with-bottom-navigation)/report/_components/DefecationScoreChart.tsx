@@ -1,19 +1,27 @@
 'use client';
 
 import type { ApexOptions } from 'apexcharts';
+import { Loader2Icon } from 'lucide-react';
 import dynamic from 'next/dynamic';
 
-const ApexChart = dynamic(() => import('react-apexcharts'), { ssr: false });
+const ApexChart = dynamic(() => import('react-apexcharts'), {
+  ssr: false,
+  loading: () => (
+    <div className="flex items-center justify-center w-full h-[232px]">
+      <Loader2Icon className="w-10 h-10 text-gray-500 animate-spin" />
+    </div>
+  ),
+});
 
 interface DefecationScoreChartProps {
   scores: number[];
   labels: string[];
 }
 
-export const DefecationScoreChart = ({
+export function DefecationScoreChart({
   scores,
   labels,
-}: DefecationScoreChartProps) => {
+}: DefecationScoreChartProps) {
   if (!scores || !labels || labels.length === 0) {
     return null;
   }
@@ -72,6 +80,7 @@ export const DefecationScoreChart = ({
       fillSeriesColor: false,
       onDatasetHover: { highlightDataSeries: false },
     },
+
     states: {
       hover: {
         filter: {
@@ -99,6 +108,9 @@ export const DefecationScoreChart = ({
       colors: ['#796AFF'],
       strokeColors: 'none',
       strokeWidth: 2,
+      hover: {
+        sizeOffset: 0,
+      },
     },
     title: {
       align: 'left',
@@ -109,7 +121,7 @@ export const DefecationScoreChart = ({
       },
     },
     grid: {
-      borderColor: '#707885',
+      borderColor: '#292D32',
       xaxis: {
         lines: {
           show: false,
@@ -175,23 +187,18 @@ export const DefecationScoreChart = ({
     <>
       <style global jsx>{`
 
-      .apexcharts-tooltip.apexcharts-theme-dark{
-      background: rgba(255, 255, 255, 0.12);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-radius: 20px;
-      box-shadow: 
-        0 8px 32px rgba(0, 0, 0, 0.1),
-        inset 0 1px 0 rgba(255, 255, 255, 0.5),
-        inset 0 -1px 0 rgba(255, 255, 255, 0.1),
-        inset 0 0 2px 4px rgba(255, 255, 255, 1);
-      overflow: hidden;
+.apexcharts-tooltip.apexcharts-theme-dark {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(3px) !important;
+  -webkit-backdrop-filter: blur(3px);
+  border: none !important; 
+  box-shadow: none !important;  
+  border-radius: 20px;
+  overflow: hidden;
 }
 
 .apexcharts-tooltip.apexcharts-theme-dark::before {
   content: '';
-  top: 0;
-  left: 0;
   right: 0;
   height: 1px;
   background: linear-gradient(
@@ -201,6 +208,7 @@ export const DefecationScoreChart = ({
     transparent
   );
 }
+
 
 .apexcharts-tooltip.apexcharts-theme-dark::after {
   content: '';
@@ -214,31 +222,30 @@ export const DefecationScoreChart = ({
   );
 }
 
-    .custom-tooltip-container {
-      box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-      padding: 6px 16px; 
-    }
+.custom-tooltip-container {
+  padding: 6px 16px;
+}
 
-    .custom-tooltip-value {
-      color: #eff6ff;
-      font-size: 12px;
-      font-weight: 600;
-    }
-    
-    .apexcharts-tooltip-marker {
-       display: none;
-    }
+.custom-tooltip-value {
+  color: #eff6ff;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.apexcharts-tooltip-marker {
+  display: none;
+}
 
 `}</style>
-      <div className="bg-gray-800 rounded-[20px] w-full pt-7 px-3">
+      <div className="bg-gray-800 rounded-[20px] w-[calc(100%-40px)] mx-auto pt-7 px-3 z-10">
         <div className="text-body3-m text-gray-600 px-3">배변 점수</div>
         <ApexChart
           options={options}
           series={seriesData}
           type="line"
-          height={350}
+          height={232}
         />
       </div>
     </>
   );
-};
+}

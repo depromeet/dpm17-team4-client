@@ -2,15 +2,14 @@
 
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useCallback, useMemo } from 'react';
-import toast from 'react-hot-toast';
+import { useCallback } from 'react';
 import { BottomBtnBar } from '@/components';
 import { QUERY_KEYS } from '@/constants';
 import {
   useActivityRecordMutation,
   useActivityRecordUpdateMutation,
 } from '@/hooks';
-import type { Food } from '../types/dto';
+import type { Food, LifeStyleCreateRequestDto } from '../types/dto';
 import type { StressLevel } from '../types/entitites';
 
 interface LifeStyleSubmitProps {
@@ -38,35 +37,35 @@ export const LifeStyleSubmit = ({
   const queryClient = useQueryClient();
 
   // 폼 유효성 검사
-  const validation = useMemo(() => {
-    const validFoods = foods.filter(
-      (food) => food.name && food.mealTime !== ''
-    );
-    const missingItems: string[] = [];
+  // const validation = useMemo(() => {
+  //   const validFoods = foods.filter(
+  //     (food) => food.name && food.mealTime !== ''
+  //   );
+  //   const missingItems: string[] = [];
 
-    if (validFoods.length === 0) {
-      missingItems.push('음식');
-    }
-    if (water === 0) {
-      missingItems.push('물');
-    }
-    if (stress === '') {
-      missingItems.push('스트레스');
-    }
+  //   if (validFoods.length === 0) {
+  //     missingItems.push('음식');
+  //   }
+  //   if (water === 0) {
+  //     missingItems.push('물');
+  //   }
+  //   if (stress === '') {
+  //     missingItems.push('스트레스');
+  //   }
 
-    return {
-      isValid: missingItems.length === 0,
-      missingItems,
-    };
-  }, [foods, water, stress]);
+  //   return {
+  //     isValid: missingItems.length === 0,
+  //     missingItems,
+  //   };
+  // }, [foods, water, stress]);
 
   const handleSubmit = useCallback(async () => {
     // 유효성 검사 실패 시 토스트 표시
-    if (!validation.isValid) {
-      const missingText = validation.missingItems.join(', ');
-      toast.error(`${missingText} 항목을 입력해주세요.`);
-      return;
-    }
+    // if (!validation.isValid) {
+    //   const missingText = validation.missingItems.join(', ');
+    //   toast.error(`${missingText} 항목을 입력해주세요.`);
+    //   return;
+    // }
     const year = searchParams.get('year');
     const month = searchParams.get('month');
     const date = searchParams.get('day');
@@ -84,7 +83,7 @@ export const LifeStyleSubmit = ({
 
     const data = {
       water,
-      stress,
+      stress: stress === '' ? null : stress,
       foods: validFoods.map((food) => ({
         id: food.foodId,
         mealTime: food.mealTime,
@@ -97,10 +96,20 @@ export const LifeStyleSubmit = ({
       updateMutation(
         {
           id: existingRecordId,
-          ...data,
+          ...(data as LifeStyleCreateRequestDto),
         },
         {
           onSuccess: () => {
+            // 리포트 관련 쿼리 무효화
+            queryClient.invalidateQueries({
+              queryKey: QUERY_KEYS.REPORT_DAILY,
+            });
+            queryClient.invalidateQueries({
+              queryKey: QUERY_KEYS.REPORT_WEEKLY,
+            });
+            queryClient.invalidateQueries({
+              queryKey: QUERY_KEYS.REPORT_MONTHLY,
+            });
             // 캘린더 관련 쿼리 무효화
             queryClient.invalidateQueries({
               queryKey: [QUERY_KEYS.CALENDAR],
@@ -126,7 +135,11 @@ export const LifeStyleSubmit = ({
       createMutation({
         ...data,
         onSuccess: () => {
-          queryClient.invalidateQueries({ queryKey: QUERY_KEYS.REPORT });
+          queryClient.invalidateQueries({ queryKey: QUERY_KEYS.REPORT_DAILY });
+          queryClient.invalidateQueries({ queryKey: QUERY_KEYS.REPORT_WEEKLY });
+          queryClient.invalidateQueries({
+            queryKey: QUERY_KEYS.REPORT_MONTHLY,
+          });
           // 캘린더 관련 쿼리 무효화
           queryClient.invalidateQueries({
             queryKey: [QUERY_KEYS.CALENDAR],
@@ -148,7 +161,6 @@ export const LifeStyleSubmit = ({
       });
     }
   }, [
-    validation,
     foods,
     water,
     stress,

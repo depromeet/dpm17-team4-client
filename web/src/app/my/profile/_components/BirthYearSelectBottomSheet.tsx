@@ -1,6 +1,7 @@
 'use client';
 
-import { Check } from 'lucide-react';
+import Image from 'next/image';
+import Check from '@/assets/my/check-primary.png';
 import { BottomSheet } from '@/components/BottomSheet';
 
 interface BirthYearSelectBottomSheetProps {
@@ -51,7 +52,7 @@ export const BirthYearSelectBottomSheet = ({
                 {option.label}
               </span>
               {currentYear === option.value && (
-                <Check className="w-5 h-5 text-primary-600" />
+                <Image src={Check} alt="check" className="w-[18px]" />
               )}
             </button>
           ))}

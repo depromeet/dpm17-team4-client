@@ -17,6 +17,8 @@ export const API_ENDPOINTS = {
 
   REPORT: {
     BASE: '/api/v1/reports/daily',
+    WEEKLY: '/api/v1/reports/weekly',
+    MONTHLY: '/api/v1/reports/monthly',
   },
 
   ACTIVITY_RECORDS: {
@@ -45,5 +47,8 @@ export const API_ENDPOINTS = {
 
   CALENDAR: {
     BASE: '/api/v1/calendar',
+  },
+  HOME: {
+    BASE: '/api/v1/home',
   },
 } as const;

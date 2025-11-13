@@ -1,44 +1,65 @@
 'use client';
 
 import Image from 'next/image';
-import { useSearchParams } from 'next/navigation';
-import { Suspense, useEffect, useRef, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import emojiOpenMouse from '@/assets/report/emoji_open_mouse.png';
 import newsPaper from '@/assets/report/newspaper.png';
 import poop from '@/assets/report/poop.png';
 import { useNavigationContext } from '@/contexts/NavigationContext';
 import { useReportQuery } from '@/hooks/queries/useReportQuery';
+import { formatToISOString, getKoreanDate } from '@/utils/utils-date';
+import ReportNotice from '../_components/ReportNotice';
 import { StressReport } from '../_components/StressReport';
 import { WaterReport } from '../_components/WaterReport';
 import { DefecationScore } from './_components/DefecationScore';
 import { FoodReport } from './_components/FoodReport';
 import { NullReport } from './_components/NullReport';
+import { SelectDate } from './_components/SelectDate';
 import type { Card } from './types';
-import { formatDate, getColorLabel, getShapeLabel } from './utils';
-
-// import { Suggestions } from './_components/Suggestions';
+import { getColorLabel, getShapeLabel } from './utils';
 
 function DailyReportContent() {
   const [cardIndex, setCardIndex] = useState(0);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const searchParams = useSearchParams();
+  const router = useRouter();
   const toastShownRef = useRef(false);
-  const { handleTabClick } = useNavigationContext();
+  const { handleOnNotification: onAlert } = useNavigationContext();
 
   const dateParam = searchParams.get('date');
 
-  console.log('dateParam', dateParam);
-  useEffect(() => {
-    handleTabClick('report');
-  }, [handleTabClick]);
+  // 현재 날짜 상태 관리
+  const currentDate = useMemo(() => {
+    if (dateParam) {
+      const [year, month, day] = dateParam.split('-').map(Number);
+      if (
+        Number.isInteger(year) &&
+        Number.isInteger(month) &&
+        Number.isInteger(day)
+      ) {
+        const parsedDate = new Date(year, month - 1, day);
+        if (!isNaN(parsedDate.getTime())) {
+          return parsedDate;
+        }
+      }
+    }
+
+    return getKoreanDate();
+  }, [dateParam]);
+
+  // 날짜 변경 핸들러
+  const handleDateChange = (newDate: Date) => {
+    const dateString = formatToISOString(newDate);
+    router.push(`/report/daily?date=${dateString}`);
+  };
 
   const {
     data: reportData,
     isLoading,
     error,
   } = useReportQuery(dateParam ? { dateTime: dateParam } : undefined);
-  const { handleOnNotification: onAlert } = useNavigationContext();
 
   // Toast 표시를 위한 별도 useEffect
   useEffect(() => {
@@ -59,20 +80,6 @@ function DailyReportContent() {
       toastShownRef.current = true;
     }
   }, [searchParams, onAlert]);
-
-  // NOTE(seonghyun): 임시 - Suggestion 아이템의 이미지를 동적으로 생성
-  // const getSuggestionIcon = (index: number) => {
-  //     switch (index) {
-  //       case 0:
-  //         return <Droplets className="w-6 h-6 text-blue-400" />;
-  //       case 1:
-  //         return <Banana className="w-6 h-6 text-yellow-400" />;
-  //       case 2:
-  //         return <FileText className="w-6 h-6 text-white" />;
-  //       default:
-  //         return null;
-  //     }
-  //   };
 
   // TODO(seonghyun): 카드 데이터 - API 응답에서 생성
   const cards: Card[] =
@@ -145,18 +152,7 @@ function DailyReportContent() {
   return (
     <div className="flex flex-col flex-1">
       {/* 날짜 네비게이션 */}
-      <div className="flex items-center justify-center gap-4 px-4 py-4 mt-4 mb-2">
-        {/* TODO(seonghyun): 다른 날짜 이동 */}
-        {/*<button className="p-2">*/}
-        {/* <ChevronLeft className="w-5 h-5" />*/}
-        {/*</button>*/}
-        <span className="text-body2-m">
-          {formatDate(new Date(String(reportData?.updatedAt)))}
-        </span>
-        {/*<button className="p-2">*/}
-        {/* <ChevronRight className="w-5 h-5" />*/}
-        {/*</button>*/}
-      </div>
+      <SelectDate currentDate={currentDate} onDateChange={handleDateChange} />
       {isLoading && (
         // 로딩 상태 처리
         <div className="flex items-center justify-center h-40">
@@ -199,7 +195,7 @@ function DailyReportContent() {
               {hasNoDataAtAll && <NullReport mode="all" nullIcon={newsPaper} />}
               {/* 메인 콘텐츠 */}
               {!hasNoDataAtAll && (
-                <main className="px-4 pb-20">
+                <main className="pb-20">
                   {hasPooData ? (
                     <>
                       {/* 캐러셀 컨테이너 */}
@@ -391,15 +387,8 @@ function DailyReportContent() {
                         />
                       )}
                       {reportData.stress && (
-                        <StressReport
-                          stressData={reportData.stress}
-                          type="daily"
-                        />
+                        <StressReport stressData={reportData.stress} />
                       )}
-                      {/* //NOTE(taehyeon): 일간 리포트에는 추천 습관 영역 제거 (만약 대비 주석 처리) */}
-                      {/* {reportData.suggestion && (
-                <Suggestions suggestion={reportData.suggestion} />
-              )} */}
                     </div>
                   ) : (
                     <NullReport
@@ -409,6 +398,7 @@ function DailyReportContent() {
                       description="생활을 기록하면 더 자세한 분석을 얻을 수 있어요"
                     />
                   )}
+                  {hasNoDataAtAll ? null : <ReportNotice />}
                 </main>
               )}
             </>

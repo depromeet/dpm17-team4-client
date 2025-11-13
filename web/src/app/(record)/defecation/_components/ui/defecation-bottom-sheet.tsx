@@ -19,6 +19,7 @@ import {
   type ChangeEvent,
   type Dispatch,
   type SetStateAction,
+  useEffect,
   useState,
 } from 'react';
 import { ChevronIcon } from '@/components';
@@ -30,7 +31,7 @@ interface DefecationBottomSheetProps {
   isOpen: boolean;
   selectedHour?: string;
   selectedDate?: Date;
-  onClose: Dispatch<SetStateAction<boolean>>;
+  onClose: (shouldClose: boolean, isRegister?: boolean) => void;
   handleDateChange: (e: ChangeEvent<HTMLInputElement>) => void;
   handleHourChange: (hour: string) => void;
 }
@@ -38,13 +39,20 @@ interface DefecationBottomSheetProps {
 export const DefecationBottomSheet = ({
   isOpen,
   selectedHour,
-  selectedDate = new Date(),
+  selectedDate,
   onClose,
   handleDateChange,
   handleHourChange,
 }: DefecationBottomSheetProps) => {
   const hours = useHourOptions();
   const [currentMonth, setCurrentMonth] = useState(new Date());
+  const [hasSelectedHour, setHasSelectedHour] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      setHasSelectedHour(false);
+    }
+  }, [isOpen]);
 
   const monthStart = startOfMonth(currentMonth);
   const monthEnd = endOfMonth(monthStart);
@@ -86,8 +94,8 @@ export const DefecationBottomSheet = ({
   const finalDateRange = fixedDateRange.slice(0, TOTAL_DAYS);
 
   return (
-    <BottomSheet isOpen={isOpen} onClose={() => onClose(false)}>
-      <div className="bg-[#2A2A2E] text-white p-4 rounded-lg">
+    <BottomSheet isOpen={isOpen} onClose={() => onClose(false, false)}>
+      <div className="bg-gray-800 text-white p-4 rounded-lg">
         <div className="flex items-center justify-center gap-7.5 mb-3.5">
           <button
             type="button"
@@ -163,14 +171,17 @@ export const DefecationBottomSheet = ({
               <button
                 key={hour.id}
                 type="button"
-                onClick={() => handleHourChange(hour.time)}
+                onClick={() => {
+                  setHasSelectedHour(true);
+                  handleHourChange(hour.time);
+                }}
                 className={`
                   flex items-center justify-center w-[73px] h-10 whitespace-nowrap py-3 px-[22.5px] rounded-lg 
                   text-button-3 border-[1px] transition-colors
                   ${
                     isSelected
                       ? 'bg-primary-500/40 border-primary-600 text-white'
-                      : 'bg-[#3C4149] border-transparent text-white hover:bg-[#4A5058]'
+                      : 'bg-gray-700 border-transparent text-white hover:bg-[#4A5058]'
                   }
                 `}
               >
@@ -183,10 +194,10 @@ export const DefecationBottomSheet = ({
           <button
             type="button"
             onClick={() => {
-              onClose(false);
+              onClose(false, true);
             }}
-            disabled={!selectedHour || !selectedDate}
-            className={`text-center text-button-2 w-full h-[56px] rounded-lg bg-primary-600 text-white ${!selectedHour || !selectedDate ? 'opacity-50' : ''}`}
+            disabled={!hasSelectedHour}
+            className={`text-center text-button-2 w-full h-[56px] rounded-lg bg-primary-600 text-white ${!hasSelectedHour ? 'opacity-50 cursor-not-allowed' : ''}`}
           >
             등록
           </button>

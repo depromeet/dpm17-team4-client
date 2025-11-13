@@ -20,7 +20,7 @@ export default function ReportLayout({
   const currentPeriod = getCurrentPeriod();
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-black text-white  ">
       {/* 헤더 */}
       <header className="flex items-center justify-between px-4 py-4">
         <h1 className="text-xl font-bold">리포트</h1>
@@ -35,7 +35,7 @@ export default function ReportLayout({
       {children}
 
       {/* 하단 여백 추가 */}
-      <div className="h-10"></div>
+      <div className="h-[80px]"></div>
     </div>
   );
 }

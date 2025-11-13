@@ -21,7 +21,8 @@ export const DefecationSubmit = () => {
   const isEdit = searchParams.get('toiletRecordId') !== null;
   const from = searchParams.get('from');
 
-  const { handleSubmit } = useFormContext<DefecationFormValues>();
+  const { handleSubmit, watch } = useFormContext<DefecationFormValues>();
+  const selectedTry = watch('selectedTry');
 
   const { mutate: createDefecation } = useDefecationMutation();
   const { mutate: updateDefecation } = useDefecationUpdateMutation();
@@ -56,7 +57,15 @@ export const DefecationSubmit = () => {
             console.log('🔍 DefecationSubmit - updateDefecation success');
 
             // 모든 관련 쿼리 무효화
-            queryClient.invalidateQueries({ queryKey: QUERY_KEYS.REPORT });
+            queryClient.invalidateQueries({
+              queryKey: QUERY_KEYS.REPORT_DAILY,
+            });
+            queryClient.invalidateQueries({
+              queryKey: QUERY_KEYS.REPORT_WEEKLY,
+            });
+            queryClient.invalidateQueries({
+              queryKey: QUERY_KEYS.REPORT_MONTHLY,
+            });
             queryClient.invalidateQueries({
               queryKey: [QUERY_KEYS.DEFECATION_RECORD_LIST],
             });
@@ -125,7 +134,11 @@ export const DefecationSubmit = () => {
           );
 
           // 모든 관련 쿼리 무효화
-          queryClient.invalidateQueries({ queryKey: QUERY_KEYS.REPORT });
+          queryClient.invalidateQueries({ queryKey: QUERY_KEYS.REPORT_DAILY });
+          queryClient.invalidateQueries({ queryKey: QUERY_KEYS.REPORT_WEEKLY });
+          queryClient.invalidateQueries({
+            queryKey: QUERY_KEYS.REPORT_MONTHLY,
+          });
           queryClient.invalidateQueries({
             queryKey: [QUERY_KEYS.DEFECATION_RECORD_LIST],
           });
@@ -199,6 +212,7 @@ export const DefecationSubmit = () => {
     <BottomBtnBar
       text={isEdit ? '수정' : '다음'}
       onSubmit={handleSubmit(onSubmit, onError)}
+      disabled={!selectedTry}
     />
   );
 };

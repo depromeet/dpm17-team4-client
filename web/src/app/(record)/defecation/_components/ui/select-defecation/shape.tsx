@@ -59,7 +59,7 @@ export default function Shape({
 
                     <div
                       className={cn(
-                        'text-button-2',
+                        'text-button-3',
                         field.value === key && 'text-white'
                       )}
                     >

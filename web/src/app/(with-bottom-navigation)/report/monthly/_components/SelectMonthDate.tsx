@@ -3,7 +3,11 @@
 import type { WheelPickerOption } from '@ncdai/react-wheel-picker';
 import { useMemo, useState } from 'react';
 import { PlayIcon } from '@/components/icons';
-import { formatToISOString, getKoreanDate } from '@/utils/utils-date';
+import {
+  formatToISOString,
+  getKoreanDate,
+  getLastDayOfMonth,
+} from '@/utils/utils-date';
 import { WheelPickerBottomSheet } from '../../_components/WheelPickerBottomsheet';
 
 const MONTH_RANGE = 24;
@@ -120,7 +124,7 @@ export function SelectDate({
 
   return (
     <>
-      <div className="flex justify-center items-center gap-4 py-4">
+      <div className="flex justify-center items-center gap-2 py-3">
         <button
           type="button"
           className={`p-2 ${
@@ -134,7 +138,7 @@ export function SelectDate({
         <button
           type="button"
           onClick={() => setIsBottomSheetOpen(true)}
-          className="font-medium text-white text-center px-3 py-1 rounded-lg bg-gray-700/30"
+          className="font-medium text-white text-center py-1 rounded-lg"
         >
           {currentYear}년 {currentMonth}월
         </button>
@@ -153,6 +157,7 @@ export function SelectDate({
       <WheelPickerBottomSheet
         isOpen={isBottomSheetOpen}
         title="월 선택"
+        description={`기간 ${currentYear}.${currentMonth}.1 ~ ${currentYear}.${currentMonth}.${getLastDayOfMonth(currentYear, currentMonth)}`}
         options={monthOptions}
         initialValue={currentValue ?? monthOptions[0]?.value ?? ''}
         onApply={handleApply}

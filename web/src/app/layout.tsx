@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import { Toaster } from 'react-hot-toast';
+import LegacyCookieCleanup from '@/components/LegacyCookieCleanup';
 import QueryProvider from '@/providers/query-provider';
 
 const geistSans = Geist({
@@ -36,6 +37,8 @@ export default function RootLayout({
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
           suppressHydrationWarning={true}
         >
+          {/* NOTE: 기존 사용자의 오래된 .kkruk.com 쿠키 정리 (일주일 후 제거 예정) */}
+          <LegacyCookieCleanup />
           {children}
           {/* biome-ignore lint/correctness/useUniqueElementIds: <This is a global portal root> */}
           <div id="modal-root"></div>

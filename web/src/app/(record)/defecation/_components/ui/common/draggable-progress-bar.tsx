@@ -54,7 +54,7 @@ export function DraggableProgressBar({
         ref={progressBarRef}
         onMouseDown={handleMouseDown}
         onTouchStart={handleTouchStart}
-        className="relative mx-auto h-full w-[calc(100%-1.375rem)]"
+        className="relative  h-full w-[calc(100%-1rem)] mx-auto"
       >
         <div
           style={{

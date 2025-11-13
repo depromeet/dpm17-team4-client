@@ -15,7 +15,7 @@ export const BottomBtnBar = ({
   return (
     <div
       className={cn(
-        'fixed bottom-0 left-0 w-full h-30 z-10 pt-4 px-4 bg-gray-900',
+        'fixed bottom-0 left-0 w-full h-[96px] z-10 pt-4 px-4 bg-gray-900',
         className
       )}
     >
