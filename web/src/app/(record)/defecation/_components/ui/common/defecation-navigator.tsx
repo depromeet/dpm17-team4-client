@@ -86,9 +86,8 @@ export const DefecationNavigator = () => {
           onClick={handleBack}
           className="w-6 h-6 absolute left-4 top-1/2 -translate-y-1/2 z-10"
         >
-       <ArrowIcon type='left'/>
-            <title>뒤로가기</title>
-          
+          <ArrowIcon type="left" />
+          <title>뒤로가기</title>
         </button>
         <div className="flex-1 flex justify-center items-center">
           <Navigator.Center>배변 기록</Navigator.Center>

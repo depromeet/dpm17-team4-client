@@ -78,7 +78,11 @@ export const DefecationAttempt = ({
                 className={cn(
                   'flex-1 h-12 rounded-[10px] bg-gray-800 whitespace-nowrap flex items-center justify-center',
                   'transition-all duration-200',
-                  selectedTry === value ? 'bg-primary-600 text-white' : !selectedTry ? 'text-white' : 'text-white/40'
+                  selectedTry === value
+                    ? 'bg-primary-600 text-white'
+                    : !selectedTry
+                      ? 'text-white'
+                      : 'text-white/40'
                 )}
                 type="button"
                 key={value}

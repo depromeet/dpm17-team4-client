@@ -64,7 +64,10 @@ export default function Preview({ currentKey }: { currentKey: string }) {
 
         return (
           <div
-            className={cn('text-[13px] font-semibold rounded-[6px] py-1 px-2', getColorClass())}
+            className={cn(
+              'text-[13px] font-semibold rounded-[6px] py-1 px-2',
+              getColorClass()
+            )}
           >
             {painKey}%
           </div>

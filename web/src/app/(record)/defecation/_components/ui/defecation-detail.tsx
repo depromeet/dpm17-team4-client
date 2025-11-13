@@ -62,46 +62,31 @@ export const DefecationDetail = forwardRef<
     [openId, handleSectionChange]
   );
 
-  const onColorSelect = useCallback(
-    () => {
-      setTimeout(() => {
-        handleSectionChange('SHAPE');
-      }, SCROLL_DELAY);
-    },
-    [handleSectionChange]
-  );
-  const onShapeSelect = useCallback(
-    () => {
-      setTimeout(() => {
-        handleSectionChange('PAIN');
-      }, SCROLL_DELAY);
-    },
-    [handleSectionChange]
-  );
-  const onPainSelect = useCallback(
-    () => {
-      setTimeout(() => {
-        handleSectionChange('TIME_TAKEN');
-      }, SCROLL_DELAY);
-    },
-    [handleSectionChange]
-  );
-  const onTimeTakenSelect = useCallback(
-    () => {
-      setTimeout(() => {
-        handleSectionChange('OPTIONAL');
-      }, SCROLL_DELAY);
-    },
-    [handleSectionChange]
-  );
-  const onOptionalSelect = useCallback(
-    () => {
-      setTimeout(() => {
-        handleSectionChange(null);
-      }, SCROLL_DELAY);
-    },
-    [handleSectionChange]
-  );
+  const onColorSelect = useCallback(() => {
+    setTimeout(() => {
+      handleSectionChange('SHAPE');
+    }, SCROLL_DELAY);
+  }, [handleSectionChange]);
+  const onShapeSelect = useCallback(() => {
+    setTimeout(() => {
+      handleSectionChange('PAIN');
+    }, SCROLL_DELAY);
+  }, [handleSectionChange]);
+  const onPainSelect = useCallback(() => {
+    setTimeout(() => {
+      handleSectionChange('TIME_TAKEN');
+    }, SCROLL_DELAY);
+  }, [handleSectionChange]);
+  const onTimeTakenSelect = useCallback(() => {
+    setTimeout(() => {
+      handleSectionChange('OPTIONAL');
+    }, SCROLL_DELAY);
+  }, [handleSectionChange]);
+  const onOptionalSelect = useCallback(() => {
+    setTimeout(() => {
+      handleSectionChange(null);
+    }, SCROLL_DELAY);
+  }, [handleSectionChange]);
 
   const renderSelectSection = (value: DefecationTryDetailKey) => {
     switch (value) {
@@ -163,7 +148,9 @@ export const DefecationDetail = forwardRef<
             previewr={<SelectPreview currentKey={key} />}
             trigger={value}
           >
-            <div className='flex flex-col gap-4'>{renderSelectSection(key as DefecationTryDetailKey)}</div>
+            <div className="flex flex-col gap-4">
+              {renderSelectSection(key as DefecationTryDetailKey)}
+            </div>
           </CollapsibleToggle>
         </div>
       ))}
