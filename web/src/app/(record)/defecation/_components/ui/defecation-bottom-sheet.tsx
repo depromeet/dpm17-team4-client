@@ -19,6 +19,7 @@ import {
   type ChangeEvent,
   type Dispatch,
   type SetStateAction,
+  useEffect,
   useState,
 } from 'react';
 import { ChevronIcon } from '@/components';
@@ -38,13 +39,20 @@ interface DefecationBottomSheetProps {
 export const DefecationBottomSheet = ({
   isOpen,
   selectedHour,
-  selectedDate = new Date(),
+  selectedDate,
   onClose,
   handleDateChange,
   handleHourChange,
 }: DefecationBottomSheetProps) => {
   const hours = useHourOptions();
   const [currentMonth, setCurrentMonth] = useState(new Date());
+  const [hasSelectedHour, setHasSelectedHour] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      setHasSelectedHour(false);
+    }
+  }, [isOpen]);
 
   const monthStart = startOfMonth(currentMonth);
   const monthEnd = endOfMonth(monthStart);
@@ -163,7 +171,10 @@ export const DefecationBottomSheet = ({
               <button
                 key={hour.id}
                 type="button"
-                onClick={() => handleHourChange(hour.time)}
+                onClick={() => {
+                  setHasSelectedHour(true);
+                  handleHourChange(hour.time);
+                }}
                 className={`
                   flex items-center justify-center w-[73px] h-10 whitespace-nowrap py-3 px-[22.5px] rounded-lg 
                   text-button-3 border-[1px] transition-colors
@@ -185,8 +196,8 @@ export const DefecationBottomSheet = ({
             onClick={() => {
               onClose(false);
             }}
-            disabled={!selectedHour || !selectedDate}
-            className={`text-center text-button-2 w-full h-[56px] rounded-lg bg-primary-600 text-white ${!selectedHour || !selectedDate ? 'opacity-50' : ''}`}
+            disabled={!hasSelectedHour}
+            className={`text-center text-button-2 w-full h-[56px] rounded-lg bg-primary-600 text-white ${!hasSelectedHour ? 'opacity-50 cursor-not-allowed' : ''}`}
           >
             등록
           </button>
