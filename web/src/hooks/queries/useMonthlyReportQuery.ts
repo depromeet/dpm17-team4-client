@@ -32,7 +32,7 @@ export const useMonthlyReportQuery = (params?: UseMonthlyReportQueryParams) => {
             return INSUFFICIENT_DATA;
           }
         }
-        return null;
+        throw error;
       }
     },
     refetchOnMount: 'always',

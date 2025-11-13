@@ -1,8 +1,10 @@
+'use client';
+
 const ReportNotice = () => {
   // NOTE(taehyeon): 생활 습관 및 일반 건강 관련 정보 참고 URL (현재는 앱 컨텍스트 내에서 열림 -> 외부 브라우저로 열려야 하는지 여부는 논의 필요)
   const linkedURL = 'https://www.snuh.org/health/nMedInfo/nList.do';
   const handleLinkClick = () => {
-    window.open(linkedURL, '_blank');
+    window.open(linkedURL, '_blank', 'noopener,noreferrer');
   };
 
   return (

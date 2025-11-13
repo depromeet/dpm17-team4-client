@@ -26,8 +26,8 @@ export const FoodReport = ({ foodData }: { foodData: Food }) => {
   }, [foodData]);
 
   const hasNoFoodData = useMemo(() => {
-    const noYesterdayFood = foodData.items[0]?.meals.length === 0;
-    const noTodayFood = foodData.items[1]?.meals.length === 0;
+    const noYesterdayFood = foodData.items[0]?.meals?.length === 0;
+    const noTodayFood = foodData.items[1]?.meals?.length === 0;
 
     return noYesterdayFood && noTodayFood;
   }, [foodData]);

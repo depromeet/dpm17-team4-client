@@ -20,7 +20,6 @@ export const DefecationScore = ({ score }: ScoreProgressBarProps) => {
         <button
           type="button"
           onClick={() => {
-            console.log('🔍 DefecationScore - onClick');
             setIsTooltipVisible((prev) => !prev);
           }}
           className="flex items-center gap-1 relative"

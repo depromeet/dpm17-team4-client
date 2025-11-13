@@ -29,7 +29,7 @@ export const useWeeklyReportQuery = (params?: UseReportQueryParams) => {
           }
         }
         // NOTE(taehyeon): 기타 에러인 경우 null 반환
-        return null;
+        throw error;
       }
     },
     refetchOnMount: 'always',
