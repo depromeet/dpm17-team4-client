@@ -79,6 +79,46 @@ module.exports = {
       boxShadow: {
         tooltip: '0 4px 8px 0 rgba(0, 0, 0, 0.25)',
       },
+      keyframes: {
+        'scale-up-down': {
+          '0%, 30%': {
+            transform: 'scale(1) translateY(0)',
+          },
+          '50%': {
+            transform: 'scale(1.1) translateY(-20px)',
+          },
+          '80%': {
+            transform: 'scale(1.1) translateY(-20px)',
+          },
+          '100%': {
+            transform: 'scale(1) translateY(0)',
+          },
+        },
+        'fade-blink': {
+          '0%, 30%': { opacity: '1' },
+          '39%': { opacity: '0.8' },
+          '41%': { opacity: '0.8' },
+          '50%, 80%': { opacity: '1' },
+          '89%': { opacity: '0.8' },
+          '91%': { opacity: '0.8' },
+
+          '100%': { opacity: '1' },
+        },
+        'bg-fade': {
+          '0%, 30%': { opacity: '0.4' },
+
+          '50%': { opacity: '1' },
+
+          '80%': { opacity: '1' },
+
+          '100%': { opacity: '0.4' },
+        },
+      },
+      animation: {
+        'scale-pulse': 'scale-up-down 2s ease-out infinite',
+        'text-blink': 'fade-blink 2s ease-in-out infinite',
+        'bg-fade-pulse': 'bg-fade 2s linear infinite',
+      },
     },
   },
   plugins: [],

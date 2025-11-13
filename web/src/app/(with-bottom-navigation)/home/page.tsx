@@ -1,6 +1,5 @@
 'use client';
 
-import { Bell } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useRef, useState } from 'react';
@@ -11,20 +10,85 @@ import {
   setAccessToken,
   setUserInfo,
 } from '@/app/auth/_components/AuthSessionProvider';
-import Character from '@/assets/home/character.png';
-import MaskGroup from '@/assets/home/Mask group.svg';
+import bgBad from '@/assets/home/bg_bad.png';
+import bgBadDeco from '@/assets/home/bg_bad_deco.png';
+import bgBase from '@/assets/home/bg_base.png';
+import bgGood from '@/assets/home/bg_good.png';
+import bgGoodDeco from '@/assets/home/bg_good_deco.png';
+import bgMedium from '@/assets/home/bg_medium.png';
+import bgMediumDeco from '@/assets/home/bg_medium_deco.png';
+import bgVeryBad from '@/assets/home/bg_very_bad.png';
+import bgVeryBadDeco from '@/assets/home/bg_very_bad_deco.png';
+import bgVeryGood from '@/assets/home/bg_very_good.png';
+import bgVeryGoodDeco from '@/assets/home/bg_very_good_deco.png';
+import forkIcon from '@/assets/home/fork.svg';
+import logo from '@/assets/home/logo.png';
+import poopIcon from '@/assets/home/poop.svg';
 import { Modal } from '@/components';
 import { useNavigationContext } from '@/contexts/NavigationContext';
 import { useUserInfo } from '@/hooks';
+import { useGetHomeQuery } from '@/hooks/queries/useHomeQuery';
+import { formatToISOString } from '@/utils/utils-date';
 import { RecordSection, Tutorial } from './_components/ui';
+import { RecordBadge } from './_components/ui/RecordBadge';
+import { type HomeResponseData } from './types/dto';
 
 // import { BottomSheet } from '@/components/BottomSheet';
 // import { NotifcationSet } from './_components/ui';
 
-function HomeContent() {
-  const { navHeight } = useNavigationContext();
+type BgStatusKey = keyof typeof homeBackGround;
+
+export const homeBackGround = {
+  base: {
+    src: bgBase.src,
+    deco: bgBase.src,
+    message: '반가워요! 오늘의 기록을 시작할까요?',
+  },
+  good: {
+    src: bgGood.src,
+    deco: bgGoodDeco.src,
+    message: '평화로운 하루,\n개운하실 것 같아요!',
+  },
+  bad: {
+    src: bgBad.src,
+    deco: bgBadDeco.src,
+    message: '약간 무리했나봐요\n잠시 관리가 필요해요!',
+  },
+  medium: {
+    src: bgMedium.src,
+    deco: bgMediumDeco.src,
+    message: '별 일 없는\n무난한 하루가 되었군요!',
+  },
+  very_good: {
+    src: bgVeryGood.src,
+    deco: bgVeryGoodDeco.src,
+    message: '행복한 하루,\n장 컨디션 아주 굿!',
+  },
+  very_bad: {
+    src: bgVeryBad.src,
+    deco: bgVeryBadDeco.src,
+    message: '긴급상황!\n전문가 상담이 필요해요!',
+  },
+};
+
+interface HomeContentProps {
+  data: HomeResponseData;
+  currentDate: Date;
+  onChangeDate: (direction: 'prev' | 'next') => void;
+}
+
+function HomeContent({ data, currentDate, onChangeDate }: HomeContentProps) {
+  const { navHeight, handleTabClick } = useNavigationContext();
   const searchParams = useSearchParams();
   const router = useRouter();
+
+  const bgStatus = data.heroImage
+    .split('/colon_')[1]
+    .split('.png')[0] as BgStatusKey;
+
+  useEffect(() => {
+    handleTabClick('home');
+  }, [handleTabClick]);
 
   const { userInfo: savedUserInfo } = useUserInfo();
   // const [isNotificationSheetOpen, setIsNotificationSheetOpen] = useState(false);
@@ -118,6 +182,38 @@ function HomeContent() {
     })();
   }, [router, savedUserInfo]);
 
+  const hasAnyRecord = data.toiletRecordCount > 0 || data.hasActivityRecord;
+  const currentBg = hasAnyRecord
+    ? (homeBackGround[bgStatus] ?? homeBackGround.base)
+    : homeBackGround.base;
+
+  const getMessage = () => {
+    if (data.toiletRecordCount === 0 && !data.hasActivityRecord) {
+      return {
+        title: `${savedUserInfo?.nickname || savedUserInfo?.id || '테스터'}님, 반가워요!\n오늘의 기록을 시작할까요?`,
+        subtitle: '대장이와 함께 배아픈 이유를 찾아보아요',
+      };
+    }
+    if (data.toiletRecordCount === 0 && data.hasActivityRecord) {
+      return {
+        title: '배변기록도\n함께 기록해볼까요?',
+        subtitle: null,
+      };
+    }
+    if (data.toiletRecordCount > 0 && !data.hasActivityRecord) {
+      return {
+        title: '생활기록도\n함께 기록해볼까요?',
+        subtitle: null,
+      };
+    }
+    return {
+      title: currentBg.message,
+      subtitle: null,
+    };
+  };
+
+  const message = getMessage();
+
   return (
     <>
       {/* 알림 설정 바텀시트 */}
@@ -140,56 +236,116 @@ function HomeContent() {
         <Tutorial onClose={handleCloseTutorial} />
       </Modal>
 
-      <main className="min-w-[3.75rem] min-h-screen text-white relative px-4 pb-20 bg-gradient-to-br from-[#140927] via-[#403397] to-[#4665F3]">
-        {/* Radial gradient 배경 */}
-        <div className="absolute inset-0 opacity-70">
+      <Image
+        src={currentBg.src}
+        alt="배경 이미지"
+        fill
+        className="-z-10 bg-cover"
+        priority
+      />
+      <Image
+        src={currentBg.deco}
+        alt="배경 데코이미지"
+        fill
+        className="-z-10 bg-cover animate-bg-fade-pulse"
+        priority
+      />
+      <main
+        className="min-w-[3.75rem] h-dvh flex flex-col text-white relative"
+        style={{ paddingBottom: `${navHeight + 16}px` }}
+      >
+        {/* 콘텐츠 영역 */}
+        <div className="relative z-10 flex flex-col px-4">
+          <section className="flex justify-between font-bold text-h3 pt-[0.94rem]">
+            <Image src={logo} alt="로고" width={76.57} height={24} />
+          </section>
+          <section className="text-h2 mt-[2.2rem] animate-text-blink">
+            <h1 className="whitespace-pre-line">{message.title}</h1>
+            {message.subtitle && (
+              <p className="text-body3-r mt-2 text-gray-500">
+                {message.subtitle}
+              </p>
+            )}
+            <div className="flex mt-3 gap-1">
+              {data.toiletRecordCount > 0 && (
+                <RecordBadge
+                  icon={poopIcon}
+                  recordCounts={data.toiletRecordCount}
+                >
+                  배변
+                </RecordBadge>
+              )}
+              {data.hasActivityRecord === true && (
+                <RecordBadge icon={forkIcon} recordCounts={1}>
+                  생활
+                </RecordBadge>
+              )}
+            </div>
+          </section>
+        </div>
+
+        <div
+          className="flex-1 flex items-center justify-center relative px-4"
+          style={{ marginBottom: `${navHeight + 100}px` }}
+        >
           <Image
-            src={MaskGroup}
-            alt="배경 그라디언트"
-            className="w-full h-full object-cover"
-            priority
+            width={280}
+            height={280}
+            className="animate-scale-pulse w-fit"
+            src={data.heroImage}
+            alt="홈 화면 중앙 아이콘"
           />
         </div>
-        {/* 콘텐츠 영역 */}
-        <div className="relative z-10">
-          <section className="flex justify-between font-bold text-h3 pt-[0.94rem]">
-            <span>Logo</span>
-            {/* NOTE(yubin):아이콘 교체 */}
-            <Bell />
-          </section>
-          <section className="text-h2 mt-[2.2rem]">
-            <h1>
-              {savedUserInfo?.nickname || savedUserInfo?.id || '테스터'}님,
-              반가워요!
-              <br />
-              오늘의 기록을 시작할까요?
-            </h1>
-            <p className="text-gray-500 text-sm mt-2">
-              또잇이와 함께 배아픈 이유를 찾아보아요
-            </p>
-          </section>
-          {/* 중앙 아이콘 영역 */}
-          <section className="flex justify-center items-center">
-            {/* NOTE(yubin):이미지 교체 */}
-            <Image
-              width={213}
-              height={206}
-              src={Character}
-              alt="홈 화면 중앙 아이콘"
-            />
-          </section>
-        </div>
+        <RecordSection
+          navHeight={navHeight}
+          currentDate={currentDate}
+          onChangeDate={onChangeDate}
+        />
       </main>
       {/* 기록하기 영역 */}
-      <RecordSection navHeight={navHeight} />
     </>
   );
 }
 
 export default function Home() {
+  const date = new Date();
+  const [selectedDate, setSelectedDate] = useState(date);
+
+  const formattedDate = formatToISOString(selectedDate);
+  const { data: homeData, isLoading, error } = useGetHomeQuery(formattedDate);
+
+  const handleDateChange = (direction: 'prev' | 'next') => {
+    const newDate = new Date(selectedDate);
+
+    if (direction === 'prev') {
+      newDate.setDate(newDate.getDate() - 1);
+    } else {
+      newDate.setDate(newDate.getDate() + 1);
+    }
+    setSelectedDate(newDate);
+  };
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div>로딩 중...</div>
+      </div>
+    );
+  }
+  if (error || !homeData) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div>데이터를 불러올 수 없습니다.</div>
+      </div>
+    );
+  }
+
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <HomeContent />
+      <HomeContent
+        data={homeData}
+        currentDate={selectedDate}
+        onChangeDate={handleDateChange}
+      />
     </Suspense>
   );
 }
