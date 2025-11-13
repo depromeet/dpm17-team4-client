@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import LottieAnimation from 'react-lottie';
 import bgReport from '@/assets/report/bg-report.png';
-import animationData from './loading-lottie.json'
+import animationData from './loading-lottie.json';
 
 const defaultOptions = {
   loop: true,
@@ -16,7 +16,7 @@ const defaultOptions = {
   },
 };
 
-const TIME = 3000
+const TIME = 3000;
 export default function LoadingPage() {
   const router = useRouter();
 
@@ -48,11 +48,9 @@ export default function LoadingPage() {
             isClickToPauseDisabled
             style={{ width: '60px', height: '60px' }}
           />
-        <p className="text-white text-h3">리포트를 생성 중이에요.</p>
+          <p className="text-white text-h3">리포트를 생성 중이에요.</p>
         </div>
-
       </div>
     </div>
   );
 }
-

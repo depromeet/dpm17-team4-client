@@ -88,7 +88,8 @@ export default function CalendarPage() {
               const isSelected = selectedDate && isSameDay(date, selectedDate);
               const today = startOfDay(new Date());
               const isFutureDate = isAfter(startOfDay(date), today);
-              const isFutureDateNotCurrentMonth = isFutureDate && !isCurrentMonth;
+              const isFutureDateNotCurrentMonth =
+                isFutureDate && !isCurrentMonth;
 
               const dateRecord = data?.data.results.find(
                 (result) => result.date === format(date, 'yyyy-MM-dd')

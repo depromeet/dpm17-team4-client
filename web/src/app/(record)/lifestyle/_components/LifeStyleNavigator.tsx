@@ -25,8 +25,8 @@ export const LifeStyleNavigator = ({
     if (from === 'defecation') {
       // 배변 기록에서 온 경우, 배변 기록 완료 토스트와 함께 리포트로 이동
       router.push(`${PAGE_ROUTES.REPORT_DAILY}?toast-defecation=true`);
-      } else {
-        router.push('/report/loading');
+    } else {
+      router.push('/report/loading');
     }
   };
 
