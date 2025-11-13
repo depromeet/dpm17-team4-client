@@ -87,7 +87,7 @@ export const DefecationBottomSheet = ({
 
   return (
     <BottomSheet isOpen={isOpen} onClose={() => onClose(false)}>
-      <div className="bg-[#2A2A2E] text-white p-4 rounded-lg">
+      <div className="bg-gray-800 text-white p-4 rounded-lg">
         <div className="flex items-center justify-center gap-7.5 mb-3.5">
           <button
             type="button"
@@ -170,7 +170,7 @@ export const DefecationBottomSheet = ({
                   ${
                     isSelected
                       ? 'bg-primary-500/40 border-primary-600 text-white'
-                      : 'bg-[#3C4149] border-transparent text-white hover:bg-[#4A5058]'
+                      : 'bg-gray-700 border-transparent text-white hover:bg-[#4A5058]'
                   }
                 `}
               >
