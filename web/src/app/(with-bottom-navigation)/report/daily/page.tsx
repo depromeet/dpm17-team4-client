@@ -34,7 +34,11 @@ function DailyReportContent() {
   const currentDate = useMemo(() => {
     if (dateParam) {
       const [year, month, day] = dateParam.split('-').map(Number);
-      if (Number.isInteger(year) && Number.isInteger(month) && Number.isInteger(day)) {
+      if (
+        Number.isInteger(year) &&
+        Number.isInteger(month) &&
+        Number.isInteger(day)
+      ) {
         const parsedDate = new Date(year, month - 1, day);
         if (!isNaN(parsedDate.getTime())) {
           return parsedDate;
