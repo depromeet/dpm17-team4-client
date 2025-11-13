@@ -2,7 +2,7 @@
 
 import { forwardRef, useCallback, useImperativeHandle, useState } from 'react';
 import type { DefecationDataResponseDto } from '@/types/dto/defecation.dto';
-import { DEFECATION_DETAIL } from '../constants';
+import { DEFECATION_DETAIL, SCROLL_DELAY } from '../constants';
 import { useScrollToSection } from '../hooks';
 import type { DefecationTryDetailKey } from '../types';
 import { CollapsibleToggle } from './common';
@@ -63,23 +63,43 @@ export const DefecationDetail = forwardRef<
   );
 
   const onColorSelect = useCallback(
-    () => handleSectionChange('SHAPE'),
+    () => {
+      setTimeout(() => {
+        handleSectionChange('SHAPE');
+      }, SCROLL_DELAY);
+    },
     [handleSectionChange]
   );
   const onShapeSelect = useCallback(
-    () => handleSectionChange('PAIN'),
+    () => {
+      setTimeout(() => {
+        handleSectionChange('PAIN');
+      }, SCROLL_DELAY);
+    },
     [handleSectionChange]
   );
   const onPainSelect = useCallback(
-    () => handleSectionChange('TIME_TAKEN'),
+    () => {
+      setTimeout(() => {
+        handleSectionChange('TIME_TAKEN');
+      }, SCROLL_DELAY);
+    },
     [handleSectionChange]
   );
   const onTimeTakenSelect = useCallback(
-    () => handleSectionChange('OPTIONAL'),
+    () => {
+      setTimeout(() => {
+        handleSectionChange('OPTIONAL');
+      }, SCROLL_DELAY);
+    },
     [handleSectionChange]
   );
   const onOptionalSelect = useCallback(
-    () => handleSectionChange(null),
+    () => {
+      setTimeout(() => {
+        handleSectionChange(null);
+      }, SCROLL_DELAY);
+    },
     [handleSectionChange]
   );
 

@@ -41,5 +41,5 @@ export const DEFECATION_TIME_TAKEN_KEYS = {
   MORE_THAN_10_MINUTES: 'MORE_THAN_10_MINUTES',
 } as const;
 
-export const SCROLL_DELAY = 100;
+export const SCROLL_DELAY = 300;
 export const HOUR = 24;
