@@ -96,8 +96,8 @@ function WeeklyReportContent() {
 
   return (
     <div>
-      <div className="absolute top-[134px] left-[130px] pointer-events-none w-[426px] h-[426px] bg-radial from-[#2994FF] to-[#121213] opacity-10" />
-      <div className="absolute top-[428px] right-[191px] pointer-events-none w-[426px] h-[426px] bg-radial from-[#2994FF] to-[#121213] opacity-10" />
+      <div className="fixed top-[134px] left-[130px] pointer-events-none w-[426px] h-[426px] bg-radial from-[#2994FF] to-[#121213] opacity-10" />
+      <div className="fixed top-[428px] right-[191px] pointer-events-none w-[426px] h-[426px] bg-radial from-[#2994FF] to-[#121213] opacity-10" />
       <div className="flex flex-col gap-5 mb-[50px]">
         <SelectDate
           today={today}
