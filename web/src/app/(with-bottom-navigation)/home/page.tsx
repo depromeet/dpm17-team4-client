@@ -31,7 +31,7 @@ import { useGetHomeQuery } from '@/hooks/queries/useHomeQuery';
 import { formatToISOString } from '@/utils/utils-date';
 import { RecordSection, Tutorial } from './_components/ui';
 import { RecordBadge } from './_components/ui/RecordBadge';
-import { type HomeResponseData } from './types/dto';
+import type { HomeResponseData } from './types/dto';
 
 // import { BottomSheet } from '@/components/BottomSheet';
 // import { NotifcationSet } from './_components/ui';

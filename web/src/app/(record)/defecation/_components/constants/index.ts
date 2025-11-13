@@ -16,7 +16,7 @@ export const DEFECATION_COLOR = {
   GOLD: ['황금색', '#FCC82B'],
   RED: ['적색', '#F15151'],
   GREEN: ['녹색', '#5E632D'],
-  GRAY: ['흰색', '#DED7D4'],
+  WHITE: ['흰색', '#DED7D4'],
   DARK_BROWN: ['흑색', '#200D02'],
 } as const satisfies Record<string, [string, string]>;
 
@@ -26,7 +26,7 @@ export const DEFECATION_SHAPE = {
   CORN: '옥수수',
   PORRIDGE: '죽',
   RABBIT: '토끼',
-  ROCK: '물', // NOTE(taehyeon): 물로 변경 필요
+  WATER: '물', // NOTE(taehyeon): 물로 변경 필요
 } as const satisfies Record<string, string>;
 
 export const DEFECATION_TIME_TAKEN = {

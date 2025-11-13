@@ -9,6 +9,7 @@ import { DAYS_OF_WEEK } from '@/constants';
 import { DailyRecord } from './_components/DailyRecord';
 import { DefecationRecordBottomSheet } from './_components/DefecationRecordBottomSheet';
 import { useCalendar } from './_components/hooks/useCalendar';
+import { LifestyleRecordBottomSheet } from './_components/LifestyleRecordBottomSheet';
 import { Tag } from './_components/Tag';
 
 export default function CalendarPage() {
@@ -29,14 +30,18 @@ export default function CalendarPage() {
     isDefecationRecordBottomSheetOpen,
     setIsDefecationRecordBottomSheetOpen,
   ] = useState(false);
+  const [
+    isLifestyleRecordBottomSheetOpen,
+    setIsLifestyleRecordBottomSheetOpen,
+  ] = useState(false);
 
   return (
-    <div className="h-screen bg-[#1D1E20] text-white overflow-y-auto pb-32">
+    <div className="h-screen bg-[#121213] text-white overflow-y-auto pb-32">
       <header className="w-full flex items-center justify-center px-10 py-4 flex-shrink-0">
         <p className="text-[18px] font-semibold">캘린더</p>
       </header>
       <div>
-        <div className="flex items-center justify-between mb-5 px-4">
+        <div className="flex items-center justify-between mb-[20px] px-4">
           <p className="text-body1-m">
             {format(currentMonth, 'yyyy년 M월', { locale: ko })}
           </p>
@@ -82,6 +87,8 @@ export default function CalendarPage() {
               const isSelected = selectedDate && isSameDay(date, selectedDate);
               const today = startOfDay(new Date());
               const isFutureDate = isAfter(startOfDay(date), today);
+              const isFutureDateNotCurrentMonth =
+                isFutureDate && !isCurrentMonth;
 
               const dateRecord = data?.data.results.find(
                 (result) => result.date === format(date, 'yyyy-MM-dd')
@@ -104,22 +111,22 @@ export default function CalendarPage() {
                   <button
                     type="button"
                     onClick={() => handleDateClick(date)}
-                    disabled={isFutureDate}
+                    disabled={isFutureDateNotCurrentMonth}
                     className={`
                         w-7.5 h-7.5 rounded-full flex items-center justify-center text-body3-r transition-colors
                         ${
-                          isFutureDate
+                          isFutureDateNotCurrentMonth
                             ? 'text-[#4A4A4A] cursor-not-allowed'
                             : isCurrentMonth
                               ? 'text-white hover:bg-gray-700'
                               : 'text-[#707885]'
                         }
-                        ${isSelected ? 'bg-gray-600 text-white' : ''}
+                        ${isSelected ? 'bg-gray-700 text-white' : ''}
                       `}
                   >
                     {format(date, 'd')}
                   </button>
-                  {!isFutureDate && recordType && (
+                  {!isFutureDateNotCurrentMonth && recordType && (
                     <DailyRecord type={recordType} />
                   )}
                 </div>
@@ -129,7 +136,7 @@ export default function CalendarPage() {
         </div>
       </div>
 
-      <div className="flex w-full h-2 bg-[#3C4149]/20 mt-2.5 mb-5" />
+      <div className="flex w-full h-2 bg-[#292D32] opacity-20 mt-2.5 mb-5" />
 
       <div className="px-4">
         <div className="flex items-center justify-between mb-3.5">
@@ -156,7 +163,7 @@ export default function CalendarPage() {
         </div>
 
         <div className="flex items-center justify-between gap-2">
-          <div className="flex flex-col gap-1 justify-center w-1/3 h-[70px] py-3 px-4 bg-[#272B31] rounded-[10px]">
+          <div className="flex flex-col gap-1 justify-center w-1/3 h-[70px] py-3 px-4 bg-[#1B1D20] rounded-[10px]">
             <p className="text-[#707885] text-body4-m">배변 점수</p>
             <p className="text-white text-body2-sb">
               {calendarByDateData?.data.score ?? 0}점
@@ -165,7 +172,7 @@ export default function CalendarPage() {
           <button
             type="button"
             onClick={() => setIsDefecationRecordBottomSheetOpen(true)}
-            className="flex flex-col gap-1 justify-center items-start w-1/3 h-[70px] py-3 px-4 bg-[#272B31] rounded-[10px]"
+            className="flex flex-col gap-1 justify-center items-start w-1/3 h-[70px] py-3 px-4 bg-[#1B1D20] rounded-[10px]"
           >
             <p className="text-[#707885] text-body4-m">배변 기록</p>
             <p className="text-white text-body2-sb">
@@ -190,18 +197,32 @@ export default function CalendarPage() {
             type="button"
             onClick={() => {
               if (selectedDate) {
-                router.push(
-                  `/lifestyle?year=${selectedDate.getFullYear()}&month=${selectedDate.getMonth() + 1}&day=${selectedDate.getDate()}&from=calendar`
-                );
+                const hasActivityRecord =
+                  calendarByDateData?.data.hasActivityRecord ?? false;
+                if (!hasActivityRecord) {
+                  setIsLifestyleRecordBottomSheetOpen(true);
+                } else {
+                  router.push(
+                    `/lifestyle?year=${selectedDate.getFullYear()}&month=${selectedDate.getMonth() + 1}&day=${selectedDate.getDate()}&from=calendar`
+                  );
+                }
               }
             }}
-            className="flex flex-col gap-1 justify-center items-start w-1/3 h-[70px] py-3 px-4 bg-[#272B31] rounded-[10px]"
+            className="flex flex-col gap-1 justify-center items-start w-1/3 h-[70px] py-3 px-4 bg-[#1B1D20] rounded-[10px]"
           >
             <p className="text-[#707885] text-body4-m">생활 기록</p>
             <p className="text-white text-body2-sb">
               {calendarByDateData?.data.hasActivityRecord ? 'O' : 'X'}
             </p>
           </button>
+          {isLifestyleRecordBottomSheetOpen && (
+            <LifestyleRecordBottomSheet
+              isOpen={isLifestyleRecordBottomSheetOpen}
+              onClose={() => setIsLifestyleRecordBottomSheetOpen(false)}
+              date={selectedDate ?? new Date()}
+              hasRecords={false}
+            />
+          )}
         </div>
       </div>
     </div>

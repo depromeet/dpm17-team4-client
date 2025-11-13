@@ -4,7 +4,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useCallback } from 'react';
 import { BottomBtnBar } from '@/components';
-import { PAGE_ROUTES, QUERY_KEYS } from '@/constants';
+import { QUERY_KEYS } from '@/constants';
 import {
   useActivityRecordMutation,
   useActivityRecordUpdateMutation,
@@ -122,7 +122,7 @@ export const LifeStyleSubmit = ({
             if (from === 'calendar') {
               router.push('/calendar');
             } else {
-              router.push(`${PAGE_ROUTES.REPORT_DAILY}?toast-lifestyle=true`);
+              router.push('/report/loading');
             }
           },
           onError: (error) => {
@@ -152,7 +152,7 @@ export const LifeStyleSubmit = ({
           if (from === 'calendar') {
             router.push('/calendar');
           } else {
-            router.push(`${PAGE_ROUTES.REPORT_DAILY}?toast-lifestyle=true`);
+            router.push('/report/loading');
           }
         },
         onError: (error) => {

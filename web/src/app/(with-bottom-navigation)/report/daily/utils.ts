@@ -69,7 +69,7 @@ export const getColorLabel = (color: string): string => {
     DARK_BROWN: '갈색',
     RED: '빨간색',
     GREEN: '초록색',
-    GRAY: '흰색',
+    WHITE: '흰색',
   };
   return mapping[color] || color;
 };
@@ -77,7 +77,7 @@ export const getColorLabel = (color: string): string => {
 export const getShapeLabel = (shape: string): string => {
   const mapping: Record<string, string> = {
     RABBIT: '토끼',
-    ROCK: '돌',
+    WATER: '물',
     CORN: '옥수수',
     BANANA: '바나나',
     CREAM: '크림',

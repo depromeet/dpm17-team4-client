@@ -23,7 +23,7 @@ const getRealShapeIcon = (
       return (
         <Image src={Rabbit_EMOJI} alt="rabbit" width={width} height={height} />
       );
-    case 'ROCK':
+    case 'WATER':
       return (
         <Image src={Water_EMOJI} alt="water" width={width} height={height} />
       );
@@ -63,7 +63,7 @@ const getEmojiShapeIcon = (
       return (
         <Image src={Rabbit_IILUST} alt="rabbit" width={width} height={height} />
       );
-    case 'ROCK':
+    case 'WATER':
       return (
         <Image src={Water_IILUST} alt="water" width={width} height={height} />
       );
