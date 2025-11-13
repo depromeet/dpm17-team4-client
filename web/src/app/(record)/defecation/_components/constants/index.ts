@@ -30,7 +30,7 @@ export const DEFECATION_SHAPE = {
 } as const satisfies Record<string, string>;
 
 export const DEFECATION_TIME_TAKEN = {
-  LESS_THAN_5_MINUTES: '5분 내',
+  LESS_THAN_5_MINUTES: '5분 이내',
   LESS_THAN_10_MINUTES: '10분 이내',
   MORE_THAN_10_MINUTES: '10분 이상',
 } as const satisfies Record<string, string>;
