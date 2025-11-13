@@ -143,7 +143,7 @@ export const DefecationDetail = forwardRef<
             previewr={<SelectPreview currentKey={key} />}
             trigger={value}
           >
-            <div>{renderSelectSection(key as DefecationTryDetailKey)}</div>
+            <div className='flex flex-col gap-4'>{renderSelectSection(key as DefecationTryDetailKey)}</div>
           </CollapsibleToggle>
         </div>
       ))}
