@@ -9,6 +9,7 @@ import { DAYS_OF_WEEK } from '@/constants';
 import { useNavigationContext } from '@/contexts/NavigationContext';
 import { DailyRecord } from './_components/DailyRecord';
 import { DefecationRecordBottomSheet } from './_components/DefecationRecordBottomSheet';
+import { LifestyleRecordBottomSheet } from './_components/LifestyleRecordBottomSheet';
 import { useCalendar } from './_components/hooks/useCalendar';
 import { Tag } from './_components/Tag';
 
@@ -34,6 +35,10 @@ export default function CalendarPage() {
   const [
     isDefecationRecordBottomSheetOpen,
     setIsDefecationRecordBottomSheetOpen,
+  ] = useState(false);
+  const [
+    isLifestyleRecordBottomSheetOpen,
+    setIsLifestyleRecordBottomSheetOpen,
   ] = useState(false);
 
   return (
@@ -198,9 +203,15 @@ export default function CalendarPage() {
             type="button"
             onClick={() => {
               if (selectedDate) {
-                router.push(
-                  `/lifestyle?year=${selectedDate.getFullYear()}&month=${selectedDate.getMonth() + 1}&day=${selectedDate.getDate()}&from=calendar`
-                );
+                const hasActivityRecord =
+                  calendarByDateData?.data.hasActivityRecord ?? false;
+                if (!hasActivityRecord) {
+                  setIsLifestyleRecordBottomSheetOpen(true);
+                } else {
+                  router.push(
+                    `/lifestyle?year=${selectedDate.getFullYear()}&month=${selectedDate.getMonth() + 1}&day=${selectedDate.getDate()}&from=calendar`
+                  );
+                }
               }
             }}
             className="flex flex-col gap-1 justify-center items-start w-1/3 h-[70px] py-3 px-4 bg-[#1B1D20] rounded-[10px]"
@@ -210,6 +221,14 @@ export default function CalendarPage() {
               {calendarByDateData?.data.hasActivityRecord ? 'O' : 'X'}
             </p>
           </button>
+          {isLifestyleRecordBottomSheetOpen && (
+            <LifestyleRecordBottomSheet
+              isOpen={isLifestyleRecordBottomSheetOpen}
+              onClose={() => setIsLifestyleRecordBottomSheetOpen(false)}
+              date={selectedDate ?? new Date()}
+              hasRecords={false}
+            />
+          )}
         </div>
       </div>
     </div>
