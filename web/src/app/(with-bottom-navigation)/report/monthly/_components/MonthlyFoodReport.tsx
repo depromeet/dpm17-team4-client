@@ -50,8 +50,8 @@ export function MonthlyFoodReport({ food }: MonthlyFoodReportProps) {
       )}
       {food.monthlyComparison.thisMonth !== 0 && (
         <>
-          {mockMonthlyReportData.food.monthlyComparison.lastMonth !==
-            mockMonthlyReportData.food.monthlyComparison.thisMonth && (
+          {food.monthlyComparison.lastMonth !==
+            food.monthlyComparison.thisMonth && (
             <div
               className={`flex items-center justify-center text-center py-2 px-3 w-full rounded-[6px] mb-5 ${isIncreased ? 'bg-red-100' : 'bg-blue-100'}`}
             >

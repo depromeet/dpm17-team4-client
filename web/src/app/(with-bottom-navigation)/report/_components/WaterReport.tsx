@@ -5,7 +5,7 @@ import type { Water, WaterItem } from '../daily/types';
 import {
   getMonthlyWaterNameLabel,
   getWaterNameLabel,
-  getWeeklyWaterNameLabel,  
+  getWeeklyWaterNameLabel,
 } from '../daily/utils';
 import { Tooltip } from './Tooltip';
 
