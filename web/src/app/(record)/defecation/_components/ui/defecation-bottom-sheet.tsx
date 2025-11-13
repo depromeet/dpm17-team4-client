@@ -31,7 +31,7 @@ interface DefecationBottomSheetProps {
   isOpen: boolean;
   selectedHour?: string;
   selectedDate?: Date;
-  onClose: Dispatch<SetStateAction<boolean>>;
+  onClose: (shouldClose: boolean, isRegister?: boolean) => void;
   handleDateChange: (e: ChangeEvent<HTMLInputElement>) => void;
   handleHourChange: (hour: string) => void;
 }
@@ -94,7 +94,7 @@ export const DefecationBottomSheet = ({
   const finalDateRange = fixedDateRange.slice(0, TOTAL_DAYS);
 
   return (
-    <BottomSheet isOpen={isOpen} onClose={() => onClose(false)}>
+    <BottomSheet isOpen={isOpen} onClose={() => onClose(false, false)}>
       <div className="bg-gray-800 text-white p-4 rounded-lg">
         <div className="flex items-center justify-center gap-7.5 mb-3.5">
           <button
@@ -194,7 +194,7 @@ export const DefecationBottomSheet = ({
           <button
             type="button"
             onClick={() => {
-              onClose(false);
+              onClose(false, true);
             }}
             disabled={!hasSelectedHour}
             className={`text-center text-button-2 w-full h-[56px] rounded-lg bg-primary-600 text-white ${!hasSelectedHour ? 'opacity-50 cursor-not-allowed' : ''}`}
