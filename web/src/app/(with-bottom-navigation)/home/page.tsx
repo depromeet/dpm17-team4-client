@@ -47,27 +47,27 @@ export const homeBackGround = {
   good: {
     src: bgGood.src,
     deco: bgGoodDeco.src,
-    message: '평화로운 하루,개운하실 것 같아요!',
+    message: '평화로운 하루,\n개운하실 것 같아요!',
   },
   bad: {
     src: bgBad.src,
     deco: bgBadDeco.src,
-    message: '약간 무리했나봐요 잠시 관리가 필요해요!',
+    message: '약간 무리했나봐요\n잠시 관리가 필요해요!',
   },
   medium: {
     src: bgMedium.src,
     deco: bgMediumDeco.src,
-    message: '별 일 없는 무난한 하루가 되었군요!',
+    message: '별 일 없는\n무난한 하루가 되었군요!',
   },
-  veryGood: {
+  very_good: {
     src: bgVeryGood.src,
     deco: bgVeryGoodDeco.src,
-    message: '행복한 하루,장 컨디션 아주 굿!',
+    message: '행복한 하루,\n장 컨디션 아주 굿!',
   },
-  veryBad: {
+  very_bad: {
     src: bgVeryBad.src,
     deco: bgVeryBadDeco.src,
-    message: '긴급상황 전문가 상담이 필요해요!',
+    message: '긴급상황!\n전문가 상담이 필요해요!',
   },
 };
 
@@ -182,7 +182,38 @@ function HomeContent({ data, currentDate, onChangeDate }: HomeContentProps) {
     })();
   }, [router, savedUserInfo]);
 
-  const currentBg = homeBackGround[bgStatus] ?? homeBackGround.base;
+  const hasAnyRecord = data.toiletRecordCount > 0 || data.hasActivityRecord;
+  const currentBg = hasAnyRecord 
+    ? (homeBackGround[bgStatus] ?? homeBackGround.base)
+    : homeBackGround.base;
+
+  const getMessage = () => {
+    if (data.toiletRecordCount === 0 && !data.hasActivityRecord) {
+      return {
+        title: `${savedUserInfo?.nickname || savedUserInfo?.id || '테스터'}님, 반가워요!\n오늘의 기록을 시작할까요?`,
+        subtitle: '대장이와 함께 배아픈 이유를 찾아보아요',
+      };
+    }
+    if (data.toiletRecordCount === 0 && data.hasActivityRecord) {
+      return {
+        title: '배변기록도\n함께 기록해볼까요?',
+        subtitle: null,
+      };
+    }
+    if (data.toiletRecordCount > 0 && !data.hasActivityRecord) {
+      return {
+        title: '생활기록도\n함께 기록해볼까요?',
+        subtitle: null,
+      };
+    }
+    return {
+      title: currentBg.message,
+      subtitle: null,
+    };
+  };
+
+  const message = getMessage();
+
 
   return (
     <>
@@ -230,38 +261,13 @@ function HomeContent({ data, currentDate, onChangeDate }: HomeContentProps) {
             <Image src={logo} alt="로고" width={76.57} height={24} />
           </section>
           <section className="text-h2 mt-[2.2rem] animate-text-blink">
-            <h1>
-              {!data.hasActivityRecord && data.toiletRecordCount < 1 && (
-                <>
-                  {savedUserInfo?.nickname || savedUserInfo?.id || '테스터'}님,
-                  반가워요!
-                  <br />
-                  오늘의 기록을 시작할까요?
-                  <p className="text-body3-r mt-2 text-gray-500">
-                    대장이와 함께 배아픈 이유를 찾아보아요
-                  </p>
-                </>
-              )}
-              {data.hasActivityRecord && data.toiletRecordCount === 0 && (
-                <>
-                  배변기록도 <br />
-                  함께 기록해볼까요?
-                </>
-              )}
-              {data.toiletRecordCount > 0 && !data.hasActivityRecord && (
-                <>
-                  생활기록도 <br />
-                  함께 기록해볼까요?
-                </>
-              )}
-              {data.toiletRecordCount > 0 && data.hasActivityRecord && (
-                <>
-                  업데이트 된<br />
-                  리포트를 확인해보세요!
-                </>
-              )}
-            </h1>
-            <div className="flex mt-3">
+            <h1 className="whitespace-pre-line">{message.title}</h1>
+            {message.subtitle && (
+              <p className="text-body3-r mt-2 text-gray-500">
+                {message.subtitle}
+              </p>
+            )}
+            <div className="flex mt-3 gap-1">
               {data.toiletRecordCount > 0 && (
                 <RecordBadge
                   icon={poopIcon}

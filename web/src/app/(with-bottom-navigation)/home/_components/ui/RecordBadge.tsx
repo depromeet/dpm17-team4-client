@@ -13,7 +13,7 @@ export function RecordBadge({
   children,
 }: RecordBadgeProps) {
   return (
-    <div className="rounded-full py-1.5 px-4 text-body4-m flex gap-1 bg-black/20">
+    <div className="rounded-full py-1.5 px-3 text-body4-m flex gap-1 bg-black/20">
       <Image src={icon} alt="기록 심볼" width={18} height={18} />
       <div>{children}</div>
       <div>{recordCounts}</div>
