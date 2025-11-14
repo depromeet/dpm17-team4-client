@@ -10,6 +10,7 @@ import {
   useMemo,
   useState,
 } from 'react';
+import toast from 'react-hot-toast';
 import bgGradient2 from '@/assets/auth/bg-gradient2.png';
 import bgGradient3 from '@/assets/auth/bg-gradient3.png';
 import loginCharacter from '@/assets/auth/login-character.png';
@@ -75,7 +76,27 @@ export function AuthContent() {
 
   useEffect(() => {
     const error = searchParams.get('erroror_message');
+    const isLogoutSuccess = searchParams.get('toast-logout-success');
+    const isDeleteUserSuccess = searchParams.get('toast-user-delete-success');
     if (error) setError(decodeURIComponent(error));
+    if (isLogoutSuccess) {
+      toast.success('로그아웃이 완료되었어요', {
+        position: 'top-center',
+        style: {
+          backgroundColor: '#3C3C3F',
+          marginTop: '34px',
+        },
+      });
+    }
+    if (isDeleteUserSuccess) {
+      toast.success('회원 탈퇴가 완료되었어요', {
+        position: 'top-center',
+        style: {
+          backgroundColor: '#3C3C3F',
+          marginTop: '34px',
+        },
+      });
+    }
   }, [searchParams]);
 
   // code 파라미터가 있으면 token 엔드포인트로 요청

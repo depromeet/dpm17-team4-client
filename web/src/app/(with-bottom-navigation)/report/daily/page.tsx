@@ -68,18 +68,44 @@ function DailyReportContent() {
     if (searchParams.get('toast-lifestyle')) {
       toast.success('새로운 생활 기록이 등록되었어요!', {
         position: 'top-center',
+        style: {
+          background: 'rgba(255,255,255,0.12)',
+        },
       });
       onAlert();
       toastShownRef.current = true;
     }
     if (searchParams.get('toast-defecation')) {
       toast.success('새로운 배변 기록이 등록되었어요!', {
+        style: {
+          background: 'rgba(255,255,255,0.12)',
+        },
         position: 'top-center',
       });
       onAlert();
       toastShownRef.current = true;
     }
-  }, [searchParams, onAlert]);
+    if (searchParams.get('toast-report') && reportData) {
+      // 실제로 데이터가 있을 때만 리포트 생성 토스트 표시
+      const hasPooData = reportData?.poo !== null;
+      const hasFoodData = reportData?.food?.items?.length > 0;
+      const hasWaterData = reportData?.water !== null;
+      const hasStressData = reportData?.stress !== null;
+      const hasAnyData =
+        hasPooData || hasFoodData || hasWaterData || hasStressData;
+
+      if (hasAnyData) {
+        toast.success('새로운 리포트가 생성되었어요!', {
+          position: 'top-center',
+          style: {
+            background: 'rgba(255,255,255,0.12)',
+          },
+        });
+        onAlert();
+        toastShownRef.current = true;
+      }
+    }
+  }, [searchParams, onAlert, reportData]);
 
   // TODO(seonghyun): 카드 데이터 - API 응답에서 생성
   const cards: Card[] =
