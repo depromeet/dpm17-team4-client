@@ -5,6 +5,7 @@ import {
   type WheelPickerOption,
   WheelPickerWrapper,
 } from '@ncdai/react-wheel-picker';
+import { X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { BottomSheet } from '@/components/BottomSheet';
 
@@ -41,9 +42,18 @@ export function WheelPickerBottomSheet({
   return (
     <BottomSheet isOpen={isOpen} onClose={onClose}>
       <div className="px-4 pb-8">
-        <h3 className="text-body2-sb text-white text-left mb-[20px]">
-          {title}
-        </h3>
+        <div className="flex items-center justify-between mb-[20px] ">
+          <h3 className="text-body2-sb text-white text-left">{title}</h3>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="닫기"
+            className="p-1 text-white"
+          >
+            <X className="w-[24px] h-[24px]" />
+          </button>
+        </div>
+
         <div className="text-body3-m text-gray-400 text-left mb-[20px]">
           {description}
         </div>
