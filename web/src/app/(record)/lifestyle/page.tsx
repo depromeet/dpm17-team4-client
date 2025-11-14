@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useEffect, useMemo, useState } from 'react';
 import { Modal, ModalContent } from '@/components';
 import { Button } from '@/components/Button';
 import { PAGE_ROUTES } from '@/constants';
@@ -54,6 +54,10 @@ function LifestylePageContent() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isSkipModalOpen, setIsSkipModalOpen] = useState<boolean>(false);
 
+  const year = searchParams.get('year');
+  const month = searchParams.get('month');
+  const date = searchParams.get('day');
+
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -69,7 +73,14 @@ function LifestylePageContent() {
   };
 
   const handleSkipNavigate = () => {
-    router.push('/loading');
+    if (!year || !month || !date) {
+      return;
+    }
+    const formattedDate = `${year}-${month.padStart(2, '0')}-${date.padStart(
+      2,
+      '0'
+    )}`;
+    router.push(`/loading?date=${formattedDate}`);
   };
   // 날짜 파라미터로부터 ISO 문자열 생성
   const getDateString = () => {

@@ -8,6 +8,7 @@ import {
   useContext,
   useEffect,
   useLayoutEffect,
+  useMemo,
   useRef,
   useState,
 } from 'react';
@@ -72,6 +73,13 @@ export const NavigationProvider = ({ children }: NavigationProviderProps) => {
     }
   }, []);
 
+  const currentDate = useMemo(() => {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return { year, month, day };
+  }, []);
   const handleTabClick = useCallback(
     (tabName: Tab) => {
       setCurrentTab(tabName);
@@ -80,7 +88,10 @@ export const NavigationProvider = ({ children }: NavigationProviderProps) => {
           router.push(PAGE_ROUTES.HOME);
           break;
         case 'report':
-          router.push(PAGE_ROUTES.REPORT_DAILY);
+          router.push(
+            PAGE_ROUTES.REPORT_DAILY +
+              `?date=${currentDate.year}-${currentDate.month}-${currentDate.day}`
+          );
           break;
         case 'calendar':
           router.push(PAGE_ROUTES.CALENDAR);
@@ -92,7 +103,7 @@ export const NavigationProvider = ({ children }: NavigationProviderProps) => {
           break;
       }
     },
-    [router]
+    [router, currentDate]
   );
   const handleOnNotification = useCallback(() => {
     setHasNotification(true);

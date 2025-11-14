@@ -75,7 +75,11 @@ export const LifeStyleSubmit = ({
     }
 
     // searchParams에서 가져온 날짜를 그대로 사용 (YYYY-MM-DD 형식)
-    const occurredAt = `${year}-${month.padStart(2, '0')}-${date.padStart(2, '0')}T00:00:00.000`;
+    const formattedDate = `${year}-${month.padStart(2, '0')}-${date.padStart(
+      2,
+      '0'
+    )}`;
+    const occurredAt = `${formattedDate}T00:00:00.000`;
 
     const validFoods = foods.filter(
       (food) => food.name && food.mealTime !== ''
@@ -122,7 +126,7 @@ export const LifeStyleSubmit = ({
             if (from === 'calendar') {
               router.push('/calendar');
             } else {
-              router.push('/loading');
+              router.push(`/loading?date=${formattedDate}`);
             }
           },
           onError: (error) => {
@@ -152,7 +156,7 @@ export const LifeStyleSubmit = ({
           if (from === 'calendar') {
             router.push('/calendar');
           } else {
-            router.push('/loading');
+            router.push(`/loading?date=${formattedDate}`);
           }
         },
         onError: (error) => {
