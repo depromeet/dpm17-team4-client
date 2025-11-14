@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 import LottieAnimation from 'react-lottie';
 import bgReport from '@/assets/report/bg-report.png';
@@ -20,13 +20,15 @@ const TIME = 3000;
 export default function LoadingPage() {
   const router = useRouter();
 
+  const searchParams = useSearchParams();
+  const date = searchParams.get('date');
   useEffect(() => {
     const timer = setTimeout(() => {
-      router.push('/report/daily?toast-report=true');
+      router.push('/report/daily?date=' + date + '&toast-report=true');
     }, TIME);
 
     return () => clearTimeout(timer);
-  }, [router]);
+  }, [router, date]);
 
   return (
     <div className="relative h-screen w-full overflow-hidden">
