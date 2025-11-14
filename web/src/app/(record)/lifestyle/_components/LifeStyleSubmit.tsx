@@ -122,7 +122,7 @@ export const LifeStyleSubmit = ({
             if (from === 'calendar') {
               router.push('/calendar');
             } else {
-              router.push('/report/loading');
+              router.push('/loading');
             }
           },
           onError: (error) => {
@@ -152,7 +152,7 @@ export const LifeStyleSubmit = ({
           if (from === 'calendar') {
             router.push('/calendar');
           } else {
-            router.push('/report/loading');
+            router.push('/loading');
           }
         },
         onError: (error) => {
