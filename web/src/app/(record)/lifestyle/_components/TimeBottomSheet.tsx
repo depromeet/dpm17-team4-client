@@ -1,4 +1,4 @@
-import { Check } from 'lucide-react';
+import { Check, X } from 'lucide-react';
 import Image from 'next/image';
 import { useState } from 'react';
 import { BottomSheet } from '@/components/BottomSheet';
@@ -28,12 +28,19 @@ export const TimeBottomSheet = ({
 
   return (
     <BottomSheet isOpen={isOpen} onClose={onClose}>
-      <div className="p-[1.5rem]">
+      <div className="px-[16px] pb-[20px]">
         <div className="space-y-[0.75rem]">
-          <div className="text-body3-sb text-gray-300 mb-[1rem] flex justify-start">
+          <div className="text-body1-m text-white mb-[20px] flex justify-between items-center">
             식사 시간
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label="닫기"
+              className="p-1 text-white"
+            >
+              <X className="w-[24px] h-[24px]" />
+            </button>
           </div>
-
           <div className="flex flex-col w-full">
             {MEAL_TIMES.map((mealTime) => (
               <button

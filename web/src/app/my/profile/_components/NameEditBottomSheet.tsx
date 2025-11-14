@@ -1,5 +1,6 @@
 'use client';
 
+import { X } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import XIcon from '@/assets/my/x.png';
@@ -60,9 +61,19 @@ export const NameEditBottomSheet = ({
   return (
     <BottomSheet isOpen={isOpen} onClose={onClose}>
       <div className="px-6 pb-6">
-        <h2 className="text-lg font-semibold text-white mb-6 text-left">
-          변경할 이름을 입력해주세요
-        </h2>
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-lg font-semibold text-white text-left">
+            변경할 이름을 입력해주세요
+          </h2>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="닫기"
+            className="p-1 text-white"
+          >
+            <X className="w-[24px] h-[24px]" />
+          </button>
+        </div>
 
         <div className="space-y-4">
           {/* Input Field */}

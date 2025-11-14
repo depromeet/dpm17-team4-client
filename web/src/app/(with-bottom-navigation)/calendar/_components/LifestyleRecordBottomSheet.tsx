@@ -1,11 +1,12 @@
 'use client';
 
-import { Plus } from 'lucide-react';
+import { Plus, X } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { getRecordPath } from '@/app/(with-bottom-navigation)/home/_components/utils/util-route';
 import EmptyEmoji from '@/assets/calendar/empty.png';
 import { BottomSheet } from '@/components/BottomSheet';
+import { Button } from '@/components/Button';
 import { getDateDisplayTextFromDate } from '@/utils/utils-date';
 
 interface LifestyleRecordBottomSheetProps {
@@ -40,11 +41,11 @@ export const LifestyleRecordBottomSheet = ({
           </h2>
           <button
             type="button"
-            onClick={handleAddRecord}
-            className="flex items-center gap-[0.5rem] text-primary-500 text-body3-m hover:text-primary-500"
+            onClick={onClose}
+            aria-label="닫기"
+            className="p-1 text-white"
           >
-            <Plus className="w-[1rem] h-[1rem]" />
-            기록 추가
+            <X className="w-[24px] h-[24px]" />
           </button>
         </div>
 
@@ -65,6 +66,11 @@ export const LifestyleRecordBottomSheet = ({
               </p>
             </div>
           ) : null}
+        </div>
+        <div className="px-[1rem] py-[19px]">
+          <Button size="48" color="primary" onClick={handleAddRecord} fullWidth>
+            기록 추가
+          </Button>
         </div>
       </div>
     </BottomSheet>

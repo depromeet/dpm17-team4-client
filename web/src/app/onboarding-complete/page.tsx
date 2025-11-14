@@ -28,7 +28,7 @@ export default function OnboardingCompletePage() {
         {/* 체크 아이콘 */}
         <div className="relative mb-8">
           <div
-            className="w-20 h-20 rounded-3xl flex items-center justify-center shadow-2xl flex-shrink-0"
+            className="w-[60px] h-[60px] rounded-3xl flex items-center justify-center shadow-2xl flex-shrink-0"
             style={{ aspectRatio: '1/1' }}
           >
             <Image
@@ -36,14 +36,14 @@ export default function OnboardingCompletePage() {
               alt="체크 아이콘"
               width={80}
               height={80}
-              className="w-20 h-20"
+              className="w-[60px] h-[60px]"
             />
           </div>
         </div>
 
         {/* 메인 텍스트 */}
         <div className="text-center mb-8">
-          <h1 className="text-[1.5rem] font-semibold mb-2.5">
+          <h1 className="text-[1.5rem] font-semibold mb-[8px]">
             회원가입이 완료되었어요
           </h1>
           <div className="text-[#707885] text-body3-m leading-relaxed">

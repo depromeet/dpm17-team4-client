@@ -81,7 +81,7 @@ export default function MyPageContent() {
           <div className="space-y-4">
             <Link
               href={PAGE_ROUTES.TERMS_PRIVACY}
-              className="flex items-center justify-between py-2 cursor-pointer"
+              className="flex items-center justify-between cursor-pointer"
             >
               <span className="text-body2-sb">약관 및 개인정보</span>
               <Image
