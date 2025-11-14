@@ -107,7 +107,7 @@ export function MonthlyFoodReport({ food }: MonthlyFoodReportProps) {
                   <div className="flex flex-col gap-2 mt-3">
                     {week.items.map((item) => (
                       <div
-                        key={item.occurredAt}
+                        key={`${item.occurredAt}_${item.mealTime}`}
                         className="flex items-start justify-between"
                       >
                         <p className="text-body4-m text-[#707885]">
