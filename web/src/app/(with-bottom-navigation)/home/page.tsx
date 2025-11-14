@@ -82,9 +82,14 @@ function HomeContent({ data, currentDate, onChangeDate }: HomeContentProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const bgStatus = data.heroImage
-    .split('/toilet/')[1]
-    .split('.png')[0] as BgStatusKey;
+  const bgStatus = (() => {
+    const parts = data.heroImage.split('/toilet/');
+    if (parts.length < 2) {
+      console.warn('Invalid heroImage URL format:', data.heroImage);
+      return 'base';
+    }
+    return parts[1].split('.png')[0] as BgStatusKey;
+  })();
 
   useEffect(() => {
     handleTabClick('home');
