@@ -3,11 +3,15 @@ import { StyleSheet, AppState, Linking } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { WebView } from 'react-native-webview';
 import { useEffect, useRef, useState } from 'react';
+import * as SplashScreen from 'expo-splash-screen';
 import { setupNotificationHandler, registerForPushNotificationsAsync, registerPendingToken, showLocalNotification, testServerPushNotification } from './services/notificationService';
 import { handleWebViewMessage } from './services/webViewService';
 import { lockService } from './services/lockService';
 import LockScreen from './components/LockScreen';
 import LockSettings from './components/LockSettings';
+
+// 스플래시 화면이 자동으로 숨겨지지 않도록 설정
+// SplashScreen.preventAutoHideAsync();
 
 export default function App() {
   const webViewRef = useRef<WebView>(null);
