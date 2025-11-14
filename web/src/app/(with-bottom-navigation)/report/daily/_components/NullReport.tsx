@@ -106,7 +106,8 @@ export const NullReport = ({
       <div
         className={cn(
           'absolute w-full h-3/4 bottom-0 left-0 right-0 pointer-events-none',
-          mode === 'all' && `bg-gradient-to-b from-black to-[#3A3860] flex-1`
+          mode === 'all' &&
+            `bg-gradient-to-b from-[#121213] to-[#3A3860] flex-1`
         )}
       />
     </>

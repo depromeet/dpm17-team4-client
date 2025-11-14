@@ -3,6 +3,7 @@ import BreakfastImage from '@/assets/report/breakfast.png';
 import DinnerImage from '@/assets/report/dinner.png';
 import LunchImage from '@/assets/report/lunch.png';
 import SnackImage from '@/assets/report/snack.png';
+import { BackgroundColor } from './types';
 
 // NOTE(seonghyun): Enum 매핑 함수들
 export const getMealTimeLabel = (mealTime: string): string => {
@@ -172,4 +173,16 @@ export const fillMissingMealTimes = (
       allMealTimes.indexOf(b.mealTime as (typeof allMealTimes)[number])
     );
   });
+};
+
+// NOTE(taehyeon): 배경 색상 반환
+export const getBackgroundColor = (message: string): BackgroundColor => {
+  const mapping: Record<string, BackgroundColor> = {
+    '화가 잔뜩 난 대장': 'VERY_BAD',
+    '속상한 대장': 'BAD',
+    '얌전한 대장': 'NORMAL',
+    '기분 좋은 대장': 'GOOD',
+    '신이 난 대장': 'VERY_GOOD',
+  };
+  return mapping[message] || 'VERY_BAD';
 };
