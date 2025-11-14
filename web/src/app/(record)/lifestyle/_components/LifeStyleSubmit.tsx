@@ -151,7 +151,7 @@ export const LifeStyleSubmit = ({
           // 캘린더에서 온 경우 캘린더로, 그렇지 않으면 리포트로
           if (from === 'calendar') {
             router.push('/calendar');
-          } else if (!existingRecordId) {
+          } else {
             router.push('/loading');
           }
         },
