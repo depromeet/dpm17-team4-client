@@ -122,7 +122,7 @@ export const LifeStyleSubmit = ({
             if (from === 'calendar') {
               router.push('/calendar');
             } else {
-              router.push('/report/loading');
+              router.push('/loading');
             }
           },
           onError: (error) => {
@@ -151,8 +151,8 @@ export const LifeStyleSubmit = ({
           // 캘린더에서 온 경우 캘린더로, 그렇지 않으면 리포트로
           if (from === 'calendar') {
             router.push('/calendar');
-          } else {
-            router.push('/report/loading');
+          } else if (!existingRecordId) {
+            router.push('/loading');
           }
         },
         onError: (error) => {
