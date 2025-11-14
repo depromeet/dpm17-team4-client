@@ -42,7 +42,7 @@ export const homeBackGround = {
   base: {
     src: bgBase.src,
     deco: bgBase.src,
-    message: '반가워요! 오늘의 기록을 시작할까요?',
+    message: '반가워요!\n오늘의 기록을 시작할까요?',
   },
   good: {
     src: bgGood.src,
@@ -83,7 +83,7 @@ function HomeContent({ data, currentDate, onChangeDate }: HomeContentProps) {
   const router = useRouter();
 
   const bgStatus = data.heroImage
-    .split('/colon_')[1]
+    .split('/toilet/')[1]
     .split('.png')[0] as BgStatusKey;
 
   useEffect(() => {
@@ -181,7 +181,6 @@ function HomeContent({ data, currentDate, onChangeDate }: HomeContentProps) {
       }
     })();
   }, [router, savedUserInfo]);
-
   const hasAnyRecord = data.toiletRecordCount > 0 || data.hasActivityRecord;
   const currentBg = hasAnyRecord
     ? (homeBackGround[bgStatus] ?? homeBackGround.base)
