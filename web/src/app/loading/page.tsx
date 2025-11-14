@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import LottieAnimation from 'react-lottie';
 import bgReport from '@/assets/report/bg-report.png';
 import animationData from './loading-lottie.json';
@@ -17,14 +17,15 @@ const defaultOptions = {
 };
 
 const TIME = 3000;
-export default function LoadingPage() {
-  const router = useRouter();
 
+function LoadingPageContent() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const date = searchParams.get('date');
+
   useEffect(() => {
     const timer = setTimeout(() => {
-      router.push('/report/daily?date=' + date + '&toast-report=true');
+      router.push(`/report/daily?date=${date ?? ''}&toast-report=true`);
     }, TIME);
 
     return () => clearTimeout(timer);
@@ -44,7 +45,7 @@ export default function LoadingPage() {
       {/* 컨텐츠 영역 */}
       <div className="relative z-10 flex flex-col items-center justify-center h-full text-center">
         {/* 로띠 애니메이션 */}
-        <div className="">
+        <div>
           <LottieAnimation
             options={defaultOptions}
             isClickToPauseDisabled
@@ -54,5 +55,17 @@ export default function LoadingPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function LoadingPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="relative h-screen w-full overflow-hidden bg-black" />
+      }
+    >
+      <LoadingPageContent />
+    </Suspense>
   );
 }
