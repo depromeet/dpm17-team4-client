@@ -36,7 +36,8 @@ export const useUserDeleteMutation = () => {
 
       // 인증 페이지로 리다이렉트
       console.log('🔄 인증 페이지로 리다이렉트:', PAGE_ROUTES.AUTH);
-      window.location.href = PAGE_ROUTES.AUTH;
+      window.location.href =
+        PAGE_ROUTES.AUTH + `?toast-user-delete-success=true`;
     },
     onError: (error) => {
       console.error('❌ 회원 탈퇴 실패:', error);

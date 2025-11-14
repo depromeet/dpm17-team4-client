@@ -22,7 +22,7 @@ export default function LoadingPage() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      router.push('/report/daily');
+      router.push('/report/daily?toast-report=true');
     }, TIME);
 
     return () => clearTimeout(timer);

@@ -58,6 +58,9 @@ export default function RootLayout({
                 padding: '0.75rem 1.125rem 0.75rem 1rem',
                 backgroundColor: '#3C3C3C80',
                 borderRadius: '0.625rem',
+                fontWeight: '600',
+                fontSize: '14px',
+                lineHeight: '145%',
               },
               success: {
                 iconTheme: {
