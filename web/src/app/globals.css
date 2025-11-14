@@ -2,7 +2,7 @@
 @config "../../tailwind.config.ts";
 
 :root {
-  --background: #ffffff;
+  --background: #000000;
   --foreground: #171717;
 }
 
@@ -28,6 +28,8 @@
 html {
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: transparent;
+  background: #000000;
+  min-height: 100%;
 }
 
 body {
@@ -39,6 +41,8 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
 .bg-report-empty {
