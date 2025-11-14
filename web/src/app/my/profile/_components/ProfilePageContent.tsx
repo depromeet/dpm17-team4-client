@@ -198,11 +198,11 @@ export default function ProfilePageContent() {
         />
 
         {/* Personal Information Section */}
-        <div className="px-4 py-4">
-          <div className="space-y-4">
+        <div className="px-4 pt-[20px] pb-[24px]">
+          <div className="space-y-[20px]">
             <button
               type="button"
-              className="flex items-center justify-between py-[4px] cursor-pointer w-full"
+              className="flex items-center justify-between cursor-pointer w-full"
               onClick={handleNameClick}
               disabled={isUpdating}
             >
@@ -220,7 +220,7 @@ export default function ProfilePageContent() {
             </button>
             <button
               type="button"
-              className="flex items-center justify-between py-3 cursor-pointer w-full"
+              className="flex items-center justify-between  cursor-pointer w-full"
             >
               <span className="text-body2-sb">연결된 계정</span>
               <div className="flex items-center space-x-2">
@@ -240,7 +240,7 @@ export default function ProfilePageContent() {
             </button>
             <button
               type="button"
-              className="flex items-center justify-between py-3 cursor-pointer w-full"
+              className="flex items-center justify-between  cursor-pointer w-full"
               onClick={handleBirthYearClick}
               disabled={isUpdating}
             >
@@ -258,7 +258,7 @@ export default function ProfilePageContent() {
             </button>
             <button
               type="button"
-              className="flex items-center justify-between py-3 cursor-pointer w-full"
+              className="flex items-center justify-between  cursor-pointer w-full"
               onClick={handleGenderClick}
               disabled={isUpdating}
             >
@@ -278,12 +278,12 @@ export default function ProfilePageContent() {
         </div>
 
         <div className="bg-[#292D32] h-[8px] opacity-20" />
-        <div className="px-4 py-4">
-          <div className=" pt-4">
-            <div className="space-y-4">
+        <div className="px-4 pt-[24px] pb-[24px]">
+          <div>
+            <div className="space-y-[20px]">
               <button
                 type="button"
-                className="flex items-center justify-between py-[4px] cursor-pointer w-full"
+                className="flex items-center justify-between  cursor-pointer w-full"
                 onClick={handleLogoutClick}
               >
                 <span className="text-body2-sb">로그아웃</span>
@@ -295,7 +295,7 @@ export default function ProfilePageContent() {
               </button>
               <button
                 type="button"
-                className="flex items-center justify-between py-3 cursor-pointer w-full"
+                className="flex items-center justify-between cursor-pointer w-full"
                 onClick={handleAccountDeletionClick}
               >
                 <span className="text-body2-sb">회원 탈퇴</span>
