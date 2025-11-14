@@ -73,8 +73,14 @@ function LifestylePageContent() {
   };
 
   const handleSkipNavigate = () => {
-    //fdateParm :22
-    router.push(`/loading?date=${year}-${month}-${date}`);
+    if (!year || !month || !date) {
+      return;
+    }
+    const formattedDate = `${year}-${month.padStart(2, '0')}-${date.padStart(
+      2,
+      '0'
+    )}`;
+    router.push(`/loading?date=${formattedDate}`);
   };
   // 날짜 파라미터로부터 ISO 문자열 생성
   const getDateString = () => {
