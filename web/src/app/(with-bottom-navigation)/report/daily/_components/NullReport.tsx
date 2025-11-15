@@ -24,7 +24,12 @@ export const NullReport = ({
   const searchParams = useSearchParams();
   //2025-11-15
   const dateParam = searchParams.get('date');
-  const [year, month, day] = dateParam?.split('-').map(Number) || [];
+  const [year, month, day] =
+    dateParam?.split('-').map(Number) ||
+    (() => {
+      const today = getTodayDate();
+      return [today.todayYear, today.todayMonth, today.todayDay];
+    })();
   const handleGoReport = (targetMode: 'defecation' | 'lifestyle') => {
     const path = targetMode;
     router.push(`/${path}?year=${year}&month=${month}&day=${day}`);
