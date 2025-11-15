@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'kkruk-꾸륵',
     description: '배변기록을 추가하고, 장 건강을 지키세요!',
-    images: ['/opengraph-image.png'],
+    images: ['https://kkruk.com/opengraph-image.png'],
   },
 };
 
