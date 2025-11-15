@@ -4,6 +4,7 @@ import './globals.css';
 import { Toaster } from 'react-hot-toast';
 import LegacyCookieCleanup from '@/components/LegacyCookieCleanup';
 import LayoutStabilizer from '@/components/LayoutStabilizer';
+import DesktopWrapper from '@/components/DesktopWrapper';
 import QueryProvider from '@/providers/query-provider';
 
 const geistSans = Geist({
@@ -48,39 +49,41 @@ export default function RootLayout({
           suppressHydrationWarning={true}
         >
           <LayoutStabilizer>
-            {/* NOTE: 기존 사용자의 오래된 .kkruk.com 쿠키 정리 (일주일 후 제거 예정) */}
-            <LegacyCookieCleanup />
-            {children}
-            {/* biome-ignore lint/correctness/useUniqueElementIds: <This is a global portal root> */}
-            <div id="modal-root"></div>
-            <Toaster
-              position="bottom-center"
-              containerStyle={{ bottom: '19.125rem' }}
-              toastOptions={{
-                className: '',
-                style: {
-                  display: 'inline-flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  gap: '0.5rem',
-                  flexShrink: 0,
-                  color: 'white',
-                  height: '2.75rem',
-                  padding: '0.75rem 1.125rem 0.75rem 1rem',
-                  backgroundColor: '#3C3C3C80',
-                  borderRadius: '0.625rem',
-                  fontWeight: '600',
-                  fontSize: '14px',
-                  lineHeight: '145%',
-                },
-                success: {
-                  iconTheme: {
-                    primary: '#02AF6A',
-                    secondary: 'white',
+            <DesktopWrapper>
+              {/* NOTE: 기존 사용자의 오래된 .kkruk.com 쿠키 정리 (일주일 후 제거 예정) */}
+              <LegacyCookieCleanup />
+              {children}
+              {/* biome-ignore lint/correctness/useUniqueElementIds: <This is a global portal root> */}
+              <div id="modal-root"></div>
+              <Toaster
+                position="bottom-center"
+                containerStyle={{ bottom: '19.125rem' }}
+                toastOptions={{
+                  className: '',
+                  style: {
+                    display: 'inline-flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    flexShrink: 0,
+                    color: 'white',
+                    height: '2.75rem',
+                    padding: '0.75rem 1.125rem 0.75rem 1rem',
+                    backgroundColor: '#3C3C3C80',
+                    borderRadius: '0.625rem',
+                    fontWeight: '600',
+                    fontSize: '14px',
+                    lineHeight: '145%',
                   },
-                },
-              }}
-            />
+                  success: {
+                    iconTheme: {
+                      primary: '#02AF6A',
+                      secondary: 'white',
+                    },
+                  },
+                }}
+              />
+            </DesktopWrapper>
           </LayoutStabilizer>
         </body>
       </html>
