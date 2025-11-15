@@ -187,7 +187,7 @@ export const DefecationBottomSheet = ({
             //disabled={!hasSelectedHour}
             className={`text-center text-button-2 w-full h-[56px] rounded-lg bg-primary-600 text-white`}
           >
-            등록
+            확인
           </button>
         </div>
       </div>
