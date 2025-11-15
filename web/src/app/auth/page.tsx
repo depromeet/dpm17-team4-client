@@ -28,6 +28,7 @@ import {
   setUserInfo,
   type UserInfo,
 } from './_components/AuthSessionProvider';
+import { userApi } from '@/apis/userApi';
 import KakaoLoginButton from './_components/KakaoLoginButton';
 
 const API_BASE = process.env.NEXT_PUBLIC_API || 'https://kkruk.com';
@@ -102,10 +103,9 @@ export function AuthContent() {
     }
 
     const accessToken = getAccessToken();
-    const userInfo = getUserInfo();
 
-    // accessToken이 없고 userInfo와 refreshToken이 있으면 refreshToken으로 새 토큰 받아오기 시도
-    if (!accessToken && userInfo) {
+    // accessToken이 없으면 refreshToken으로 새 토큰 받아오기 시도 (userInfo 유무와 관계없이)
+    if (!accessToken) {
       console.log('🔄 accessToken 없음 - refreshToken 확인 중...');
       setIsRedirecting(true); // 로딩 중 표시
 
@@ -123,9 +123,41 @@ export function AuthContent() {
           const { accessToken: newAccessToken } = await requestAccessToken();
           if (newAccessToken) {
             console.log(
-              '✅ refreshToken으로 새 accessToken 발급 성공 - /home으로 리다이렉트'
+              '✅ refreshToken으로 새 accessToken 발급 성공'
             );
             setAccessToken(newAccessToken);
+
+            // userInfo가 없으면 API에서 사용자 정보 가져오기
+            const currentUserInfo = getUserInfo();
+            if (!currentUserInfo) {
+              try {
+                console.log('🔄 userInfo 없음 - 사용자 정보 API 호출 중...');
+                const userMeResponse = await userApi.getMe();
+                const userData = userMeResponse.data;
+                
+                // UserData를 UserInfo 형식으로 변환
+                const userInfo: UserInfo = {
+                  id: String(userData.id),
+                  nickname: userData.nickname,
+                  profileImage: userData.profileImage,
+                  isNew: false, // 재로그인 시에는 신규 사용자가 아님
+                  providerType: userData.provider.type,
+                };
+                
+                setUserInfo(userInfo);
+                console.log('✅ 사용자 정보 저장 완료');
+              } catch (error) {
+                console.error('❌ 사용자 정보 가져오기 실패:', error);
+                // 사용자 정보 가져오기 실패 시 로그인 페이지 유지
+                setIsRedirecting(false);
+                return;
+              }
+            }
+
+            // userInfo 저장이 완료된 후 /home으로 리다이렉트
+            // localStorage에 저장된 userInfo가 반영되도록 약간의 지연 추가
+            await new Promise((resolve) => setTimeout(resolve, 0));
+            console.log('✅ userInfo 저장 완료 - /home으로 리다이렉트');
             router.replace('/home');
           } else {
             console.log(
@@ -141,11 +173,6 @@ export function AuthContent() {
           setIsRedirecting(false);
         }
       })();
-    } else if (!accessToken && !userInfo) {
-      console.log('❌ 로그인되지 않은 상태 - 로그인 페이지 유지', {
-        hasUserInfo: false,
-        hasAccessToken: false,
-      });
     }
   }, [router, hasAuthParams, searchParams]);
 
@@ -391,8 +418,28 @@ export function AuthContent() {
 
   if (hasAuthParams) return null;
 
-  // 리다이렉트 중일 때는 아무것도 렌더링하지 않음 (화면 깜빡임 방지)
-  if (isRedirecting) return null;
+  // 리다이렉트 중일 때 로딩 UI 표시
+  if (isRedirecting) {
+    return (
+      <div
+        className="
+    h-dvh relative overflow-hidden [background-color:var(--Background-Background-Primary,#1D1E20)]
+    bg-[radial-gradient(54.67%_121.62%_at_12.93%_70.32%,_rgba(9,4,27,0.20)_0%,_rgba(73,179,169,0.20)_100%)]
+    bg-no-repeat
+     [background-size:100%_100%]
+    bg-[position:center]
+    flex flex-col items-center justify-center
+    text-white
+  "
+      >
+        <div className="relative z-10 flex flex-col items-center justify-center">
+          {/* 로딩 스피너 */}
+          <div className="w-12 h-12 border-4 border-gray-600 border-t-white rounded-full animate-spin mb-4" />
+          <p className="text-body2-m text-gray-400">로그인 정보를 확인하고 있어요</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div
