@@ -8,6 +8,7 @@ import emojiOpenMouse from '@/assets/report/emoji_open_mouse.png';
 import newsPaper from '@/assets/report/newspaper.png';
 import poop from '@/assets/report/poop.png';
 import { useNavigationContext } from '@/contexts/NavigationContext';
+import { useReportContext } from '@/contexts/ReportContext';
 import { useReportQuery } from '@/hooks/queries/useReportQuery';
 import { formatToISOString, getKoreanDate } from '@/utils/utils-date';
 import ReportNotice from '../_components/ReportNotice';
@@ -18,7 +19,7 @@ import { FoodReport } from './_components/FoodReport';
 import { NullReport } from './_components/NullReport';
 import { SelectDate } from './_components/SelectDate';
 import type { Card } from './types';
-import { getColorLabel, getShapeLabel } from './utils';
+import { getBackgroundColor, getColorLabel, getShapeLabel } from './utils';
 
 function DailyReportContent() {
   const [cardIndex, setCardIndex] = useState(0);
@@ -27,6 +28,7 @@ function DailyReportContent() {
   const router = useRouter();
   const toastShownRef = useRef(false);
   const { handleOnNotification: onAlert } = useNavigationContext();
+  const { setHasPooData, setBackgroundColor } = useReportContext();
 
   const dateParam = searchParams.get('date');
 
@@ -59,7 +61,11 @@ function DailyReportContent() {
     data: reportData,
     isLoading,
     error,
-  } = useReportQuery(dateParam ? { dateTime: dateParam } : undefined);
+  } = useReportQuery(
+    dateParam
+      ? { dateTime: dateParam }
+      : { dateTime: formatToISOString(currentDate) }
+  );
 
   // Toast 표시를 위한 별도 useEffect
   useEffect(() => {
@@ -174,6 +180,19 @@ function DailyReportContent() {
 
     setTouchStart(null);
   };
+
+  useEffect(() => {
+    if (reportData) {
+      const hasPooData = reportData?.poo !== null;
+      setHasPooData(hasPooData);
+      if (hasPooData) {
+        const backgroundColor = getBackgroundColor(
+          reportData.poo.summary.caption
+        );
+        setBackgroundColor(backgroundColor);
+      }
+    }
+  }, [reportData, setHasPooData, setBackgroundColor]);
 
   return (
     <div className="flex flex-col flex-1">

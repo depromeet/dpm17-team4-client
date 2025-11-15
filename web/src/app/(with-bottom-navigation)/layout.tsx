@@ -6,6 +6,7 @@ import {
 } from '@/contexts/NavigationContext';
 import { BottomNavigation } from './home/_components/ui';
 import '@ncdai/react-wheel-picker/style.css';
+import { ReportProvider } from '@/contexts/ReportContext';
 
 function LayoutContent({ children }: { children: React.ReactNode }) {
   const { navRef } = useNavigationContext();
@@ -20,7 +21,9 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <NavigationProvider>
-      <LayoutContent>{children}</LayoutContent>
+      <ReportProvider>
+        <LayoutContent>{children}</LayoutContent>
+      </ReportProvider>
     </NavigationProvider>
   );
 }

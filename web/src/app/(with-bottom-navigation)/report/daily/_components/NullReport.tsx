@@ -15,7 +15,7 @@ interface NullReportProps {
 export const NullReport = ({
   nullIcon,
   title = '',
-  description = '리포트는 기록이 있어야 확인할 수 있어요.',
+  description = `오늘 하루 배변 기록과 생활 기록을\n작성하고 리포트를 확인해보세요`,
   mode = 'all',
   type = 'daily',
 }: NullReportProps) => {
@@ -68,8 +68,10 @@ export const NullReport = ({
           />
         </div>
         <div className="mt-3">
-          <h2 className="text-h3 text-center">{title} 기록이 없어요!</h2>
-          <p className="text-body3-m text-gray-500 text-center mt-2">
+          <h2 className="text-h3 text-center">
+            {title} 리포트가 생성되지 않았어요.
+          </h2>
+          <p className="text-body3-m text-gray-500 text-center mt-2 whitespace-pre-line">
             {description}
           </p>
         </div>
@@ -106,7 +108,8 @@ export const NullReport = ({
       <div
         className={cn(
           'absolute w-full h-3/4 bottom-0 left-0 right-0 pointer-events-none',
-          mode === 'all' && `bg-gradient-to-b from-black to-[#3A3860] flex-1`
+          mode === 'all' &&
+            `bg-gradient-to-b from-[#121213] to-[#3A3860] flex-1`
         )}
       />
     </>

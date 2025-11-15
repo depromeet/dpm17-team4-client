@@ -16,32 +16,33 @@ import {
 } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import { type ChangeEvent, useEffect, useState } from 'react';
-import { ChevronIcon } from '@/components';
+import { ChevronIcon, XIcon } from '@/components';
 import { BottomSheet } from '@/components/BottomSheet';
 import { DAYS_OF_WEEK, TOTAL_DAYS } from '@/constants';
-import { useHourOptions } from '../utils';
 
-interface DefecationBottomSheetProps {
+interface DailyCalendarSheetProps {
   isOpen: boolean;
-  selectedHour?: string;
   selectedDate?: Date;
   onClose: (shouldClose: boolean, isRegister?: boolean) => void;
   handleDateChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  handleHourChange: (hour: string) => void;
 }
 
-export const DefecationBottomSheet = ({
+export const DailyCalendarSheet = ({
   isOpen,
-  selectedHour,
   selectedDate,
   onClose,
   handleDateChange,
-  handleHourChange,
-}: DefecationBottomSheetProps) => {
-  const hours = useHourOptions();
-  const [currentMonth, setCurrentMonth] = useState(
-    selectedDate ? new Date(selectedDate) : new Date()
+}: DailyCalendarSheetProps) => {
+  const [currentMonth, setCurrentMonth] = useState(new Date());
+  const [tempSelectedDate, setTempSelectedDate] = useState<Date | undefined>(
+    selectedDate
   );
+
+  useEffect(() => {
+    if (isOpen) {
+      setTempSelectedDate(selectedDate);
+    }
+  }, [isOpen, selectedDate]);
 
   const monthStart = startOfMonth(currentMonth);
   const monthEnd = endOfMonth(monthStart);
@@ -64,12 +65,19 @@ export const DefecationBottomSheet = ({
       return;
     }
 
-    const event = {
-      target: {
-        value: format(date, 'yyyy-MM-dd'),
-      },
-    } as ChangeEvent<HTMLInputElement>;
-    handleDateChange(event);
+    setTempSelectedDate(date);
+  };
+
+  const handleApply = () => {
+    if (tempSelectedDate) {
+      const event = {
+        target: {
+          value: format(tempSelectedDate, 'yyyy-MM-dd'),
+        },
+      } as ChangeEvent<HTMLInputElement>;
+      handleDateChange(event);
+      onClose(false, true);
+    }
   };
 
   const fixedDateRange = [...dateRange];
@@ -85,6 +93,12 @@ export const DefecationBottomSheet = ({
   return (
     <BottomSheet isOpen={isOpen} onClose={() => onClose(false, false)}>
       <div className="bg-gray-800 text-white p-4 rounded-lg">
+        <div className="flex items-center justify-between mb-5">
+          <p className="text-body1-m text-white">일 선택</p>
+          <button type="button" onClick={() => onClose(false, false)}>
+            <XIcon />
+          </button>
+        </div>
         <div className="flex items-center justify-center gap-7.5 mb-3.5">
           <button
             type="button"
@@ -105,7 +119,7 @@ export const DefecationBottomSheet = ({
           </button>
         </div>
 
-        <div className="w-full mb-2.5">
+        <div className="w-full mb-8">
           <div className="grid grid-cols-7 gap-0 mb-2">
             {DAYS_OF_WEEK.map((day) => (
               <div
@@ -120,7 +134,8 @@ export const DefecationBottomSheet = ({
           <div className="grid grid-cols-7 gap-0">
             {finalDateRange.map((date) => {
               const isCurrentMonth = isSameMonth(date, currentMonth);
-              const isSelected = selectedDate && isSameDay(date, selectedDate);
+              const isSelected =
+                tempSelectedDate && isSameDay(date, tempSelectedDate);
               const today = startOfDay(new Date());
               const isFutureDate = isAfter(startOfDay(date), today);
 
@@ -152,42 +167,13 @@ export const DefecationBottomSheet = ({
             })}
           </div>
         </div>
-        <div className="flex items-center justify-start gap-1.5 overflow-x-auto mb-4">
-          {hours.map((hour) => {
-            const isSelected = selectedHour === hour.time;
-
-            return (
-              <button
-                key={hour.id}
-                type="button"
-                onClick={() => {
-                  handleHourChange(hour.time);
-                }}
-                className={`
-                  flex items-center justify-center w-[73px] h-10 whitespace-nowrap py-3 px-[22.5px] rounded-lg 
-                  text-button-3 border-[1px] transition-colors
-                  ${
-                    isSelected
-                      ? 'bg-primary-500/40 border-primary-600 text-white'
-                      : 'bg-gray-700 border-transparent text-white hover:bg-[#4A5058]'
-                  }
-                `}
-              >
-                {hour.time}시
-              </button>
-            );
-          })}
-        </div>
-        <div className="pb-10">
+        <div className="pb-10 pt-4">
           <button
             type="button"
-            onClick={() => {
-              onClose(false, true);
-            }}
-            //disabled={!hasSelectedHour}
+            onClick={handleApply}
             className={`text-center text-button-2 w-full h-[56px] rounded-lg bg-primary-600 text-white`}
           >
-            등록
+            적용
           </button>
         </div>
       </div>
