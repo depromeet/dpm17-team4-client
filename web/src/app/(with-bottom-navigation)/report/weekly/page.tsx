@@ -104,6 +104,7 @@ function WeeklyReportContent() {
         style={{
           background:
             'radial-gradient(42.57% 42.57% at 50% 50%, rgba(41, 148, 255, 0.10) 0%, rgba(29, 30, 32, 0.10) 100%)',
+          filter: 'blur(80px)',
         }}
       />
       <div
@@ -111,6 +112,7 @@ function WeeklyReportContent() {
         style={{
           background:
             'radial-gradient(42.57% 42.57% at 50% 50%, rgba(41, 148, 255, 0.10) 0%, rgba(29, 30, 32, 0.10) 100%)',
+          filter: 'blur(80px)',
         }}
       />
       <div className="flex flex-col gap-5 mb-[50px]">
