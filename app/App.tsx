@@ -196,6 +196,23 @@ export default function App() {
               return false; // WebView에서 로드하지 않음
             }
             
+            // 리포트 하단 링크(snuh.org)는 외부 브라우저로 열기
+            try {
+              const url = new URL(request.url);
+              if (url.hostname === 'www.snuh.org' || url.hostname === 'snuh.org' || url.hostname.endsWith('.snuh.org')) {
+                // snuh.org 도메인은 외부 브라우저로 열기
+                Linking.canOpenURL(request.url).then((canOpen) => {
+                  if (canOpen) {
+                    Linking.openURL(request.url);
+                  }
+                }).catch(() => {});
+                return false; // WebView에서 로드하지 않음
+              }
+            } catch (error) {
+              // URL 파싱 실패 시 기본 동작 (WebView 내에서 로드)
+              console.warn('URL 파싱 실패:', error);
+            }
+            
             // 나머지는 모두 WebView 내에서 로드
             return true;
           }}
