@@ -1,5 +1,5 @@
 import Image, { type StaticImageData } from 'next/image';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Button } from '@/components';
 import { cn } from '@/utils/utils-cn';
 import { getTodayDate } from '@/utils/utils-date';
@@ -21,12 +21,13 @@ export const NullReport = ({
 }: NullReportProps) => {
   const router = useRouter();
 
+  const searchParams = useSearchParams();
+  //2025-11-15
+  const dateParam = searchParams.get('date');
+  const [year, month, day] = dateParam?.split('-').map(Number) || [];
   const handleGoReport = (targetMode: 'defecation' | 'lifestyle') => {
-    const { todayYear, todayMonth, todayDay } = getTodayDate();
     const path = targetMode;
-    router.push(
-      `/${path}?year=${todayYear}&month=${todayMonth}&day=${todayDay}`
-    );
+    router.push(`/${path}?year=${year}&month=${month}&day=${day}`);
   };
   const getButtonText = (
     currentMode: 'all' | 'defecation' | 'lifestyle',
