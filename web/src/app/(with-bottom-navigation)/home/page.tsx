@@ -244,7 +244,7 @@ function HomeContent({ data, currentDate, onChangeDate }: HomeContentProps) {
         src={currentBg.src}
         alt="배경 이미지"
         fill
-        className="-z-10 bg-cover"
+        className="z-0 bg-cover"
         priority
       />
       <Image
