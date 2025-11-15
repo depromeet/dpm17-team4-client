@@ -1,9 +1,9 @@
 import Image, { type StaticImageData } from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Button } from '@/components';
+import { usePreventScroll } from '@/hooks';
 import { cn } from '@/utils/utils-cn';
 import { getTodayDate } from '@/utils/utils-date';
-import { usePreventScroll } from '@/hooks';
 
 interface NullReportProps {
   nullIcon: StaticImageData;

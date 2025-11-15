@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { Suspense, useMemo, useState } from 'react';
 import emojiOpenMouse from '@/assets/report/emoji_open_mouse.png';
 import EmptyMemoIcon from '@/assets/report/monthly_memo.png';
+import { usePreventScroll } from '@/hooks';
 import {
   INSUFFICIENT_DATA,
   useWeeklyReportQuery,
@@ -19,7 +20,6 @@ import { StressAnalysisChart } from './_components/StressAnalysisChart';
 import { WeeklyComparisonChart } from './_components/WeeklyComparisonChart';
 import { WeeklyFoodReport } from './_components/WeeklyFoodReport';
 import type { DayOfWeek } from './types';
-import { usePreventScroll } from '@/hooks';
 
 const weekLabels = ['월', '화', '수', '목', '금', '토', '일'];
 const allDays: DayOfWeek[] = [
