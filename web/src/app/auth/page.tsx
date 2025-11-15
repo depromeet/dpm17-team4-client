@@ -122,15 +122,22 @@ export function AuthContent() {
           console.log('🔄 refreshToken 있음 - 새 accessToken 발급 시도');
           const { accessToken: newAccessToken } = await requestAccessToken();
           if (newAccessToken) {
-            console.log('✅ refreshToken으로 새 accessToken 발급 성공 - /home으로 리다이렉트');
+            console.log(
+              '✅ refreshToken으로 새 accessToken 발급 성공 - /home으로 리다이렉트'
+            );
             setAccessToken(newAccessToken);
             router.replace('/home');
           } else {
-            console.log('❌ refreshToken으로 새 accessToken 발급 실패 - 로그인 페이지 유지');
+            console.log(
+              '❌ refreshToken으로 새 accessToken 발급 실패 - 로그인 페이지 유지'
+            );
             setIsRedirecting(false);
           }
         } catch (error) {
-          console.error('❌ refreshToken으로 새 accessToken 발급 중 오류:', error);
+          console.error(
+            '❌ refreshToken으로 새 accessToken 발급 중 오류:',
+            error
+          );
           setIsRedirecting(false);
         }
       })();
