@@ -1,10 +1,9 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Suspense, useEffect, useMemo, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { Modal, ModalContent } from '@/components';
 import { Button } from '@/components/Button';
-import { PAGE_ROUTES } from '@/constants';
 import { useActivityRecordDeleteMutation } from '@/hooks';
 import { useActivityRecordQuery } from '@/hooks/queries';
 import { FoodListContainer } from './_components/FoodListContainer';

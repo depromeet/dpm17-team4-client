@@ -16,7 +16,7 @@ import bgGradient2 from '@/assets/auth/bg-gradient2.png';
 import bgGradient3 from '@/assets/auth/bg-gradient3.png';
 import loginCharacter from '@/assets/auth/login-character.png';
 import { API_ENDPOINTS, PAGE_ROUTES } from '@/constants';
-import { isAndroid, isWeb } from '@/utils/utils-platform';
+import { isAndroid } from '@/utils/utils-platform';
 import AppleLoginButton from './_components/AppleLoginButton';
 import {
   getAccessToken,
@@ -37,7 +37,9 @@ export function AuthContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [error, setError] = useState<string | null>(null);
-  const [loadingProvider, setLoadingProvider] = useState<'kakao' | 'apple' | null>(null);
+  const [loadingProvider, setLoadingProvider] = useState<
+    'kakao' | 'apple' | null
+  >(null);
   const [isRedirecting, setIsRedirecting] = useState(false);
   const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
   const toastShownRef = useRef<{ logout?: boolean; deleteUser?: boolean }>({});
@@ -65,23 +67,26 @@ export function AuthContent() {
   useLayoutEffect(() => {
     // 서버 사이드에서는 실행하지 않음
     if (typeof window === 'undefined') return;
-    
+
     // 인증 콜백 파라미터나 code 파라미터가 있으면 리다이렉트하지 않음 (로그인 진행 중)
     const code = searchParams.get('code');
     if (hasAuthParams || code) {
-      console.log('⏸️ 로그인 진행 중 - 리다이렉트 건너뜀', { hasAuthParams, code: !!code });
+      console.log('⏸️ 로그인 진행 중 - 리다이렉트 건너뜀', {
+        hasAuthParams,
+        code: !!code,
+      });
       return;
     }
-    
+
     const userInfo = getUserInfo();
     const accessToken = getAccessToken();
-    
-    console.log('🔍 로그인 상태 확인:', { 
-      hasUserInfo: !!userInfo, 
+
+    console.log('🔍 로그인 상태 확인:', {
+      hasUserInfo: !!userInfo,
       hasAccessToken: !!accessToken,
-      userInfoId: userInfo?.id 
+      userInfoId: userInfo?.id,
     });
-    
+
     // 사용자 정보 또는 토큰이 있으면 이미 로그인된 상태
     if (userInfo || accessToken) {
       console.log('✅ 이미 로그인된 상태 - /home으로 리다이렉트');
@@ -115,12 +120,12 @@ export function AuthContent() {
     const error = searchParams.get('erroror_message');
     const isLogoutSuccess = searchParams.get('toast-logout-success');
     const isDeleteUserSuccess = searchParams.get('toast-user-delete-success');
-    
+
     if (error) {
       setError(decodeURIComponent(error));
       setLoadingProvider(null); // 에러 발생 시 로딩 해제
     }
-    
+
     if (isLogoutSuccess && !toastShownRef.current.logout) {
       toastShownRef.current.logout = true;
       toast.success('로그아웃이 완료되었어요', {
@@ -135,7 +140,7 @@ export function AuthContent() {
       url.searchParams.delete('toast-logout-success');
       window.history.replaceState({}, '', url.toString());
     }
-    
+
     if (isDeleteUserSuccess && !toastShownRef.current.deleteUser) {
       toastShownRef.current.deleteUser = true;
       toast.success('회원 탈퇴가 완료되었어요', {
@@ -285,7 +290,11 @@ export function AuthContent() {
 
   // 디바운스된 로그인 핸들러
   const handleLoginSubmit = useCallback(
-    (e: React.FormEvent<HTMLFormElement>, form: HTMLFormElement, provider: 'kakao' | 'apple') => {
+    (
+      e: React.FormEvent<HTMLFormElement>,
+      form: HTMLFormElement,
+      provider: 'kakao' | 'apple'
+    ) => {
       e.preventDefault();
 
       // 이미 로딩 중이면 무시
@@ -329,7 +338,7 @@ export function AuthContent() {
   }, [loadingProvider]);
 
   if (hasAuthParams) return null;
-  
+
   // 리다이렉트 중일 때는 아무것도 렌더링하지 않음 (화면 깜빡임 방지)
   if (isRedirecting) return null;
 

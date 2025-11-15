@@ -51,7 +51,7 @@ function DailyReportContent() {
         Number.isInteger(day)
       ) {
         const parsedDate = new Date(year, month - 1, day);
-        if (!isNaN(parsedDate.getTime())) {
+        if (!Number.isNaN(parsedDate.getTime())) {
           return parsedDate;
         }
       }
@@ -296,141 +296,122 @@ function DailyReportContent() {
                             >
                               <div className="relative z-10 h-full flex flex-col justify-center">
                                 {card.type === 'character' ? (
-                                  <>
-                                    {index === cardIndex ? (
-                                      <>
-                                        {/* 캐릭터 이미지 */}
-                                        <div className="w-[227px] h-[162px] mx-auto mb-4 relative">
-                                          <Image
-                                            src={card.content.character}
-                                            alt="화가 난 대장 캐릭터"
-                                            width={227}
-                                            height={162}
-                                            className="w-full h-full object-contain"
-                                            priority
-                                          />
-                                        </div>
-
-                                        <div
-                                          className="text-white text-body4-m inline-block mb-2 w-fit mx-auto"
-                                          style={{
-                                            backgroundColor:
-                                              reportData.poo.summary
-                                                .backgroundColors[0],
-                                            paddingTop: '6px',
-                                            paddingRight: '16px',
-                                            paddingBottom: '6px',
-                                            paddingLeft: '16px',
-                                            borderRadius: '40px',
-                                          }}
-                                        >
-                                          {card.content.badge}
-                                        </div>
-
-                                        <h2 className="text-xl font-bold mb-2 text-white">
-                                          {card.content.title}
-                                        </h2>
-                                      </>
-                                    ) : (
-                                      <>
-                                        {/* NOTE(taehyeon): 카드가 뒤쪽에 배치된 경우 빈 카드를 반환 */}
-                                      </>
-                                    )}
-                                  </>
-                                ) : (
-                                  <>
-                                    {index === cardIndex ? (
-                                      <div className="h-[264px] flex flex-col justify-center">
-                                        {/* 텍스트 카드 */}
-                                        <div
-                                          className="w-6 h-6 py-1.5 px-[5.5px] rounded-full text-white mx-auto mb-3 flex items-center justify-center"
-                                          style={{
-                                            backgroundColor: getCardTextColor(
-                                              reportData.poo.summary.caption
-                                            ),
-                                          }}
-                                        >
-                                          <span
-                                            className="font-bold"
-                                            style={{ fontSize: '11px' }}
-                                          >
-                                            {card.content.badge}
-                                          </span>
-                                        </div>
-
-                                        <p
-                                          className="font-semibold text-lg mb-7"
-                                          style={{
-                                            color: getCardTextColor(
-                                              reportData.poo.summary.caption
-                                            ),
-                                          }}
-                                        >
-                                          {card.type === 'text'
-                                            ? card.content.date
-                                            : ''}
-                                        </p>
-
-                                        <p className="text-[#707885] text-body3-m mb-7 w-[206px] mx-auto leading-[1.54] h-[88px]">
-                                          {card.type === 'text'
-                                            ? card.content.advisory
-                                            : ''}
-                                        </p>
-
-                                        <div className="h-[60px] space-y-1">
-                                          {card.type === 'text' &&
-                                            card.content.tags?.map(
-                                              (
-                                                row: string[],
-                                                rowIndex: number
-                                              ) => (
-                                                <div
-                                                  key={`tag-row-${row.join(
-                                                    '-'
-                                                  )}-${rowIndex}`}
-                                                  className="flex gap-1 justify-center"
-                                                >
-                                                  {row.map((tag, _tagIndex) => (
-                                                    <div
-                                                      key={
-                                                        tag
-                                                          ? `tag-${tag}`
-                                                          : `tag-${_tagIndex}`
-                                                      }
-                                                    >
-                                                      {tag && tag.length > 0 ? (
-                                                        <span
-                                                          className="text-body3-m whitespace-nowrap"
-                                                          style={{
-                                                            paddingTop: '4px',
-                                                            paddingRight:
-                                                              '12px',
-                                                            paddingBottom:
-                                                              '4px',
-                                                            paddingLeft: '12px',
-                                                            borderRadius: '6px',
-                                                            backgroundColor:
-                                                              '#A5A5A533',
-                                                            color: '#707885',
-                                                          }}
-                                                        >
-                                                          {tag}
-                                                        </span>
-                                                      ) : null}
-                                                    </div>
-                                                  ))}
-                                                </div>
-                                              )
-                                            )}
-                                        </div>
+                                  index === cardIndex ? (
+                                    <>
+                                      {/* 캐릭터 이미지 */}
+                                      <div className="w-[227px] h-[162px] mx-auto mb-4 relative">
+                                        <Image
+                                          src={card.content.character}
+                                          alt="화가 난 대장 캐릭터"
+                                          width={227}
+                                          height={162}
+                                          className="w-full h-full object-contain"
+                                          priority
+                                        />
                                       </div>
-                                    ) : (
-                                      <>
-                                        {/* NOTE(taehyeon): 카드가 뒤쪽에 배치된 경우 빈 카드를 반환 */}
-                                      </>
-                                    )}
-                                  </>
-                                )}
+
+                                      <div
+                                        className="text-white text-body4-m inline-block mb-2 w-fit mx-auto"
+                                        style={{
+                                          backgroundColor:
+                                            reportData.poo.summary
+                                              .backgroundColors[0],
+                                          paddingTop: '6px',
+                                          paddingRight: '16px',
+                                          paddingBottom: '6px',
+                                          paddingLeft: '16px',
+                                          borderRadius: '40px',
+                                        }}
+                                      >
+                                        {card.content.badge}
+                                      </div>
+
+                                      <h2 className="text-xl font-bold mb-2 text-white">
+                                        {card.content.title}
+                                      </h2>
+                                    </>
+                                  ) : null
+                                ) : index === cardIndex ? (
+                                  <div className="h-[264px] flex flex-col justify-center">
+                                    {/* 텍스트 카드 */}
+                                    <div
+                                      className="w-6 h-6 py-1.5 px-[5.5px] rounded-full text-white mx-auto mb-3 flex items-center justify-center"
+                                      style={{
+                                        backgroundColor: getCardTextColor(
+                                          reportData.poo.summary.caption
+                                        ),
+                                      }}
+                                    >
+                                      <span
+                                        className="font-bold"
+                                        style={{ fontSize: '11px' }}
+                                      >
+                                        {card.content.badge}
+                                      </span>
+                                    </div>
+
+                                    <p
+                                      className="font-semibold text-lg mb-7"
+                                      style={{
+                                        color: getCardTextColor(
+                                          reportData.poo.summary.caption
+                                        ),
+                                      }}
+                                    >
+                                      {card.type === 'text'
+                                        ? card.content.date
+                                        : ''}
+                                    </p>
+
+                                    <p className="text-[#707885] text-body3-m mb-7 w-[206px] mx-auto leading-[1.54] h-[88px]">
+                                      {card.type === 'text'
+                                        ? card.content.advisory
+                                        : ''}
+                                    </p>
+
+                                    <div className="h-[60px] space-y-1">
+                                      {card.type === 'text' &&
+                                        card.content.tags?.map(
+                                          (row: string[], rowIndex: number) => (
+                                            <div
+                                              key={`tag-row-${row.join(
+                                                '-'
+                                              )}-${rowIndex}`}
+                                              className="flex gap-1 justify-center"
+                                            >
+                                              {row.map((tag, _tagIndex) => (
+                                                <div
+                                                  key={
+                                                    tag
+                                                      ? `tag-${tag}`
+                                                      : `tag-${_tagIndex}`
+                                                  }
+                                                >
+                                                  {tag && tag.length > 0 ? (
+                                                    <span
+                                                      className="text-body3-m whitespace-nowrap"
+                                                      style={{
+                                                        paddingTop: '4px',
+                                                        paddingRight: '12px',
+                                                        paddingBottom: '4px',
+                                                        paddingLeft: '12px',
+                                                        borderRadius: '6px',
+                                                        backgroundColor:
+                                                          '#A5A5A533',
+                                                        color: '#707885',
+                                                      }}
+                                                    >
+                                                      {tag}
+                                                    </span>
+                                                  ) : null}
+                                                </div>
+                                              ))}
+                                            </div>
+                                          )
+                                        )}
+                                    </div>
+                                  </div>
+                                ) : null}
                               </div>
                             </button>
                           ))}

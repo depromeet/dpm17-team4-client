@@ -1,6 +1,6 @@
 'use client';
 
-import { ChevronRightIcon, Plus, X } from 'lucide-react';
+import { ChevronRightIcon, X } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { getRecordPath } from '@/app/(with-bottom-navigation)/home/_components/utils/util-route';

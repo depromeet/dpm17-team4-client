@@ -27,12 +27,12 @@ const KakaoLoginButton = ({
             <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin" />
           </div>
         ) : (
-        <Image
-          src={kakaoSymbol}
-          alt=""
-          aria-hidden
-          className="w-[1.18806rem] h-[1.12206rem]"
-        />
+          <Image
+            src={kakaoSymbol}
+            alt=""
+            aria-hidden
+            className="w-[1.18806rem] h-[1.12206rem]"
+          />
         )}
         <span className="text-button-2 font-semibold flex-1 justify-center">
           {isLoading ? '로그인 중...' : '카카오톡으로 로그인'}
