@@ -1,23 +1,35 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, AppState, Linking, ActivityIndicator, View } from 'react-native';
+import { StyleSheet, AppState, Linking } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { WebView } from 'react-native-webview';
 import { useEffect, useRef, useState } from 'react';
+import * as SplashScreen from 'expo-splash-screen';
 import { setupNotificationHandler, registerForPushNotificationsAsync, registerPendingToken, showLocalNotification, testServerPushNotification } from './services/notificationService';
 import { handleWebViewMessage } from './services/webViewService';
 import { lockService } from './services/lockService';
 import LockScreen from './components/LockScreen';
 import LockSettings from './components/LockSettings';
 
+// 스플래시 화면을 수동으로 관리
+SplashScreen.preventAutoHideAsync();
+
 export default function App() {
   const webViewRef = useRef<WebView>(null);
   const [isLocked, setIsLocked] = useState(false);
   const [showLockSettings, setShowLockSettings] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
+  const [isWebViewLoaded, setIsWebViewLoaded] = useState(false);
 
   useEffect(() => {
     initializeApp();
   }, []);
+
+  useEffect(() => {
+    // WebView 로딩이 완료되고 앱이 초기화되면 스플래시 숨기기
+    if (isInitialized && isWebViewLoaded) {
+      SplashScreen.hideAsync();
+    }
+  }, [isInitialized, isWebViewLoaded]);
 
   const initializeApp = async () => {
     try {
@@ -190,13 +202,24 @@ export default function App() {
           originWhitelist={['*']}
           thirdPartyCookiesEnabled={true}
           sharedCookiesEnabled={true}
-          renderLoading={() => (
-            <View style={styles.loadingContainer}>
-              <View style={styles.loadingWrapper}>
-                <ActivityIndicator size="large" color="#ffffff" />
-              </View>
-            </View>
-          )}
+          onLoadStart={() => {
+            // WebView 로딩 시작 시 스플래시 유지
+            setIsWebViewLoaded(false);
+          }}
+          onLoadEnd={() => {
+            // WebView 로딩 완료 시 스플래시 숨기기
+            setIsWebViewLoaded(true);
+            if (isInitialized) {
+              SplashScreen.hideAsync();
+            }
+          }}
+          onError={() => {
+            // 에러 발생 시에도 스플래시 숨기기
+            setIsWebViewLoaded(true);
+            if (isInitialized) {
+              SplashScreen.hideAsync();
+            }
+          }}
         />
         <StatusBar style="auto" />
       </SafeAreaView>
@@ -212,19 +235,5 @@ const styles = StyleSheet.create({
   webview: {
     flex: 1,
     backgroundColor: '#000000',
-  },
-  loadingContainer: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: '#000000',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  loadingWrapper: {
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 });
