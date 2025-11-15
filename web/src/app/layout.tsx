@@ -2,8 +2,8 @@ import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import { Toaster } from 'react-hot-toast';
-import LegacyCookieCleanup from '@/components/LegacyCookieCleanup';
 import LayoutStabilizer from '@/components/LayoutStabilizer';
+import LegacyCookieCleanup from '@/components/LegacyCookieCleanup';
 import QueryProvider from '@/providers/query-provider';
 
 const geistSans = Geist({
