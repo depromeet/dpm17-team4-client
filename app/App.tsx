@@ -159,7 +159,7 @@ export default function App() {
       <SafeAreaView style={styles.container} edges={['top', 'left', 'right', 'bottom']}>
         <WebView
           ref={webViewRef}
-          source={{ uri: 'https://kkruk.com/auth' }}
+          source={{ uri: 'https://angelic-calibred-nonextensively.ngrok-free.dev/auth' }}
           style={styles.webview}
           javaScriptEnabled={true}
           domStorageEnabled={true}
@@ -200,9 +200,10 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#000',
   },
   webview: {
     flex: 1,
+    backgroundColor: '#000000',
   },
 });

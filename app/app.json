@@ -2,7 +2,7 @@
   "expo": {
     "name": "kkruk",
     "slug": "app",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -17,12 +17,13 @@
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#000000"
     },
     "ios": {
-      "supportsTablet": true,
+      "supportsTablet": false,
       "bundleIdentifier": "com.leeseonghyun316.app",
       "appleTeamId": "8R4YV3AUWK",
+      "splash": null,
       "infoPlist": {
         "UIBackgroundModes": [
           "remote-notification"

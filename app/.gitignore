@@ -36,7 +36,7 @@ ios/*.xcodeproj/xcuserdata/
 ios/*.xcodeproj/project.xcworkspace/xcuserdata/
 ios/DerivedData/
 ios/*.xcworkspace/xcshareddata/
-ios/*.xcodeproj/xcshareddata/
+# ios/*.xcodeproj/xcshareddata/ - xcschemes는 빌드에 필요하므로 포함
 ios/*.xcarchive
 ios/*.ipa
 ios/*.dSYM.zip
@@ -46,8 +46,7 @@ ios/*.dSYM
 ios/.xcode.env
 ios/Podfile.properties.json
 ios/app/GoogleService-Info.plist
-ios/app/Images.xcassets/
-ios/app/Supporting/
+# ios/app/Images.xcassets/ - AppIcon은 빌드에 필요하므로 포함
 
 # Android build artifacts
 android/build/
@@ -92,6 +91,7 @@ yarn-error.*
 *.temp
 *.cache
 *.lock
+!ios/Podfile.lock
 *.pid
 *.seed
 *.pid.lock
