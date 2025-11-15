@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import CompleteImage from '@/assets/calendar/complete.png';
-import DefecationImage from '@/assets/calendar/defecation.png';
-import LifestyleImage from '@/assets/calendar/lifestyle.png';
+import DefecationImage from '@/assets/common/defecation.png';
+import LifestyleImage from '@/assets/common/lifestyle.png';
 
 export const DailyRecord = ({
   type,

@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import forkIcon from '@/assets/home/fork.svg';
+import poopIcon from '@/assets/common/defecation.png';
+import forkIcon from '@/assets/common/lifestyle.png';
 import ChevronLeft from '@/assets/home/IC_Chevron_Left.png';
 import ChevronRight from '@/assets/home/IC_Chevron_Right.png';
-import poopIcon from '@/assets/home/poop.svg';
 import { cn } from '@/utils/utils-cn';
 import { formatDate, isNextDisabled, isPrevDisabled } from '../utils/util-date';
 import { getRecordPath } from '../utils/util-route';
