@@ -240,12 +240,16 @@ export function AuthContent() {
  
   "
     >
-      <div className="z-20">
+      <div
+        className="z-20 image-container"
+        style={{ width: '375px', height: '500px', position: 'relative' }} // 부모에 명시적 크기 및 position: relative 지정
+      >
         <Image
           src={loginCharacter}
           alt="로그인 캐릭터 이미지"
-          width={375}
-          height={500}
+          fill // 부모 요소를 채움
+          style={{ objectFit: 'cover' }} // 이미지 채우는 방식 (cover, contain 등)
+          priority
         />
       </div>
       <div
@@ -262,14 +266,16 @@ export function AuthContent() {
         alt="배경 그라디언트2"
         width={345}
         height={345}
-        className="absolute z-10 top-[207.49px] right-0"
+        priority
+        className="absolute z-10 top-[207.49px] right-0 w-[345px] h-[345px]"
       />
       <Image
         src={bgGradient3}
         width={284}
         height={284}
         alt="배경 그라디언트3"
-        className="absolute z-10 top-[496px] right-0"
+        priority
+        className="absolute z-10 top-[496px] right-0 w-[284px] h-[284px]"
       />
 
       <div className="relative z-10">
@@ -289,18 +295,20 @@ export function AuthContent() {
           </div>
         )}
 
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3 min-h-[7rem]">
           <form method="POST" action={KAKAO_LOGIN_INITIATE_URL}>
             <input type="hidden" name="redirectUri" value={redirectUri} />
             <input type="hidden" name="responseType" value="code" />
             <KakaoLoginButton />
           </form>
-          {showAppleLogin && (
+          {showAppleLogin ? (
             <form method="POST" action={APPLE_LOGIN_INITIATE_URL}>
               <input type="hidden" name="redirectUri" value={redirectUri} />
               <input type="hidden" name="responseType" value="code" />
               <AppleLoginButton />
             </form>
+          ) : (
+            <div className="h-[3.5rem]" aria-hidden="true" />
           )}
         </div>
       </div>
@@ -310,9 +318,27 @@ export function AuthContent() {
   );
 }
 
+function AuthPageFallback() {
+  return (
+    <div
+      className="
+    h-dvh relative overflow-hidden [background-color:var(--Background-Background-Primary,#1D1E20)]
+    bg-[radial-gradient(54.67%_121.62%_at_12.93%_70.32%,_rgba(9,4,27,0.20)_0%,_rgba(73,179,169,0.20)_100%)]
+    bg-no-repeat
+     [background-size:100%_100%]
+    bg-[position:center]
+    flex flex-col items-center justify-center
+    text-white
+  "
+    >
+      <div className="pointer-events-none absolute inset-0 z-10 bg-[linear-gradient(180deg,_#090318_0%,#090318_10%,#404DDC80_40%,_#404DDC00_100%)] bg-no-repeat bg-top [background-size:100%_36.75rem]" />
+    </div>
+  );
+}
+
 export default function AuthPage() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<AuthPageFallback />}>
       <AuthContent />
     </Suspense>
   );

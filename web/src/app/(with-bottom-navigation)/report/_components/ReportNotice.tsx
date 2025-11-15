@@ -1,10 +1,24 @@
 'use client';
 
+import {
+  isWebViewAvailable,
+  postMessageToWebView,
+} from '@/services/webViewService';
+
 const ReportNotice = () => {
-  // NOTE(taehyeon): 생활 습관 및 일반 건강 관련 정보 참고 URL (현재는 앱 컨텍스트 내에서 열림 -> 외부 브라우저로 열려야 하는지 여부는 논의 필요)
+  // NOTE(taehyeon): 생활 습관 및 일반 건강 관련 정보 참고 URL (외부 브라우저에서 열기)
   const linkedURL = 'https://www.snuh.org/health/nMedInfo/nList.do';
   const handleLinkClick = () => {
-    window.open(linkedURL, '_blank', 'noopener,noreferrer');
+    // WebView 환경에서는 네이티브 앱에 메시지를 보내서 외부 브라우저로 열기
+    if (isWebViewAvailable()) {
+      postMessageToWebView({
+        type: 'OPEN_EXTERNAL_BROWSER',
+        url: linkedURL,
+      });
+    } else {
+      // 일반 브라우저에서는 window.open 사용
+      window.open(linkedURL, '_blank', 'noopener,noreferrer');
+    }
   };
 
   return (
