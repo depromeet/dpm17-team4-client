@@ -1,10 +1,10 @@
-import Image from 'next/image';
+import Image, { type StaticImageData } from 'next/image';
 import type { ButtonHTMLAttributes } from 'react';
 
 type RecordButtonProps = {
   title: string;
   subtitle: string;
-  icon: string;
+  icon: string | StaticImageData;
 } & Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'type'>;
 
 const RecordButton = ({
