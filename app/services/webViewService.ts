@@ -1,14 +1,16 @@
 import React from 'react';
+import { Linking } from 'react-native';
 import { showLocalNotification, requestNotificationPermission } from './notificationService';
 import { lockService } from './lockService';
 import { tokenService } from './tokenService';
 
 // NOTE(seonghyun): WebView 메시지 타입 정의
 export interface WebViewMessage {
-  type: 'SHOW_NOTIFICATION' | 'REQUEST_PERMISSION' | 'OPEN_LOCK_SETTINGS' | 'CHECK_LOCK_STATUS' | 'SAVE_REFRESH_TOKEN' | 'GET_REFRESH_TOKEN';
+  type: 'SHOW_NOTIFICATION' | 'REQUEST_PERMISSION' | 'OPEN_LOCK_SETTINGS' | 'CHECK_LOCK_STATUS' | 'SAVE_REFRESH_TOKEN' | 'GET_REFRESH_TOKEN' | 'OPEN_EXTERNAL_BROWSER';
   title?: string;
   body?: string;
   token?: string;
+  url?: string;
   requestId?: string; // 응답 매칭을 위한 ID
 }
 
@@ -112,6 +114,26 @@ export const handleWebViewMessage = async (
               requestId: data.requestId,
             }));
           }
+        }
+        break;
+        
+      case 'OPEN_EXTERNAL_BROWSER':
+        if (data.url) {
+          try {
+            Linking.canOpenURL(data.url).then((canOpen) => {
+              if (canOpen) {
+                Linking.openURL(data.url!);
+              } else {
+                console.error('❌ 외부 브라우저를 열 수 없습니다:', data.url);
+              }
+            }).catch((error) => {
+              console.error('❌ 외부 브라우저 열기 실패:', error);
+            });
+          } catch (error) {
+            console.error('❌ 외부 브라우저 열기 오류:', error);
+          }
+        } else {
+          console.error('❌ URL이 제공되지 않았습니다.');
         }
         break;
         
