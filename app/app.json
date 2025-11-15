@@ -2,7 +2,7 @@
   "expo": {
     "name": "kkruk",
     "slug": "app",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -16,8 +16,7 @@
     },
     "splash": {
       "image": "./assets/splash-icon.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#000000"
+      "resizeMode": "contain"
     },
     "ios": {
       "supportsTablet": false,

@@ -8,6 +8,7 @@ import {
   useEffect,
   useLayoutEffect,
   useMemo,
+  useRef,
   useState,
 } from 'react';
 import toast from 'react-hot-toast';
@@ -19,6 +20,7 @@ import { isAndroid } from '@/utils/utils-platform';
 import AppleLoginButton from './_components/AppleLoginButton';
 import {
   getAccessToken,
+  getUserInfo,
   requestAccessToken,
   setAccessToken,
   setRefreshToken,
@@ -35,6 +37,12 @@ export function AuthContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [error, setError] = useState<string | null>(null);
+  const [loadingProvider, setLoadingProvider] = useState<
+    'kakao' | 'apple' | null
+  >(null);
+  const [isRedirecting, setIsRedirecting] = useState(false);
+  const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const toastShownRef = useRef<{ logout?: boolean; deleteUser?: boolean }>({});
 
   const redirectUri = useMemo(() => {
     if (typeof window === 'undefined') return '';
@@ -54,6 +62,40 @@ export function AuthContent() {
         searchParams.get('providerType')
     );
   }, [searchParams]);
+
+  // 이미 로그인된 상태에서 /auth 접근 시 home으로 리다이렉트 (렌더링 전에 실행)
+  useLayoutEffect(() => {
+    // 서버 사이드에서는 실행하지 않음
+    if (typeof window === 'undefined') return;
+
+    // 인증 콜백 파라미터나 code 파라미터가 있으면 리다이렉트하지 않음 (로그인 진행 중)
+    const code = searchParams.get('code');
+    if (hasAuthParams || code) {
+      console.log('⏸️ 로그인 진행 중 - 리다이렉트 건너뜀', {
+        hasAuthParams,
+        code: !!code,
+      });
+      return;
+    }
+
+    const userInfo = getUserInfo();
+    const accessToken = getAccessToken();
+
+    console.log('🔍 로그인 상태 확인:', {
+      hasUserInfo: !!userInfo,
+      hasAccessToken: !!accessToken,
+      userInfoId: userInfo?.id,
+    });
+
+    // 사용자 정보 또는 토큰이 있으면 이미 로그인된 상태
+    if (userInfo || accessToken) {
+      console.log('✅ 이미 로그인된 상태 - /home으로 리다이렉트');
+      setIsRedirecting(true);
+      router.replace('/home');
+    } else {
+      console.log('❌ 로그인되지 않은 상태 - 로그인 페이지 유지');
+    }
+  }, [router, hasAuthParams, searchParams]);
 
   const extractUserInfo = useCallback((): UserInfo | null => {
     const id = searchParams.get('id');
@@ -78,8 +120,14 @@ export function AuthContent() {
     const error = searchParams.get('erroror_message');
     const isLogoutSuccess = searchParams.get('toast-logout-success');
     const isDeleteUserSuccess = searchParams.get('toast-user-delete-success');
-    if (error) setError(decodeURIComponent(error));
-    if (isLogoutSuccess) {
+
+    if (error) {
+      setError(decodeURIComponent(error));
+      setLoadingProvider(null); // 에러 발생 시 로딩 해제
+    }
+
+    if (isLogoutSuccess && !toastShownRef.current.logout) {
+      toastShownRef.current.logout = true;
       toast.success('로그아웃이 완료되었어요', {
         position: 'top-center',
         style: {
@@ -87,8 +135,14 @@ export function AuthContent() {
           marginTop: '34px',
         },
       });
+      // URL에서 파라미터 제거
+      const url = new URL(window.location.href);
+      url.searchParams.delete('toast-logout-success');
+      window.history.replaceState({}, '', url.toString());
     }
-    if (isDeleteUserSuccess) {
+
+    if (isDeleteUserSuccess && !toastShownRef.current.deleteUser) {
+      toastShownRef.current.deleteUser = true;
       toast.success('회원 탈퇴가 완료되었어요', {
         position: 'top-center',
         style: {
@@ -96,6 +150,10 @@ export function AuthContent() {
           marginTop: '34px',
         },
       });
+      // URL에서 파라미터 제거
+      const url = new URL(window.location.href);
+      url.searchParams.delete('toast-user-delete-success');
+      window.history.replaceState({}, '', url.toString());
     }
   }, [searchParams]);
 
@@ -108,6 +166,9 @@ export function AuthContent() {
     const provider = providerParam ? providerParam.toLowerCase() : 'kakao'; // 기본값은 kakao
 
     if (!code) return;
+
+    // code 파라미터가 있으면 이미 리디렉션이 일어났으므로 로딩 해제
+    setLoadingProvider(null);
 
     const handleTokenRequest = async () => {
       try {
@@ -145,6 +206,7 @@ export function AuthContent() {
           const errorText = await response.text();
           console.error('❌ Token 요청 실패:', errorText);
           setError('토큰 요청에 실패했습니다.');
+          setLoadingProvider(null);
           return;
         }
 
@@ -186,13 +248,14 @@ export function AuthContent() {
       } catch (error) {
         console.error('Token 요청 에러:', error);
         setError('토큰 요청 중 오류가 발생했습니다.');
+        setLoadingProvider(null);
       }
     };
 
     handleTokenRequest();
   }, [searchParams, router]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const userInfo = extractUserInfo();
     if (!userInfo) return;
 
@@ -225,7 +288,59 @@ export function AuthContent() {
     })();
   }, [extractUserInfo, router]);
 
+  // 디바운스된 로그인 핸들러
+  const handleLoginSubmit = useCallback(
+    (
+      e: React.FormEvent<HTMLFormElement>,
+      form: HTMLFormElement,
+      provider: 'kakao' | 'apple'
+    ) => {
+      e.preventDefault();
+
+      // 이미 로딩 중이면 무시
+      if (loadingProvider) return;
+
+      // 기존 타이머가 있으면 취소
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+
+      // 디바운스 타이머 설정 (300ms)
+      debounceTimerRef.current = setTimeout(() => {
+        setLoadingProvider(provider);
+        // form 제출
+        form.submit();
+      }, 300);
+    },
+    [loadingProvider]
+  );
+
+  // 컴포넌트 언마운트 시 타이머 정리
+  useEffect(() => {
+    return () => {
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+    };
+  }, []);
+
+  // 로딩 타임아웃 처리 (10초 후 자동 해제)
+  useEffect(() => {
+    if (!loadingProvider) return;
+
+    const timeoutId = setTimeout(() => {
+      setLoadingProvider(null);
+    }, 10000); // 10초 후 자동 해제
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [loadingProvider]);
+
   if (hasAuthParams) return null;
+
+  // 리다이렉트 중일 때는 아무것도 렌더링하지 않음 (화면 깜빡임 방지)
+  if (isRedirecting) return null;
 
   return (
     <div
@@ -296,16 +411,36 @@ export function AuthContent() {
         )}
 
         <div className="flex flex-col gap-3 min-h-[7rem]">
-          <form method="POST" action={KAKAO_LOGIN_INITIATE_URL}>
+          <form
+            method="POST"
+            action={KAKAO_LOGIN_INITIATE_URL}
+            onSubmit={(e) => {
+              const form = e.currentTarget;
+              handleLoginSubmit(e, form, 'kakao');
+            }}
+          >
             <input type="hidden" name="redirectUri" value={redirectUri} />
             <input type="hidden" name="responseType" value="code" />
-            <KakaoLoginButton />
+            <KakaoLoginButton
+              disabled={!!loadingProvider}
+              isLoading={loadingProvider === 'kakao'}
+            />
           </form>
           {showAppleLogin ? (
-            <form method="POST" action={APPLE_LOGIN_INITIATE_URL}>
+            <form
+              method="POST"
+              action={APPLE_LOGIN_INITIATE_URL}
+              onSubmit={(e) => {
+                const form = e.currentTarget;
+                handleLoginSubmit(e, form, 'apple');
+              }}
+            >
               <input type="hidden" name="redirectUri" value={redirectUri} />
               <input type="hidden" name="responseType" value="code" />
-              <AppleLoginButton />
+              <AppleLoginButton
+                disabled={!!loadingProvider}
+                isLoading={loadingProvider === 'apple'}
+              />
             </form>
           ) : (
             <div className="h-[3.5rem]" aria-hidden="true" />

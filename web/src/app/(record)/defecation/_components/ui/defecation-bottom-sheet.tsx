@@ -15,7 +15,7 @@ import {
   subMonths,
 } from 'date-fns';
 import { ko } from 'date-fns/locale';
-import { type ChangeEvent, useEffect, useState } from 'react';
+import { type ChangeEvent, useState } from 'react';
 import { ChevronIcon } from '@/components';
 import { BottomSheet } from '@/components/BottomSheet';
 import { DAYS_OF_WEEK, TOTAL_DAYS } from '@/constants';

@@ -1,4 +1,3 @@
-import { Minus, Plus } from 'lucide-react';
 import Image from 'next/image';
 import { type ChangeEvent, memo } from 'react';
 import MinusIcon from '../assets/water-minus.png';

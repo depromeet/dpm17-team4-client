@@ -18,7 +18,7 @@ export const useLogout = () => {
     } finally {
       console.log('🔄 인증 페이지로 리다이렉트:', PAGE_ROUTES.AUTH);
       // 로그아웃 후 인증 페이지로 직접 리다이렉트 (새로고침 포함)
-      window.location.href = PAGE_ROUTES.AUTH + `?toast-logout-success=true`;
+      window.location.href = `${PAGE_ROUTES.AUTH}?toast-logout-success=true`;
     }
   }, []);
 

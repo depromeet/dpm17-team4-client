@@ -1,9 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { homeDataApi } from '@/apis/homeApi';
-import {
-  type HomeResponseData,
-  HomeResponseDto,
-} from '@/app/(with-bottom-navigation)/home/types/dto';
+import type { HomeResponseData } from '@/app/(with-bottom-navigation)/home/types/dto';
 import { QUERY_KEYS } from '@/constants';
 
 export const useGetHomeQuery = (date: string) => {

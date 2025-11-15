@@ -1,7 +1,6 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import { getDateQueryParams } from '@/app/(with-bottom-navigation)/home/_components/utils';
 import { Navigator } from '@/components';
-import { PAGE_ROUTES } from '@/constants';
 
 interface LifeStyleNavigatorProps {
   existingRecordId: number | null;
