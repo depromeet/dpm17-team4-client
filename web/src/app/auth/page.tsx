@@ -12,6 +12,7 @@ import {
   useState,
 } from 'react';
 import toast from 'react-hot-toast';
+import { userApi } from '@/apis/userApi';
 import bgGradient2 from '@/assets/auth/bg-gradient2.png';
 import bgGradient3 from '@/assets/auth/bg-gradient3.png';
 import loginCharacter from '@/assets/auth/login-character.png';
@@ -28,7 +29,6 @@ import {
   setUserInfo,
   type UserInfo,
 } from './_components/AuthSessionProvider';
-import { userApi } from '@/apis/userApi';
 import KakaoLoginButton from './_components/KakaoLoginButton';
 
 const API_BASE = process.env.NEXT_PUBLIC_API || 'https://kkruk.com';
@@ -122,9 +122,7 @@ export function AuthContent() {
           console.log('🔄 refreshToken 있음 - 새 accessToken 발급 시도');
           const { accessToken: newAccessToken } = await requestAccessToken();
           if (newAccessToken) {
-            console.log(
-              '✅ refreshToken으로 새 accessToken 발급 성공'
-            );
+            console.log('✅ refreshToken으로 새 accessToken 발급 성공');
             setAccessToken(newAccessToken);
 
             // userInfo가 없으면 API에서 사용자 정보 가져오기
@@ -134,7 +132,7 @@ export function AuthContent() {
                 console.log('🔄 userInfo 없음 - 사용자 정보 API 호출 중...');
                 const userMeResponse = await userApi.getMe();
                 const userData = userMeResponse.data;
-                
+
                 // UserData를 UserInfo 형식으로 변환
                 const userInfo: UserInfo = {
                   id: String(userData.id),
@@ -143,7 +141,7 @@ export function AuthContent() {
                   isNew: false, // 재로그인 시에는 신규 사용자가 아님
                   providerType: userData.provider.type,
                 };
-                
+
                 setUserInfo(userInfo);
                 console.log('✅ 사용자 정보 저장 완료');
               } catch (error) {
@@ -435,7 +433,9 @@ export function AuthContent() {
         <div className="relative z-10 flex flex-col items-center justify-center">
           {/* 로딩 스피너 */}
           <div className="w-12 h-12 border-4 border-gray-600 border-t-white rounded-full animate-spin mb-4" />
-          <p className="text-body2-m text-gray-400">로그인 정보를 확인하고 있어요</p>
+          <p className="text-body2-m text-gray-400">
+            로그인 정보를 확인하고 있어요
+          </p>
         </div>
       </div>
     );
