@@ -17,7 +17,7 @@ function HomeContent() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
       <div className="text-center">
-        <h1 className="text-4xl font-bold text-gray-800 mb-4">kkruk-꾸륵</h1>
+        <h1 className="text-4xl font-bold text-gray-800 mb-4">kkruk-꾸룩</h1>
         <p className="text-lg text-gray-600 mb-8 text-center px-6 leading-relaxed">
           개발자 페이지
         </p>
