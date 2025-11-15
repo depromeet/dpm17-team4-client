@@ -20,6 +20,7 @@ import { isAndroid, isWeb } from '@/utils/utils-platform';
 import AppleLoginButton from './_components/AppleLoginButton';
 import {
   getAccessToken,
+  getUserInfo,
   requestAccessToken,
   setAccessToken,
   setRefreshToken,
@@ -37,6 +38,7 @@ export function AuthContent() {
   const searchParams = useSearchParams();
   const [error, setError] = useState<string | null>(null);
   const [loadingProvider, setLoadingProvider] = useState<'kakao' | 'apple' | null>(null);
+  const [isRedirecting, setIsRedirecting] = useState(false);
   const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
   const toastShownRef = useRef<{ logout?: boolean; deleteUser?: boolean }>({});
 
@@ -58,6 +60,37 @@ export function AuthContent() {
         searchParams.get('providerType')
     );
   }, [searchParams]);
+
+  // 이미 로그인된 상태에서 /auth 접근 시 home으로 리다이렉트 (렌더링 전에 실행)
+  useLayoutEffect(() => {
+    // 서버 사이드에서는 실행하지 않음
+    if (typeof window === 'undefined') return;
+    
+    // 인증 콜백 파라미터나 code 파라미터가 있으면 리다이렉트하지 않음 (로그인 진행 중)
+    const code = searchParams.get('code');
+    if (hasAuthParams || code) {
+      console.log('⏸️ 로그인 진행 중 - 리다이렉트 건너뜀', { hasAuthParams, code: !!code });
+      return;
+    }
+    
+    const userInfo = getUserInfo();
+    const accessToken = getAccessToken();
+    
+    console.log('🔍 로그인 상태 확인:', { 
+      hasUserInfo: !!userInfo, 
+      hasAccessToken: !!accessToken,
+      userInfoId: userInfo?.id 
+    });
+    
+    // 사용자 정보 또는 토큰이 있으면 이미 로그인된 상태
+    if (userInfo || accessToken) {
+      console.log('✅ 이미 로그인된 상태 - /home으로 리다이렉트');
+      setIsRedirecting(true);
+      router.replace('/home');
+    } else {
+      console.log('❌ 로그인되지 않은 상태 - 로그인 페이지 유지');
+    }
+  }, [router, hasAuthParams, searchParams]);
 
   const extractUserInfo = useCallback((): UserInfo | null => {
     const id = searchParams.get('id');
@@ -217,7 +250,7 @@ export function AuthContent() {
     handleTokenRequest();
   }, [searchParams, router]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const userInfo = extractUserInfo();
     if (!userInfo) return;
 
@@ -296,6 +329,9 @@ export function AuthContent() {
   }, [loadingProvider]);
 
   if (hasAuthParams) return null;
+  
+  // 리다이렉트 중일 때는 아무것도 렌더링하지 않음 (화면 깜빡임 방지)
+  if (isRedirecting) return null;
 
   return (
     <div
