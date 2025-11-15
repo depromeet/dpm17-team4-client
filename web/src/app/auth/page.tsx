@@ -20,6 +20,7 @@ import { isAndroid } from '@/utils/utils-platform';
 import AppleLoginButton from './_components/AppleLoginButton';
 import {
   getAccessToken,
+  getRefreshToken,
   getUserInfo,
   requestAccessToken,
   setAccessToken,
@@ -78,22 +79,73 @@ export function AuthContent() {
       return;
     }
 
-    const userInfo = getUserInfo();
     const accessToken = getAccessToken();
 
-    console.log('🔍 로그인 상태 확인:', {
-      hasUserInfo: !!userInfo,
-      hasAccessToken: !!accessToken,
-      userInfoId: userInfo?.id,
-    });
-
-    // 사용자 정보 또는 토큰이 있으면 이미 로그인된 상태
-    if (userInfo || accessToken) {
-      console.log('✅ 이미 로그인된 상태 - /home으로 리다이렉트');
+    // accessToken이 있으면 바로 리다이렉트
+    if (accessToken) {
+      console.log('✅ 이미 로그인된 상태 (토큰 있음) - /home으로 리다이렉트');
       setIsRedirecting(true);
       router.replace('/home');
-    } else {
-      console.log('❌ 로그인되지 않은 상태 - 로그인 페이지 유지');
+    }
+    // accessToken이 없으면 refreshToken으로 새 토큰 받아오기 시도 (useEffect에서 처리)
+  }, [router, hasAuthParams, searchParams]);
+
+  // accessToken이 없을 때 refreshToken으로 새 토큰 받아오기 시도
+  useEffect(() => {
+    // 서버 사이드에서는 실행하지 않음
+    if (typeof window === 'undefined') return;
+
+    // 인증 콜백 파라미터나 code 파라미터가 있으면 건너뜀 (로그인 진행 중)
+    const code = searchParams.get('code');
+    if (hasAuthParams || code) {
+      return;
+    }
+
+    const accessToken = getAccessToken();
+    const userInfo = getUserInfo();
+
+    // accessToken이 없고 userInfo와 refreshToken이 있으면 refreshToken으로 새 토큰 받아오기 시도
+    if (!accessToken && userInfo) {
+      console.log('🔄 accessToken 없음 - refreshToken 확인 중...');
+      setIsRedirecting(true); // 로딩 중 표시
+
+      (async () => {
+        try {
+          // refreshToken이 있는지 먼저 확인
+          const refreshToken = await getRefreshToken();
+          if (!refreshToken) {
+            console.log('❌ refreshToken 없음 - 로그인 페이지 유지');
+            setIsRedirecting(false);
+            return;
+          }
+
+          console.log('🔄 refreshToken 있음 - 새 accessToken 발급 시도');
+          const { accessToken: newAccessToken } = await requestAccessToken();
+          if (newAccessToken) {
+            console.log(
+              '✅ refreshToken으로 새 accessToken 발급 성공 - /home으로 리다이렉트'
+            );
+            setAccessToken(newAccessToken);
+            router.replace('/home');
+          } else {
+            console.log(
+              '❌ refreshToken으로 새 accessToken 발급 실패 - 로그인 페이지 유지'
+            );
+            setIsRedirecting(false);
+          }
+        } catch (error) {
+          console.error(
+            '❌ refreshToken으로 새 accessToken 발급 중 오류:',
+            error
+          );
+          setIsRedirecting(false);
+        }
+      })();
+    } else if (!accessToken && !userInfo) {
+      console.log('❌ 로그인되지 않은 상태 - 로그인 페이지 유지', {
+        hasUserInfo: false,
+        hasAccessToken: false,
+      });
     }
   }, [router, hasAuthParams, searchParams]);
 
