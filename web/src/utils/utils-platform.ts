@@ -20,3 +20,11 @@ export const isIOS = (): boolean => {
 export const isMobile = (): boolean => {
   return isAndroid() || isIOS();
 };
+
+/**
+ * Check if running in web browser (not in React Native app)
+ */
+export const isWeb = (): boolean => {
+  if (typeof window === 'undefined') return false;
+  return !window.ReactNativeWebView;
+};
