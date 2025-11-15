@@ -166,7 +166,7 @@ export const FoodReport = ({ foodData }: { foodData: Food }) => {
               className={`w-4 h-4 ${currentIndex === 0 ? 'text-gray-500' : 'text-white'}`}
             />
           </button>
-          <p className="text-white text-base font-medium">
+          <p className="text-white text-xs font-medium">
             {currentIndex + 1} / {foodData.items.length}
           </p>
           <button

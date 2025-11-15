@@ -210,7 +210,9 @@ export function StressAnalysisChart({
         ) : (
           <>
             <div className="flex justify-between gap-2 px-6">
-              <div className="text-h4 w-2/3">{stressAnalysis.message}</div>
+              <div className="text-[18px] font-semibold leading-[1.35] w-2/3">
+                {stressAnalysis.message}
+              </div>
               <Image
                 src={streching}
                 alt="스트레스 분석 결과 이미지"
