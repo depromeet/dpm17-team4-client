@@ -1,6 +1,9 @@
 'use client';
 
-import { isWebViewAvailable, postMessageToWebView } from '@/services/webViewService';
+import {
+  isWebViewAvailable,
+  postMessageToWebView,
+} from '@/services/webViewService';
 
 const ReportNotice = () => {
   // NOTE(taehyeon): 생활 습관 및 일반 건강 관련 정보 참고 URL (외부 브라우저에서 열기)

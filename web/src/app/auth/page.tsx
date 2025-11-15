@@ -240,18 +240,18 @@ export function AuthContent() {
  
   "
     >
-        <div
-            className="z-20 image-container"
-            style={{ width: '375px', height: '500px', position: 'relative' }} // 부모에 명시적 크기 및 position: relative 지정
-        >
-            <Image
-                src={loginCharacter}
-                alt="로그인 캐릭터 이미지"
-                fill // 부모 요소를 채움
-                style={{ objectFit: 'cover' }} // 이미지 채우는 방식 (cover, contain 등)
-                priority
-            />
-        </div>
+      <div
+        className="z-20 image-container"
+        style={{ width: '375px', height: '500px', position: 'relative' }} // 부모에 명시적 크기 및 position: relative 지정
+      >
+        <Image
+          src={loginCharacter}
+          alt="로그인 캐릭터 이미지"
+          fill // 부모 요소를 채움
+          style={{ objectFit: 'cover' }} // 이미지 채우는 방식 (cover, contain 등)
+          priority
+        />
+      </div>
       <div
         className="
     pointer-events-none absolute inset-0 z-10
