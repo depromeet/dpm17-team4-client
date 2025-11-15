@@ -8,6 +8,7 @@ import {
   useEffect,
   useLayoutEffect,
   useMemo,
+  useRef,
   useState,
 } from 'react';
 import toast from 'react-hot-toast';
@@ -35,6 +36,8 @@ export function AuthContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [error, setError] = useState<string | null>(null);
+  const [loadingProvider, setLoadingProvider] = useState<'kakao' | 'apple' | null>(null);
+  const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   const redirectUri = useMemo(() => {
     if (typeof window === 'undefined') return '';
@@ -78,7 +81,10 @@ export function AuthContent() {
     const error = searchParams.get('erroror_message');
     const isLogoutSuccess = searchParams.get('toast-logout-success');
     const isDeleteUserSuccess = searchParams.get('toast-user-delete-success');
-    if (error) setError(decodeURIComponent(error));
+    if (error) {
+      setError(decodeURIComponent(error));
+      setLoadingProvider(null); // 에러 발생 시 로딩 해제
+    }
     if (isLogoutSuccess) {
       toast.success('로그아웃이 완료되었어요', {
         position: 'top-center',
@@ -108,6 +114,9 @@ export function AuthContent() {
     const provider = providerParam ? providerParam.toLowerCase() : 'kakao'; // 기본값은 kakao
 
     if (!code) return;
+
+    // code 파라미터가 있으면 이미 리디렉션이 일어났으므로 로딩 해제
+    setLoadingProvider(null);
 
     const handleTokenRequest = async () => {
       try {
@@ -145,6 +154,7 @@ export function AuthContent() {
           const errorText = await response.text();
           console.error('❌ Token 요청 실패:', errorText);
           setError('토큰 요청에 실패했습니다.');
+          setLoadingProvider(null);
           return;
         }
 
@@ -186,6 +196,7 @@ export function AuthContent() {
       } catch (error) {
         console.error('Token 요청 에러:', error);
         setError('토큰 요청 중 오류가 발생했습니다.');
+        setLoadingProvider(null);
       }
     };
 
@@ -224,6 +235,51 @@ export function AuthContent() {
       }
     })();
   }, [extractUserInfo, router]);
+
+  // 디바운스된 로그인 핸들러
+  const handleLoginSubmit = useCallback(
+    (e: React.FormEvent<HTMLFormElement>, form: HTMLFormElement, provider: 'kakao' | 'apple') => {
+      e.preventDefault();
+
+      // 이미 로딩 중이면 무시
+      if (loadingProvider) return;
+
+      // 기존 타이머가 있으면 취소
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+
+      // 디바운스 타이머 설정 (300ms)
+      debounceTimerRef.current = setTimeout(() => {
+        setLoadingProvider(provider);
+        // form 제출
+        form.submit();
+      }, 300);
+    },
+    [loadingProvider]
+  );
+
+  // 컴포넌트 언마운트 시 타이머 정리
+  useEffect(() => {
+    return () => {
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+    };
+  }, []);
+
+  // 로딩 타임아웃 처리 (10초 후 자동 해제)
+  useEffect(() => {
+    if (!loadingProvider) return;
+
+    const timeoutId = setTimeout(() => {
+      setLoadingProvider(null);
+    }, 10000); // 10초 후 자동 해제
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [loadingProvider]);
 
   if (hasAuthParams) return null;
 
@@ -296,16 +352,36 @@ export function AuthContent() {
         )}
 
         <div className="flex flex-col gap-3 min-h-[7rem]">
-          <form method="POST" action={KAKAO_LOGIN_INITIATE_URL}>
+          <form
+            method="POST"
+            action={KAKAO_LOGIN_INITIATE_URL}
+            onSubmit={(e) => {
+              const form = e.currentTarget;
+              handleLoginSubmit(e, form, 'kakao');
+            }}
+          >
             <input type="hidden" name="redirectUri" value={redirectUri} />
             <input type="hidden" name="responseType" value="code" />
-            <KakaoLoginButton />
+            <KakaoLoginButton
+              disabled={!!loadingProvider}
+              isLoading={loadingProvider === 'kakao'}
+            />
           </form>
           {showAppleLogin ? (
-            <form method="POST" action={APPLE_LOGIN_INITIATE_URL}>
+            <form
+              method="POST"
+              action={APPLE_LOGIN_INITIATE_URL}
+              onSubmit={(e) => {
+                const form = e.currentTarget;
+                handleLoginSubmit(e, form, 'apple');
+              }}
+            >
               <input type="hidden" name="redirectUri" value={redirectUri} />
               <input type="hidden" name="responseType" value="code" />
-              <AppleLoginButton />
+              <AppleLoginButton
+                disabled={!!loadingProvider}
+                isLoading={loadingProvider === 'apple'}
+              />
             </form>
           ) : (
             <div className="h-[3.5rem]" aria-hidden="true" />

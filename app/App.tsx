@@ -171,7 +171,7 @@ export default function App() {
       <SafeAreaView style={styles.container} edges={['top', 'left', 'right', 'bottom']}>
         <WebView
           ref={webViewRef}
-          source={{ uri: 'https://kkruk.com/auth' }}
+          source={{ uri: 'https://angelic-calibred-nonextensively.ngrok-free.dev/auth' }}
           style={styles.webview}
           javaScriptEnabled={true}
           domStorageEnabled={true}
