@@ -24,6 +24,7 @@
       "bundleIdentifier": "com.leeseonghyun316.app",
       "appleTeamId": "8R4YV3AUWK",
       "splash": null,
+      "buildNumber": "1",
       "infoPlist": {
         "UIBackgroundModes": [
           "remote-notification"
