@@ -18,6 +18,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: 'kkruk-꾸륵',
   description: '배변기록을 추가하고, 장 건강을 지키세요!',
+  openGraph: {
+    title: 'kkruk-꾸륵',
+    description: '배변기록을 추가하고, 장 건강을 지키세요!',
+    images: ['/opengraph-image.png'],
+  },
 };
 
 export const viewport: Viewport = {
