@@ -38,6 +38,7 @@ export function AuthContent() {
   const [error, setError] = useState<string | null>(null);
   const [loadingProvider, setLoadingProvider] = useState<'kakao' | 'apple' | null>(null);
   const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const toastShownRef = useRef<{ logout?: boolean; deleteUser?: boolean }>({});
 
   const redirectUri = useMemo(() => {
     if (typeof window === 'undefined') return '';
@@ -81,11 +82,14 @@ export function AuthContent() {
     const error = searchParams.get('erroror_message');
     const isLogoutSuccess = searchParams.get('toast-logout-success');
     const isDeleteUserSuccess = searchParams.get('toast-user-delete-success');
+    
     if (error) {
       setError(decodeURIComponent(error));
       setLoadingProvider(null); // 에러 발생 시 로딩 해제
     }
-    if (isLogoutSuccess) {
+    
+    if (isLogoutSuccess && !toastShownRef.current.logout) {
+      toastShownRef.current.logout = true;
       toast.success('로그아웃이 완료되었어요', {
         position: 'top-center',
         style: {
@@ -93,8 +97,14 @@ export function AuthContent() {
           marginTop: '34px',
         },
       });
+      // URL에서 파라미터 제거
+      const url = new URL(window.location.href);
+      url.searchParams.delete('toast-logout-success');
+      window.history.replaceState({}, '', url.toString());
     }
-    if (isDeleteUserSuccess) {
+    
+    if (isDeleteUserSuccess && !toastShownRef.current.deleteUser) {
+      toastShownRef.current.deleteUser = true;
       toast.success('회원 탈퇴가 완료되었어요', {
         position: 'top-center',
         style: {
@@ -102,6 +112,10 @@ export function AuthContent() {
           marginTop: '34px',
         },
       });
+      // URL에서 파라미터 제거
+      const url = new URL(window.location.href);
+      url.searchParams.delete('toast-user-delete-success');
+      window.history.replaceState({}, '', url.toString());
     }
   }, [searchParams]);
 
