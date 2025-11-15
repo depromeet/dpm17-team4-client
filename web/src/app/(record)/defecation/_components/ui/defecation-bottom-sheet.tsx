@@ -15,13 +15,7 @@ import {
   subMonths,
 } from 'date-fns';
 import { ko } from 'date-fns/locale';
-import {
-  type ChangeEvent,
-  type Dispatch,
-  type SetStateAction,
-  useEffect,
-  useState,
-} from 'react';
+import { type ChangeEvent, useState } from 'react';
 import { ChevronIcon } from '@/components';
 import { BottomSheet } from '@/components/BottomSheet';
 import { DAYS_OF_WEEK, TOTAL_DAYS } from '@/constants';
@@ -45,14 +39,9 @@ export const DefecationBottomSheet = ({
   handleHourChange,
 }: DefecationBottomSheetProps) => {
   const hours = useHourOptions();
-  const [currentMonth, setCurrentMonth] = useState(new Date());
-  const [hasSelectedHour, setHasSelectedHour] = useState(false);
-
-  useEffect(() => {
-    if (isOpen) {
-      setHasSelectedHour(false);
-    }
-  }, [isOpen]);
+  const [currentMonth, setCurrentMonth] = useState(
+    selectedDate ? new Date(selectedDate) : new Date()
+  );
 
   const monthStart = startOfMonth(currentMonth);
   const monthEnd = endOfMonth(monthStart);
@@ -172,7 +161,6 @@ export const DefecationBottomSheet = ({
                 key={hour.id}
                 type="button"
                 onClick={() => {
-                  setHasSelectedHour(true);
                   handleHourChange(hour.time);
                 }}
                 className={`
@@ -196,8 +184,8 @@ export const DefecationBottomSheet = ({
             onClick={() => {
               onClose(false, true);
             }}
-            disabled={!hasSelectedHour}
-            className={`text-center text-button-2 w-full h-[56px] rounded-lg bg-primary-600 text-white ${!hasSelectedHour ? 'opacity-50 cursor-not-allowed' : ''}`}
+            //disabled={!hasSelectedHour}
+            className={`text-center text-button-2 w-full h-[56px] rounded-lg bg-primary-600 text-white`}
           >
             등록
           </button>
