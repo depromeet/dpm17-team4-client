@@ -1,8 +1,8 @@
-import Image from 'next/image';
+import Image, { type StaticImageData } from 'next/image';
 import type React from 'react';
 
 interface RecordBadgeProps {
-  icon: string;
+  icon: StaticImageData;
   recordCounts: number;
   children: React.ReactNode;
 }

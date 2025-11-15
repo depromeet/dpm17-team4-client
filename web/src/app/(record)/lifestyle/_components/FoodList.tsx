@@ -1,4 +1,8 @@
+import Image from 'next/image';
+import { useEffect, useRef } from 'react';
+import toast from 'react-hot-toast';
 import { useFoodSearch } from '@/hooks';
+import ErrorIcon from '../assets/icon-warning-toast.svg';
 
 interface FoodListProps {
   debouncedFoodName: string;
@@ -23,6 +27,39 @@ export const FoodList = ({
 
   // API 데이터가 없으면 빈 배열 사용
   const foods = foodList?.items || [];
+  const lastToastKeywordRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    const trimmedKeyword = debouncedFoodName.trim();
+    const shouldShowToast =
+      trimmedKeyword.length > 0 &&
+      foods.length === 0 &&
+      !isLoading &&
+      !error &&
+      isUserTyping;
+
+    if (shouldShowToast) {
+      if (lastToastKeywordRef.current !== trimmedKeyword) {
+        toast.error(
+          <div className="text-body3-m">
+            검색 결과에 없는 음식이 등록되었어요
+            <br />
+            현재는 검색 결과에 있는 음식만 등록이 가능해요
+          </div>,
+          {
+            position: 'top-center',
+            style: {
+              height: 'fit-content',
+            },
+            icon: <Image src={ErrorIcon} alt="error" width={20} height={20} />,
+          }
+        );
+        lastToastKeywordRef.current = trimmedKeyword;
+      }
+    } else if (trimmedKeyword.length === 0 || foods.length > 0) {
+      lastToastKeywordRef.current = null;
+    }
+  }, [debouncedFoodName, foods.length, isLoading, error, isUserTyping]);
 
   const handleFoodClick = (foodId: number, foodName: string) => {
     onFoodSelect(foodId, foodName);

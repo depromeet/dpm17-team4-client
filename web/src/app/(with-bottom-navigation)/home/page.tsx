@@ -10,6 +10,8 @@ import {
   setAccessToken,
   setUserInfo,
 } from '@/app/auth/_components/AuthSessionProvider';
+import poopIcon from '@/assets/common/defecation.png';
+import forkIcon from '@/assets/common/lifestyle.png';
 import bgBad from '@/assets/home/bg_bad.png';
 import bgBadDeco from '@/assets/home/bg_bad_deco.png';
 import bgBase from '@/assets/home/bg_base.png';
@@ -21,9 +23,7 @@ import bgVeryBad from '@/assets/home/bg_very_bad.png';
 import bgVeryBadDeco from '@/assets/home/bg_very_bad_deco.png';
 import bgVeryGood from '@/assets/home/bg_very_good.png';
 import bgVeryGoodDeco from '@/assets/home/bg_very_good_deco.png';
-import forkIcon from '@/assets/home/fork.svg';
 import logo from '@/assets/home/logo.png';
-import poopIcon from '@/assets/home/poop.svg';
 import { Modal } from '@/components';
 import { useNavigationContext } from '@/contexts/NavigationContext';
 import { useUserInfo } from '@/hooks';
