@@ -78,6 +78,10 @@ module.exports = {
       },
       boxShadow: {
         tooltip: '0 4px 8px 0 rgba(0, 0, 0, 0.25)',
+        defecationCard:
+          '-1.4px -1.4px 1px 0 rgba(255, 255, 255, 0.30) inset, 1.4px 1.4px 1px 0 rgba(255, 255, 255, 0.50) inset',
+        'inner-glow':
+          '-1.065px -1.065px 0.761px 0 rgba(255, 255, 255, 0.30) inset, 1.065px 1.065px 0.761px 0 rgba(255, 255, 255, 0.50) inset',
       },
       keyframes: {
         'scale-up-down': {

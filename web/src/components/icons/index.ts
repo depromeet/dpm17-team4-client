@@ -6,6 +6,7 @@ export * from './Delete';
 export * from './Home';
 export * from './Info';
 export * from './Play';
+export * from './Refresh';
 export * from './Report';
 export * from './SpeechBubble';
 export * from './User';

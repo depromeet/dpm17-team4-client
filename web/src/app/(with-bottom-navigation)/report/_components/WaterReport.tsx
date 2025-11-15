@@ -226,12 +226,17 @@ export const WaterReport = ({
     if (hasNoWaterData) {
       return <NullWaterReport />;
     }
+  } else {
+    const hasNoWaterData = waterData.items.every((item) => item.value === 0);
+    if (hasNoWaterData) {
+      return <NullWaterReport />;
+    }
   }
 
   return (
     <div className="bg-[#1B1D20] rounded-[14px] py-7 px-6 w-[calc(100%-40px)] mx-auto z-10">
       <p className="text-[#4E5560] text-body3-m mb-2">물 섭취량 분석 결과</p>
-      <p className="text-white text-[18px] font-semibold mb-6 whitespace-pre-line">
+      <p className="text-white text-[18px] font-semibold mb-6 whitespace-pre-line leading-[1.35]">
         {waterData.message}
       </p>
       <div className="flex flex-col items-center justify-center gap-10 w-full relative pb-[73px]">
@@ -259,7 +264,7 @@ export const NullWaterReport = () => {
   return (
     <div className="bg-[#1B1D20] rounded-[14px] py-7 px-6 w-[calc(100%-40px)] mx-auto z-10">
       <p className="text-[#4E5560] text-body3-m mb-2">물 섭취량 분석 결과</p>
-      <p className="text-white text-[18px] font-semibold whitespace-pre-line">
+      <p className="text-white text-[18px] font-semibold whitespace-pre-line leading-[1.35]">
         기록한 물 섭취량이 없어요!
         <br />
         규칙적인 기록이 장 건강에 도움이 돼요

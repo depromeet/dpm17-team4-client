@@ -31,7 +31,7 @@ export function MonthlyFoodReport({ food }: MonthlyFoodReportProps) {
       <p className="text-[#4E5560] text-body3-m mb-2">식단 분석 결과</p>
       {food.monthlyComparison.thisMonth === 0 ? (
         <div className="flex items-start justify-between gap-2">
-          <p className="text-white text-[18px] font-semibold whitespace-pre-line">
+          <p className="text-white text-[18px] font-semibold whitespace-pre-line leading-[1.35]">
             {food.message}
           </p>
           <div className="mt-2 flex justify-end">
@@ -44,7 +44,7 @@ export function MonthlyFoodReport({ food }: MonthlyFoodReportProps) {
           </div>
         </div>
       ) : (
-        <p className="text-white text-[18px] font-semibold mb-6 whitespace-pre-line">
+        <p className="text-white text-[18px] font-semibold mb-6 whitespace-pre-line leading-[1.35]">
           {food.message}
         </p>
       )}
