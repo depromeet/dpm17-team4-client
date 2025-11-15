@@ -1,7 +1,7 @@
 'use client';
 
-import { BackgroundColor } from '@/app/(with-bottom-navigation)/report/daily/types';
 import { createContext, type ReactNode, useContext, useState } from 'react';
+import type { BackgroundColor } from '@/app/(with-bottom-navigation)/report/daily/types';
 
 interface ReportContextValue {
   hasPooData: boolean;
@@ -14,7 +14,8 @@ const ReportContext = createContext<ReportContextValue | undefined>(undefined);
 
 export function ReportProvider({ children }: { children: ReactNode }) {
   const [hasPooData, setHasPooData] = useState(false);
-  const [backgroundColor, setBackgroundColor] = useState<BackgroundColor>('VERY_BAD');
+  const [backgroundColor, setBackgroundColor] =
+    useState<BackgroundColor>('VERY_BAD');
 
   return (
     <ReportContext.Provider

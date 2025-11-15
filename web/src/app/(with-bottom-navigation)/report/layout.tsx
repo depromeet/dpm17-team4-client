@@ -3,13 +3,12 @@
 import { usePathname } from 'next/navigation';
 import { useReportContext } from '@/contexts/ReportContext';
 import { SegmentedControl } from './_components/SegmentedControl';
-import type { BackgroundColor, ReportPeriod } from './daily/types';
-
-import VERY_BAD_BG from './daily/_components/assets/VERY_BAD.png';
 import BAD_BG from './daily/_components/assets/BAD.png';
-import NORMAL_BG from './daily/_components/assets/NORMAL.png';
 import GOOD_BG from './daily/_components/assets/GOOD.png';
+import NORMAL_BG from './daily/_components/assets/NORMAL.png';
+import VERY_BAD_BG from './daily/_components/assets/VERY_BAD.png';
 import VERY_GOOD_BG from './daily/_components/assets/VERY_GOOD.png';
+import type { BackgroundColor, ReportPeriod } from './daily/types';
 
 export default function ReportLayout({
   children,
@@ -27,7 +26,9 @@ export default function ReportLayout({
 
   const currentPeriod = getCurrentPeriod();
 
-  const getBackgroundColorImage = (backgroundColor: BackgroundColor): string => {
+  const getBackgroundColorImage = (
+    backgroundColor: BackgroundColor
+  ): string => {
     switch (backgroundColor) {
       case 'VERY_BAD':
         return VERY_BAD_BG.src;

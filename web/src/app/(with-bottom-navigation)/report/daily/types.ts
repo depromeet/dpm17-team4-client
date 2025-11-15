@@ -137,4 +137,9 @@ export type TextCard = {
 
 export type Card = CharacterCard | TextCard;
 
-export type BackgroundColor = 'VERY_BAD' | 'BAD' | 'NORMAL' | 'GOOD' | 'VERY_GOOD';
+export type BackgroundColor =
+  | 'VERY_BAD'
+  | 'BAD'
+  | 'NORMAL'
+  | 'GOOD'
+  | 'VERY_GOOD';

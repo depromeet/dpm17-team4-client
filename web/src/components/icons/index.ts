@@ -9,3 +9,4 @@ export * from './Play';
 export * from './Report';
 export * from './SpeechBubble';
 export * from './User';
+export * from './XIcon';

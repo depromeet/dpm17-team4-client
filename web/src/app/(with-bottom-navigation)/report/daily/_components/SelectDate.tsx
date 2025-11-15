@@ -1,10 +1,13 @@
 'use client';
 
-import type { WheelPickerOption } from '@ncdai/react-wheel-picker';
-import { useMemo, useState } from 'react';
+import { type ChangeEvent, useMemo, useState } from 'react';
 import { PlayIcon } from '@/components';
-import { formatToISOString, getKoreanDate } from '@/utils/utils-date';
-import { WheelPickerBottomSheet } from '../../_components/WheelPickerBottomsheet';
+import {
+  formatToISOString,
+  getDateDisplayText,
+  getKoreanDate,
+} from '@/utils/utils-date';
+import { DailyCalendarSheet } from './DailyCalendarSheet';
 
 const DATE_RANGE = 90;
 
@@ -40,30 +43,6 @@ export function SelectDate({
   const earliestDate = dates[dates.length - 1];
   const latestDate = dates[0];
 
-  const currentValue = useMemo(
-    () => formatToISOString(currentDate),
-    [currentDate]
-  );
-
-  const handleDateSelect = (date: Date) => {
-    onDateChange?.(date);
-    setIsBottomSheetOpen(false);
-  };
-
-  const handleApply = (selectedValue: string) => {
-    if (!selectedValue) {
-      setIsBottomSheetOpen(false);
-      return;
-    }
-
-    const selected = dates.find((d) => d.value === selectedValue);
-    if (selected) {
-      handleDateSelect(selected.date);
-    } else {
-      setIsBottomSheetOpen(false);
-    }
-  };
-
   const handlePrevDate = () => {
     if (!earliestDate) return;
     const prevDate = new Date(currentDate);
@@ -72,7 +51,7 @@ export function SelectDate({
     if (prevDate < earliestDate.date) {
       return;
     }
-    handleDateSelect(prevDate);
+    onDateChange?.(prevDate);
   };
 
   const handleNextDate = () => {
@@ -83,7 +62,15 @@ export function SelectDate({
     if (nextDate > latestDate.date) {
       return;
     }
-    handleDateSelect(nextDate);
+    onDateChange?.(nextDate);
+  };
+
+  const handleDateChange = (e: ChangeEvent<HTMLInputElement>) => {
+    onDateChange?.(new Date(e.target.value as string));
+  };
+
+  const handleClose = () => {
+    setIsBottomSheetOpen(false);
   };
 
   const isPrevDisabled = useMemo(() => {
@@ -99,10 +86,6 @@ export function SelectDate({
     nextDate.setDate(nextDate.getDate() + 1);
     return nextDate > latestDate.date;
   }, [currentDate, latestDate]);
-
-  const dateOptions = useMemo<WheelPickerOption[]>(() => {
-    return dates.map(({ label, value }) => ({ label, value }));
-  }, [dates]);
 
   return (
     <>
@@ -122,7 +105,11 @@ export function SelectDate({
           onClick={() => setIsBottomSheetOpen(true)}
           className="font-medium text-white text-center py-1 rounded-lg"
         >
-          {formatDateLabel(currentDate)}
+          {getDateDisplayText(
+            currentDate.getFullYear(),
+            currentDate.getMonth() + 1,
+            currentDate.getDate()
+          )}
         </button>
         <button
           type="button"
@@ -136,15 +123,11 @@ export function SelectDate({
         </button>
       </div>
 
-      <WheelPickerBottomSheet
+      <DailyCalendarSheet
         isOpen={isBottomSheetOpen}
-        title="날짜 선택"
-        description={`기간 ${currentDate.getFullYear()}.${currentDate.getMonth() + 1}.${currentDate.getDate()} - ${today.getFullYear()}.${today.getMonth() + 1}.${today.getDate()}`}
-        options={dateOptions}
-        initialValue={currentValue ?? dateOptions[0]?.value ?? ''}
-        onApply={handleApply}
-        onClose={() => setIsBottomSheetOpen(false)}
-        applyLabel="적용"
+        selectedDate={currentDate}
+        onClose={handleClose}
+        handleDateChange={handleDateChange}
       />
     </>
   );

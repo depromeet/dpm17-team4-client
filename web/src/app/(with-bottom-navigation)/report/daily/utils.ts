@@ -3,7 +3,7 @@ import BreakfastImage from '@/assets/report/breakfast.png';
 import DinnerImage from '@/assets/report/dinner.png';
 import LunchImage from '@/assets/report/lunch.png';
 import SnackImage from '@/assets/report/snack.png';
-import { BackgroundColor } from './types';
+import type { BackgroundColor } from './types';
 
 // NOTE(seonghyun): Enum 매핑 함수들
 export const getMealTimeLabel = (mealTime: string): string => {

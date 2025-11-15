@@ -61,7 +61,11 @@ function DailyReportContent() {
     data: reportData,
     isLoading,
     error,
-  } = useReportQuery(dateParam ? { dateTime: dateParam } : undefined);
+  } = useReportQuery(
+    dateParam
+      ? { dateTime: dateParam }
+      : { dateTime: formatToISOString(currentDate) }
+  );
 
   // Toast 표시를 위한 별도 useEffect
   useEffect(() => {
@@ -182,7 +186,9 @@ function DailyReportContent() {
       const hasPooData = reportData?.poo !== null;
       setHasPooData(hasPooData);
       if (hasPooData) {
-        const backgroundColor = getBackgroundColor(reportData.poo.summary.caption);
+        const backgroundColor = getBackgroundColor(
+          reportData.poo.summary.caption
+        );
         setBackgroundColor(backgroundColor);
       }
     }
