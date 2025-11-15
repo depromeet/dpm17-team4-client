@@ -21,10 +21,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'kkruk-꾸륵',
+  title: 'kkruk-꾸룩',
   description: '배변기록을 추가하고, 장 건강을 지키세요!',
   openGraph: {
-    title: 'kkruk-꾸륵',
+    title: 'kkruk-꾸룩',
     description: '배변기록을 추가하고, 장 건강을 지키세요!',
     images: ['https://kkruk.com/opengraph1115.png'],
   },
