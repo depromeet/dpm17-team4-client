@@ -2,7 +2,7 @@
   "expo": {
     "name": "kkruk",
     "slug": "app",
-    "version": "1.0.1",
+    "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -24,6 +24,7 @@
       "bundleIdentifier": "com.leeseonghyun316.app",
       "appleTeamId": "8R4YV3AUWK",
       "splash": null,
+      "buildNumber": "1",
       "infoPlist": {
         "UIBackgroundModes": [
           "remote-notification"

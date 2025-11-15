@@ -17,13 +17,9 @@ function HomeContent() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
       <div className="text-center">
-        <h1 className="text-4xl font-bold text-gray-800 mb-4">
-          DPM17 Team4 Web View
-        </h1>
+        <h1 className="text-4xl font-bold text-gray-800 mb-4">kkruk-꾸륵</h1>
         <p className="text-lg text-gray-600 mb-8 text-center px-6 leading-relaxed">
-          React Native WebView 에서
-          <br />
-          표시되는 웹 페이지입니다.
+          개발자 페이지
         </p>
         {/* 유저 정보 표시 */}
         <LoginContent />
