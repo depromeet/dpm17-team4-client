@@ -7,7 +7,7 @@ interface SuggestionsProps {
 
 export const Suggestions = ({ suggestion }: SuggestionsProps) => {
   return (
-    <div className="bg-[#1B1D20] min-h-[520px] pt-6 mt-[30px] pb-[160px] px-4 z-10 w-screen">
+    <div className="bg-[#1B1D20] min-h-[520px] pt-6 mt-[30px] pb-[80px] px-4 z-10 w-screen">
       <span className="text-body3-m text-[#4E5560]">추천 습관</span>
       <div className="h-[0.0625rem]" />
       <div className="text-[18px] font-semibold text-white leading-[1.35]">

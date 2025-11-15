@@ -52,7 +52,7 @@ export default function MonthlyReportPage() {
             }}
           />
         </div>
-        <div className="flex flex-1 flex-col items-center justify-center text-center px-6 pb-[205px]">
+        <div className="flex flex-col items-center justify-center text-center px-6 min-h-screen fixed top-0 left-0 right-0 bottom-0 pointer-events-none">
           <Image
             src={EmptyMemoIcon}
             alt="empty report"

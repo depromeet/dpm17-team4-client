@@ -3,6 +3,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { Button } from '@/components';
 import { cn } from '@/utils/utils-cn';
 import { getTodayDate } from '@/utils/utils-date';
+import { usePreventScroll } from '@/hooks';
 
 interface NullReportProps {
   nullIcon: StaticImageData;
@@ -21,6 +22,7 @@ export const NullReport = ({
 }: NullReportProps) => {
   const router = useRouter();
 
+  usePreventScroll(mode === 'all');
   const searchParams = useSearchParams();
   //2025-11-15
   const dateParam = searchParams.get('date');
@@ -57,7 +59,13 @@ export const NullReport = ({
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center pt-[58px] pb-[72px] z-10">
+      <div
+        className={cn(
+          'flex flex-col items-center justify-center z-10 pb-[72px] pt-[58px]',
+          mode === 'all' &&
+            'min-h-screen fixed top-0 left-0 right-0 bottom-0 pointer-events-none'
+        )}
+      >
         <div className="relative w-[15.125rem] h-[6.3125rem]">
           <Image
             src={nullIcon}

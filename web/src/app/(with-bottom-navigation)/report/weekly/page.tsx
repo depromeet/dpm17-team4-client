@@ -19,6 +19,7 @@ import { StressAnalysisChart } from './_components/StressAnalysisChart';
 import { WeeklyComparisonChart } from './_components/WeeklyComparisonChart';
 import { WeeklyFoodReport } from './_components/WeeklyFoodReport';
 import type { DayOfWeek } from './types';
+import { usePreventScroll } from '@/hooks';
 
 const weekLabels = ['월', '화', '수', '목', '금', '토', '일'];
 const allDays: DayOfWeek[] = [
@@ -48,6 +49,8 @@ function WeeklyReportContent() {
     dateTime: formatToISOString(weekStartDate),
   });
 
+  usePreventScroll(weeklyData === INSUFFICIENT_DATA);
+
   // NOTE(taehyeon): 데이터 부족 에러인 경우 빈 리포트 렌더링
   if (weeklyData === INSUFFICIENT_DATA) {
     return (
@@ -61,7 +64,7 @@ function WeeklyReportContent() {
             }}
           />
         </div>
-        <div className="flex flex-1 flex-col items-center justify-center text-center px-6 pb-[205px]">
+        <div className="flex flex-col items-center justify-center text-center px-6 min-h-screen fixed top-0 left-0 right-0 bottom-0 pointer-events-none">
           <Image
             src={EmptyMemoIcon}
             alt="empty report"
