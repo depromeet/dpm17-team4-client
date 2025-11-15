@@ -128,7 +128,7 @@ export const FoodReport = ({ foodData }: { foodData: Food }) => {
                             {meal.foods.map((food, foodIndex) => (
                               <p
                                 key={food}
-                                className="text-white text-caption text-center"
+                                className="text-white text-[14px] font-medium leading-[1.45] text-center"
                               >
                                 {food}
                                 {foodIndex < meal.foods.length - 1 ? (

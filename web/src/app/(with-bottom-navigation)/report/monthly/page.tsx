@@ -116,6 +116,8 @@ export default function MonthlyReportPage() {
 
   return (
     <>
+      <div className="fixed top-[134px] left-[130px] pointer-events-none w-[426px] h-[426px] bg-radial from-[#2994FF] to-[#121213] opacity-10" />
+      <div className="fixed top-[428px] right-[191px] pointer-events-none w-[426px] h-[426px] bg-radial from-[#2994FF] to-[#121213] opacity-10" />
       <div className="py-0 flex flex-col items-center gap-5 mb-[50px]">
         <SelectDate
           currentMonth={month}
@@ -148,10 +150,10 @@ export default function MonthlyReportPage() {
             displayLabels={weekLabels}
           />
         )}
+        {reportData.suggestion && (
+          <Suggestions suggestion={reportData.suggestion} />
+        )}
       </div>
-      {reportData.suggestion && (
-        <Suggestions suggestion={reportData.suggestion} />
-      )}
       <ReportNotice />
     </>
   );

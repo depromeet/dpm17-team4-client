@@ -7,9 +7,11 @@ import toast from 'react-hot-toast';
 import emojiOpenMouse from '@/assets/report/emoji_open_mouse.png';
 import newsPaper from '@/assets/report/newspaper.png';
 import poop from '@/assets/report/poop.png';
+import { RefreshIcon } from '@/components';
 import { useNavigationContext } from '@/contexts/NavigationContext';
 import { useReportContext } from '@/contexts/ReportContext';
 import { useReportQuery } from '@/hooks/queries/useReportQuery';
+import { cn } from '@/utils/utils-cn';
 import { formatToISOString, getKoreanDate } from '@/utils/utils-date';
 import ReportNotice from '../_components/ReportNotice';
 import { StressReport } from '../_components/StressReport';
@@ -19,11 +21,18 @@ import { FoodReport } from './_components/FoodReport';
 import { NullReport } from './_components/NullReport';
 import { SelectDate } from './_components/SelectDate';
 import type { Card } from './types';
-import { getBackgroundColor, getColorLabel, getShapeLabel } from './utils';
+import {
+  getBackgroundColor,
+  getCardDurationText,
+  getCardTextColor,
+  getColorLabel,
+  getShapeLabel,
+} from './utils';
 
 function DailyReportContent() {
   const [cardIndex, setCardIndex] = useState(0);
   const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const searchParams = useSearchParams();
   const router = useRouter();
   const toastShownRef = useRef(false);
@@ -55,12 +64,14 @@ function DailyReportContent() {
   const handleDateChange = (newDate: Date) => {
     const dateString = formatToISOString(newDate);
     router.push(`/report/daily?date=${dateString}`);
+    setCardIndex(0);
   };
 
   const {
     data: reportData,
     isLoading,
     error,
+    refetch,
   } = useReportQuery(
     dateParam
       ? { dateTime: dateParam }
@@ -140,7 +151,7 @@ function DailyReportContent() {
                 [
                   getColorLabel(item.color),
                   getShapeLabel(item.shape),
-                  `${item.duration}분 이상 소요`,
+                  getCardDurationText(item.duration),
                 ],
                 [`복통 정도 ${item.pain}%`, item.note],
               ],
@@ -244,7 +255,7 @@ function DailyReportContent() {
                   {hasPooData ? (
                     <>
                       {/* 캐러셀 컨테이너 */}
-                      <div className="relative overflow-hidden w-full max-w-[400px] mx-auto">
+                      <div className="relative overflow-hidden w-full mx-auto">
                         <div
                           className="flex transition-transform duration-300 ease-out"
                           style={{
@@ -259,124 +270,165 @@ function DailyReportContent() {
                             <button
                               type="button"
                               key={`card-${card.type}-${index}`}
-                              className="w-[251px] h-[328px] rounded-2xl text-center relative overflow-hidden flex-shrink-0 cursor-pointer transition-all duration-300"
+                              className={cn(
+                                `w-[251px] h-[328px] rounded-2xl text-center relative overflow-hidden flex-shrink-0 cursor-pointer transition-all duration-300`,
+                                {
+                                  'shadow-defecation-card':
+                                    index === cardIndex &&
+                                    card.type === 'character',
+                                  'shadow-inner-glow': index !== cardIndex,
+                                }
+                              )}
                               style={{
                                 background:
                                   card.type === 'character'
-                                    ? `linear-gradient(to bottom, ${reportData.poo.summary.backgroundColors[0]} 0%, ${reportData.poo.summary.backgroundColors[1]} 100%)`
-                                    : '#ffffff',
+                                    ? index === cardIndex
+                                      ? `linear-gradient(to bottom, ${reportData.poo.summary.backgroundColors[0]} 0%, ${reportData.poo.summary.backgroundColors[1]} 100%)`
+                                      : 'linear-gradient(182deg, #505050 10.03%, #474444 94.23%)'
+                                    : index === cardIndex
+                                      ? '#ffffff'
+                                      : 'linear-gradient(182deg, #505050 10.03%, #474444 94.23%)',
                                 padding: '36px 12px',
                                 transform: `scale(${index === cardIndex ? 1 : 0.85})`,
-                                opacity: index === cardIndex ? 1 : 0.6,
+                                opacity: index === cardIndex ? 1 : 0.34,
                               }}
                               onClick={() => setCardIndex(index)}
                             >
                               <div className="relative z-10 h-full flex flex-col justify-center">
                                 {card.type === 'character' ? (
                                   <>
-                                    {/* 캐릭터 이미지 */}
-                                    <div className="w-[227px] h-[162px] mx-auto mb-4 relative">
-                                      <Image
-                                        src={card.content.character}
-                                        alt="화가 난 대장 캐릭터"
-                                        width={227}
-                                        height={162}
-                                        className="w-full h-full object-contain"
-                                        priority
-                                      />
-                                    </div>
+                                    {index === cardIndex ? (
+                                      <>
+                                        {/* 캐릭터 이미지 */}
+                                        <div className="w-[227px] h-[162px] mx-auto mb-4 relative">
+                                          <Image
+                                            src={card.content.character}
+                                            alt="화가 난 대장 캐릭터"
+                                            width={227}
+                                            height={162}
+                                            className="w-full h-full object-contain"
+                                            priority
+                                          />
+                                        </div>
 
-                                    <div
-                                      className="text-white text-body4-m inline-block mb-2 w-fit mx-auto"
-                                      style={{
-                                        backgroundColor:
-                                          reportData.poo.summary
-                                            .backgroundColors[0],
-                                        paddingTop: '6px',
-                                        paddingRight: '16px',
-                                        paddingBottom: '6px',
-                                        paddingLeft: '16px',
-                                        borderRadius: '40px',
-                                      }}
-                                    >
-                                      {card.content.badge}
-                                    </div>
+                                        <div
+                                          className="text-white text-body4-m inline-block mb-2 w-fit mx-auto"
+                                          style={{
+                                            backgroundColor:
+                                              reportData.poo.summary
+                                                .backgroundColors[0],
+                                            paddingTop: '6px',
+                                            paddingRight: '16px',
+                                            paddingBottom: '6px',
+                                            paddingLeft: '16px',
+                                            borderRadius: '40px',
+                                          }}
+                                        >
+                                          {card.content.badge}
+                                        </div>
 
-                                    <h2 className="text-xl font-bold mb-2 text-white">
-                                      {card.content.title}
-                                    </h2>
+                                        <h2 className="text-xl font-bold mb-2 text-white">
+                                          {card.content.title}
+                                        </h2>
+                                      </>
+                                    ) : (
+                                      <>
+                                        {/* NOTE(taehyeon): 카드가 뒤쪽에 배치된 경우 빈 카드를 반환 */}
+                                      </>
+                                    )}
                                   </>
                                 ) : (
                                   <>
-                                    {/* 텍스트 카드 */}
-                                    <div
-                                      className="text-white mx-auto mb-4 w-8 h-8 flex items-center justify-center p-1.5"
-                                      style={{
-                                        backgroundColor:
-                                          reportData.poo.summary
-                                            .backgroundColors[0],
-                                        borderRadius: '999px',
-                                      }}
-                                    >
-                                      <span
-                                        className="font-bold"
-                                        style={{ fontSize: '11px' }}
-                                      >
-                                        {card.content.badge}
-                                      </span>
-                                    </div>
+                                    {index === cardIndex ? (
+                                      <div className="h-[264px] flex flex-col justify-center">
+                                        {/* 텍스트 카드 */}
+                                        <div
+                                          className="w-6 h-6 py-1.5 px-[5.5px] rounded-full text-white mx-auto mb-3 flex items-center justify-center"
+                                          style={{
+                                            backgroundColor: getCardTextColor(
+                                              reportData.poo.summary.caption
+                                            ),
+                                          }}
+                                        >
+                                          <span
+                                            className="font-bold"
+                                            style={{ fontSize: '11px' }}
+                                          >
+                                            {card.content.badge}
+                                          </span>
+                                        </div>
 
-                                    <h2
-                                      className="font-bold text-lg mb-4"
-                                      style={{
-                                        color:
-                                          reportData.poo.summary
-                                            .backgroundColors[0],
-                                      }}
-                                    >
-                                      {card.type === 'text'
-                                        ? card.content.date
-                                        : ''}
-                                    </h2>
+                                        <p
+                                          className="font-semibold text-lg mb-7"
+                                          style={{
+                                            color: getCardTextColor(
+                                              reportData.poo.summary.caption
+                                            ),
+                                          }}
+                                        >
+                                          {card.type === 'text'
+                                            ? card.content.date
+                                            : ''}
+                                        </p>
 
-                                    <p className="text-gray-400 text-body3-m mb-6 leading-relaxed">
-                                      {card.type === 'text'
-                                        ? card.content.advisory
-                                        : ''}
-                                    </p>
+                                        <p className="text-[#707885] text-body3-m mb-7 w-[206px] mx-auto leading-[1.54] h-[88px]">
+                                          {card.type === 'text'
+                                            ? card.content.advisory
+                                            : ''}
+                                        </p>
 
-                                    <div className="space-y-2">
-                                      {card.type === 'text' &&
-                                        card.content.tags?.map(
-                                          (row: string[], rowIndex: number) => (
-                                            <div
-                                              key={`tag-row-${row.join(
-                                                '-'
-                                              )}-${rowIndex}`}
-                                              className="flex flex-wrap gap-2 justify-center"
-                                            >
-                                              {row.map((tag, _tagIndex) => (
-                                                <span
-                                                  key={`tag-${tag}`}
-                                                  className="text-body3-m"
-                                                  style={{
-                                                    paddingTop: '4px',
-                                                    paddingRight: '12px',
-                                                    paddingBottom: '4px',
-                                                    paddingLeft: '12px',
-                                                    borderRadius: '6px',
-                                                    backgroundColor:
-                                                      '#A5A5A533',
-                                                    color: '#707885',
-                                                  }}
+                                        <div className="h-[60px] space-y-1">
+                                          {card.type === 'text' &&
+                                            card.content.tags?.map(
+                                              (
+                                                row: string[],
+                                                rowIndex: number
+                                              ) => (
+                                                <div
+                                                  key={`tag-row-${row.join(
+                                                    '-'
+                                                  )}-${rowIndex}`}
+                                                  className="flex gap-1 justify-center"
                                                 >
-                                                  {tag}
-                                                </span>
-                                              ))}
-                                            </div>
-                                          )
-                                        )}
-                                    </div>
+                                                  {row.map((tag, _tagIndex) => (
+                                                    <div
+                                                      key={
+                                                        tag
+                                                          ? `tag-${tag}`
+                                                          : `tag-${_tagIndex}`
+                                                      }
+                                                    >
+                                                      {tag && tag.length > 0 ? (
+                                                        <span
+                                                          className="text-body3-m whitespace-nowrap"
+                                                          style={{
+                                                            paddingTop: '4px',
+                                                            paddingRight:
+                                                              '12px',
+                                                            paddingBottom:
+                                                              '4px',
+                                                            paddingLeft: '12px',
+                                                            borderRadius: '6px',
+                                                            backgroundColor:
+                                                              '#A5A5A533',
+                                                            color: '#707885',
+                                                          }}
+                                                        >
+                                                          {tag}
+                                                        </span>
+                                                      ) : null}
+                                                    </div>
+                                                  ))}
+                                                </div>
+                                              )
+                                            )}
+                                        </div>
+                                      </div>
+                                    ) : (
+                                      <>
+                                        {/* NOTE(taehyeon): 카드가 뒤쪽에 배치된 경우 빈 카드를 반환 */}
+                                      </>
+                                    )}
                                   </>
                                 )}
                               </div>
@@ -390,26 +442,43 @@ function DailyReportContent() {
                         {cards.map((card, index) => (
                           <div
                             key={`indicator-${card.type}-${index}`}
-                            className={`w-2 h-2 rounded-full transition-colors duration-200 ${
-                              index === cardIndex ? 'bg-white' : 'bg-gray-500'
+                            className={`transition-colors duration-200 ${
+                              index === cardIndex
+                                ? 'w-3 h-1 rounded-[10px] bg-white'
+                                : 'w-1 h-1 rounded-full bg-gray-500'
                             }`}
                           />
                         ))}
                       </div>
 
                       {/* 업데이트 시간 - 카드 밖 하단 */}
-                      <p className="text-gray-400 text-sm text-center mt-2">
-                        {new Date(reportData.updatedAt).toLocaleString(
-                          'ko-KR',
-                          {
-                            month: 'long',
-                            day: 'numeric',
-                            weekday: 'short',
-                            hour: 'numeric',
-                          }
-                        )}{' '}
-                        업데이트
-                      </p>
+                      <div className="w-full flex items-center justify-center h-4.5">
+                        <button
+                          type="button"
+                          className="flex items-center justify-center gap-1 h-full"
+                          onClick={async () => {
+                            setIsRefreshing(true);
+                            await refetch();
+                            setTimeout(() => setIsRefreshing(false), 500);
+                          }}
+                        >
+                          <p className="text-[#4E5560] text-xs font-medium leading-[1.5] text-center">
+                            {new Date(reportData.updatedAt).toLocaleString(
+                              'ko-KR',
+                              {
+                                month: 'long',
+                                day: 'numeric',
+                                weekday: 'short',
+                                hour: 'numeric',
+                              }
+                            )}{' '}
+                            업데이트
+                          </p>
+                          <RefreshIcon
+                            className={isRefreshing ? 'animate-spin' : ''}
+                          />
+                        </button>
+                      </div>
                       {reportData.poo && (
                         <DefecationScore score={reportData.poo.score} />
                       )}

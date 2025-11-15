@@ -186,3 +186,25 @@ export const getBackgroundColor = (message: string): BackgroundColor => {
   };
   return mapping[message] || 'VERY_BAD';
 };
+
+// NOTE(taehyeon): 배경 색상 반환
+export const getCardTextColor = (message: string): string => {
+  const mapping: Record<string, string> = {
+    '화가 잔뜩 난 대장': '#F13A49',
+    '속상한 대장': '#F4B005',
+    '얌전한 대장': '#7850FB',
+    '기분 좋은 대장': '#23ABFF',
+    '신이 난 대장': '#02AF6A',
+  };
+  return mapping[message] || '#F13A49';
+};
+
+// NOTE(taehyeon): 카드 배변 소요 시간 텍스트 변환
+export const getCardDurationText = (duration: number): string => {
+  const mapping: Record<number, string> = {
+    5: '5분 이내',
+    10: '10분 이내',
+    15: '10분 이상 소요',
+  };
+  return mapping[duration] || '5분 이내';
+};
