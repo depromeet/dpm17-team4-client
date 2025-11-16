@@ -43,7 +43,8 @@ export const DefecationSubmit = () => {
       shape: data.selectedShape || null,
       pain: data.selectedPain,
       duration: toiletDuration,
-      note: data.selectedOptional === 'initial' ? '' : data.selectedOptional || '',
+      note:
+        data.selectedOptional === 'initial' ? '' : data.selectedOptional || '',
     };
 
     if (isEdit) {
