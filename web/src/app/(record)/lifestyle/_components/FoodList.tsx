@@ -1,8 +1,5 @@
-import Image from 'next/image';
 import { useEffect, useRef } from 'react';
-import toast from 'react-hot-toast';
 import { useFoodSearch } from '@/hooks';
-import ErrorIcon from '../assets/icon-warning-toast.svg';
 
 interface FoodListProps {
   debouncedFoodName: string;
