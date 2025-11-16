@@ -251,7 +251,7 @@ function HomeContent({ data, currentDate, onChangeDate }: HomeContentProps) {
         src={currentBg.deco}
         alt="배경 데코이미지"
         fill
-        className="-z-10 bg-cover animate-bg-fade-pulse"
+        className="z-0 bg-cover animate-bg-fade-pulse"
         priority
       />
       <main
