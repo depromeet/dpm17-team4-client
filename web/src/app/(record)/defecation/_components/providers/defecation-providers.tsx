@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { DEFECATION_TRY } from '../constants';
 import { type DefecationFormValues, defecationFormSchema } from '../schemas';
 
 export const DefecationProvider = ({
@@ -45,7 +46,7 @@ export const DefecationProvider = ({
     resolver: zodResolver(defecationFormSchema),
     defaultValues: {
       selectedWhen: initialDate,
-      selectedTry: '',
+      selectedTry: DEFECATION_TRY.DID_POO,
       selectedColor: '',
       selectedShape: '',
       selectedPain: -1,
@@ -60,7 +61,7 @@ export const DefecationProvider = ({
     if (!isEdit) {
       methods.reset({
         selectedWhen: initialDate,
-        selectedTry: '',
+        selectedTry: DEFECATION_TRY.DID_POO,
         selectedColor: '',
         selectedShape: '',
         selectedPain: -1,

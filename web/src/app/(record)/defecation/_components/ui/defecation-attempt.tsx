@@ -32,8 +32,11 @@ export const DefecationAttempt = ({
           ? DEFECATION_TRY.DID_POO
           : DEFECATION_TRY.DID_NOT_POO
       );
+    } else if (!selectedTry) {
+      // 데이터가 없을 때 기본값으로 '쌌어요' 설정
+      setValue('selectedTry', DEFECATION_TRY.DID_POO);
     }
-  }, [data, setValue]);
+  }, [data, setValue, selectedTry]);
 
   const handleClick = (value: string, field: FieldValues) => {
     const newValue = selectedTry === value ? '' : value;
