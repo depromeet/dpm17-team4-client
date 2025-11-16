@@ -40,20 +40,20 @@ export const FoodList = ({
 
     if (shouldShowToast) {
       if (lastToastKeywordRef.current !== trimmedKeyword) {
-        toast.error(
-          <div className="text-body3-m">
-            검색 결과에 없는 음식이 등록되었어요
-            <br />
-            현재는 검색 결과에 있는 음식만 등록이 가능해요
-          </div>,
-          {
-            position: 'top-center',
-            style: {
-              height: 'fit-content',
-            },
-            icon: <Image src={ErrorIcon} alt="error" width={20} height={20} />,
-          }
-        );
+        // toast.error(
+        //   <div className="text-body3-m">
+        //     검색 결과에 없는 음식이 등록되었어요
+        //     <br />
+        //     현재는 검색 결과에 있는 음식만 등록이 가능해요
+        //   </div>,
+        //   {
+        //     position: 'top-center',
+        //     style: {
+        //       height: 'fit-content',
+        //     },
+        //     icon: <Image src={ErrorIcon} alt="error" width={20} height={20} />,
+        //   }
+        // );
         lastToastKeywordRef.current = trimmedKeyword;
       }
     } else if (trimmedKeyword.length === 0 || foods.length > 0) {
