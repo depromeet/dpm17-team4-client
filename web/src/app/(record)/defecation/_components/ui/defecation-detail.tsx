@@ -1,6 +1,6 @@
 'use client';
 
-import { forwardRef, useCallback, useImperativeHandle, useState } from 'react';
+import {forwardRef, useCallback, useEffect, useImperativeHandle, useState} from 'react';
 import type { DefecationDataResponseDto } from '@/types/dto/defecation.dto';
 import { DEFECATION_DETAIL, SCROLL_DELAY } from '../constants';
 import { useScrollToSection } from '../hooks';
@@ -43,6 +43,12 @@ export const DefecationDetail = forwardRef<
       setOpenId(null);
     },
   }));
+
+    useEffect(() => {
+        setTimeout(()=>{
+            setOpenId('COLOR');
+        },)
+    }, []);
 
   const handleSectionChange = useCallback(
     (id: DefecationTryDetailKey | null) => {
