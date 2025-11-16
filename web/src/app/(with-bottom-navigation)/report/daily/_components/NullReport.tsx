@@ -85,7 +85,12 @@ export const NullReport = ({
         </div>
 
         {type === 'daily' && (
-          <div className="mt-8 flex justify-center gap-2">
+          <div
+            className={cn(
+              'mt-8 flex justify-center gap-2',
+              mode === 'all' && 'pointer-events-auto'
+            )}
+          >
             {mode === 'all' ? (
               <>
                 <Button onClick={() => handleGoReport('defecation')}>

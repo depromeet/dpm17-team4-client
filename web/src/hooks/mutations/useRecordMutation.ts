@@ -1,7 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
 import { recordApi } from '@/apis/recordApi';
-import { QUERY_KEYS } from '@/constants';
-import { queryClient } from '@/queryClient';
 import type {
   RecordDataRequestDto,
   RecordDataResponseDto,
