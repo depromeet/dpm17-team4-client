@@ -73,26 +73,33 @@ export const DefecationAttempt = ({
         control={control}
         render={({ field }: { field: FieldValues }) => (
           <>
-            {Object.entries(DEFECATION_TRY).map(([_, value]) => (
-              <button
-                className={cn(
-                  'flex-1 h-12 rounded-[10px] bg-gray-800 whitespace-nowrap flex items-center justify-center',
-                  'transition-all duration-200',
-                  selectedTry === value
-                    ? 'bg-primary-600 text-white'
-                    : !selectedTry
-                      ? 'text-white'
-                      : 'text-white/40'
-                )}
-                type="button"
-                key={value}
-                onClick={() => {
-                  handleClick(value, field);
-                }}
-              >
-                <p className="text-button-3">{value}</p>
-              </button>
-            ))}
+            {Object.entries(DEFECATION_TRY).map(([_, value]) => {
+              const isDisabled = value === DEFECATION_TRY.DID_NOT_POO;
+              return (
+                <button
+                  className={cn(
+                    'flex-1 h-12 rounded-[10px] bg-gray-800 whitespace-nowrap flex items-center justify-center',
+                    'transition-all duration-200',
+                    isDisabled && 'opacity-50 cursor-not-allowed',
+                    selectedTry === value
+                      ? 'bg-primary-600 text-white'
+                      : !selectedTry
+                        ? 'text-white'
+                        : 'text-white/40'
+                  )}
+                  type="button"
+                  key={value}
+                  disabled={isDisabled}
+                  onClick={() => {
+                    if (!isDisabled) {
+                      handleClick(value, field);
+                    }
+                  }}
+                >
+                  <p className="text-button-3">{value}</p>
+                </button>
+              );
+            })}
           </>
         )}
       />
