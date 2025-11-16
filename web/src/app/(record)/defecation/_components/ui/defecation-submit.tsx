@@ -43,7 +43,8 @@ export const DefecationSubmit = () => {
       shape: data.selectedShape || null,
       pain: data.selectedPain,
       duration: toiletDuration,
-      note: data.selectedOptional || '',
+      note:
+        data.selectedOptional === 'initial' ? '' : data.selectedOptional || '',
     };
 
     if (isEdit) {
@@ -76,6 +77,12 @@ export const DefecationSubmit = () => {
               queryKey: [QUERY_KEYS.CALENDAR_BY_DATE],
             });
 
+            queryClient.invalidateQueries({
+              queryKey: [
+                ...QUERY_KEYS.DEFECATION,
+                Number(searchParams.get('toiletRecordId')),
+              ],
+            });
             // 캘린더에서 온 경우 캘린더로 리디렉션
             if (from === 'calendar') {
               console.log('🔍 DefecationSubmit - navigating to calendar');

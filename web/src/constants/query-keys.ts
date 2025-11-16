@@ -3,8 +3,6 @@ export const QUERY_KEYS = {
   REPORT_WEEKLY: ['report/weekly'],
   REPORT_MONTHLY: ['report/monthly'],
 
-  RECORD: ['record'],
-
   ACTIVITY_RECORDS: ['activity-records'],
 
   DEFECATION: ['defecation'],
